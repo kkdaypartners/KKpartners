@@ -575,16 +575,16 @@ body.adminonly #codes #ck-prod{display:none}
 .deal.big .why{font-size:15.5px}
 .dimg{background:#F2F5F6;aspect-ratio:1/1;flex:0 0 auto;overflow:hidden}
 .dimg img{width:100%;height:100%;display:block;object-fit:cover}
-.dlinks{display:grid;gap:6px;margin-bottom:16px}
+.dlinks{display:grid;gap:8px;margin-bottom:16px}.plans+.dlinks{margin-top:6px;padding-top:18px;border-top:1px solid var(--line)}
 .dlinks a{font-size:13px;color:var(--mid);text-decoration:none;padding:7px 11px;background:var(--wash);border-radius:8px}
 .dlinks a:hover{background:var(--brand);color:#fff}
-.plans{display:grid;gap:8px;margin-bottom:16px}
-.plan{background:var(--wash);border-radius:10px;padding:11px 13px}
-.planh{display:flex;align-items:center;gap:9px;min-width:0;flex-wrap:wrap;row-gap:8px}
+.plans{display:grid;gap:14px;margin:0 0 22px}
+.plan{background:var(--wash);border-radius:10px;padding:14px 15px}
+.planh{display:flex;align-items:center;gap:9px;min-width:0;flex-wrap:wrap;row-gap:11px}
 .planh i{font-style:normal;font-size:11.5px;font-weight:800;color:var(--brand);flex:0 0 auto}
 .planh b{font-size:14.5px;flex:1;min-width:0}
 .planh .chip{flex:1 0 100%;text-align:center;padding:8px 11px;font-size:12.5px;background:#fff;letter-spacing:.02em}
-.plan span{display:block;font-size:12.5px;color:var(--muted);line-height:1.6;margin-top:6px}
+.plan span{display:block;font-size:12.5px;color:var(--muted);line-height:1.7;margin-top:10px}
 .plan span em{font-style:normal;color:var(--down);font-weight:700}
 .dcode{display:flex;align-items:center;gap:10px;margin-bottom:12px}
 .dcode span{font-size:13px;color:var(--muted)}
@@ -1057,7 +1057,7 @@ const CODE_GEO = {
   "JCBJPTRAIN":{cat:["交通","票券通票"],cty:["Japan"]},
   "AFFKDDI85":{cat:["網路"],cty:["Japan"]},
   "DBSKDDI09":{cat:["網路"],cty:["Japan"]},
-  "HMCDAY":{cty:["Hong Kong and Macau","China","Japan"]},
+  "HMCDAY":{cty:["Hong Kong and Macau","China"]},
   "BSDAY":{dest:["kr-busan","kr-daegu","kr-gyeongju"]},
   "SEADAY":{cty:["TH","VN","ID","MY","SG","PH","SEA"]},
   "JPDAY":{cty:["Japan"]},
@@ -1340,11 +1340,6 @@ const DEALS = [  {
       {n:"韓國樂高樂園門票", u:"https://www.kkday.com/zh-tw/product/140195"},
       {n:"63 SkyPicnic 首爾", u:"https://www.kkday.com/zh-tw/product/621650"},
       {n:"韓國機場貴賓室通行證", u:"https://www.kkday.com/zh-tw/product/113733"}
-    ],
-    plans: [
-      {n:"韓國秋季・指定票券", c:"KTOAUTUMN5",  x:"9 折",  d:"韓國秋季限定"},
-      {n:"韓國秋季・指定體驗", c:"KTOAUTUMN12", x:"88 折", d:"韓國秋季限定"},
-      {n:"韓國秋季・指定行程", c:"KTOAUTUMN15", x:"85 折", d:"韓國秋季限定"}
     ],
     cta: {n:"看活動頁", u:"https://www.kkday.com/zh-tw/promo/kto_traveldeeper#uber"}
   },
@@ -1642,7 +1637,7 @@ const CAMPAIGNS = [
 ];
 
 const DAILY = [
-  {dow:1, label:"週一", dest:"港澳中日", code:"HMCDAY", terms:"滿 1,500 享 94 折，最高折 150 元"},
+  {dow:1, label:"週一", dest:"港澳中", code:"HMCDAY", terms:"滿 1,500 享 94 折，最高折 150 元"},
   {dow:2, label:"週二", dest:"釜山／大邱／慶州", code:"BSDAY", terms:"滿 2,200 享 96 折，最高折 180 元"},
   {dow:3, label:"週三", dest:"東南亞", code:"SEADAY", terms:"滿 1,700 享 93 折，最高折 130 元"},
   {dow:4, label:"週四", dest:"全日本", code:"JPDAY", terms:"滿 1,000 享 94 折，最高折 200 元"},
