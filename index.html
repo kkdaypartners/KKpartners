@@ -816,6 +816,33 @@ footer a{color:var(--brand)}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
 
+/* 本週重點格（可點） */
+.stats.hl a.stat{text-decoration:none;transition:background .15s}
+.stats.hl a.stat:hover{background:var(--wash)}
+.stats.hl .stat b{color:var(--mid)}
+
+/* 頂端橫幅列 */
+.topbar{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:12px;
+  background:var(--deep);color:#fff;padding:10px 18px;font-size:14px;flex-wrap:wrap}
+.topbar b{font-weight:800}
+.tbtag{background:rgba(255,255,255,.16);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700;white-space:nowrap}
+.tbgo{margin-left:auto;color:#fff;text-decoration:underline;font-weight:700;white-space:nowrap}
+.tbx{background:none;border:none;color:#fff;font-size:20px;line-height:1;cursor:pointer;padding:0 2px;opacity:.75}
+.tbx:hover{opacity:1}
+@media (max-width:720px){ .tbgo{margin-left:0} .topbar{font-size:13px;padding:9px 14px} }
+
+/* 本週主打（特惠第一張） */
+.deal.feat{outline:2px solid var(--brand);outline-offset:-2px}
+.deal.feat .dbd{background:linear-gradient(180deg,rgba(38,190,201,.09),transparent 120px)}
+.featflag{display:inline-block;background:var(--brand);color:#fff;font-size:11.5px;font-weight:800;
+  letter-spacing:.03em;border-radius:999px;padding:4px 11px;margin-bottom:8px}
+
+/* 上次造訪後的新內容 */
+.deal.isnew,.pick.isnew{position:relative}
+.deal.isnew:before,.pick.isnew:before{content:"NEW";position:absolute;top:10px;left:10px;z-index:3;
+  background:var(--down);color:#fff;font-size:10.5px;font-weight:800;letter-spacing:.06em;
+  border-radius:999px;padding:3px 8px;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+
 .slotnote{margin:0 0 12px;font-size:13px;color:var(--muted);background:var(--wash);
   border-radius:10px;padding:9px 13px;line-height:1.55}
 
@@ -1594,6 +1621,14 @@ const BENEFITS = [
 
 /* 檔期專區｜每次有活動就改這一段
    s / e 起訖日，過了 e 之後整個專區自動收起來只剩行事曆 */
+/* 首頁三格「本週重點」｜留空陣列 [] 就會退回原本的招募數據（10 萬商品／25 日入帳／USD 10）
+   href 填站內錨點，點了會捲到對應區塊。最多三格，多的不會顯示。 */
+const HIGHLIGHTS = [
+  {b:"補助加碼到 5 折", s:"F1 新加坡大獎賽・親友也能申請", href:"#benefit"},
+  {b:"熱度 +2,374%",   s:"Taiwan PASS 台鐵版本週爆量",     href:"#picks"},
+  {b:"600 JPY",        s:"六本木之丘展望台・原價 2,400",    href:"#today"}
+];
+
 /* 首頁彈窗｜要換推哪一檔就改這一塊
    留 null = 跟著 EVENT 走（預設行為）。填物件 = 以這裡為準，不動 EVENT。
    s/e 決定顯示期間，過期自動不跳；badge 留空會自動算「還剩 N 天」，
@@ -2126,7 +2161,7 @@ const LIVE_DEALS = DEALS.filter(function(d){
 });
 
 /* 卡片渲染抽成函式，讓「特惠」與「新品」兩條 rail 共用同一套版型 */
-const dealCard = function(d){
+const dealCard = function(d, feat){
   const detail =
     (d.plans ? d.plans.map(function(p, i){
        return '<div class="plan"><div class="planh"><i>0' + (i+1) + '</i><b>' + esc(p.n) + '</b>' +
@@ -2151,7 +2186,7 @@ const dealCard = function(d){
   const dleft = d.till ? dayDiff(d.till) : null;
   const dlast = dleft === 0 || dleft === 1;
   const dtag = dleft === 0 ? "今天最後一天" : dleft === 1 ? "明天最後一天" : d.tag;
-  return '<div class="deal' + (soon ? " soon" : "") + '">' +
+  return '<div class="deal' + (feat ? " feat" : "") + (soon ? " soon" : "") + '">' +
     (soon ? '<div class="soonflag">敬請期待　' + esc((d.from || "").slice(5).replace("-", "/")) + ' 開跑</div>' : "") +
     (d.grid
       ? '<div class="dgrid">' + d.grid.map(function(g){
@@ -2161,6 +2196,7 @@ const dealCard = function(d){
       : d.img ? '<div class="dimg"><img loading="lazy" src="' + esc(d.img) + '" alt="" onerror="this.closest(\'.dimg\').remove()"></div>' : "") +
     '<div class="dbd">' +
     (dtag ? '<span class="deyebrow' + (dlast ? " end" : "") + '">' + esc(dtag) + '</span>' : "") +
+    (feat ? '<span class="featflag">本週主打</span>' : "") +
     '<b class="dttl">' + esc(d.name) + '</b>' +
     (d.why ? '<p class="why">' + esc(d.why) + '</p>' : "") +
     (d.note ? '<p class="dnote">' + esc(d.note) + '</p>' : "") +
@@ -2175,7 +2211,7 @@ const dealCard = function(d){
             : '<a class="btn" href="' + esc(d.url) + '" target="_blank" rel="noopener">' + (d.cta ? esc(d.cta.n) : "看商品") + '</a>') +
     (soon ? "" : '<button class="btn alt mkpost" data-code="' + esc(d.code || "") + '" data-benefit="' + esc(d.name + (d.why ? "｜" + d.why : "")) + '" data-url="' + esc(d.url) + '" data-event="' + esc(EVENT.url || "") + '" data-perks="1"' + (d.links && d.links.length ? ' data-links="' + esc(JSON.stringify(d.links)) + '"' : "") + '>複製貼文</button>') +
     '</div></div></div>'; };
-const dealRail = function(list){ return list.length ? '<div class="rail"><button class="railbtn prev" aria-label="上一個">‹</button><button class="railbtn next" aria-label="下一個">›</button><div class="deals">' + list.map(dealCard).join("") + '</div></div>' : ""; };
+const dealRail = function(list, feat){ return list.length ? '<div class="rail"><button class="railbtn prev" aria-label="上一個">‹</button><button class="railbtn next" aria-label="下一個">›</button><div class="deals">' + list.map(function(d, i){ return dealCard(d, !!feat && i === 0); }).join("") + '</div></div>' : ""; };
 const SALE_DEALS = LIVE_DEALS.filter(function(d){ return d.kind !== "new"; });
 const NEW_DEALS  = LIVE_DEALS.filter(function(d){ return d.kind === "new"; });
 
@@ -2187,7 +2223,7 @@ H += '<section class="band band-wash" id="today"><div class="inner">' +
 '<p class="lede">' + (DEAL_DATE ? esc(DEAL_DATE) + ' 更新。' : "") + '這週最值得推的幾檔，附上推的理由與適用的折扣碼。</p>' +
 '<div class="mycid" id="mycid"></div>' +
 (LIVE_DEALS.length ?
-   (SALE_DEALS.length ? '<h3 class="dsub">特惠商品</h3>' + dealRail(SALE_DEALS) : "") +
+   (SALE_DEALS.length ? '<h3 class="dsub">特惠商品</h3>' + dealRail(SALE_DEALS, true) : "") +
    (NEW_DEALS.length  ? '<h3 class="dsub">新品上架</h3>'  + dealRail(NEW_DEALS)  : "")
  : '<div class="open"><div class="hd"><span class="dot"></span>今天還沒更新</div>' +
    '<p class="empty">每日主打商品會放在這裡，通常早上更新。急著找商品可以先看下面的本月折扣碼。</p></div>') +
@@ -3114,6 +3150,61 @@ renderCid();
     for (let k = 0; k < np.length; k++) np[k].classList.toggle("on", k === openIdx);
     applyCid();
   }, 60000);
+})();
+
+/* ── 首頁三格改成「本週重點」（HIGHLIGHTS 有東西才覆蓋） ───────── */
+(function(){
+  if (typeof HIGHLIGHTS === "undefined" || !HIGHLIGHTS || !HIGHLIGHTS.length) return;
+  const box = document.querySelector(".hero .stats");
+  if (!box) return;
+  box.classList.add("hl");
+  box.innerHTML = HIGHLIGHTS.slice(0,3).map(function(x){
+    const inner = '<b>' + esc(x.b) + '</b><span>' + esc(x.s) + '</span>';
+    return x.href ? '<a class="stat" href="' + esc(x.href) + '">' + inner + '</a>'
+                  : '<div class="stat">' + inner + '</div>';
+  }).join("");
+})();
+
+/* ── 頂端橫幅列：跟彈窗共用 POPUP 資料，但不擋畫面、關掉後當天不再出現 ─── */
+(function(){
+  const PL = (typeof POPUP !== "undefined" && POPUP)
+    ? (Array.isArray(POPUP) ? POPUP : [POPUP]) : [];
+  const P = PL.filter(function(x){ return dayDiff(x.s) <= 0 && dayDiff(x.e) >= 0; })[0];
+  if (!P) return;
+  const key = "kkp_bar_" + (P.name || "") + "_" + P.s;
+  const today = new Date().toISOString().slice(0,10);
+  try { if (localStorage.getItem(key) === today) return; } catch(e) {}
+  const bar = document.createElement("div");
+  bar.className = "topbar";
+  bar.innerHTML = '<span class="tbtag">' + esc(P.badge || "進行中") + '</span>' +
+    '<b>' + esc(P.name) + '</b>' +
+    '<a class="tbgo" href="' + esc(P.url || "#today") + '">' + esc(P.cta || "看詳情") + '</a>' +
+    '<button class="tbx" aria-label="關閉">×</button>';
+  document.body.insertBefore(bar, document.body.firstChild);
+  document.body.classList.add("hasbar");
+  bar.querySelector(".tbx").addEventListener("click", function(){
+    bar.remove(); document.body.classList.remove("hasbar");
+    try { localStorage.setItem(key, today); } catch(e) {}
+  });
+})();
+
+/* ── 上次造訪後的新內容標記 ───────────────────────────────
+   記住上次看過哪些卡片（用標題），這次出現的新標題就標紅點。
+   用標題而不是日期，是因為卡片不一定都有 added 欄位。 */
+(function(){
+  const KEY = "kkp_seen_v1";
+  let seen = [];
+  try { seen = JSON.parse(localStorage.getItem(KEY) || "[]"); } catch(e) {}
+  const now = [];
+  const cards = document.querySelectorAll("#today .deal, #picks .pick");
+  cards.forEach(function(c){
+    const t = c.querySelector(".dttl, b");
+    if (!t) return;
+    const name = t.textContent.trim();
+    now.push(name);
+    if (seen.length && seen.indexOf(name) === -1) c.classList.add("isnew");
+  });
+  try { localStorage.setItem(KEY, JSON.stringify(now)); } catch(e) {}
 })();
 
 /* 檔期彈窗：活動期間每天最多跳一次 */
