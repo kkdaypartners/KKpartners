@@ -1345,7 +1345,7 @@ const DEALS = [  {
     url: "https://www.kkday.com/zh-tw/transportation/taiwan",
     from: "2026-09-24",
     till: "2026-09-26",
-    img: "https://image.kkday.com/v2/image/get/q_55%2Ct_jpg/s1.kkday.com/campaign_4450/20251229071125_o9Tvx/png",
+    img: "img/thsr-1024.webp",
     price: "輸碼 95 折，另有聰明選時 65 折起",
     why: "光復節連假 10/24–10/26，高鐵疏運期間 10/23–10/27，開放預售日就是 9/25（五）凌晨。搶票題材的急迫感是真的、不用硬造，而且每次連假都固定有人在找。建議 9/24 就先發預告貼文卡位，隔天凌晨開搶時再補一則。",
     code: "THSR26OF5",
@@ -1686,6 +1686,7 @@ const BENEFITS = [
    s/e 決定該則的顯示期間，過期自動不播；全部過期就整條不出現。
    兩則以上會每 6 秒自動輪播，滑鼠移上去暫停。 */
 const BANNERS = [
+  {t:"光復節連假", b:"高鐵車票 9/25 00:00 開搶，輸碼再享 95 折", cta:"看搶票重點", url:"#today", s:"2026-09-24", e:"2026-09-26"},
   {t:"限時特惠", b:"六本木之丘展望台 600 JPY，原價 2,400", cta:"看商品", url:"#today",   s:"2026-09-21", e:"2026-09-30"},
   {t:"夥伴福利", b:"F1 新加坡大獎賽 補助加碼到 5 折・親友也能申請", cta:"看福利", url:"#benefit", s:"2026-09-21", e:"2026-10-05"},
   {t:"倒數最後", b:"JR PASS 全國版 10/1 漲價，9/30 前鎖舊價", cta:"看商品", url:"#today",   s:"2026-09-21", e:"2026-09-30"}
@@ -1693,8 +1694,10 @@ const BANNERS = [
 
 /* 首頁「本週重點」｜留空陣列 [] 會退回原本的招募數據（10 萬商品／25 日入帳／USD 10）
    img=商品縮圖（沒圖就看不出在推什麼，盡量都給）、t=分類小標（4 字內）、
-   b=商品名（12 字內）、d=賣點一行（10 字內）、href=站內錨點。最多四則。 */
+   b=商品名（12 字內）、d=賣點一行（10 字內）、href=站內錨點。最多四則。
+   可選 s/e：填了只在該期間顯示，過期自動讓位給後面的；不填＝一直顯示。 */
 const HIGHLIGHTS = [
+  {img:"img/thsr-1024.webp", t:"光復節連假", b:"高鐵車票 9/25 開搶", d:"輸碼 95 折・疏運 10/23–27", href:"#today", s:"2026-09-24", e:"2026-09-26"},
   {img:"img/roppongi-v3.webp",    t:"限時特惠", b:"六本木之丘展望台", d:"600 JPY・原價 2,400", href:"#today"},
   {img:"img/jrpass-fare-v2.webp", t:"倒數最後", b:"JR PASS 全國版",  d:"10/1 漲價前鎖舊價",   href:"#today"},
   {img:"img/f1-benefit-wide.webp",t:"夥伴福利", b:"F1 新加坡大獎賽",  d:"補助 5 折・親友可申請", href:"#benefit"},
@@ -1711,6 +1714,16 @@ const HIGHLIGHTS = [
    長檔期建議自己寫，不然會出現「還剩 101 天」這種沒有急迫感的字。
    url 可填站內錨點（#today）或外部網址；img 省略就沿用 HTML 裡的預設圖。 */
 const POPUP = [
+{
+  name:  "光復節連假｜高鐵車票 9/25 00:00 開搶",
+  s:     "2026-09-24",
+  e:     "2026-09-26",
+  badge: "今晚午夜開搶・輸碼再享 95 折",
+  desc:  "搭乘期間 10/23–10/27（高鐵疏運日期），連假為 10/24–10/26。建議 23:59 先把頁面開好。",
+  img:   "img/thsr-1024.webp",
+  url:   "#today",
+  cta:   "看搶票重點"
+},
 {
   name:  "東京六本木之丘展望台｜夜景限時 600 日圓",
   s:     "2026-09-22",
@@ -3232,6 +3245,12 @@ renderCid();
    擠在左欄時每格只有約 160px，圖＋兩行字必定被截斷（2026-09-21 改）。 */
 (function(){
   if (typeof HIGHLIGHTS === "undefined" || !HIGHLIGHTS || !HIGHLIGHTS.length) return;
+  const LIVE_HL = HIGHLIGHTS.filter(function(x){
+    if (x.s && dayDiff(x.s) > 0) return false;      /* 還沒到開始日 */
+    if (x.e && dayDiff(x.e) < 0) return false;      /* 已過期 */
+    return true;
+  });
+  if (!LIVE_HL.length) return;
   const stats = document.querySelector(".hero .stats");
   const hero  = document.querySelector(".hero");
   if (!hero) return;
@@ -3240,7 +3259,7 @@ renderCid();
   const band = document.createElement("section");
   band.className = "hlband";
   band.innerHTML = '<div class="inner"><div class="hlhd">本週重點</div><div class="hlpills">' +
-    HIGHLIGHTS.slice(0,4).map(function(x){
+    LIVE_HL.slice(0,4).map(function(x){
       return '<a class="hlpill" href="' + esc(x.href || "#today") + '">' +
         (x.img ? '<span class="hlimg"><img loading="lazy" src="' + esc(x.img) + '" alt=""></span>' : "") +
         '<span class="hltx">' +
