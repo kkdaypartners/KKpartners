@@ -580,7 +580,7 @@ body.adminonly #codes #ck-prod{display:none}
 .dlinks a:hover{background:var(--brand);color:#fff}
 .plans{display:grid;gap:8px;margin-bottom:16px}
 .plan{background:var(--wash);border-radius:10px;padding:11px 13px}
-.planh{display:flex;align-items:center;gap:9px;min-width:0}
+.planh{display:flex;align-items:center;gap:9px;min-width:0;flex-wrap:wrap}.planh i{flex:0 0 auto}.planh b{flex:1 1 auto;min-width:0;line-height:1.45}.planh .chip{flex:0 0 auto;padding:7px 10px;font-size:13.5px;white-space:nowrap}
 .planh i{font-style:normal;font-size:11.5px;font-weight:800;color:var(--brand);flex:0 0 auto}
 .planh b{font-size:14.5px;flex:1;min-width:0}
 .planh .chip{flex:0 0 auto;padding:6px 11px;font-size:12.5px;background:#fff;letter-spacing:.02em}
@@ -1353,15 +1353,25 @@ const DEALS = [  {
     name: "USJ 神級 3 大套票｜關西旅行必備",
     url: "https://www.kkday.com/zh-tw/product/2247",
     img: "img/p-b39ee015a1.webp",
-    why: "門票加周遊券加人氣周邊一次買齊，95 折起。KKday 預訂免 1.5% 海外刷卡手續費。方案一等於爆米花桶倒貼送，是這波最好講的角度。",
-    price: "10,000 日圓起",
+    why: "門票加周遊券加人氣周邊一次買齊，三個方案都還在。⚠️ 原本「固定 10,000 日圓起」的檔期已結束，文案不要再用那個價格與「比單買門票便宜」的說法。現在的角度改打折扣本身：方案一、二 95 折，方案三現折 JPY 1,000，外加 KKday 預訂免 1.5% 海外刷卡手續費。萬聖季敲磚與任天堂保證入園是這波最好講的兩個切角。",
+    price: "三方案 95 折起／最高現折 JPY 1,000",
     code: "",
     due: "環球影城商品不適用一般折扣碼，只有下面三組指定套票碼可以折",
     plans: [
-      {n:"方案一｜快閃閃電戰", d:"門票＋哈咪酷瑪爆米花桶＋關西樂享周遊券", c:"HAMIKUMA5OFF", x:"95 折・限時延至 9/20"},
+      {n:"方案一｜快閃閃電戰", d:"門票＋哈咪酷瑪爆米花桶＋關西樂享周遊券", c:"HAMIKUMA5OFF", x:"95 折・限時延至 9/30"},
       {n:"方案二｜萬聖限定・敲磚必備", d:"門票＋關西樂享周遊券＋周邊任選（能量手環™／無敵星爆米花桶／哈咪酷瑪爆米花桶）", c:"USJBUNDLE5OFF", x:"95 折"},
       {n:"方案三｜任天堂保證入園套票", d:"保證入園＋門票＋能量手環™或無敵星爆米花桶＋關西樂享周遊券", c:"USJBUNDLE1000", x:"現折 JPY 1,000"}
     ]
+  },
+  {
+    tag: "倒數最後",
+    name: "凍漲倒數｜JR PASS 全國版 10/1 漲價",
+    url: "https://www.kkday.com/zh-tw/product/20291",
+    till: "2026-09-30",
+    why: "10/1 起全面調漲，9/30 前下單鎖住舊價。普通車廂大人 7 日 ¥50,000→¥53,000、14 日 ¥80,000→¥84,000、21 日 ¥100,000→¥105,000；綠色車廂 7 日 ¥70,000→¥74,000、14 日 ¥110,000→¥116,000、21 日 ¥140,000→¥147,000，漲幅 5～6%，一張現省 ¥3,000～¥7,000（兒童票同步調漲）。受眾非常明確：10～11 月賞楓、12 月底跨年與滑雪的旅客，現在買就鎖舊價，是少數「不買會後悔」型的急迫感題材。",
+    price: "普通車 7 日 ¥50,000（10/1 起 ¥53,000）",
+    code: "",
+    due: "9/30 前購買的票券，須於 12/30 前在日本 JR 兌換窗口兌換啟用（自購買日起 90 天內有效）"
   },
   {
     tag: "限時促銷",
