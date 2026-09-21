@@ -816,20 +816,21 @@ footer a{color:var(--brand)}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
 
-/* 本週重點・膠囊捷徑 */
-.hlpills{display:flex;flex-wrap:wrap;gap:10px;margin:40px 0 0}
-.hlpill{display:inline-flex;align-items:center;gap:10px;background:#fff;border-radius:999px;
-  padding:9px 16px 9px 11px;text-decoration:none;color:var(--ink);
+/* 本週重點・膠囊捷徑（四顆等寬對齊） */
+.hlpills{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:40px 0 0}
+.hlpill{display:flex;align-items:center;gap:9px;background:#fff;border-radius:999px;
+  padding:10px 14px 10px 10px;text-decoration:none;color:var(--ink);min-width:0;
   box-shadow:0 4px 14px rgba(9,60,66,.14);transition:transform .15s,box-shadow .15s}
 .hlpill:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(9,60,66,.2)}
-.hlpill i{font-style:normal;font-size:11px;font-weight:800;letter-spacing:.06em;color:#fff;
-  background:var(--mid);border-radius:999px;padding:4px 9px;white-space:nowrap}
-.hlpill b{font-size:14.5px;font-weight:700;letter-spacing:-.01em;white-space:nowrap}
-.hlpill em{font-style:normal;font-size:17px;line-height:1;color:var(--brand);font-weight:800}
+.hlpill i{flex:0 0 auto;font-style:normal;font-size:10.5px;font-weight:800;letter-spacing:.05em;
+  color:#fff;background:var(--mid);border-radius:999px;padding:4px 8px;white-space:nowrap}
+.hlpill b{flex:1 1 auto;min-width:0;font-size:13.5px;font-weight:700;letter-spacing:-.01em;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hlpill em{flex:0 0 auto;font-style:normal;font-size:16px;line-height:1;color:var(--brand);font-weight:800}
+@media (max-width:980px){ .hlpills{grid-template-columns:repeat(2,1fr)} }
 @media (max-width:720px){
-  .hlpills{margin-top:26px;gap:8px}
-  .hlpill{padding:8px 13px 8px 9px;gap:8px}
-  .hlpill b{font-size:13.5px;white-space:normal}
+  .hlpills{grid-template-columns:1fr;margin-top:26px;gap:8px}
+  .hlpill b{white-space:normal;overflow:visible}
 }
 
 /* 頂端橫幅列 */
@@ -1650,12 +1651,14 @@ const BANNERS = [
 ];
 
 /* 首頁「本週重點」膠囊捷徑｜留空陣列 [] 會退回原本的招募數據（10 萬商品／25 日入帳／USD 10）
-   t=分類小標（4 字內）、b=一行文字（建議 16 字內，太長手機會折）、href=站內錨點。最多三顆。 */
+   t=分類小標（4 字內）、b=一行文字（等寬排列，建議 12 字內）、href=站內錨點。最多四顆。 */
 const HIGHLIGHTS = [
-  {t:"限時特惠", b:"六本木展望台 600 JPY",        href:"#today"},
-  {t:"夥伴福利", b:"F1 補助加碼到 5 折",           href:"#benefit"},
-  {t:"本週選品", b:"Taiwan PASS 熱度 +2,374%",    href:"#picks"}
+  {t:"限時特惠", b:"六本木展望台 600 JPY",   href:"#today"},
+  {t:"倒數最後", b:"JR PASS 10/1 漲價",      href:"#today"},
+  {t:"夥伴福利", b:"F1 補助加碼到 5 折",      href:"#benefit"},
+  {t:"本週選品", b:"Taiwan PASS +2,374%",   href:"#picks"}
 ];
+
 
 
 
@@ -3189,7 +3192,7 @@ renderCid();
   if (!box) return;
   const wrap = document.createElement("div");
   wrap.className = "hlpills";
-  wrap.innerHTML = HIGHLIGHTS.slice(0,3).map(function(x){
+  wrap.innerHTML = HIGHLIGHTS.slice(0,4).map(function(x){
     return '<a class="hlpill" href="' + esc(x.href || "#today") + '">' +
       (x.t ? '<i>' + esc(x.t) + '</i>' : "") +
       '<b>' + esc(x.b) + '</b><em aria-hidden="true">›</em></a>';
