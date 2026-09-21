@@ -562,7 +562,7 @@ body.adminonly #codes #ck-prod{display:none}
 .deyebrow{display:block;font-size:12px;font-weight:700;color:var(--mid);letter-spacing:.02em;margin-bottom:6px}
 .dttl{display:block;font-size:17px;font-weight:700;line-height:1.4;letter-spacing:-.01em;margin-bottom:8px;
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.dprice{font-size:15px;font-weight:800;color:var(--ink);margin-bottom:14px}
+.dprice{font-size:15px;font-weight:800;color:var(--ink);margin-bottom:14px}.dprow{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:7px 0;border-bottom:1px dashed var(--line)}.dprow:last-child{border-bottom:0}.dprow i{font-style:normal;font-size:13px;font-weight:600;color:var(--muted);line-height:1.4}.dprow b{font-size:15px;font-weight:800;color:var(--ink);white-space:nowrap}
 .dmore{border:none;margin:0 0 14px}
 .dmore summary{padding:10px 0;font-size:13.5px;font-weight:700;color:var(--mid);border-top:1px solid var(--line)}
 .dmore summary:after{width:8px;height:8px;border-color:var(--mid)}
@@ -1237,10 +1237,14 @@ const DEALS = [  {
     url: "https://www.kkday.com/zh-tw/product/771872",
     till: "2026-09-30",
     img: "https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_771872/20260918024003_pVles/png",
-    price: "R 區 NT$ 2,755 起／VIP NT$ 3,970（含飲品）／VVIP NT$ 4,780（含飲品）",
-    why: "韓國現象級 Show Musical 首次登陸大灣區，原班人馬、原汁原味。韓國站在 KKday 是 4.8 分、190+ 則評價、賣破 2,000 張，是已經驗證會轉換的題材，過去只能飛韓國才看得到。澳門銀河 G Box，10/23–25 三天五場（週五 20:00／週六 17:00、21:00／週日 17:00、21:00），場次極少賣完就沒有。適合搭澳門銀河住宿與港澳自由行一起推。⚠️ 本卡片只上到 9/30（配合 26SEP95 效期）。但演出是 10/23–25，若 10 月要繼續推，需重新加卡並換一組有效的碼——9/30 之後這張會自動消失，不會有人提醒。",
+    price: [
+      {n:"R 座位票",            v:"NT$ 2,755"},
+      {n:"VIP 座位票（含飲品）",  v:"NT$ 3,970"},
+      {n:"VVIP 座位票（含飲品）", v:"NT$ 4,780"}
+    ],
+    why: "韓國現象級 Show Musical 首次登陸大灣區，原班人馬、原汁原味。韓國站在 KKday 是 4.8 分、190+ 則評價、賣破 2,000 張，是已經驗證會轉換的題材，過去只能飛韓國才看得到。澳門銀河 G Box，10/23–25 三天五場（週五 20:00／週六 17:00、21:00／週日 17:00、21:00），場次極少賣完就沒有。適合搭澳門銀河住宿與港澳自由行一起推。⚠️ 只演三天，曝光要在 10 月初前鋪完才有實際銷售窗口。",
     code: "26SEP95",
-    due: "不限門檻 95 折、單筆最高折 NT$150，2026/9/30 到期。本卡片依 Alen 指示同步設到 9/30，碼失效當天一起下架。",
+    due: "不限門檻 95 折、單筆最高折 NT$150，2026/9/30 到期",
     note: "⚠️ 發文前一定要知道三件事：①19 歲以下一律不得入場，無論有無監護人陪同，現場查驗證件，文案務必寫明。②演出期間嚴禁拍照錄影，KOL 到現場做不出開箱或側錄內容，能產的是行前推薦與場外素材，接洽時要先講清楚免得期待落差。③這是猛男秀，跑 Meta／IG 付費廣告前先確認素材過不過審。另外不可退票換票轉讓，座位由主辦隨機分配、不可選位。",
     links: [
       {n:"澳門銀河度假城住宿與門票", u:"https://www.kkday.com/zh-tw/destination/mo-cotai-galaxy-macau"}
@@ -1397,7 +1401,7 @@ const DEALS = [  {
     /* 快閃期間改用檔期碼，到點自動換回上面的 code。台北時間，含當日 23:59:59 */
     swap: { till: "2026-09-19", code: "26SWWINTER9",
             due: "快閃至 9/19 23:59｜瑞士商品滿 NT$4,000 享 95 折，最高折 $1,800" },
-    due: "銷售至 10/1｜搭乘期間 10/1–12/31，任選連續 5 或 10 天。⚠️ 原本卡片寫「銷售至 9/30」，2026-09-21 依 Alen 指示改為 10/1，卡片同步設 10/1 自動下架。"
+    due: "銷售至 10/1｜搭乘期間 10/1–12/31，任選連續 5 或 10 天"
   },
   {
     tag: "KKpartners 專屬",
@@ -2094,7 +2098,9 @@ const dealCard = function(d){
     '<b class="dttl">' + esc(d.name) + '</b>' +
     (d.why ? '<p class="why">' + esc(d.why) + '</p>' : "") +
     (d.note ? '<p class="dnote">' + esc(d.note) + '</p>' : "") +
-    (d.price ? '<div class="dprice">' + esc(d.price) + '</div>' : "") +
+    (d.price ? '<div class="dprice">' + (Array.isArray(d.price)
+       ? d.price.map(function(x){ return '<span class="dprow"><i>' + esc(x.n) + '</i><b>' + esc(x.v) + '</b></span>'; }).join("")
+       : esc(d.price)) + '</div>' : "") +
     (detail ? '<details class="dmore"><summary>' + dlabel +
        (n ? '（' + n + '）' : "") + '</summary><div class="dmorebd">' + detail + '</div></details>' : "") +
     '<div class="pbtns">' +
