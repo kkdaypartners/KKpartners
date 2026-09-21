@@ -1519,6 +1519,22 @@ const BENEFITS = [
 
 /* 檔期專區｜每次有活動就改這一段
    s / e 起訖日，過了 e 之後整個專區自動收起來只剩行事曆 */
+/* 首頁彈窗｜要換推哪一檔就改這一塊
+   留 null = 跟著 EVENT 走（預設行為）。填物件 = 以這裡為準，不動 EVENT。
+   s/e 決定顯示期間，過期自動不跳；badge 留空會自動算「還剩 N 天」，
+   長檔期建議自己寫，不然會出現「還剩 101 天」這種沒有急迫感的字。
+   url 可填站內錨點（#today）或外部網址；img 省略就沿用 HTML 裡的預設圖。 */
+const POPUP = {
+  name:  "韓國指定商品送 Uber 優惠碼",
+  s:     "2026-09-21",
+  e:     "2026-12-31",
+  badge: "9/21–12/31・數量有限送完為止",
+  desc:  "買指定韓國商品就送 Uber 優惠碼，仁川機場接送 5 折、每組可用 2 次、每次最高折抵 ₩10,000。系統自動發兩張憑證，不需額外操作。",
+  img:   "img/p-a39ef136f3.webp",
+  url:   "#today",
+  cta:   "看 14 支指定商品"
+};
+
 const EVENT = {
   name: "全站狂撒 777｜月中快閃 72H",
   s: "2026-09-17",
@@ -3007,24 +3023,37 @@ renderCid();
 
 /* 檔期彈窗：活動期間每天最多跳一次 */
 (function(){
-  const ds = dayDiff(EVENT.s), de = dayDiff(EVENT.e);
+  const P = (typeof POPUP !== "undefined" && POPUP) ? POPUP : null;
+  const SRC = P || EVENT;
+  const ds = dayDiff(SRC.s), de = dayDiff(SRC.e);
   if (de < 0 || ds > 1) return;
-  const key = "kkp_pop_" + EVENT.s;
+  const key = "kkp_pop_" + SRC.s;
   let seen = null;
   try { seen = localStorage.getItem(key); } catch(e) {}
   const todayStr = new Date().toISOString().slice(0,10);
   if (seen === todayStr) return;
   const pop = document.getElementById("pop");
-  document.getElementById("popbadge").textContent = ds > 0 ? "明天開跑" : "進行中，還剩 " + (de + 1) + " 天";
-  document.getElementById("poptitle").textContent = EVENT.name;
-  document.getElementById("popdesc").textContent = (EVENT.perks || []).map(function(p){ return p.t + "：" + p.d; }).join("／");
+  document.getElementById("popbadge").textContent =
+    (P && P.badge) ? P.badge : (ds > 0 ? "明天開跑" : "進行中，還剩 " + (de + 1) + " 天");
+  document.getElementById("poptitle").textContent = SRC.name;
+  document.getElementById("popdesc").textContent =
+    (P && P.desc) ? P.desc : (EVENT.perks || []).map(function(p){ return p.t + "：" + p.d; }).join("／");
+  (function(){
+    const go = document.getElementById("popgo");
+    if (P && P.url) go.setAttribute("href", P.url);
+    if (P && P.cta) go.textContent = P.cta;
+  })();
 
   /* 依當天（或最近一個未結束的日子）換上對應的攻略圖 */
   (function(){
-    const day = EVENT.days.filter(function(d){ return dayDiff(d.date) >= 0; })[0];
-    if (!day || !day.img) return;
     const wrap = document.querySelector(".popimg");
     if (!wrap) return;
+    if (P) {                                   /* POPUP 自帶圖就用，沒帶就留 HTML 預設圖 */
+      if (P.img) wrap.innerHTML = '<img loading="lazy" src="' + esc(P.img) + '" alt="' + esc(P.name) + '">';
+      return;
+    }
+    const day = EVENT.days.filter(function(d){ return dayDiff(d.date) >= 0; })[0];
+    if (!day || !day.img) return;
     wrap.innerHTML =
       '<picture>' +
       (day.img.mo ? '<source media="(max-width:720px)" srcset="' + day.img.mo + '">' : "") +
