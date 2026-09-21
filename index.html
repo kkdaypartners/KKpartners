@@ -1231,6 +1231,21 @@ const PICKS = [
    tag  角標：爆品／新品／限時／回購王，留空就不顯示 */
 const DEAL_DATE = "2026/09/16";
 const DEALS = [  {
+    tag: "特惠商品",
+    name: "東京六本木之丘展望台 Tokyo City View 夜景門票",
+    url: "https://www.kkday.com/zh-tw/product/18946",
+    till: "2026-09-30",
+    img: "img/roppongi-0921.webp",
+    price: [
+      {n:"限時特惠", v:"600 JPY"},
+      {n:"原價",     v:"2,400 JPY"},
+      {n:"直降",     v:"1,800 JPY"}
+    ],
+    why: "原價 2,400 直接砍到 600 日圓，折數少見，數字本身就是賣點，不用多解釋。東京鐵塔正對面的高空夜景，畫面好拍、受眾廣，秋冬去東京的都能推。超限量、賣完提前結束，急迫感是真的。",
+    code: "26SEP95",
+    due: "⚠️ 這個特惠價有時段限制，文案一定要寫：平日限每日 21:00–隔日 07:00（GMT+9）入場；週六、週日與國定假日全天適用；9/21–9/23 三天全天皆算假日促銷期間。優惠期間即日起至 9/30，超限量、售完提前結束。折扣碼 26SEP95 不限門檻 95 折、單筆最高折 NT$150，9/30 到期。",
+  },
+  {
     kind: "new",
     tag: "新品上架",
     name: "韓國猛男秀 TOUCH FIVE 澳門站｜澳門銀河 G Box・10/23–25 限定 5 場",
@@ -1542,7 +1557,18 @@ const BENEFITS = [
    s/e 決定顯示期間，過期自動不跳；badge 留空會自動算「還剩 N 天」，
    長檔期建議自己寫，不然會出現「還剩 101 天」這種沒有急迫感的字。
    url 可填站內錨點（#today）或外部網址；img 省略就沿用 HTML 裡的預設圖。 */
-const POPUP = {
+const POPUP = [
+{
+  name:  "東京六本木之丘展望台｜夜景限時 600 日圓",
+  s:     "2026-09-22",
+  e:     "2026-09-25",
+  badge: "限時特惠・超限量售完提前結束",
+  desc:  "原價 2,400 JPY 直降到 600 JPY。平日限 21:00–隔日 07:00 入場，六日與國定假日全天適用。",
+  img:   "img/roppongi-0921.webp",
+  url:   "#today",
+  cta:   "看商品與折扣碼"
+},
+{
   name:  "韓國指定商品送 Uber 優惠碼",
   s:     "2026-09-21",
   e:     "2026-12-31",
@@ -1551,7 +1577,8 @@ const POPUP = {
   img:   "img/p-a39ef136f3.webp",
   url:   "#today",
   cta:   "看 14 支指定商品"
-};
+}
+];
 
 const EVENT = {
   name: "全站狂撒 777｜月中快閃 72H",
@@ -3043,11 +3070,13 @@ renderCid();
 
 /* 檔期彈窗：活動期間每天最多跳一次 */
 (function(){
-  const P = (typeof POPUP !== "undefined" && POPUP) ? POPUP : null;
+  const PL = (typeof POPUP !== "undefined" && POPUP)
+    ? (Array.isArray(POPUP) ? POPUP : [POPUP]) : [];
+  const P = PL.filter(function(x){ return dayDiff(x.s) <= 0 && dayDiff(x.e) >= 0; })[0] || null;
   const SRC = P || EVENT;
   const ds = dayDiff(SRC.s), de = dayDiff(SRC.e);
   if (de < 0 || ds > 1) return;
-  const key = "kkp_pop_" + SRC.s;
+  const key = "kkp_pop_" + (SRC.name || "") + "_" + SRC.s;
   let seen = null;
   try { seen = localStorage.getItem(key); } catch(e) {}
   const todayStr = new Date().toISOString().slice(0,10);
