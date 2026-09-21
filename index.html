@@ -816,26 +816,23 @@ footer a{color:var(--brand)}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
 
-/* 本週重點・商品格（四格等寬對齊，帶縮圖） */
-.hlpills{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:40px 0 0}
-.hlpill{display:flex;align-items:center;gap:11px;background:#fff;border-radius:14px;
-  padding:10px 12px 10px 10px;text-decoration:none;color:var(--ink);min-width:0;
-  box-shadow:0 4px 14px rgba(9,60,66,.14);transition:transform .15s,box-shadow .15s}
-.hlpill:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(9,60,66,.2)}
-.hlimg{flex:0 0 auto;width:52px;height:52px;border-radius:10px;overflow:hidden;background:var(--wash)}
+/* 本週重點・hero 下方滿版一排 */
+.hlband{background:#fff;padding:22px 0 24px;border-bottom:1px solid var(--line)}
+.hlhd{font-size:12px;font-weight:800;letter-spacing:.1em;color:var(--mid);margin-bottom:12px}
+.hlpills{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.hlpill{display:flex;align-items:center;gap:14px;background:var(--wash);border-radius:14px;
+  padding:12px 14px;text-decoration:none;color:var(--ink);min-width:0;
+  transition:background .15s,transform .15s}
+.hlpill:hover{background:#E4EEF0;transform:translateY(-2px)}
+.hlimg{flex:0 0 auto;width:60px;height:60px;border-radius:10px;overflow:hidden;background:#fff}
 .hlimg img{width:100%;height:100%;object-fit:cover;display:block}
-.hltx{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:2px}
-.hlpill i{font-style:normal;font-size:10px;font-weight:800;letter-spacing:.06em;color:var(--mid)}
-.hlpill b{font-size:14px;font-weight:800;letter-spacing:-.01em;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.hlpill u{text-decoration:none;font-size:11.5px;color:var(--muted);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.hlpill em{flex:0 0 auto;font-style:normal;font-size:16px;line-height:1;color:var(--brand);font-weight:800}
+.hltx{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:3px}
+.hlpill i{font-style:normal;font-size:10.5px;font-weight:800;letter-spacing:.06em;color:var(--brand)}
+.hlpill b{font-size:15px;font-weight:800;letter-spacing:-.01em;line-height:1.3}
+.hlpill u{text-decoration:none;font-size:12.5px;color:var(--muted);line-height:1.4}
+.hlpill em{flex:0 0 auto;font-style:normal;font-size:18px;line-height:1;color:var(--brand);font-weight:800}
 @media (max-width:980px){ .hlpills{grid-template-columns:repeat(2,1fr)} }
-@media (max-width:720px){
-  .hlpills{grid-template-columns:1fr;margin-top:26px;gap:8px}
-  .hlpill b,.hlpill u{white-space:normal;overflow:visible}
-}
+@media (max-width:640px){ .hlpills{grid-template-columns:1fr} }
 
 /* 頂端橫幅列 */
 .topbar{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:12px;
@@ -3191,23 +3188,28 @@ renderCid();
   }, 60000);
 })();
 
-/* ── 首頁「本週重點」商品格（HIGHLIGHTS 有東西才取代數據條） ────── */
+/* ── 「本週重點」：移出 hero 左欄，改為 hero 下方滿版一排 ────────
+   擠在左欄時每格只有約 160px，圖＋兩行字必定被截斷（2026-09-21 改）。 */
 (function(){
   if (typeof HIGHLIGHTS === "undefined" || !HIGHLIGHTS || !HIGHLIGHTS.length) return;
-  const box = document.querySelector(".hero .stats");
-  if (!box) return;
-  const wrap = document.createElement("div");
-  wrap.className = "hlpills";
-  wrap.innerHTML = HIGHLIGHTS.slice(0,4).map(function(x){
-    return '<a class="hlpill" href="' + esc(x.href || "#today") + '">' +
-      (x.img ? '<span class="hlimg"><img loading="lazy" src="' + esc(x.img) + '" alt=""></span>' : "") +
-      '<span class="hltx">' +
-        (x.t ? '<i>' + esc(x.t) + '</i>' : "") +
-        '<b>' + esc(x.b) + '</b>' +
-        (x.d ? '<u>' + esc(x.d) + '</u>' : "") +
-      '</span><em aria-hidden="true">›</em></a>';
-  }).join("");
-  box.parentNode.replaceChild(wrap, box);
+  const stats = document.querySelector(".hero .stats");
+  const hero  = document.querySelector(".hero");
+  if (!hero) return;
+  if (stats) stats.remove();
+
+  const band = document.createElement("section");
+  band.className = "hlband";
+  band.innerHTML = '<div class="inner"><div class="hlhd">本週重點</div><div class="hlpills">' +
+    HIGHLIGHTS.slice(0,4).map(function(x){
+      return '<a class="hlpill" href="' + esc(x.href || "#today") + '">' +
+        (x.img ? '<span class="hlimg"><img loading="lazy" src="' + esc(x.img) + '" alt=""></span>' : "") +
+        '<span class="hltx">' +
+          (x.t ? '<i>' + esc(x.t) + '</i>' : "") +
+          '<b>' + esc(x.b) + '</b>' +
+          (x.d ? '<u>' + esc(x.d) + '</u>' : "") +
+        '</span><em aria-hidden="true">›</em></a>';
+    }).join("") + '</div></div>';
+  hero.parentNode.insertBefore(band, hero.nextSibling);
 })();
 
 /* ── 頂端橫幅列：輪播 BANNERS，與彈窗各自獨立 ───────────────── */
