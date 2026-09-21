@@ -580,10 +580,10 @@ body.adminonly #codes #ck-prod{display:none}
 .dlinks a:hover{background:var(--brand);color:#fff}
 .plans{display:grid;gap:8px;margin-bottom:16px}
 .plan{background:var(--wash);border-radius:10px;padding:11px 13px}
-.planh{display:flex;align-items:center;gap:9px;min-width:0;flex-wrap:wrap}.planh i{flex:0 0 auto}.planh b{flex:1 1 auto;min-width:0;line-height:1.45}.planh .chip{flex:0 0 auto;padding:7px 10px;font-size:13.5px;white-space:nowrap}
+.planh{display:flex;align-items:center;gap:9px;min-width:0;flex-wrap:wrap;row-gap:8px}
 .planh i{font-style:normal;font-size:11.5px;font-weight:800;color:var(--brand);flex:0 0 auto}
 .planh b{font-size:14.5px;flex:1;min-width:0}
-.planh .chip{flex:0 0 auto;padding:6px 11px;font-size:12.5px;background:#fff;letter-spacing:.02em}
+.planh .chip{flex:1 0 100%;text-align:center;padding:8px 11px;font-size:12.5px;background:#fff;letter-spacing:.02em}
 .plan span{display:block;font-size:12.5px;color:var(--muted);line-height:1.6;margin-top:6px}
 .plan span em{font-style:normal;color:var(--down);font-weight:700}
 .dcode{display:flex;align-items:center;gap:10px;margin-bottom:12px}
@@ -1368,10 +1368,11 @@ const DEALS = [  {
     name: "凍漲倒數｜JR PASS 全國版 10/1 漲價",
     url: "https://www.kkday.com/zh-tw/product/20291",
     till: "2026-09-30",
+    img: "https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_22133/20241126072344_t939t/jpg",
     why: "10/1 起全面調漲，9/30 前下單鎖住舊價。普通車廂大人 7 日 ¥50,000→¥53,000、14 日 ¥80,000→¥84,000、21 日 ¥100,000→¥105,000；綠色車廂 7 日 ¥70,000→¥74,000、14 日 ¥110,000→¥116,000、21 日 ¥140,000→¥147,000，漲幅 5～6%，一張現省 ¥3,000～¥7,000（兒童票同步調漲）。受眾非常明確：10～11 月賞楓、12 月底跨年與滑雪的旅客，現在買就鎖舊價，是少數「不買會後悔」型的急迫感題材。",
     price: "普通車 7 日 ¥50,000（10/1 起 ¥53,000）",
     code: "",
-    due: "9/30 前購買的票券，須於 12/30 前在日本 JR 兌換窗口兌換啟用（自購買日起 90 天內有效）"
+    due: "9/30 前購買的票券，最後兌換日 2026/12/30、最後使用日 2027/1/30；兌換期限以實體兌換券 MCO 上的開票日起算三個月為準"
   },
   {
     tag: "限時促銷",
