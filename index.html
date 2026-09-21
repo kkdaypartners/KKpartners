@@ -834,6 +834,20 @@ footer a{color:var(--brand)}
 @media (max-width:980px){ .hlpills{grid-template-columns:repeat(2,1fr)} }
 @media (max-width:640px){ .hlpills{grid-template-columns:1fr} .hlband{padding-bottom:26px} }
 
+/* 即時快訊列 */
+.newsband{background:var(--deep);color:#fff;padding:16px 0 18px}
+.newshd{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:800;letter-spacing:.1em;margin-bottom:10px}
+.newsdot{width:7px;height:7px;border-radius:50%;background:#7CF2A4;box-shadow:0 0 0 4px rgba(124,242,164,.22);animation:npulse 1.8s infinite}
+@keyframes npulse{0%,100%{opacity:1}50%{opacity:.45}}
+.newsprev{font-style:normal;font-size:11px;font-weight:700;letter-spacing:0;color:#A9C4C8;
+  background:rgba(255,255,255,.1);border-radius:999px;padding:3px 9px;margin-left:4px}
+.newslist{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+.newslist li{display:flex;align-items:baseline;gap:12px;font-size:14px;line-height:1.5}
+.newslist time{flex:0 0 auto;font-family:var(--mono);font-size:12.5px;color:#9EC6CB;font-variant-numeric:tabular-nums}
+.newslist a{color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.3)}
+.newslist a:hover{border-bottom-color:#fff}
+@media (max-width:640px){ .newslist li{flex-direction:column;gap:2px} .newslist time{font-size:11.5px} }
+
 /* 頂端橫幅列 */
 .topbar{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:12px;
   background:var(--deep);color:#fff;padding:10px 18px;font-size:14px}
@@ -1725,6 +1739,17 @@ const BENEFITS = [
 
 /* 檔期專區｜每次有活動就改這一段
    s / e 起訖日，過了 e 之後整個專區自動收起來只剩行事曆 */
+/* 即時快訊｜只在活動當天出現，平常整條不顯示
+   t=時間戳（YYYY-MM-DDTHH:MM，台北時間）、b=一行內容、url 可省略。
+   只會顯示「同一天」的項目，最多五則，新的排前面。
+   工作區（?admin=1）不受日期限制、永遠顯示，方便先看版面。 */
+const NEWS = [
+  {t:"2026-09-27T20:00", b:"機票立減碼 927TKT5000 開放，滿 5,030 折 5,000", url:"#codelist"},
+  {t:"2026-09-27T13:00", b:"買一送一檔次上架，數量有限先搶先贏",           url:"#today"},
+  {t:"2026-09-27T11:00", b:"APP 限定全站 1 折券釋出，只能在 App 內使用",   url:"#codelist"},
+  {t:"2026-09-27T09:00", b:"飛航日開跑！爆款機票整點釋票，記得先填 CID",   url:"#today"}
+];
+
 /* 頂端橫幅列｜跟彈窗完全分開，這裡放要輪播的重點優惠
    s/e 決定該則的顯示期間，過期自動不播；全部過期就整條不出現。
    兩則以上會每 6 秒自動輪播，滑鼠移上去暫停。 */
@@ -2371,6 +2396,26 @@ const NEW_DEALS  = LIVE_DEALS.filter(function(d){ return d.kind === "new"; });
 let H = "";
 
 /* ── 0. 今日主打 ───────────────────────── */
+/* 即時快訊列：當天有項目才出現；admin 永遠顯示以便預覽 */
+(function(){
+  if (typeof NEWS === "undefined" || !NEWS || !NEWS.length) return;
+  const todayStr = new Date().toISOString().slice(0,10);
+  const mine = NEWS.filter(function(n){ return String(n.t).slice(0,10) === todayStr; });
+  const show = mine.length ? mine : (ADMIN ? NEWS : []);
+  if (!show.length) return;
+  const preview = !mine.length;
+  H += '<section class="newsband"><div class="inner">' +
+    '<div class="newshd"><span class="newsdot"></span>即時快訊' +
+      (preview ? '<em class="newsprev">預覽・' + esc(String(NEWS[0].t).slice(5,10).replace("-","/")) + ' 當天才會出現</em>' : "") +
+    '</div>' +
+    '<ul class="newslist">' + show.slice(0,5).map(function(n){
+      const hhmm = String(n.t).slice(11,16);
+      const body = esc(n.b);
+      return '<li><time>' + esc(hhmm) + '</time>' +
+        (n.url ? '<a href="' + esc(n.url) + '">' + body + '</a>' : '<span>' + body + '</span>') + '</li>';
+    }).join("") + '</ul></div></section>';
+})();
+
 H += '<section class="band band-wash" id="today"><div class="inner">' +
 '<h2>本週特別優惠</h2>' +
 '<p class="lede">' + (DEAL_DATE ? esc(DEAL_DATE) + ' 更新。' : "") + '這週最值得推的幾檔，附上推的理由與適用的折扣碼。</p>' +
