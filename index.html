@@ -1345,6 +1345,8 @@ const DEALS = [  {
     url: "https://www.kkday.com/zh-tw/transportation/taiwan",
     from: "2026-09-24",
     till: "2026-09-26",
+    soonmsg: "09/25 00:00 開搶",
+    demote: "2026-09-25T12:00",
     img: "img/thsr-1024.webp",
     price: "輸碼 95 折，另有聰明選時 65 折起",
     why: "光復節連假 10/24–10/26，高鐵疏運期間 10/23–10/27，開放預售日就是 9/25（五）凌晨。搶票題材的急迫感是真的、不用硬造，而且每次連假都固定有人在找。建議 9/24 就先發預告貼文卡位，隔天凌晨開搶時再補一則。",
@@ -1686,7 +1688,7 @@ const BENEFITS = [
    s/e 決定該則的顯示期間，過期自動不播；全部過期就整條不出現。
    兩則以上會每 6 秒自動輪播，滑鼠移上去暫停。 */
 const BANNERS = [
-  {t:"光復節連假", b:"高鐵車票 9/25 00:00 開搶，輸碼再享 95 折", cta:"看搶票重點", url:"#today", s:"2026-09-24", e:"2026-09-26"},
+  {t:"光復節連假", b:"高鐵車票 9/25 00:00 開搶，輸碼再享 95 折", cta:"看搶票重點", url:"#today", s:"2026-09-24", e:"2026-09-25"},
   {t:"限時特惠", b:"六本木之丘展望台 600 JPY，原價 2,400", cta:"看商品", url:"#today",   s:"2026-09-21", e:"2026-09-30"},
   {t:"夥伴福利", b:"F1 新加坡大獎賽 補助加碼到 5 折・親友也能申請", cta:"看福利", url:"#benefit", s:"2026-09-21", e:"2026-10-05"},
   {t:"倒數最後", b:"JR PASS 全國版 10/1 漲價，9/30 前鎖舊價", cta:"看商品", url:"#today",   s:"2026-09-21", e:"2026-09-30"}
@@ -1697,7 +1699,7 @@ const BANNERS = [
    b=商品名（12 字內）、d=賣點一行（10 字內）、href=站內錨點。最多四則。
    可選 s/e：填了只在該期間顯示，過期自動讓位給後面的；不填＝一直顯示。 */
 const HIGHLIGHTS = [
-  {img:"img/thsr-1024.webp", t:"光復節連假", b:"高鐵車票 9/25 開搶", d:"輸碼 95 折・疏運 10/23–27", href:"#today", s:"2026-09-24", e:"2026-09-26"},
+  {img:"img/thsr-1024.webp", t:"光復節連假", b:"高鐵車票 9/25 開搶", d:"輸碼 95 折・疏運 10/23–27", href:"#today", s:"2026-09-24", e:"2026-09-25"},
   {img:"img/roppongi-v3.webp",    t:"限時特惠", b:"六本木之丘展望台", d:"600 JPY・原價 2,400", href:"#today"},
   {img:"img/jrpass-fare-v2.webp", t:"倒數最後", b:"JR PASS 全國版",  d:"10/1 漲價前鎖舊價",   href:"#today"},
   {img:"img/f1-benefit-wide.webp",t:"夥伴福利", b:"F1 新加坡大獎賽",  d:"補助 5 折・親友可申請", href:"#benefit"},
@@ -1717,7 +1719,7 @@ const POPUP = [
 {
   name:  "光復節連假｜高鐵車票 9/25 00:00 開搶",
   s:     "2026-09-24",
-  e:     "2026-09-26",
+  e:     "2026-09-25",
   badge: "今晚午夜開搶・輸碼再享 95 折",
   desc:  "搭乘期間 10/23–10/27（高鐵疏運日期），連假為 10/24–10/26。建議 23:59 先把頁面開好。",
   img:   "img/thsr-1024.webp",
@@ -2231,6 +2233,14 @@ const TABS = (EV_LIVE ? [{
 
 /* 排程過濾：from 尚未到、till 已過的活動不顯示 */
 const isSoon = d => !!(d.from && dayDiff(d.from) > 0);      /* 還沒到上架日 */
+/* demote：過了這個時刻就把卡片排到本區塊最後（仍然顯示，只是不再佔前排）。
+   格式 "2026-09-25T12:00"，一律台北時間。搶票類檔期用得到：開搶當下要在最前面，
+   搶完之後熱度掉了但還沒結束，就讓位給其他商品。 */
+const isDemoted = function(d){
+  if (!d.demote) return false;
+  return Date.now() >= new Date(d.demote + ":00+08:00").getTime();
+};
+const railRank = d => isSoon(d) ? 2 : (isDemoted(d) ? 1 : 0);
 /* 新品自動下架：上架滿 NEW_DAYS 天就從前台移除（Alen 2026-09-18 指示）。
    added 是「上架到 KKpartners 的日期」，不是商品在 KKday 的上架日。
    只作用在 kind:"new"，特惠卡不受影響。
@@ -2243,8 +2253,8 @@ const LIVE_DEALS = DEALS.filter(function(d){
   if (newExpired(d)) return false;                          /* 新品滿 10 天自動下架 */
   return true;                                              /* 未上架的留著，卡片反灰標「敬請期待」 */
 }).sort(function(a, b){
-  const sa = isSoon(a) ? 1 : 0, sb = isSoon(b) ? 1 : 0;
-  if (sa !== sb) return sa - sb;                            /* 已開跑的排前面 */
+  const sa = railRank(a), sb = railRank(b);
+  if (sa !== sb) return sa - sb;                            /* 一般 → 已降級 → 未開跑 */
   if (sa && a.from && b.from) return a.from < b.from ? -1 : a.from > b.from ? 1 : 0;
   return 0;                                                 /* 都還沒開跑：開始早的排前面 */
 });
@@ -2276,7 +2286,7 @@ const dealCard = function(d, feat){
   const dlast = dleft === 0 || dleft === 1;
   const dtag = dleft === 0 ? "今天最後一天" : dleft === 1 ? "明天最後一天" : d.tag;
   return '<div class="deal' + (feat ? " feat" : "") + (soon ? " soon" : "") + '">' +
-    (soon ? '<div class="soonflag">敬請期待　' + esc((d.from || "").slice(5).replace("-", "/")) + ' 開跑</div>' : "") +
+    (soon ? '<div class="soonflag">敬請期待　' + esc(d.soonmsg || ((d.from || "").slice(5).replace("-", "/") + " 開跑")) + '</div>' : "") +
     (d.grid
       ? '<div class="dgrid">' + d.grid.map(function(g){
           return '<a class="dgcell" href="' + esc(g.u) + '" target="_blank" rel="noopener">' +
