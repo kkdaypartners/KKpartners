@@ -816,15 +816,21 @@ footer a{color:var(--brand)}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
 
-/* 本週重點格（可點） */
-.stats.hl .stat{padding:18px 14px;gap:2px;text-decoration:none;transition:background .15s}
-.stats.hl a.stat:hover{background:var(--wash)}
-.stats.hl .hlt{display:block;font-style:normal;font-size:11px;font-weight:800;letter-spacing:.08em;
-  color:var(--brand);margin-bottom:6px}
-.stats.hl .stat b{font-size:clamp(20px,2.2vw,27px);color:var(--ink);line-height:1.1}
-.stats.hl .stat span{margin-top:5px;font-size:12.5px;color:var(--muted);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-@media (max-width:720px){ .stats.hl .stat span{white-space:normal} }
+/* 本週重點・膠囊捷徑 */
+.hlpills{display:flex;flex-wrap:wrap;gap:10px;margin:40px 0 0}
+.hlpill{display:inline-flex;align-items:center;gap:10px;background:#fff;border-radius:999px;
+  padding:9px 16px 9px 11px;text-decoration:none;color:var(--ink);
+  box-shadow:0 4px 14px rgba(9,60,66,.14);transition:transform .15s,box-shadow .15s}
+.hlpill:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(9,60,66,.2)}
+.hlpill i{font-style:normal;font-size:11px;font-weight:800;letter-spacing:.06em;color:#fff;
+  background:var(--mid);border-radius:999px;padding:4px 9px;white-space:nowrap}
+.hlpill b{font-size:14.5px;font-weight:700;letter-spacing:-.01em;white-space:nowrap}
+.hlpill em{font-style:normal;font-size:17px;line-height:1;color:var(--brand);font-weight:800}
+@media (max-width:720px){
+  .hlpills{margin-top:26px;gap:8px}
+  .hlpill{padding:8px 13px 8px 9px;gap:8px}
+  .hlpill b{font-size:13.5px;white-space:normal}
+}
 
 /* 頂端橫幅列 */
 .topbar{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:12px;
@@ -1643,14 +1649,14 @@ const BANNERS = [
   {t:"倒數最後", b:"JR PASS 全國版 10/1 漲價，9/30 前鎖舊價", cta:"看商品", url:"#today",   s:"2026-09-21", e:"2026-09-30"}
 ];
 
-/* 首頁三格「本週重點」｜留空陣列 [] 會退回原本的招募數據（10 萬商品／25 日入帳／USD 10）
-   t=分類小標（4 字內）、b=主詞（越短越好，數字最佳）、s=說明（10 字內，太長會折行變醜）
-   href 填站內錨點。最多三格。 */
+/* 首頁「本週重點」膠囊捷徑｜留空陣列 [] 會退回原本的招募數據（10 萬商品／25 日入帳／USD 10）
+   t=分類小標（4 字內）、b=一行文字（建議 16 字內，太長手機會折）、href=站內錨點。最多三顆。 */
 const HIGHLIGHTS = [
-  {t:"限時特惠", b:"600 JPY",  s:"六本木展望台",     href:"#today"},
-  {t:"夥伴福利", b:"5 折",     s:"F1 門票補助加碼",  href:"#benefit"},
-  {t:"本週選品", b:"+2,374%",  s:"Taiwan PASS 爆量", href:"#picks"}
+  {t:"限時特惠", b:"六本木展望台 600 JPY",        href:"#today"},
+  {t:"夥伴福利", b:"F1 補助加碼到 5 折",           href:"#benefit"},
+  {t:"本週選品", b:"Taiwan PASS 熱度 +2,374%",    href:"#picks"}
 ];
+
 
 
 /* 首頁彈窗｜要換推哪一檔就改這一塊
@@ -3176,18 +3182,19 @@ renderCid();
   }, 60000);
 })();
 
-/* ── 首頁三格改成「本週重點」（HIGHLIGHTS 有東西才覆蓋） ───────── */
+/* ── 首頁「本週重點」膠囊捷徑（HIGHLIGHTS 有東西才取代數據條） ───── */
 (function(){
   if (typeof HIGHLIGHTS === "undefined" || !HIGHLIGHTS || !HIGHLIGHTS.length) return;
   const box = document.querySelector(".hero .stats");
   if (!box) return;
-  box.classList.add("hl");
-  box.innerHTML = HIGHLIGHTS.slice(0,3).map(function(x){
-    const inner = (x.t ? '<i class="hlt">' + esc(x.t) + '</i>' : "") +
-                  '<b>' + esc(x.b) + '</b><span>' + esc(x.s) + '</span>';
-    return x.href ? '<a class="stat" href="' + esc(x.href) + '">' + inner + '</a>'
-                  : '<div class="stat">' + inner + '</div>';
+  const wrap = document.createElement("div");
+  wrap.className = "hlpills";
+  wrap.innerHTML = HIGHLIGHTS.slice(0,3).map(function(x){
+    return '<a class="hlpill" href="' + esc(x.href || "#today") + '">' +
+      (x.t ? '<i>' + esc(x.t) + '</i>' : "") +
+      '<b>' + esc(x.b) + '</b><em aria-hidden="true">›</em></a>';
   }).join("");
+  box.parentNode.replaceChild(wrap, box);
 })();
 
 /* ── 頂端橫幅列：輪播 BANNERS，與彈窗各自獨立 ───────────────── */
