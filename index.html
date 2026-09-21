@@ -1052,6 +1052,7 @@ OVERRIDE.forEach(o => {
    常見錯法是只換了開始時間、忘了換結束時間，結果券還有八小時可用卻被判定過期。
    這裡的 note 與 EVENT 的 time 一律存台北時間，寫進來前先確認換算過。 */
 const FLASH_RULE = {
+  "26KDRAMA15":  {only:[596596,604376,135620,548020,21549,162252,164626,21569,23104,251738,574686,599377,262878,251752,168612,167055,529405,580774,568108,547096,547094,18410,165732,771693,738950], note:"僅限 K-Drama Exhibition 指定的 25 支韓劇拍攝地行程／包車"},
   "TWPASS94":    {only:[284326], note:"僅限 Taiwan PASS 台鐵版"},
   "F1ZONE4":     {only:[129639], note:"僅限 F1 新加坡大獎賽門票 Zone 4 Walkabout Pass"},
   "F1PREMWALK":  {only:[129639], note:"僅限 F1 新加坡大獎賽門票 Premier Walkabout Pass"},
@@ -1996,6 +1997,7 @@ const GROUPS = [
   ]},
   {id:"daily", tab:"每日目的地", lede:"依星期輪替，今天可用的會標起來。", items:[]},
   {id:"cat", tab:"類別與地區", lede:"依這檔內容的目的地或商品類別挑一個搭。", items:[
+    {scope:"韓國｜韓劇拍攝地指定行程", code:"26KDRAMA15", benefit:"滿 2,000 折 450，限 25 支指定商品", till:"2026-12-31"},
     {scope:"台灣｜Taiwan PASS 台鐵版", code:"TWPASS94", benefit:"結帳直接 94 折，折抵無上限", till:"2026-12-31", url:"https://www.kkday.com/zh-tw/product/284326"},
     {scope:"台灣高鐵", code:"THSR26OF5", benefit:"滿 2,200 享 95 折（可搭原活動 65 折起）", till:"2026-12-31", url:"https://www.kkday.com/zh-tw/transportation/taiwan"},
     {scope:"展覽", code:"26EXNEW", benefit:"新客 95 折", till:"2026-09-30"},
