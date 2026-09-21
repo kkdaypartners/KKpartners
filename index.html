@@ -1340,6 +1340,28 @@ const DEALS = [  {
     due: "折扣碼 26SEP95 不限門檻 95 折、單筆最高折 NT$150，9/30 到期",
   },
   {
+    tag: "中秋節精選",
+    name: "中秋連假就衝龜山島｜四支賞鯨登島半日遊，88 折每人 790 起",
+    url: "https://www.kkday.com/zh-tw/product/5297",
+    till: "2026-09-28",
+    gridtag: "88 折",
+    grid: [
+      {n:"龜山島登島・賞鯨・繞島｜烏石傳奇", u:"https://www.kkday.com/zh-tw/product/601590",
+       img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_601590/20260630065137_WIAsd/jpg"},
+      {n:"【保證成行】龜山島賞鯨趣｜1 人贈小禮", u:"https://www.kkday.com/zh-tw/product/575917",
+       img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_575917/20260423065131_9JJQi/jpg"},
+      {n:"宜蘭龜山島登島賞鯨半日遊（已售 20K+）", u:"https://www.kkday.com/zh-tw/product/5297",
+       img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_5297/20250126145138_u2TsX/jpg"},
+      {n:"【保證有位】賞鯨豚・繞島・登島｜贈兒童繪本", u:"https://www.kkday.com/zh-tw/product/102159",
+       img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_102159/20220606022051_GznPm/jpg"}
+    ],
+    price: "88 折後每人 790 元起",
+    why: "中秋連假 9/25–9/28 共四天，住宿與長程行程現在推已經來不及，半日遊是唯一還訂得到的品項。龜山島 3–11 月才開放，9 月是賞鯨季尾聲、海況穩定，過了就要等明年三月。四支都在烏石港出發，台北開車一小時內到，當天來回不用住宿。牛奶海與飛旋海豚是畫面極強的題材，KOL 拍完直接有素材。",
+    code: "KKAFFTOUR88",
+    due: "夥伴專屬日遊碼，不限低消 88 折、單筆上限折 300 元，2026/9/30 到期。",
+    note: "⚠️ 連假只剩四天，這幾點務必寫進文案，不然粉絲會白跑：①登島採總量管制，只在出發日前 20 天內開放登記，不保證訂得到。②每週三不開放一般旅客登島。③多數方案最少 10 人成團，未達人數會在出發前 1～3 天通知取消。④鯨豚是野生的不保證看得到，能見度約八成，沒看到可向船家索取「下次再來券」。⑤登島清潔費與設施維護費現場另付（成人約 100 元）。⑥需攜帶身分證件供海巡查驗。"
+  },
+  {
     kind: "new",
     tag: "新品上架",
     name: "韓國猛男秀 TOUCH FIVE 澳門站｜澳門銀河 G Box・10/23–25 限定 5 場",
@@ -1408,6 +1430,7 @@ const DEALS = [  {
     till: "2026-09-19",
     /* 四格的 n 一律 8 個中文字以內、四格字數盡量相同，絕對不能換到第二行。
        CSS 已用 nowrap 保底，但太長會被切掉，所以取名時就要壓短。 */
+    gridtag: "買一送一",
     grid: [
       {n:"富士山打卡一日遊", u:"https://www.kkday.com/zh-tw/product/573307",
        img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_573307/20260526031056_8FGuu/jpg"},
@@ -2232,7 +2255,7 @@ const dealCard = function(d, feat){
       ? '<div class="dgrid">' + d.grid.map(function(g){
           return '<a class="dgcell" href="' + esc(g.u) + '" target="_blank" rel="noopener">' +
             '<img loading="lazy" src="' + esc(g.img) + '" alt="">' +
-            '<i class="dgtag">買一送一</i><b>' + esc(g.n) + '</b></a>'; }).join("") + '</div>'
+            (g.tag || d.gridtag ? '<i class="dgtag">' + esc(g.tag || d.gridtag) + '</i>' : "") + '<b>' + esc(g.n) + '</b></a>'; }).join("") + '</div>'
       : d.img ? '<div class="dimg"><img loading="lazy" src="' + esc(d.img) + '" alt="" onerror="this.closest(\'.dimg\').remove()"></div>' : "") +
     '<div class="dbd">' +
     (dtag ? '<span class="deyebrow' + (dlast ? " end" : "") + '">' + esc(dtag) + '</span>' : "") +
