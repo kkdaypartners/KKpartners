@@ -817,14 +817,27 @@ footer a{color:var(--brand)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
 
 /* 本週重點格（可點） */
-.stats.hl a.stat{text-decoration:none;transition:background .15s}
+.stats.hl .stat{padding:18px 14px;gap:2px;text-decoration:none;transition:background .15s}
 .stats.hl a.stat:hover{background:var(--wash)}
-.stats.hl .stat b{color:var(--mid)}
+.stats.hl .hlt{display:block;font-style:normal;font-size:11px;font-weight:800;letter-spacing:.08em;
+  color:var(--brand);margin-bottom:6px}
+.stats.hl .stat b{font-size:clamp(20px,2.2vw,27px);color:var(--ink);line-height:1.1}
+.stats.hl .stat span{margin-top:5px;font-size:12.5px;color:var(--muted);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:720px){ .stats.hl .stat span{white-space:normal} }
 
 /* 頂端橫幅列 */
 .topbar{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:12px;
-  background:var(--deep);color:#fff;padding:10px 18px;font-size:14px;flex-wrap:wrap}
-.topbar b{font-weight:800}
+  background:var(--deep);color:#fff;padding:10px 18px;font-size:14px}
+.tbwrap{position:relative;flex:1;min-width:0}
+.tbitem{display:none;align-items:center;gap:12px}
+.tbitem.on{display:flex;animation:tbin .35s ease}
+@keyframes tbin{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.tbitem b{font-weight:800;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tbdots{display:flex;gap:6px;flex:0 0 auto}
+.tbdot{width:7px;height:7px;border-radius:50%;border:none;padding:0;cursor:pointer;
+  background:rgba(255,255,255,.35);transition:background .2s}
+.tbdot.on{background:#fff}
 .tbtag{background:rgba(255,255,255,.16);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700;white-space:nowrap}
 .tbgo{margin-left:auto;color:#fff;text-decoration:underline;font-weight:700;white-space:nowrap}
 .tbx{background:none;border:none;color:#fff;font-size:20px;line-height:1;cursor:pointer;padding:0 2px;opacity:.75}
@@ -1621,13 +1634,24 @@ const BENEFITS = [
 
 /* 檔期專區｜每次有活動就改這一段
    s / e 起訖日，過了 e 之後整個專區自動收起來只剩行事曆 */
-/* 首頁三格「本週重點」｜留空陣列 [] 就會退回原本的招募數據（10 萬商品／25 日入帳／USD 10）
-   href 填站內錨點，點了會捲到對應區塊。最多三格，多的不會顯示。 */
-const HIGHLIGHTS = [
-  {b:"補助加碼到 5 折", s:"F1 新加坡大獎賽・親友也能申請", href:"#benefit"},
-  {b:"熱度 +2,374%",   s:"Taiwan PASS 台鐵版本週爆量",     href:"#picks"},
-  {b:"600 JPY",        s:"六本木之丘展望台・原價 2,400",    href:"#today"}
+/* 頂端橫幅列｜跟彈窗完全分開，這裡放要輪播的重點優惠
+   s/e 決定該則的顯示期間，過期自動不播；全部過期就整條不出現。
+   兩則以上會每 6 秒自動輪播，滑鼠移上去暫停。 */
+const BANNERS = [
+  {t:"限時特惠", b:"六本木之丘展望台 600 JPY，原價 2,400", cta:"看商品", url:"#today",   s:"2026-09-21", e:"2026-09-30"},
+  {t:"夥伴福利", b:"F1 新加坡大獎賽 補助加碼到 5 折・親友也能申請", cta:"看福利", url:"#benefit", s:"2026-09-21", e:"2026-10-05"},
+  {t:"倒數最後", b:"JR PASS 全國版 10/1 漲價，9/30 前鎖舊價", cta:"看商品", url:"#today",   s:"2026-09-21", e:"2026-09-30"}
 ];
+
+/* 首頁三格「本週重點」｜留空陣列 [] 會退回原本的招募數據（10 萬商品／25 日入帳／USD 10）
+   t=分類小標（4 字內）、b=主詞（越短越好，數字最佳）、s=說明（10 字內，太長會折行變醜）
+   href 填站內錨點。最多三格。 */
+const HIGHLIGHTS = [
+  {t:"限時特惠", b:"600 JPY",  s:"六本木展望台",     href:"#today"},
+  {t:"夥伴福利", b:"5 折",     s:"F1 門票補助加碼",  href:"#benefit"},
+  {t:"本週選品", b:"+2,374%",  s:"Taiwan PASS 爆量", href:"#picks"}
+];
+
 
 /* 首頁彈窗｜要換推哪一檔就改這一塊
    留 null = 跟著 EVENT 走（預設行為）。填物件 = 以這裡為準，不動 EVENT。
@@ -3159,31 +3183,53 @@ renderCid();
   if (!box) return;
   box.classList.add("hl");
   box.innerHTML = HIGHLIGHTS.slice(0,3).map(function(x){
-    const inner = '<b>' + esc(x.b) + '</b><span>' + esc(x.s) + '</span>';
+    const inner = (x.t ? '<i class="hlt">' + esc(x.t) + '</i>' : "") +
+                  '<b>' + esc(x.b) + '</b><span>' + esc(x.s) + '</span>';
     return x.href ? '<a class="stat" href="' + esc(x.href) + '">' + inner + '</a>'
                   : '<div class="stat">' + inner + '</div>';
   }).join("");
 })();
 
-/* ── 頂端橫幅列：跟彈窗共用 POPUP 資料，但不擋畫面、關掉後當天不再出現 ─── */
+/* ── 頂端橫幅列：輪播 BANNERS，與彈窗各自獨立 ───────────────── */
 (function(){
-  const PL = (typeof POPUP !== "undefined" && POPUP)
-    ? (Array.isArray(POPUP) ? POPUP : [POPUP]) : [];
-  const P = PL.filter(function(x){ return dayDiff(x.s) <= 0 && dayDiff(x.e) >= 0; })[0];
-  if (!P) return;
-  const key = "kkp_bar_" + (P.name || "") + "_" + P.s;
+  if (typeof BANNERS === "undefined" || !BANNERS) return;
+  const live = BANNERS.filter(function(x){ return dayDiff(x.s) <= 0 && dayDiff(x.e) >= 0; });
+  if (!live.length) return;
+  const key = "kkp_bar_" + live.map(function(x){ return x.b; }).join("|").slice(0,80);
   const today = new Date().toISOString().slice(0,10);
   try { if (localStorage.getItem(key) === today) return; } catch(e) {}
+
   const bar = document.createElement("div");
   bar.className = "topbar";
-  bar.innerHTML = '<span class="tbtag">' + esc(P.badge || "進行中") + '</span>' +
-    '<b>' + esc(P.name) + '</b>' +
-    '<a class="tbgo" href="' + esc(P.url || "#today") + '">' + esc(P.cta || "看詳情") + '</a>' +
+  bar.innerHTML = '<div class="tbwrap">' + live.map(function(x, i){
+      return '<div class="tbitem' + (i === 0 ? " on" : "") + '">' +
+        '<span class="tbtag">' + esc(x.t || "進行中") + '</span>' +
+        '<b>' + esc(x.b) + '</b>' +
+        '<a class="tbgo" href="' + esc(x.url || "#today") + '">' + esc(x.cta || "看詳情") + '</a>' +
+      '</div>'; }).join("") + '</div>' +
+    (live.length > 1 ? '<div class="tbdots">' + live.map(function(_, i){
+      return '<button class="tbdot' + (i === 0 ? " on" : "") + '" data-i="' + i + '" aria-label="第 ' + (i+1) + ' 則"></button>'; }).join("") + '</div>' : "") +
     '<button class="tbx" aria-label="關閉">×</button>';
   document.body.insertBefore(bar, document.body.firstChild);
   document.body.classList.add("hasbar");
+
+  const items = bar.querySelectorAll(".tbitem");
+  const dots  = bar.querySelectorAll(".tbdot");
+  let idx = 0, timer = null;
+  function show(n){
+    idx = (n + items.length) % items.length;
+    items.forEach(function(el, i){ el.classList.toggle("on", i === idx); });
+    dots.forEach(function(el, i){ el.classList.toggle("on", i === idx); });
+  }
+  function start(){ if (items.length > 1 && !timer) timer = setInterval(function(){ show(idx + 1); }, 6000); }
+  function stop(){ if (timer) { clearInterval(timer); timer = null; } }
+  dots.forEach(function(el){ el.addEventListener("click", function(){ stop(); show(+el.dataset.i); start(); }); });
+  bar.addEventListener("mouseenter", stop);
+  bar.addEventListener("mouseleave", start);
+  start();
+
   bar.querySelector(".tbx").addEventListener("click", function(){
-    bar.remove(); document.body.classList.remove("hasbar");
+    stop(); bar.remove(); document.body.classList.remove("hasbar");
     try { localStorage.setItem(key, today); } catch(e) {}
   });
 })();
