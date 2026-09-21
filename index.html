@@ -1194,6 +1194,48 @@ const MONTHLY = {
 
 const PICKS = [
   {
+    week: "2026 W39（9/22–9/28）",
+    title: "國旅交通爆量，日本冬季題材同步開跑",
+    summary: "全站熱度續跌 23.5%，但兩條線逆勢竄升：Taiwan PASS 雙省方案帶動國旅交通爆量，日本冬季限定行程開始有人查資料。前者現在就在成交，後者是提前布局。",
+    data: {
+      asof: "2026-09-20",
+      win: "近 28 天 vs 前 28 天",
+      mkt: "台灣",
+      baseHeat: -23.5,
+      baseCr: 4.16,
+      cat: "行程＆體驗",
+      catN: 230,
+      catCr: 2.19
+    },
+    items: [
+      {
+        n: "Taiwan PASS 台鐵版｜台鐵＋捷運＋景區接駁",
+        cr: 10.63, pct: 95, heat: 2374,
+        read: "瀏覽 4,259→105,359、訂單 11,195 筆，不是新品基數小造成的假象，是真的爆量",
+        why: "觀光署 9/1 開賣雙省方案在推，轉換率是交通類中位數的三倍。可寫：台鐵版 vs 高鐵版怎麼選、捷運四選一與景區接駁十五選一怎麼配最划算"
+      },
+      {
+        n: "北海道旭川動物園一日遊｜冬季限定雪地摩托車・四季彩之丘",
+        cr: 2.81, pct: 69, heat: 300,
+        read: "熱度翻三倍，轉換率贏過同類 69%，動能與成交力都在",
+        why: "企鵝遊行 12 月才開始，讀者現在查資料、還沒下訂，正是內容切進去的時間點。可寫：冬季行程怎麼排、雪地摩托車值不值得加"
+      },
+      {
+        n: "吉伊卡哇餐廳（池袋 PARCO）THE GUEST CAFE",
+        cr: 6.58, pct: 73, heat: 230,
+        read: "IP 熱潮帶動，沖繩 PARCO CITY 那家同步 +185%，兩家可以合寫一篇",
+        why: "轉換率 6.58% 在美食類偏高，訂位型商品寫了就會成交。可寫：兩家分店差在哪、幾點訂得到位、限定周邊怎麼買"
+      },
+      {
+        n: "富士山河口湖全景纜車一日遊｜天上山公園・淺間公園",
+        cr: 1.99, pct: 42, heat: 82,
+        read: "四支裡最弱的一支，同類排名只贏 42%，純靠熱度入選",
+        why: "紅葉季 10 月中開跑、河口湖是經典拍點。轉換力普通，適合當補充題材而不是主打"
+      }
+    ]
+  },
+
+  {
     week: "2026 W38（9/15–9/21）",
     title: "秋冬長線開跑，現在寫剛好",
     summary: "全站熱度正在退潮（暑假結束），但這四條線逆勢在漲。讀者正在查資料、還沒下訂——這正是內容切進去的時間點。",
@@ -2437,7 +2479,9 @@ H += '<section class="band band-wash" id="picks"><div class="inner">' +
   (IT.length ? '<div class="picklist">' + IT.map(function(i){
      var rel = (i.heat - BH);
      return '<div class="pkrow">' +
-       '<div class="pkhd"><a href="' + esc(i.url) + '" target="_blank" rel="noopener">' + esc(i.n) + '</a></div>' +
+       '<div class="pkhd">' + (i.url
+         ? '<a href="' + esc(i.url) + '" target="_blank" rel="noopener">' + esc(i.n) + '</a>'
+         : '<span>' + esc(i.n) + '</span>') + '</div>' +
        '<div class="pkm">' +
          '<div class="m"><i>同類排名</i><em class="' + pctTone(i.pct) + '">贏過 ' + i.pct + '%</em></div>' +
          '<div class="m"><i>近月熱度</i><em class="' + (i.heat > 0 ? "up" : "mid") + '">' + signed(i.heat, 0) + '</em><u>相對全站 ' + signed(rel, 0) + '</u></div>' +
