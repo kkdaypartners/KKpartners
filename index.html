@@ -2994,7 +2994,11 @@ document.addEventListener("click", e => {
   if (!MYCID) { toastMsg("先在上面填你的 CID"); document.getElementById("mycid").scrollIntoView({block:"center"}); return; }
   const url = withCid(b.dataset.url || "https://www.kkday.com/zh-tw");
   const evUrl = b.dataset.event || "";
-  const evLine = (evUrl && evUrl !== (b.dataset.url || "")) ? "\n活動頁：" + withCid(evUrl) : "";
+  /* 活動頁只在檔期真的進行中才帶。檔期結束後仍附上連結，等於叫 KOL 導流到一個
+     已經沒有優惠的頁面，粉絲點進去會撲空（2026-09-21 修）。 */
+  const evOn = (typeof EVENT !== "undefined" && EVENT)
+    && dayDiff(EVENT.e) >= 0 && dayDiff(EVENT.s) <= 0;
+  const evLine = (evOn && evUrl && evUrl !== (b.dataset.url || "")) ? "\n活動頁：" + withCid(evUrl) : "";
 
   /* 全站通用優惠：檔期進行中才帶，且只帶免搶券的鋪底優惠；活動頁連結接在這段結尾 */
   let perks = "";
