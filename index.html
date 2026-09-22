@@ -689,7 +689,7 @@ background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden}
 .pkm .m{padding:11px 14px;border-left:1px solid var(--line)}
 .pkm .m:first-child{border-left:0}
 .pkm .m i{display:block;font-style:normal;font-size:11.5px;color:var(--muted);letter-spacing:.02em}
-.pkm .m em{font-style:normal;font-size:19px;font-weight:700;letter-spacing:-.02em;line-height:1.25}
+.pkm .m em{font-style:normal;font-size:19px;font-weight:700;letter-spacing:-.02em;line-height:1.25}.pkm .m em small{display:block;font-size:11px;font-weight:700;opacity:.72;margin-top:1px}
 .pkm .m u{display:block;text-decoration:none;font-size:11.5px;color:var(--muted);margin-top:1px}
 .pkm em.up{color:#0E7A6B}.pkm em.mid{color:var(--ink)}.pkm em.low{color:#B4543F}
 .dbase em.low{color:#B4543F}
@@ -2529,6 +2529,21 @@ var signed   = function(v, d){ return (v > 0 ? "+" : (v < 0 ? "−" : "")) + Mat
 
 /* ── 選品：折扣碼反查（用站上 judge()，碼表一改就跟著換）── */
 function oidOf(u){ var m=String(u||"").match(/product\/(\d+)/); return m?Number(m[1]):0; }
+/* 把百分位換成看得懂的結論。同事回饋：數字太多、不知道怎麼解讀。
+   熱度數字保留（Alen 要求），成交力改給結論並附一句說明，不再列原始百分位。 */
+function crWord(pct){
+  if (pct >= 80) return {t:"很會成交", c:"up",  h:"同類前 20%，看到的人多半會下單"};
+  if (pct >= 60) return {t:"成交穩",   c:"up",  h:"同類前 40%，寫了就有轉換"};
+  if (pct >= 40) return {t:"成交普通", c:"mid", h:"同類中段，靠內容補說服力"};
+  return             {t:"要多推一把", c:"low", h:"同類後段，需要更強的推薦理由"};
+}
+function heatWord(h){
+  if (h >= 100) return {t:"爆量", c:"up"};
+  if (h >= 30)  return {t:"明顯上升", c:"up"};
+  if (h >= 0)   return {t:"持平", c:"mid"};
+  if (h >= -30) return {t:"略降", c:"mid"};
+  return             {t:"退燒中", c:"low"};
+}
 function bestCode(oid, aop){
   if (typeof judge!=="function" || typeof GROUPS==="undefined" || !oid) return null;
   /* 信用卡與支付分頁（g.id==="card"）不進自動推薦：要持特定卡才能用，
@@ -2841,8 +2856,10 @@ H += '<section class="band band-wash" id="picks"><div class="inner">' +
          ? '<a href="' + esc(i.url) + '" target="_blank" rel="noopener">' + esc(i.n) + '</a>'
          : '<span>' + esc(i.n) + '</span>') + '</div>' +
        '<div class="pkm">' +
-         '<div class="m"><i>同類排名</i><em class="' + pctTone(i.pct) + '">贏過 ' + i.pct + '%</em></div>' +
-         '<div class="m"><i>近月熱度</i><em class="' + (i.heat > 0 ? "up" : "mid") + '">' + signed(i.heat, 0) + '</em><u>相對全站 ' + signed(rel, 0) + '</u></div>' +
+         '<div class="m"><i>近月熱度</i><em class="' + heatWord(i.heat).c + '">' + signed(i.heat, 0) +
+           '<small>' + heatWord(i.heat).t + '</small></em></div>' +
+         '<div class="m"><i>成交力</i><em class="' + crWord(i.pct).c + '">' + esc(crWord(i.pct).t) + '</em>' +
+           '<u>' + esc(crWord(i.pct).h) + '</u></div>' +
        '</div>' +
        (i.read ? '<div class="pkread">' + esc(i.read) + '</div>' : "") +
        '<div class="pkwhy"><span>撰寫方向</span>' + esc(i.why) + '</div>' +
