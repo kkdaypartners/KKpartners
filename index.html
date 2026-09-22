@@ -2499,7 +2499,10 @@ function bestCode(oid, aop){
     var t=String(it.benefit||"");
     var n=function(x){ return parseInt(String(x).replace(/[^\d]/g,""),10); };
     var best=0;
-    t.split(/[\/、,，]/).forEach(function(part){
+    /* 只用 / 分隔「擇優」的多組規則。不能用逗號或頓號——金額的千分位就是逗號
+       （「滿 8,000 折 800」會被切成「滿 8」和「000 折 800」，門檻直接消失），
+       而「，」通常是同一組規則的子句（折數與上限），切開會把上限誤判成折抵額。 */
+    t.split(/\//).forEach(function(part){
       var min=(part.match(/滿\s*(?:NT)?\$?\s*([\d,]+)/)||[])[1];
       var cap=(part.match(/(?:上限折?|最高折抵?|至多抵?|最高可?折抵?)\s*(?:NT)?\$?\s*([\d,]+)/)||[])[1];
       var pct=part.match(/(?:^|[^\d,.折])(\d{1,2}(?:\.\d)?)\s*折/);
