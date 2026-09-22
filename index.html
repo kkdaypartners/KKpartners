@@ -2856,8 +2856,8 @@ H += '<section class="band band-wash" id="picks"><div class="inner">' +
          ? '<a href="' + esc(i.url) + '" target="_blank" rel="noopener">' + esc(i.n) + '</a>'
          : '<span>' + esc(i.n) + '</span>') + '</div>' +
        '<div class="pkm">' +
-         '<div class="m"><i>近月熱度</i><em class="' + heatWord(i.heat).c + '">' + signed(i.heat, 0) +
-           '<small>' + heatWord(i.heat).t + '</small></em></div>' +
+         '<div class="m"><i>近月熱度</i><em class="' + heatWord(i.heat).c + '">' + esc(heatWord(i.heat).t) +
+           '<small>' + signed(i.heat, 0) + '</small></em></div>' +
          '<div class="m"><i>成交力</i><em class="' + crWord(i.pct).c + '">' + esc(crWord(i.pct).t) + '</em>' +
            '<u>' + esc(crWord(i.pct).h) + '</u></div>' +
        '</div>' +
