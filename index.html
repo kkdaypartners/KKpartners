@@ -564,7 +564,7 @@ body.adminonly #codes #ck-prod{display:none}
   font-size:12px;font-weight:800;letter-spacing:.02em;padding:5px 11px;border-radius:999px}
 .deyebrow{display:block;font-size:12px;font-weight:700;color:var(--mid);letter-spacing:.02em;margin-bottom:6px}
 .dttl{display:block;font-size:17px;font-weight:700;line-height:1.4;letter-spacing:-.01em;margin-bottom:8px;
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .dprice{font-size:15px;font-weight:800;color:var(--ink);margin-bottom:14px}.dprow{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:7px 0;border-bottom:1px dashed var(--line)}.dprow:last-child{border-bottom:0}.dprow i{font-style:normal;font-size:13px;font-weight:600;color:var(--muted);line-height:1.4}.dprow b{font-size:15px;font-weight:800;color:var(--ink);white-space:nowrap}.dprow s{font-size:12.5px;color:var(--muted);text-decoration:line-through;margin-right:7px;white-space:nowrap}
 .dmore{border:none;margin:auto 0 14px}.deal .dmore+.pbtns{margin-top:0}
 .dmore summary{padding:10px 0;font-size:13.5px;font-weight:700;color:var(--mid);border-top:1px solid var(--line)}
@@ -1365,7 +1365,7 @@ const DEALS = [  {
   },
   {
     tag: "KOL 專屬",
-    name: "台灣虎航｜石垣島機票 3,388 起",
+    name: "台灣虎航｜石垣島機票",
     url: "https://www.kkday.com/zh-tw/product/246671",
     till: "2026-09-23",
     until: "2026-09-23T09:00",
@@ -1470,7 +1470,7 @@ const DEALS = [  {
   },
   {
     tag: "清倉機票",
-    name: "越捷｜桃園－峴港機票 3,849 起",
+    name: "越捷｜桃園－峴港機票",
     url: "https://www.kkday.com/zh-tw/product/182324",
     till: "2026-09-26",
     img: "https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_182324/20240614020404_e3sNe/jpg",
@@ -1530,7 +1530,7 @@ const DEALS = [  {
   },
   {
     tag: "清倉機票",
-    name: "華航｜高雄－高松機票 9,088 起",
+    name: "華航｜高雄－高松機票",
     url: "https://www.kkday.com/zh-tw/product/132331",
     till: "2026-09-26",
     img: "https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_132331/20250328041219_P7HQj/png",
@@ -1555,7 +1555,7 @@ const DEALS = [  {
   {
     kind: "new",
     tag: "新品上架",
-    name: "京都 teamLab Biovortex 門票",
+    name: "京都 teamLab 門票",
     url: "https://www.kkday.com/zh-tw/product/533773",
     added: "2026-09-22",
     img: "https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_533773/20260824015035_Rd2p1/jpg",
@@ -1575,7 +1575,7 @@ const DEALS = [  {
   {
     kind: "new",
     tag: "新品上架",
-    name: "韓國猛男秀 TOUCH FIVE 澳門站",
+    name: "韓國猛男秀 TOUCH FIVE",
     url: "https://www.kkday.com/zh-tw/product/771872",
     till: "2026-09-30",
     img: "https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_771872/20260918024003_pVles/png",
@@ -1612,7 +1612,7 @@ const DEALS = [  {
   {
     kind: "new",
     tag: "新品上架",
-    name: "嵐山夜楓點燈小火車｜秋季限定夢幻名場面",
+    name: "嵐山夜楓點燈小火車",
     url: "https://www.kkday.com/zh-tw/product/546301",
     added: "2026-09-18",
     img: "https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_546301/20251105142649_bamlY/jpg",
@@ -1669,7 +1669,7 @@ const DEALS = [  {
   },
   {
     tag: "9/21 上線",
-    name: "韓國指定商品送 Uber 優惠碼",
+    name: "韓國指定商品送 Uber 券",
     url: "https://www.kkday.com/zh-tw/promo/kto_traveldeeper#uber",
     from: "2026-09-21",
     img: "img/p-a39ef136f3.webp",
@@ -1696,7 +1696,7 @@ const DEALS = [  {
   },
   {
     tag: "最新開碼",
-    name: "USJ 神級 3 大套票｜關西旅行必備",
+    name: "USJ 神級 3 大套票",
     url: "https://www.kkday.com/zh-tw/product/2247",
     img: "img/p-b39ee015a1.webp",
     why: "門票加周遊券加人氣周邊一次買齊，三個方案都還在。⚠️ 原本「固定 10,000 日圓起」的檔期已結束，文案不要再用那個價格與「比單買門票便宜」的說法。現在的角度改打折扣本身：方案一、二 95 折，方案三現折 JPY 1,000，外加 KKday 預訂免 1.5% 海外刷卡手續費。萬聖季敲磚與任天堂保證入園是這波最好講的兩個切角。",
@@ -1711,7 +1711,7 @@ const DEALS = [  {
   },
   {
     tag: "倒數最後",
-    name: "JR PASS 全國版｜10/1 漲價",
+    name: "JR PASS｜10/1 漲價",
     url: "https://www.kkday.com/zh-tw/product/20291",
     till: "2026-09-30",
     img: "img/jrpass-fare-v2.webp",
@@ -1722,7 +1722,7 @@ const DEALS = [  {
   },
   {
     tag: "限時促銷",
-    name: "瑞士通行證｜買 4 送 1、買 8 送 2",
+    name: "瑞士通行證｜買 4 送 1",
     url: "https://www.kkday.com/zh-tw/product/2524",
     till: "2026-10-01",
     img: "img/p-c52f621c32.webp",
@@ -1736,7 +1736,7 @@ const DEALS = [  {
   },
   {
     tag: "KKpartners 專屬",
-    name: "新加坡熱門景點票選狂歡｜粉絲滿額回饋",
+    name: "新加坡景點票選狂歡",
     url: "https://forms.gle/ZNmYM1buWBrEhZn47",
     img: "img/p-5f57024f48.webp",
     why: "為 KKpartners 夥伴特別爭取的回饋。粉絲透過你的連結訂指定 Top 5 商品，結帳後填表登記就送 KKday Points，等於變相加碼。名額有限，登記額滿即止。",
@@ -2520,7 +2520,7 @@ const dealCard = function(d, feat){
   /* 角標：有 till 而且剩兩天內就自己算，不要寫死「今天最後一天」，隔天就過時了 */
   const dleft = d.till ? dayDiff(d.till) : null;
   const dlast = dleft === 0 || dleft === 1;
-  const dtag = dleft === 0 ? "今天最後一天" : dleft === 1 ? "明天最後一天" : d.tag;
+  const dtag = dleft === 0 ? "今天最後" : dleft === 1 ? "剩 1 天" : d.tag;
   return '<div class="deal' + (feat ? " feat" : "") + (soon ? " soon" : "") + '">' +
     (soon ? '<div class="soonflag">敬請期待　' + esc(d.soonmsg || ((d.from || "").slice(5).replace("-", "/") + " 開跑")) + '</div>' : "") +
     (d.grid
