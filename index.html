@@ -3896,6 +3896,13 @@ const blRow = b => '<div class="bitem"><em>' + b[0] + '</em><i>oid ' + b[2] + '<
    每日目的地碼若把「今天不是週一」也算成不能用，週二查週一的碼就會顯示 0 支，
    但 KOL 本來就會提前查別天的碼（Alen 2026-09-22 回報）。
    單品查詢（用商品查）不帶這個參數，仍然會提醒今天能不能用。 */
+/* 服務類商品（免稅券、折價券、代辦、貴賓室、行李運送、免費兌換券）不列入
+   折扣碼比對與選品建議：KOL 不會推這些，多數還是免費領取的券，
+   留著只會在「不能用的」清單裡製造噪音（Alen 2026-09-22）。 */
+function isPromotable(oid){
+  const g = geoOf(Number(oid));
+  return !(g && g.cat === "其他");
+}
 function judge(code, id, opts){
   const r = RULES.r[code];
   const fr = FLASH_RULE[code];
@@ -3986,7 +3993,7 @@ function pkUsable(code){
   const fit = [], over = [], rest = [];
   for (let i = 0; i < PICKRANK.length; i++) {
     const pid = PICKRANK[i][0], aop = PICKRANK[i][2];
-    if (!HOT_PRODS[pid] || used.has(pid)) continue;
+    if (!HOT_PRODS[pid] || used.has(pid) || !isPromotable(pid)) continue;
     if (aop < 100) continue;          /* 免費券、兌換券之類的極低單價不進推薦 */
     const v = judge(code, pid);
     if (!v || v.ok !== true) continue;
@@ -4109,6 +4116,7 @@ document.getElementById("cksel").addEventListener("change", e => {
   /* 從台灣近 90 天最熱門的 1,000 支商品裡，挑出這張碼可用與不可用的，直接列名字 */
   var blocked = [], usable = [], unsure = [];
   for (var oid in HOT_PRODS){
+    if (!isPromotable(oid)) continue;
     var v = judge(code, Number(oid), {ignoreDay:true});
     if (v && v.ok === false) blocked.push([oid, HOT_PRODS[oid]]);
     else if (v && v.ok === true) usable.push([oid, HOT_PRODS[oid]]);
@@ -4146,7 +4154,7 @@ document.getElementById("cksel").addEventListener("change", e => {
     (DAILY_META[code] ? '<p class="hotday">⚠️ 這張碼只有' +
         DAILY_META[code].dows.map(function(x){ return DAYNM[x]; }).join("、") +
         '能用，下面列的是它的適用商品，不代表今天就能折。</p>' : "") +
-    '<p class="hotsum">只比對台灣近 90 天最熱門的 <b>1,000 支</b>商品，不是全站清單。</p>' +
+    '<p class="hotsum">只比對台灣近 90 天最熱門的 <b>965 支</b>商品，不是全站清單；免稅券、代辦、貴賓室、行李運送等服務類商品不列入。</p>' +
     '<div class="hottabs">' +
       '<button class="hottab on" data-side="bad">不能用的 ' + blocked.length + ' 支</button>' +
       '<button class="hottab" data-side="ok">可以用的 ' + usable.length + ' 支</button>' +
