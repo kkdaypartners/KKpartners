@@ -4046,9 +4046,22 @@ document.querySelectorAll('.cktabs button').forEach(b => b.addEventListener("cli
 }));
 
 /* 用折扣碼查 */
+let CK_ITEM = null;
 const ckout = document.getElementById("ckout");
 document.getElementById("cksel").addEventListener("change", e => {
   const code = e.target.value, r = RULES.r[code];
+  /* 複製清單時要一併帶出折扣條件與效期，只給碼粉絲不知道怎麼折（Alen 2026-09-22） */
+  CK_ITEM = null;
+  GROUPS.forEach(function(g){ (g.items || []).forEach(function(it){ if (it.code === code) CK_ITEM = it; }); });
+  /* 每日目的地碼登錄在 DAILY 不在 GROUPS，漏掉的話複製出來只有碼沒有條件 */
+  if (!CK_ITEM) {
+    const ds = DAILY.filter(function(x){ return x.code === code; });
+    if (ds.length) CK_ITEM = {
+      benefit: ds[0].terms || "",
+      scope: ds.map(function(x){ return x.label; }).join("、") + "限定｜" + ds[0].dest,
+      till: ""
+    };
+  }
   if (!code) { ckout.innerHTML = ""; return; }
   const f = FLASH_RULE[code];
   if (f) {
@@ -4098,7 +4111,10 @@ document.getElementById("cksel").addEventListener("change", e => {
       (unsure.length ? '<button class="hottab" data-side="na">需確認 ' + unsure.length + ' 支</button>' : "") +
     '</div>' +
     '<div class="hotlist bad" data-side="bad">' + hotList(blocked) + '</div>' +
-    '<div class="hotlist good" data-side="ok" data-code="' + esc(code) + '" hidden>' + hotList(usable, true) + '</div>' +
+    '<div class="hotlist good" data-side="ok" data-code="' + esc(code) + '"' +
+      ' data-benefit="' + esc((CK_ITEM && CK_ITEM.benefit) || "") + '"' +
+      ' data-till="' + esc((CK_ITEM && CK_ITEM.till) || "") + '"' +
+      ' data-scope="' + esc((CK_ITEM && CK_ITEM.scope) || "") + '" hidden>' + hotList(usable, true) + '</div>' +
     '<div class="hotlist na" data-side="na" hidden>' + hotList(unsure) + '</div>' +
   '</div>';
   out += '<p class="ckmore">完整排除清單有上萬筆，這裡只挑熱門 1,000 支比對。其他商品請切到「用商品查」貼上網址確認。</p>';
@@ -4142,9 +4158,20 @@ document.addEventListener('click', function(e){
   if (!picked.length) return;
   if (!MYCID){ toastMsg("先在上面填你的 CID"); return; }
   const code = box.getAttribute('data-code') || '';
-  const body = picked.map(function(x){ return '・' + x.dataset.n + '\n' + x.dataset.u; }).join('\n');
-  copyText((code ? '【可用 ' + code + ' 的商品】\n' : '') + body + '\n',
-           '已複製 ' + picked.length + ' 支商品與連結');
+  const benefit = box.getAttribute('data-benefit') || '';
+  const till = box.getAttribute('data-till') || '';
+  const scope = box.getAttribute('data-scope') || '';
+  let head = '';
+  if (code) {
+    head += '🎟️ 折扣碼：' + code + '\n';
+    if (benefit) head += '💰 優惠內容：' + benefit + '\n';
+    if (scope)   head += '📌 適用範圍：' + scope + '\n';
+    if (till)    head += '⏰ 使用期限：' + till.replace(/-/g, '/') + ' 前\n';
+    head += '\n👇 以下商品都能用這組碼，結帳時輸入即可折抵\n\n';
+  }
+  const body = picked.map(function(x){ return '・' + x.dataset.n + '\n' + x.dataset.u; }).join('\n\n');
+  copyText(head + body + '\n',
+           '已複製 ' + picked.length + ' 支商品，含折扣條件與連結');
 });
 
 /* 用商品查 */
