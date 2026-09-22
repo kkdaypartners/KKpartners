@@ -2483,11 +2483,23 @@ var signed   = function(v, d){ return (v > 0 ? "+" : (v < 0 ? "−" : "")) + Mat
 function oidOf(u){ var m=String(u||"").match(/product\/(\d+)/); return m?Number(m[1]):0; }
 function bestCode(oid){
   if (typeof judge!=="function" || typeof GROUPS==="undefined" || !oid) return null;
-  var PREF=["KKAFFLH520","KKAFF1200","KKAFFTOUR88","26SEP800","KKAFF1000A","KKAFF700","26SEP95","KKAFF400"];
+  /* 順序＝實際推得動的程度，不是折抵金額大小。
+     高門檻券（滿萬折千）掛在單價一兩千的商品上等於沒有券，KOL 會被粉絲反問。
+     ① 指名這支商品的專屬碼最優先 ② 再來是低門檻／品類券 ③ 高門檻券墊底。 */
+  var PREF=["KKAFFTOUR88","26SEP95","KKAFF400","KKAFF700","KKAFF1000A","26SEP800","KKAFF1200","KKAFFLH520"];
   var all=[]; GROUPS.forEach(function(g){ (g.items||[]).forEach(function(it){ all.push(it); }); });
   var today=new Date().toISOString().slice(0,10);
   function live(it){ return !it.till || it.till>=today; }
   function ok(c){ try{ var r=judge(c,oid); return !!(r&&r.ok); }catch(e){ return false; } }
+  /* ① 專屬碼：FLASH_RULE 裡用 only 指名這支商品的 */
+  if (typeof FLASH_RULE !== "undefined") {
+    for (var fc in FLASH_RULE) {
+      var fr = FLASH_RULE[fc];
+      if (!fr || !fr.only || fr.only.indexOf(oid) < 0) continue;
+      for (var m=0;m<all.length;m++)
+        if (all[m].code===fc && live(all[m])) return all[m];
+    }
+  }
   for (var p=0;p<PREF.length;p++)
     for (var k=0;k<all.length;k++)
       if (all[k].code===PREF[p] && live(all[k]) && ok(PREF[p])) return all[k];
@@ -3436,7 +3448,7 @@ renderCid();
     items.forEach(function(el, i){ el.classList.toggle("on", i === idx); });
     dots.forEach(function(el, i){ el.classList.toggle("on", i === idx); });
   }
-  function start(){ if (items.length > 1 && !timer) timer = setInterval(function(){ show(idx + 1); }, 6000); }
+  function start(){ if (items.length > 1 && !timer) timer = setInterval(function(){ show(idx + 1); }, 4000); }
   function stop(){ if (timer) { clearInterval(timer); timer = null; } }
   dots.forEach(function(el){ el.addEventListener("click", function(){ stop(); show(+el.dataset.i); start(); }); });
   bar.addEventListener("mouseenter", stop);
