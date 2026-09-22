@@ -1372,6 +1372,18 @@ const DEALS = [  {
     note: "🚨 折扣碼以文字為準：THSR26OF5，第 7 碼是英文字母 O 不是數字 0。目前 KV 上印成 THSR260F5 是錯的，照圖輸入會失敗——發文一律複製文字，不要叫粉絲看圖打字，圖待設計更換。⚠️ 高鐵座位為電腦派位、無法選位，同行者不保證連續劃位，文案不要寫「可選位」。⚠️ 常態訂票規則是可預訂 29 天內車次，連假疏運是特別釋票才突破這個限制——若窗口臨時調整釋出範圍，以官方公告為準。"
   },
   {
+    tag: "週二限定",
+    dow: [2],
+    name: "釜山通行證 VISIT BUSAN PASS｜每週二 BSDAY 96 折",
+    url: "https://www.kkday.com/zh-tw/product/138477",
+    img: "https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_138477/20260728003807_cF2SE/jpg",
+    price: "24H／48H／BIG3／BIG5 四種方案",
+    why: "公司每週二固定開這檔，所以這張卡設成只在週二出現、其他天自動隱藏，不用每週手動上下架。已售 100K+、4.8 分，是釜山線最好賣的單品：免費入場約 30 個設施、超過 160 家合作店家有折扣。實體卡還能當交通卡加值搭地鐵，旅行結束可以留著當紀念品，這個點很好寫。可切角：24H 還是 48H 划算、BIG3／BIG5 怎麼挑、哪些景點一定要排進去。",
+    code: "BSDAY",
+    due: "每週二限定：釜山全線商品單筆滿 NT$2,200 享 96 折，最高折 180 元。",
+    note: "⚠️ 商品頁明列的限制，文案要寫到：①僅限外國籍旅客，持韓國籍不可使用。②通行證啟用後恕不退費；未使用可免費取消，但只要其中一張已使用就無法部分取消。③交通卡功能只有實體卡才有，行動版沒有。④電子憑證必須在 KKday App 內出示 QR Code，截圖或翻拍不被接受。⑤海雲台海岸列車等景點多為單次免費，不能重複使用。⑥實體卡要到指定櫃檯憑護照領取，不是買了就能直接入場。"
+  },
+  {
     tag: "清倉機票",
     name: "越捷｜桃園－峴港 5/6 天計劃機票，折後每人 3,849 起",
     url: "https://www.kkday.com/zh-tw/product/182324",
@@ -2333,6 +2345,9 @@ const newExpired = d => d.kind === "new" && d.added && dayDiff(d.added) <= -NEW_
 
 const LIVE_DEALS = DEALS.filter(function(d){
   if (d.till && dayDiff(d.till) < 0) return false;          /* 已過期，直接不顯示 */
+  /* dow：每週固定星期才出現（0=日 1=一 … 6=六）。給每週固定檔期用，
+     例如釜山通行證每週二。不填＝不限星期，一般卡片不受影響。 */
+  if (d.dow && d.dow.indexOf(new Date().getDay()) === -1) return false;
   if (newExpired(d)) return false;                          /* 新品滿 10 天自動下架 */
   return true;                                              /* 未上架的留著，卡片反灰標「敬請期待」 */
 }).sort(function(a, b){
