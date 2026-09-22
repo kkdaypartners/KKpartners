@@ -654,6 +654,7 @@ border:1px solid #F0D2CA;border-radius:999px;padding:2px 8px;margin-left:8px}
 .hottab{font-size:13px;font-weight:700;color:var(--mid);background:#fff;border:1px solid var(--line);
 border-radius:999px;padding:7px 15px;cursor:pointer}
 .hottab.on{background:var(--mid);color:#fff;border-color:var(--mid)}
+.hotbar{display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap}.hotcopy{background:var(--mid);color:#fff;border:none;border-radius:999px;padding:7px 14px;font-size:12.5px;font-weight:700;cursor:pointer}.hotcopy:disabled{background:var(--line);color:var(--muted);cursor:default}.hotall{background:none;border:none;color:var(--mid);font-size:12.5px;font-weight:700;cursor:pointer;text-decoration:underline}.hotsel{list-style:none;margin:0;padding:0}.hotsel li{margin:0 0 4px}.hotsel label{display:flex;gap:8px;align-items:flex-start;cursor:pointer}.hotsel input{margin-top:3px;flex:0 0 auto;accent-color:var(--mid)}
 .hotlist.good a{color:var(--mid);text-decoration:none;border-bottom:1px solid rgba(14,122,133,.3)}.hotlist.good a:hover{border-bottom-color:var(--mid)}
 .hotlist{padding:14px 16px;border-radius:10px}
 .hotlist.bad{background:#FFF6F4;border-left:4px solid #B4543F}
@@ -2152,9 +2153,6 @@ const GROUPS = [
     {scope:"KDDI 原生 eSIM", code:"AFFKDDI85", benefit:"無限流量 85 折，上限折 100 元", till:"2026-09-30", url:"https://www.kkday.com/zh-tw/product/243815"}
   ]},
   {id:"site", tab:"全站與檔期", lede:"九月全月適用，門檻低、好推。檔期內發文的轉換通常最好。", items:[
-    {scope:"F1 新加坡｜Zone 4 Walkabout", code:"F1ZONE4", benefit:"單張 95 折，每張最高折抵 USD 9", till:"2026-09-30", url:"https://www.kkday.com/zh-tw/product/129639"},
-    {scope:"F1 新加坡｜Premier Walkabout", code:"F1PREMWALK", benefit:"單張 97 折，每張最高折抵 USD 7", till:"2026-09-30", url:"https://www.kkday.com/zh-tw/product/129639"},
-    {scope:"F1 新加坡｜Zone 4＋景點 Bundle", code:"26F1CB", benefit:"單筆滿 NT$8,000 享 97 折，最高現折 NT$1,000", till:"2026-09-30", url:"https://www.kkday.com/zh-tw/product/129639"},
     {scope:"全站低門檻", code:"26SEP95", benefit:"不限門檻 95 折，單筆最高折 NT$150", till:"2026-09-30", url:"https://www.kkday.com/zh-tw/promo/sep"},
     {scope:"全站高門檻", code:"26SEP800", benefit:"滿 8,000 折 800 元", till:"2026-09-30", url:"https://www.kkday.com/zh-tw/promo/sep"}
   ]},
@@ -4048,12 +4046,20 @@ document.getElementById("cksel").addEventListener("change", e => {
   }
   /* 「可以用的」清單給可點連結並自動帶 CID（KOL 回饋：查到能用還要自己找連結、
      還要手動補 CID，很容易漏掉就沒有分潤）。「不能用的」不給連結，避免誤點去推。 */
+  /* 「可以用的」清單：可勾選、可一次複製成帶 CID 的清單（KOL 回饋：
+     查到能用之後還要自己一支支找連結、補 CID，很容易漏掉就沒有分潤）。
+     「不能用的」不給連結也不給勾選，避免誤推。 */
   function hotList(arr, linked){
     if (!arr.length) return '<p class="hotmore">這 1,000 支裡沒有。</p>';
-    return '<ul>' + arr.map(function(b){
-        if (!linked) return '<li>' + esc(b[1]) + '</li>';
-        return '<li><a href="' + esc(withCid(prodUrl(b[0]))) + '" target="_blank" rel="noopener">' +
-               esc(b[1]) + '</a></li>';
+    if (!linked) return '<ul>' + arr.map(function(b){ return '<li>' + esc(b[1]) + '</li>'; }).join("") + '</ul>';
+    return '<div class="hotbar">' +
+        '<button class="hotcopy" disabled>複製勾選的 0 支</button>' +
+        '<button class="hotall">全選</button>' +
+      '</div>' +
+      '<ul class="hotsel">' + arr.map(function(b){
+        var u = withCid(prodUrl(b[0]));
+        return '<li><label><input type="checkbox" data-n="' + esc(b[1]) + '" data-u="' + esc(u) + '">' +
+               '<a href="' + esc(u) + '" target="_blank" rel="noopener">' + esc(b[1]) + '</a></label></li>';
       }).join("") + '</ul>';
   }
   out += '<div class="hotwrap">' +
@@ -4063,7 +4069,7 @@ document.getElementById("cksel").addEventListener("change", e => {
       '<button class="hottab" data-side="ok">可以用的 ' + usable.length + ' 支</button>' +
     '</div>' +
     '<div class="hotlist bad" data-side="bad">' + hotList(blocked) + '</div>' +
-    '<div class="hotlist good" data-side="ok" hidden>' + hotList(usable, true) + '</div>' +
+    '<div class="hotlist good" data-side="ok" data-code="' + esc(code) + '" hidden>' + hotList(usable, true) + '</div>' +
   '</div>';
   out += '<p class="ckmore">完整排除清單有上萬筆，這裡只挑熱門 1,000 支比對。其他商品請切到「用商品查」貼上網址確認。</p>';
 
@@ -4074,6 +4080,41 @@ document.getElementById("cksel").addEventListener("change", e => {
   out = '<div id="pickbox">' + pickHtml() + '</div>' + out;
 
   ckout.innerHTML = out;
+});
+
+/* 可用清單的勾選與複製 */
+function hotSync(box){
+  if (!box) return;
+  const n = box.querySelectorAll('.hotsel input:checked').length;
+  const btn = box.querySelector('.hotcopy');
+  if (btn) { btn.textContent = '複製勾選的 ' + n + ' 支'; btn.disabled = !n; }
+  const all = box.querySelector('.hotall');
+  const tot = box.querySelectorAll('.hotsel input').length;
+  if (all) all.textContent = (n === tot && tot) ? '取消全選' : '全選';
+}
+document.addEventListener('change', function(e){
+  const cb = e.target.closest('.hotsel input');
+  if (cb) hotSync(cb.closest('.hotlist'));
+});
+document.addEventListener('click', function(e){
+  const all = e.target.closest('.hotall');
+  if (all){
+    const box = all.closest('.hotlist');
+    const ins = [...box.querySelectorAll('.hotsel input')];
+    const on = ins.every(function(x){ return x.checked; });
+    ins.forEach(function(x){ x.checked = !on; });
+    hotSync(box); return;
+  }
+  const cp = e.target.closest('.hotcopy');
+  if (!cp) return;
+  const box = cp.closest('.hotlist');
+  const picked = [...box.querySelectorAll('.hotsel input:checked')];
+  if (!picked.length) return;
+  if (!MYCID){ toastMsg("先在上面填你的 CID"); return; }
+  const code = box.getAttribute('data-code') || '';
+  const body = picked.map(function(x){ return '・' + x.dataset.n + '\n' + x.dataset.u; }).join('\n');
+  copyText((code ? '【可用 ' + code + ' 的商品】\n' : '') + body + '\n',
+           '已複製 ' + picked.length + ' 支商品與連結');
 });
 
 /* 用商品查 */
