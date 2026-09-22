@@ -442,6 +442,12 @@ section[id],div[id="check"],div[id="codelist"]{scroll-margin-top:76px}
 .pickrec a{color:#fff;font-size:15px;font-weight:700;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.4)}
 .pickrec i{display:block;margin-top:3px;font-style:normal;font-size:12.5px;color:rgba(255,255,255,.6)}
 .pickwhy{margin:10px 0 0;font-size:12.5px;line-height:1.65;color:rgba(255,255,255,.62)}
+/* .pkrow 有兩條規則，後面那條（淺底、左側色條）是給別的區塊用的，
+   會蓋掉深色建議卡裡的那一排，導致白字按鈕落在淺底上看不見（2026-09-22 修）。
+   這裡把深色卡內的 .pkrow 還原成透明，白字才有對比。 */
+.pickrec .pkrow{background:none;border:0;padding:0;margin-top:14px}
+.pickrec .pklink{color:rgba(255,255,255,.8)}
+.pickrec .pklink:hover{color:#fff}
 .bizbox{background:#fff;border-radius:16px;padding:22px 24px;box-shadow:var(--shadow);min-width:0}
 .bizh{display:block;font-size:12.5px;font-weight:800;letter-spacing:.14em;color:var(--mid);margin-bottom:14px}
 .rvwrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
@@ -3901,11 +3907,21 @@ function judge(code, id){
   if (r.inc && !designated) return {ok:false, why:"這張碼只限定特定商品"};
   if (r.ex && ruleSet(r.ex).has(id)) return {ok:false, why:"在這張碼的排除清單裡"};
   /* 類別限制一定要在地區相符之前判，否則限住宿的碼會對景點門票回「可以用」 */
+  /* 類別限制：CODE_GEO 已經有 cat／nocat 時，上面的 geoFail 就判過了，
+     不要再要求 scopeCat 推一次。scopeCat 對 scope 寫「全站適用」的碼一律回 null，
+     結果 KKAFF400／KKAFF700／KKAFF1000A／KKFHP500／AFFKDDI85 這幾張
+     對 800 多支商品全部回「未判定」，前台等於顯示 0 支可用（2026-09-22 修）。 */
   if (r.cin || r.cex) {
+    const cg = (typeof CODE_GEO !== "undefined") ? CODE_GEO[code] : null;
+    const geoCovered = !!(cg && (cg.cat || cg.nocat));
     const sc = scopeCat(code), g = geoOf(id);
-    if (!sc || !g) return {ok:null, why: r.cin ? "限特定商品類別，需確認這件商品的類別" : "排除特定商品類別，需確認這件商品的類別"};
-    if (g.cat === "其他") return {ok:null, why:"這張碼限「" + sc.join("、") + "」類商品，但這件查不到類別"};
-    if (sc.indexOf(g.cat) < 0) return {ok:false, why:"這張碼限「" + sc.join("、") + "」商品，這件是「" + g.cat + "」"};
+    if (!geoCovered) {
+      if (!sc || !g) return {ok:null, why: r.cin ? "限特定商品類別，需確認這件商品的類別" : "排除特定商品類別，需確認這件商品的類別"};
+      if (g.cat === "其他") return {ok:null, why:"這張碼限「" + sc.join("、") + "」類商品，但這件查不到類別"};
+      if (sc.indexOf(g.cat) < 0) return {ok:false, why:"這張碼限「" + sc.join("、") + "」商品，這件是「" + g.cat + "」"};
+    } else if (sc && g && g.cat !== "其他" && sc.indexOf(g.cat) < 0) {
+      return {ok:false, why:"這張碼限「" + sc.join("、") + "」商品，這件是「" + g.cat + "」"};
+    }
   }
   if (geoOK) return {ok:true, why:"地區與類別相符，也不在排除清單裡"};
   if (r.cin) return {ok:null, why:"限特定商品類別，需確認這件商品的類別"};
