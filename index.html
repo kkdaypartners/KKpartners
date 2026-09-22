@@ -562,7 +562,7 @@ body.adminonly #codes #ck-prod{display:none}
 .deyebrow{display:block;font-size:12px;font-weight:700;color:var(--mid);letter-spacing:.02em;margin-bottom:6px}
 .dttl{display:block;font-size:17px;font-weight:700;line-height:1.4;letter-spacing:-.01em;margin-bottom:8px;
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.dprice{font-size:15px;font-weight:800;color:var(--ink);margin-bottom:14px}.dprow{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:7px 0;border-bottom:1px dashed var(--line)}.dprow:last-child{border-bottom:0}.dprow i{font-style:normal;font-size:13px;font-weight:600;color:var(--muted);line-height:1.4}.dprow b{font-size:15px;font-weight:800;color:var(--ink);white-space:nowrap}
+.dprice{font-size:15px;font-weight:800;color:var(--ink);margin-bottom:14px}.dprow{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:7px 0;border-bottom:1px dashed var(--line)}.dprow:last-child{border-bottom:0}.dprow i{font-style:normal;font-size:13px;font-weight:600;color:var(--muted);line-height:1.4}.dprow b{font-size:15px;font-weight:800;color:var(--ink);white-space:nowrap}.dprow s{font-size:12.5px;color:var(--muted);text-decoration:line-through;margin-right:7px;white-space:nowrap}
 .dmore{border:none;margin:auto 0 14px}.deal .dmore+.pbtns{margin-top:0}
 .dmore summary{padding:10px 0;font-size:13.5px;font-weight:700;color:var(--mid);border-top:1px solid var(--line)}
 .dmore summary:after{width:8px;height:8px;border-color:var(--mid)}
@@ -1377,10 +1377,15 @@ const DEALS = [  {
     name: "釜山通行證 VISIT BUSAN PASS｜每週二 BSDAY 96 折",
     url: "https://www.kkday.com/zh-tw/product/138477",
     img: "https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_138477/20260728003807_cF2SE/jpg",
-    price: "24H／48H／BIG3／BIG5 四種方案",
+    price: [
+      {n:"BIG3 單張",       v:"NT$ 989"},
+      {n:"BIG3 三張同行",   was:"NT$ 2,967", v:"NT$ 2,848"},
+      {n:"24H 單張",        v:"NT$ 1,209"},
+      {n:"24H 兩張同行",    was:"NT$ 2,418", v:"NT$ 2,321"}
+    ],
     why: "公司每週二固定開這檔，所以這張卡設成只在週二出現、其他天自動隱藏，不用每週手動上下架。已售 100K+、4.8 分，是釜山線最好賣的單品：免費入場約 30 個設施、超過 160 家合作店家有折扣。實體卡還能當交通卡加值搭地鐵，旅行結束可以留著當紀念品，這個點很好寫。可切角：24H 還是 48H 划算、BIG3／BIG5 怎麼挑、哪些景點一定要排進去。",
     code: "BSDAY",
-    due: "每週二限定：釜山全線商品單筆滿 NT$2,200 享 96 折，最高折 180 元。",
+    due: "每週二限定：釜山全線商品單筆滿 NT$2,200 享 96 折，最高折 180 元。⚠️ 有門檻——BIG3 單張 989、24H 單張 1,209 都吃不到折，要湊到 2,200 才會折，所以文案要打「揪團一起買」。四方案裡單買唯一有折的是 48H（1,869 滿 1,500 享 98 折 → 1,832）。",
     note: "⚠️ 商品頁明列的限制，文案要寫到：①僅限外國籍旅客，持韓國籍不可使用。②通行證啟用後恕不退費；未使用可免費取消，但只要其中一張已使用就無法部分取消。③交通卡功能只有實體卡才有，行動版沒有。④電子憑證必須在 KKday App 內出示 QR Code，截圖或翻拍不被接受。⑤海雲台海岸列車等景點多為單次免費，不能重複使用。⑥實體卡要到指定櫃檯憑護照領取，不是買了就能直接入場。"
   },
   {
@@ -2398,7 +2403,8 @@ const dealCard = function(d, feat){
     (d.why ? '<p class="why">' + esc(d.why) + '</p>' : "") +
     (d.note ? '<p class="dnote">' + esc(d.note) + '</p>' : "") +
     (d.price ? '<div class="dprice">' + (Array.isArray(d.price)
-       ? d.price.map(function(x){ return '<span class="dprow"><i>' + esc(x.n) + '</i><b>' + esc(x.v) + '</b></span>'; }).join("")
+       ? d.price.map(function(x){ return '<span class="dprow"><i>' + esc(x.n) + '</i>' +
+          (x.was ? '<s>' + esc(x.was) + '</s>' : "") + '<b>' + esc(x.v) + '</b></span>'; }).join("")
        : esc(d.price)) + '</div>' : "") +
     (detail ? '<details class="dmore"><summary>' + dlabel +
        (n ? '（' + n + '）' : "") + '</summary><div class="dmorebd">' + detail + '</div></details>' : "") +
