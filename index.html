@@ -849,8 +849,8 @@ footer a{color:var(--brand)}
 @media (max-width:640px){ .newslist li{flex-direction:column;gap:2px} .newslist time{font-size:11.5px} }
 
 /* 頂端橫幅列 */
-.topbar{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:12px;
-  background:var(--deep);color:#fff;padding:10px 18px;font-size:14px}
+.topbar{position:sticky;top:0;z-index:60;background:var(--deep);color:#fff;padding:10px 0;font-size:14px}
+.tbinner{display:flex;align-items:center;gap:12px}
 .tbwrap{position:relative;flex:1;min-width:0}
 .tbitem{display:none;align-items:center;gap:12px}
 .tbitem.on{display:flex;animation:tbin .35s ease}
@@ -1378,14 +1378,14 @@ const DEALS = [  {
     url: "https://www.kkday.com/zh-tw/product/138477",
     img: "https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_138477/20260728003807_cF2SE/jpg",
     price: [
-      {n:"BIG3 單張",       v:"NT$ 989"},
-      {n:"BIG3 三張同行",   was:"NT$ 2,967", v:"NT$ 2,848"},
-      {n:"24H 單張",        v:"NT$ 1,209"},
-      {n:"24H 兩張同行",    was:"NT$ 2,418", v:"NT$ 2,321"}
+      {n:"48H 兩張同行",  was:"NT$ 3,738", v:"NT$ 3,588"},
+      {n:"24H 三張同行",  was:"NT$ 3,627", v:"NT$ 3,482"},
+      {n:"BIG5 三張同行", was:"NT$ 4,287", v:"NT$ 4,116"},
+      {n:"48H 三張同行",  was:"NT$ 5,607", v:"NT$ 5,427"}
     ],
     why: "公司每週二固定開這檔，所以這張卡設成只在週二出現、其他天自動隱藏，不用每週手動上下架。已售 100K+、4.8 分，是釜山線最好賣的單品：免費入場約 30 個設施、超過 160 家合作店家有折扣。實體卡還能當交通卡加值搭地鐵，旅行結束可以留著當紀念品，這個點很好寫。可切角：24H 還是 48H 划算、BIG3／BIG5 怎麼挑、哪些景點一定要排進去。",
     code: "BSDAY",
-    due: "每週二限定：釜山全線商品單筆滿 NT$2,200 享 96 折，最高折 180 元。⚠️ 有門檻——BIG3 單張 989、24H 單張 1,209 都吃不到折，要湊到 2,200 才會折，所以文案要打「揪團一起買」。四方案裡單買唯一有折的是 48H（1,869 滿 1,500 享 98 折 → 1,832）。",
+    due: "每週二限定：釜山全線商品單筆滿 NT$2,200 享 96 折，最高折 180 元。⚠️ 上面列的四組是三家比過之後我方最便宜的組合（2026-09-22 三家比價結果），可以直接打「全網最低」。單張買則我方每個方案都輸 Klook 69～100 元，所以文案一律打「揪團一起買」，不要寫單買最便宜。",
     note: "⚠️ 商品頁明列的限制，文案要寫到：①僅限外國籍旅客，持韓國籍不可使用。②通行證啟用後恕不退費；未使用可免費取消，但只要其中一張已使用就無法部分取消。③交通卡功能只有實體卡才有，行動版沒有。④電子憑證必須在 KKday App 內出示 QR Code，截圖或翻拍不被接受。⑤海雲台海岸列車等景點多為單次免費，不能重複使用。⑥實體卡要到指定櫃檯憑護照領取，不是買了就能直接入場。"
   },
   {
@@ -3416,7 +3416,7 @@ renderCid();
 
   const bar = document.createElement("div");
   bar.className = "topbar";
-  bar.innerHTML = '<div class="tbwrap">' + live.map(function(x, i){
+  bar.innerHTML = '<div class="inner tbinner"><div class="tbwrap">' + live.map(function(x, i){
       return '<div class="tbitem' + (i === 0 ? " on" : "") + '">' +
         '<span class="tbtag">' + esc(x.t || "進行中") + '</span>' +
         '<b>' + esc(x.b) + '</b>' +
@@ -3424,7 +3424,7 @@ renderCid();
       '</div>'; }).join("") + '</div>' +
     (live.length > 1 ? '<div class="tbdots">' + live.map(function(_, i){
       return '<button class="tbdot' + (i === 0 ? " on" : "") + '" data-i="' + i + '" aria-label="第 ' + (i+1) + ' 則"></button>'; }).join("") + '</div>' : "") +
-    '<button class="tbx" aria-label="關閉">×</button>';
+    '<button class="tbx" aria-label="關閉">×</button></div>';
   document.body.insertBefore(bar, document.body.firstChild);
   document.body.classList.add("hasbar");
 
