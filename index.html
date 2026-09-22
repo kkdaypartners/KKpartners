@@ -4134,7 +4134,7 @@ document.getElementById("cksel").addEventListener("change", e => {
   }
   /* 整批都判不出來（規則說有類別限制但站上沒登記 CODE_GEO）就不要列清單。
      給一份「需確認 800 多支」的名單，KOL 也無從確認，只是把問題丟回去。 */
-  if (!usable.length && unsure.length > blocked.length) {
+  if (!usable.length && unsure.length >= 50) {
     out += '<div class="hotwrap"><p class="hotna">這張碼的適用範圍站上沒有登記資料，無法逐支比對。' +
       '請以 KKday 結帳頁顯示的折抵金額為準，或向窗口確認適用類別。</p></div>' +
       '<p class="ckmore">補上這張碼的適用商品類別之後，這裡就會跟其他折扣碼一樣列出可用清單。</p>';
