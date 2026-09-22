@@ -2180,7 +2180,7 @@ const GROUPS = [
     {scope:"日本指定行程", code:"KKSUMMERTOUR", benefit:"滿 5,000 日圓享 20% OFF", till:"2026-09-30"},
     {scope:"YokaBus 福岡日遊", code:"GOFUKUOKA", benefit:"5 折", till:"", url:"https://www.kkday.com/zh-tw/promo/fukuoka_yokabus"},
     {scope:"USJ 套票｜萬聖限定・敲磚必備", code:"USJBUNDLE5OFF", benefit:"門票＋關西樂享周遊券＋人氣周邊任選，結帳現折 95 折", till:"", url:"https://www.kkday.com/zh-tw/product/2247"},
-    {scope:"USJ 套票｜快閃加碼送哈咪酷瑪", code:"HAMIKUMA5OFF", benefit:"大門票＋哈咪酷瑪爆米花桶＋關西樂享周遊券，結帳現折 95 折", till:"2026-09-20", url:"https://www.kkday.com/zh-tw/product/2247"},
+    {scope:"USJ 套票｜快閃加碼送哈咪酷瑪", code:"HAMIKUMA5OFF", benefit:"大門票＋哈咪酷瑪爆米花桶＋關西樂享周遊券，結帳現折 95 折", till:"2026-09-30", url:"https://www.kkday.com/zh-tw/product/2247"},
     {scope:"USJ 套票｜任天堂世界保證入園", code:"USJBUNDLE1000", benefit:"瑪利歐園區保證入園＋門票＋關西樂享周遊券＋周邊二選一，結帳現折 1,000 日圓", till:"", url:"https://www.kkday.com/zh-tw/product/2247"},
     {scope:"日本鐵路", code:"JPTRAIN", benefit:"95 折，上限折 150 元", till:"2026-12-31", url:"https://www.kkday.com/zh-tw/transportation/japan-rail"},
     {scope:"日本鐵路｜新客", code:"JPNEWTRAIN", benefit:"新戶無低消 93 折", till:"2026-12-31", url:"https://www.kkday.com/zh-tw/transportation/japan-rail"},
@@ -2453,7 +2453,25 @@ const ALL = [];
 GROUPS.forEach(g => { if (g.id !== "daily") g.items.forEach(it => ALL.push({...it, g:g.tab})); });
 EVENT.days.forEach(function(d){ d.codes.forEach(function(it){ if(it.code) ALL.push(Object.assign({}, it, {g:d.label})); }); });
 DAILY.forEach(d => ALL.push({scope:d.label + "｜" + d.dest, code:d.code, benefit:d.terms, till:"", g:"每日目的地"}));
-const ALLCODES = ALL;
+/* 每日目的地分頁原本是空的：資料在 DAILY，但分頁是讀 GROUPS（Alen 2026-09-22 回報）。
+   同一支碼可能有多天（JPDAY 週四週五都有），合併成一筆並列出所有適用日。 */
+(function(){
+  const g = GROUPS.filter(function(x){ return x.id === "daily"; })[0];
+  if (!g || (g.items && g.items.length)) return;
+  const by = {};
+  DAILY.forEach(function(d){
+    if (!by[d.code]) by[d.code] = {days:[], dest:d.dest, terms:d.terms};
+    by[d.code].days.push(d.label);
+  });
+  g.items = Object.keys(by).map(function(c){
+    return {scope: by[c].days.join("、") + "｜" + by[c].dest, code: c, benefit: by[c].terms, till: ""};
+  });
+})();
+/* 過期的碼一律不進清單與下拉選單。EVENT 的快閃碼（例如 9/17–9/19 那批）
+   會被整批收進來，不濾掉的話檔期結束好幾天還留在「用折扣碼查」裡，
+   KOL 查了以為能用（Alen 2026-09-22 回報）。till 空白＝沒設效期，保留。 */
+const _TODAY_STR = new Date().toISOString().slice(0, 10);
+const ALLCODES = ALL.filter(function(x){ return !x.till || x.till >= _TODAY_STR; });
 
 /* 檔期碼一律帶活動頁連結，沒指定商品連結就用活動頁，避免複製出來只剩首頁 */
 EVENT.days.forEach(function(d){
