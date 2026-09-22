@@ -1364,6 +1364,32 @@ const DEALS = [  {
     due: "折扣碼 26SEP95 不限門檻 95 折、單筆最高折 NT$150，9/30 到期",
   },
   {
+    tag: "KOL 專屬",
+    name: "台灣虎航｜石垣島 4／5 天計劃機票，富邦 J 卡折後 3,388 起",
+    url: "https://www.kkday.com/zh-tw/product/246671",
+    till: "2026-09-23",
+    until: "2026-09-23T09:00",
+    img: "https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_246671/20240904130617_LpCC7/jpg",
+    price: [
+      {n:"KOL 專屬牌價",              v:"4,388 起"},
+      {n:"再輸 26SEP95",             was:"4,388", v:"4,238"},
+      {n:"富邦 J 卡 JCARD1000SEP",   was:"4,388", v:"3,388"}
+    ],
+    why: "KOL 專屬檔，商品名直接掛「KOL 專屬優惠」，這是只有夥伴推得到的價格。台北桃園與高雄小港雙點出發，1 人就成行、含 20kg 託運＋10kg 手提。石垣島是沖繩離島裡海最漂亮的一座，飛行時間短、免簽、物價比本島低，但寫的人遠少於沖繩本島——題材缺口大、競爭少。5.0 分、已售 100+。富邦 J 卡持卡人折到 3,388 是全場最低，可以直接打「不到 3,400 飛日本」。",
+    code: "JCARD1000SEP",
+    due: "26SEP95 不限門檻 95 折、最高折 NT$150（折後 4,238）｜富邦 J 卡 JCARD1000SEP 折 1,000（折後 3,388）。兩碼擇一使用。",
+    note: [
+      "團體機位：機位確認後無退票價值，醫療因素也不例外",
+      "開票後不可改名、改期、轉讓、退票",
+      "訂購後等客服 1–3 個工作天回覆是否有位，非即時確認",
+      "出發前 3–7 天才開票，憑證出發前 4–7 天才給",
+      "去程未搭，回程自動失效",
+      "姓名須對照護照正本填寫，填錯的改票費與損失由旅客自負",
+      "無機上餐；行李加購須在開票前處理，開票後不受理",
+      "護照效期需比回國日多 6 個月以上"
+    ]
+  },
+  {
     tag: "光復節連假",
     name: "高鐵光復節連假車票｜9/25 00:00 開搶，輸碼再享 95 折",
     url: "https://www.kkday.com/zh-tw/transportation/taiwan",
@@ -1860,6 +1886,7 @@ const NEWS = [
    s/e 決定該則的顯示期間，過期自動不播；全部過期就整條不出現。
    兩則以上會每 6 秒自動輪播，滑鼠移上去暫停。 */
 const BANNERS = [
+  {t:"KOL 專屬", b:"石垣島機票折後 3,388 起，明早 9:00 收單", cta:"看機票", url:"#today", s:"2026-09-22", e:"2026-09-23", until:"2026-09-23T09:00"},
   {t:"清倉機票", b:"越捷 桃園－峴港 折後 3,849 起，含稅含行李", cta:"看機票", url:"#today", s:"2026-09-21", e:"2026-09-26"},
   {t:"清倉機票", b:"華航 高雄－高松 折後 9,088 起，含稅含餐含行李", cta:"看機票", url:"#today", s:"2026-09-21", e:"2026-09-26"},
   {t:"光復節連假", b:"高鐵車票 9/25 00:00 開搶，輸碼再享 95 折", cta:"看搶票重點", url:"#today", s:"2026-09-24", e:"2026-09-25"},
@@ -1873,6 +1900,7 @@ const BANNERS = [
    b=商品名（12 字內）、d=賣點一行（10 字內）、href=站內錨點。最多四則。
    可選 s/e：填了只在該期間顯示，過期自動讓位給後面的；不填＝一直顯示。 */
 const HIGHLIGHTS = [
+  {img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_246671/20240904130617_LpCC7/jpg", t:"KOL 專屬", b:"石垣島機票 3,388 起", d:"明早 9:00 收單・含行李", href:"#today", s:"2026-09-22", e:"2026-09-23", until:"2026-09-23T09:00"},
   {img:"img/thsr-1024.webp", t:"光復節連假", b:"高鐵車票 9/25 開搶", d:"輸碼 95 折・疏運 10/23–27", href:"#today", s:"2026-09-24", e:"2026-09-25"},
   {img:"img/roppongi-v3.webp",    t:"限時特惠", b:"六本木之丘展望台", d:"600 JPY・原價 2,400", href:"#today"},
   {img:"img/jrpass-fare-v2.webp", t:"倒數最後", b:"JR PASS 全國版",  d:"10/1 漲價前鎖舊價",   href:"#today"},
@@ -1890,6 +1918,17 @@ const HIGHLIGHTS = [
    長檔期建議自己寫，不然會出現「還剩 101 天」這種沒有急迫感的字。
    url 可填站內錨點（#today）或外部網址；img 省略就沿用 HTML 裡的預設圖。 */
 const POPUP = [
+{
+  name:  "KOL 專屬｜石垣島機票折後 3,388 起",
+  s:     "2026-09-22",
+  e:     "2026-09-23",
+  until: "2026-09-23T09:00",
+  badge: "明早 9:00 收單・KOL 專屬價",
+  desc:  "台灣虎航，台北桃園與高雄小港雙點出發，1 人成行、含 20kg 託運。富邦 J 卡折後 3,388 起。",
+  img:   "https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_246671/20240904130617_LpCC7/jpg",
+  url:   "#today",
+  cta:   "看機票與折扣碼"
+},
 {
   name:  "光復節連假｜高鐵車票 9/25 00:00 開搶",
   s:     "2026-09-24",
@@ -2423,6 +2462,12 @@ const isSoon = d => !!(d.from && dayDiff(d.from) > 0);      /* 還沒到上架�
 /* demote：過了這個時刻就把卡片排到本區塊最後（仍然顯示，只是不再佔前排）。
    格式 "2026-09-25T12:00"，一律台北時間。搶票類檔期用得到：開搶當下要在最前面，
    搶完之後熱度掉了但還沒結束，就讓位給其他商品。 */
+/* until：精確到「某日某時」下架，格式 "2026-09-23T09:00"（台北時間）。
+   till 只能到日，遇到「明早 9 點收」這種需求不夠用。四個曝光版位共用這個判斷。 */
+const pastAt = function(ts){
+  if (!ts) return false;
+  return Date.now() >= new Date(ts + ":00+08:00").getTime();
+};
 const isDemoted = function(d){
   if (!d.demote) return false;
   return Date.now() >= new Date(d.demote + ":00+08:00").getTime();
@@ -2437,6 +2482,7 @@ const newExpired = d => d.kind === "new" && d.added && dayDiff(d.added) <= -NEW_
 
 const LIVE_DEALS = DEALS.filter(function(d){
   if (d.till && dayDiff(d.till) < 0) return false;          /* 已過期，直接不顯示 */
+  if (d.until && pastAt(d.until)) return false;              /* 指定時刻一到就下架 */
   /* dow：每週固定星期才出現（0=日 1=一 … 6=六）。給每週固定檔期用，
      例如釜山通行證每週二。不填＝不限星期，一般卡片不受影響。 */
   if (d.dow && d.dow.indexOf(new Date().getDay()) === -1) return false;
@@ -3545,6 +3591,7 @@ renderCid();
   const LIVE_HL = HIGHLIGHTS.filter(function(x){
     if (x.s && dayDiff(x.s) > 0) return false;      /* 還沒到開始日 */
     if (x.e && dayDiff(x.e) < 0) return false;      /* 已過期 */
+    if (pastAt(x.until)) return false;              /* 指定時刻已到 */
     return true;
   });
   if (!LIVE_HL.length) return;
@@ -3571,7 +3618,7 @@ renderCid();
 /* ── 頂端橫幅列：輪播 BANNERS，與彈窗各自獨立 ───────────────── */
 (function(){
   if (typeof BANNERS === "undefined" || !BANNERS) return;
-  const live = BANNERS.filter(function(x){ return dayDiff(x.s) <= 0 && dayDiff(x.e) >= 0; });
+  const live = BANNERS.filter(function(x){ return dayDiff(x.s) <= 0 && dayDiff(x.e) >= 0 && !pastAt(x.until); });
   if (!live.length) return;
   const key = "kkp_bar_" + live.map(function(x){ return x.b; }).join("|").slice(0,80);
   const today = new Date().toISOString().slice(0,10);
@@ -3635,7 +3682,7 @@ renderCid();
 (function(){
   const PL = (typeof POPUP !== "undefined" && POPUP)
     ? (Array.isArray(POPUP) ? POPUP : [POPUP]) : [];
-  const P = PL.filter(function(x){ return dayDiff(x.s) <= 0 && dayDiff(x.e) >= 0; })[0] || null;
+  const P = PL.filter(function(x){ return dayDiff(x.s) <= 0 && dayDiff(x.e) >= 0 && !pastAt(x.until); })[0] || null;
   const SRC = P || EVENT;
   const ds = dayDiff(SRC.s), de = dayDiff(SRC.e);
   if (de < 0 || ds > 1) return;
