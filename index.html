@@ -3884,7 +3884,10 @@ function judge(code, id){
   const gf = geoFail(code, id);
   if (gf === "UNKNOWN") return {ok:null, why:"這張碼有地區或類別限制，但這件商品查不到屬性——通常是新上架、資料還沒收錄，請直接向 KKday 確認"};
   if (gf) return {ok:false, why:gf};
-  const geoOK = gf === false;
+  /* geoFail 沒有登記規則時回 null，那代表「這張碼沒有地區或類別限制」，
+     不是「判不出來」。原本只把 false 當通過，導致 DBS26 這種沒登記 CODE_GEO 的碼
+     對所有商品都回未判定，前台顯示 0 支可用（2026-09-22 修）。 */
+  const geoOK = (gf === false || gf === null || gf === undefined);
 
   const f = FLASH_RULE[code];
   if (f) {
@@ -4062,11 +4065,12 @@ document.getElementById("cksel").addEventListener("change", e => {
   let out = "";
   if (BANK_SCOPE[code]) out += '<p class="ckmore">適用範圍：' + esc(BANK_SCOPE[code]) + '</p>';
   /* 從台灣近 90 天最熱門的 1,000 支商品裡，挑出這張碼可用與不可用的，直接列名字 */
-  var blocked = [], usable = [];
+  var blocked = [], usable = [], unsure = [];
   for (var oid in HOT_PRODS){
     var v = judge(code, Number(oid));
     if (v && v.ok === false) blocked.push([oid, HOT_PRODS[oid]]);
     else if (v && v.ok === true) usable.push([oid, HOT_PRODS[oid]]);
+    else unsure.push([oid, HOT_PRODS[oid]]);
   }
   /* 「可以用的」清單給可點連結並自動帶 CID（KOL 回饋：查到能用還要自己找連結、
      還要手動補 CID，很容易漏掉就沒有分潤）。「不能用的」不給連結，避免誤點去推。 */
@@ -4091,9 +4095,11 @@ document.getElementById("cksel").addEventListener("change", e => {
     '<div class="hottabs">' +
       '<button class="hottab on" data-side="bad">不能用的 ' + blocked.length + ' 支</button>' +
       '<button class="hottab" data-side="ok">可以用的 ' + usable.length + ' 支</button>' +
+      (unsure.length ? '<button class="hottab" data-side="na">需確認 ' + unsure.length + ' 支</button>' : "") +
     '</div>' +
     '<div class="hotlist bad" data-side="bad">' + hotList(blocked) + '</div>' +
     '<div class="hotlist good" data-side="ok" data-code="' + esc(code) + '" hidden>' + hotList(usable, true) + '</div>' +
+    '<div class="hotlist na" data-side="na" hidden>' + hotList(unsure) + '</div>' +
   '</div>';
   out += '<p class="ckmore">完整排除清單有上萬筆，這裡只挑熱門 1,000 支比對。其他商品請切到「用商品查」貼上網址確認。</p>';
 
