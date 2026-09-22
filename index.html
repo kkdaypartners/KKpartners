@@ -2487,7 +2487,14 @@ var signed   = function(v, d){ return (v > 0 ? "+" : (v < 0 ? "−" : "")) + Mat
 function oidOf(u){ var m=String(u||"").match(/product\/(\d+)/); return m?Number(m[1]):0; }
 function bestCode(oid, aop){
   if (typeof judge!=="function" || typeof GROUPS==="undefined" || !oid) return null;
-  var all=[]; GROUPS.forEach(function(g){ (g.items||[]).forEach(function(it){ all.push(it); }); });
+  /* 信用卡與支付分頁（g.id==="card"）不進自動推薦：要持特定卡才能用，
+     實際使用量只有全站券的 3～4%（2026-09-22 查近 30 天用券紀錄：
+     全站不限門檻 95 折 19,907 筆、國泰 CUBE 739 筆、星展約 700 筆）。
+     折抵再深，粉絲沒那張卡就是用不了，推了等於沒推。要查卡別優惠請用折扣碼查詢工具。 */
+  var all=[]; GROUPS.forEach(function(g){
+    if (g.id === "card") return;
+    (g.items||[]).forEach(function(it){ all.push(it); });
+  });
   var today=new Date().toISOString().slice(0,10);
   function live(it){ return !it.till || it.till>=today; }
   function ok(c){ try{ var r=judge(c,oid); return !!(r&&r.ok); }catch(e){ return false; } }
