@@ -445,6 +445,7 @@ section[id],div[id="check"],div[id="codelist"]{scroll-margin-top:76px}
 /* .pkrow 有兩條規則，後面那條（淺底、左側色條）是給別的區塊用的，
    會蓋掉深色建議卡裡的那一排，導致白字按鈕落在淺底上看不見（2026-09-22 修）。
    這裡把深色卡內的 .pkrow 還原成透明，白字才有對比。 */
+.pkcopy.done{background:var(--up);border-color:var(--up);color:#fff}
 .pickrec .pkrow{background:none;border:0;padding:0;margin-top:14px}
 .pickrec .pklink{color:rgba(255,255,255,.8)}
 .pickrec .pklink:hover{color:#fff}
@@ -3977,8 +3978,10 @@ function pkPick(list, off){
 }
 function pkUrl(pid){ return "https://www.kkday.com/zh-tw/product/" + pid; }
 
-function pkMaterial(){
-  const list = pkUsable(PK_CODE), rec = pkPick(list, PK_OFF);
+/* rec 一定要由呼叫端傳進來：複製的內容必須跟畫面上看到的是同一組。
+   先前這裡自己再算一次，理論上會跟畫面不同步（2026-09-22 修）。 */
+function pkMaterial(rec){
+  if (!rec) rec = pkPick(pkUsable(PK_CODE), PK_OFF);
   const c = ALLCODES.filter(function(x){ return x.code === PK_CODE; })[0] || {};
   let t = "專屬折扣碼：" + PK_CODE + "\n";
   if (c.benefit) t += c.benefit + "\n";
@@ -4020,11 +4023,16 @@ document.addEventListener("click", function(e){
   if (e.target.closest(".pkroll")) { PK_OFF += 2; box.innerHTML = pickHtml(); return; }
   if (e.target.closest(".pkclear")) { pkSave(new Set()); PK_OFF = 0; box.innerHTML = pickHtml(); return; }
   if (e.target.closest(".pkcopy")) {
+    /* 複製當下不換組。原本複製完立刻重繪成下一組，使用者會以為「複製到的是新出現的那組」，
+       Alen 2026-09-22 回報。現在停在原地並把按鈕改成「已複製」，要換再按「換一組」。 */
     const rec = pkPick(pkUsable(PK_CODE), PK_OFF);
-    copyText(pkMaterial(), ADMIN ? "素材已複製，貼進 Gemini Gem 就能生成" : "商品與連結已複製，連結已帶上你的 CID");
+    if (!rec.length) return;
+    copyText(pkMaterial(rec), ADMIN ? "素材已複製，貼進 Gemini Gem 就能生成" : "商品與連結已複製，連結已帶上你的 CID");
     const used = pkUsed();
     rec.forEach(function(r){ used.add(r[0]); });
-    pkSave(used); PK_OFF = 0; box.innerHTML = pickHtml();
+    pkSave(used);
+    const btn = box.querySelector(".pkcopy");
+    if (btn) { btn.textContent = "已複製這兩支 ✓"; btn.classList.add("done"); }
   }
 });
 
