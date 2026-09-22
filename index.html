@@ -2534,12 +2534,18 @@ function bestCode(oid, aop){
 
   var scored = pool.map(function(it){
     var only = (typeof FLASH_RULE!=="undefined" && FLASH_RULE[it.code] && FLASH_RULE[it.code].only) ? 1 : 0;
-    return {it:it, cut:cutAt(it, price), only:only};
+    /* 新客／新戶限定的券：老客戶用不了，跟信用卡碼一樣是「有門檻的受眾」，
+       所以即使折得多也要讓位給人人可用的券。 */
+    var newOnly = /新客|新戶|首購/.test(String(it.scope||"") + String(it.benefit||"")) ? 1 : 0;
+    return {it:it, cut:cutAt(it, price), only:only, newOnly:newOnly};
   }).filter(function(x){ return x.cut>0; });
   if (!scored.length) return null;
+  /* 排序優先序（Alen 2026-09-22 定）：
+     ① 指名這支商品的專屬碼 ② 人人可用（非新客限定） ③ 在實際客單下折最多 */
   scored.sort(function(a,b){
-    if (b.cut !== a.cut) return b.cut - a.cut;       /* 折最多的優先 */
-    return b.only - a.only;                          /* 同額時，指名這支商品的專屬碼優先 */
+    if (b.only !== a.only) return b.only - a.only;
+    if (a.newOnly !== b.newOnly) return a.newOnly - b.newOnly;
+    return b.cut - a.cut;
   });
   var w = scored[0];
   return Object.assign({}, w.it, {_cut: Math.round(w.cut), _aop: price});
