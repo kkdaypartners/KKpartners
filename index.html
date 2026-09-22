@@ -1275,6 +1275,7 @@ const PICKS = [
     items: [
       {
         n: "Taiwan PASS 台鐵版｜台鐵＋捷運＋景區接駁",
+        aop: 1700,
         url: "https://www.kkday.com/zh-tw/product/284326",
         cr: 10.63, pct: 95, heat: 2374,
         read: "瀏覽 4,259→105,359、訂單 11,195 筆，不是新品基數小造成的假象，是真的爆量",
@@ -1282,6 +1283,7 @@ const PICKS = [
       },
       {
         n: "北海道旭川動物園一日遊｜冬季限定雪地摩托車・四季彩之丘",
+        aop: 1517,
         url: "https://www.kkday.com/zh-tw/product/155327",
         cr: 2.81, pct: 69, heat: 300,
         read: "熱度翻三倍，轉換率贏過同類 69%，動能與成交力都在",
@@ -1289,6 +1291,7 @@ const PICKS = [
       },
       {
         n: "吉伊卡哇餐廳（池袋 PARCO）THE GUEST CAFE",
+        aop: 452,
         url: "https://www.kkday.com/zh-tw/product/584238",
         cr: 6.58, pct: 73, heat: 230,
         read: "IP 熱潮帶動，沖繩 PARCO CITY 那家同步 +185%，兩家可以合寫一篇",
@@ -1296,6 +1299,7 @@ const PICKS = [
       },
       {
         n: "富士山河口湖全景纜車一日遊｜天上山公園・淺間公園",
+        aop: 1542,
         url: "https://www.kkday.com/zh-tw/product/570685",
         cr: 1.99, pct: 42, heat: 82,
         read: "四支裡最弱的一支，同類排名只贏 42%，純靠熱度入選",
@@ -2481,31 +2485,54 @@ var signed   = function(v, d){ return (v > 0 ? "+" : (v < 0 ? "−" : "")) + Mat
 
 /* ── 選品：折扣碼反查（用站上 judge()，碼表一改就跟著換）── */
 function oidOf(u){ var m=String(u||"").match(/product\/(\d+)/); return m?Number(m[1]):0; }
-function bestCode(oid){
+function bestCode(oid, aop){
   if (typeof judge!=="function" || typeof GROUPS==="undefined" || !oid) return null;
-  /* 順序＝實際推得動的程度，不是折抵金額大小。
-     高門檻券（滿萬折千）掛在單價一兩千的商品上等於沒有券，KOL 會被粉絲反問。
-     ① 指名這支商品的專屬碼最優先 ② 再來是低門檻／品類券 ③ 高門檻券墊底。 */
-  var PREF=["KKAFFTOUR88","26SEP95","KKAFF400","KKAFF700","KKAFF1000A","26SEP800","KKAFF1200","KKAFFLH520"];
   var all=[]; GROUPS.forEach(function(g){ (g.items||[]).forEach(function(it){ all.push(it); }); });
   var today=new Date().toISOString().slice(0,10);
   function live(it){ return !it.till || it.till>=today; }
   function ok(c){ try{ var r=judge(c,oid); return !!(r&&r.ok); }catch(e){ return false; } }
-  /* ① 專屬碼：FLASH_RULE 裡用 only 指名這支商品的 */
-  if (typeof FLASH_RULE !== "undefined") {
-    for (var fc in FLASH_RULE) {
-      var fr = FLASH_RULE[fc];
-      if (!fr || !fr.only || fr.only.indexOf(oid) < 0) continue;
-      for (var m=0;m<all.length;m++)
-        if (all[m].code===fc && live(all[m])) return all[m];
-    }
+
+  /* 從 benefit 文字解析門檻／折數／上限／定額，算出「在這支商品的客單價下實際折多少錢」。
+     判準是 Alen 2026-09-22 定的：不是看門檻高低，也不是看折抵上限大小，
+     而是看在實際客單（AOP）下哪一張真的折最多——門檻達不到的券折 0，自然排到最後。 */
+  function cutAt(it, price){
+    var t=String(it.benefit||"");
+    var n=function(x){ return parseInt(String(x).replace(/[^\d]/g,""),10); };
+    var best=0;
+    t.split(/[\/、,，]/).forEach(function(part){
+      var min=(part.match(/滿\s*(?:NT)?\$?\s*([\d,]+)/)||[])[1];
+      var cap=(part.match(/(?:上限折?|最高折抵?|至多抵?|最高可?折抵?)\s*(?:NT)?\$?\s*([\d,]+)/)||[])[1];
+      var pct=part.match(/(?:^|[^\d,.折])(\d{1,2}(?:\.\d)?)\s*折/);
+      var minV=min?n(min):0;
+      if (price < minV) return;                      /* 門檻達不到，這組不算 */
+      var cut=0;
+      if (pct){ var v=parseFloat(pct[1]); cut = price*(1-(v<10?v/10:v/100)); }
+      else {
+        var amt=part.match(/(?:現折|折抵|直折|立減|折)\s*(?:NT)?\$?\s*([\d,]{2,})/);
+        if (amt) cut=n(amt[1]);
+      }
+      if (cap && cut>n(cap)) cut=n(cap);
+      if (cut>best) best=cut;
+    });
+    return best;
   }
-  for (var p=0;p<PREF.length;p++)
-    for (var k=0;k<all.length;k++)
-      if (all[k].code===PREF[p] && live(all[k]) && ok(PREF[p])) return all[k];
-  for (var j=0;j<all.length;j++)
-    if (live(all[j]) && ok(all[j].code)) return all[j];
-  return null;
+
+  var price = (typeof aop==="number" && aop>0) ? aop : 0;
+  var pool = all.filter(function(it){ return live(it) && ok(it.code); });
+  if (!pool.length) return null;
+  if (!price) return pool[0];
+
+  var scored = pool.map(function(it){
+    var only = (typeof FLASH_RULE!=="undefined" && FLASH_RULE[it.code] && FLASH_RULE[it.code].only) ? 1 : 0;
+    return {it:it, cut:cutAt(it, price), only:only};
+  }).filter(function(x){ return x.cut>0; });
+  if (!scored.length) return null;
+  scored.sort(function(a,b){
+    if (b.cut !== a.cut) return b.cut - a.cut;       /* 折最多的優先 */
+    return b.only - a.only;                          /* 同額時，指名這支商品的專屬碼優先 */
+  });
+  var w = scored[0];
+  return Object.assign({}, w.it, {_cut: Math.round(w.cut), _aop: price});
 }
 /* ── 選品圖表（內嵌 SVG，不拉外部套件）── */
 function shortN(n){ n=String(n); return n.length>13 ? n.slice(0,12)+"…" : n; }
@@ -2759,7 +2786,7 @@ H += '<section class="band band-wash" id="picks"><div class="inner">' +
        '</div>' +
        (i.read ? '<div class="pkread">' + esc(i.read) + '</div>' : "") +
        '<div class="pkwhy"><span>撰寫方向</span>' + esc(i.why) + '</div>' +
-       '<div class="pkcode" data-oid="' + oidOf(i.url) + '" hidden></div>' +
+       '<div class="pkcode" data-oid="' + oidOf(i.url) + '" data-aop="' + (i.aop || 0) + '" hidden></div>' +
        '<button class="mkpick" data-url="' + esc(i.url) + '" data-n="' + esc(i.n) +
          '" data-cr="' + i.cr.toFixed(2) + '" data-pct="' + i.pct + '" data-heat="' + signed(i.heat, 0) +
          '" data-rel="' + signed(rel, 0) + '" data-catcr="' + CAT +
@@ -3218,9 +3245,10 @@ function fillCodes(){
   var rows = document.querySelectorAll(".pkcode[data-oid]");
   for (var k = 0; k < rows.length; k++){
     var el = rows[k], c = null;
-    try { c = bestCode(Number(el.getAttribute("data-oid"))); } catch (err) { c = null; }
+    try { c = bestCode(Number(el.getAttribute("data-oid")), Number(el.getAttribute("data-aop"))||0); } catch (err) { c = null; }
     if (!c) continue;
-    el.innerHTML = '<span>可搭折扣碼</span><b>' + esc(c.code) + '</b><u>' + esc(c.benefit) + '</u>';
+    el.innerHTML = '<span>可搭折扣碼</span><b>' + esc(c.code) + '</b><u>' + esc(c.benefit) +
+      (c._cut ? '　→ 客單 ' + c._aop.toLocaleString() + ' 實折約 ' + c._cut.toLocaleString() + ' 元' : "") + '</u>';
     el.hidden = false;
     var row = el.closest(".pkrow"), btn = row && row.querySelector(".mkpick");
     if (btn){ btn.setAttribute("data-code", c.code); btn.setAttribute("data-cinfo", c.benefit); }
