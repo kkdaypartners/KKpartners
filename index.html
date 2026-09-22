@@ -671,6 +671,8 @@ overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
 .hotlist li{margin-bottom:2px}
 .hotlist li{color:var(--ink)}
 .hotmore{margin:8px 0 0;font-size:12.5px;color:var(--muted)}
+.hotna{margin:0;font-size:13px;line-height:1.7;color:#8E3F2E;background:#FFF0EC;border:1px solid #F0D2CA;border-radius:10px;padding:12px 14px}
+.hotday{margin:0 0 8px;font-size:12.5px;font-weight:700;color:#8E3F2E;background:#FFF0EC;border:1px solid #F0D2CA;border-radius:8px;padding:8px 11px;line-height:1.55}
 .hotsum{margin:0 0 10px;font-size:12.5px;color:#8E3F2E;line-height:1.6}
 .hotsum b{display:inline;font-size:inherit;margin:0}
 .hotok b{display:inline;font-size:inherit;margin:0}
@@ -3836,8 +3838,13 @@ function geoFail(code, id){
   if (rule.nocat && rule.nocat.indexOf(g.cat) >= 0)
     return "「" + g.cat + "」類商品不適用這張碼";
   if (rule.cat) {
-    if (g.cat === "其他") return "UNKNOWN";
-    if (rule.cat.indexOf(g.cat) < 0) return "限「" + rule.cat.join("、") + "」商品，這件是「" + g.cat + "」";
+    /* 「其他」是真實類別（行李運送、貴賓室、代辦、免稅券這類服務），不是「查不到」。
+       限定類別的碼碰到它就是不適用，回 UNKNOWN 只會讓 KOL 看到一堆
+       「需確認」卻無從確認（Alen 2026-09-22 回報）。 */
+    if (rule.cat.indexOf(g.cat) < 0)
+      return g.cat === "其他"
+        ? "這件是服務類商品（行李、貴賓室、代辦等），不在本碼限定的「" + rule.cat.join("、") + "」內"
+        : "限「" + rule.cat.join("、") + "」商品，這件是「" + g.cat + "」";
   }
   if (rule.dest && rule.dest.indexOf(g.dest) < 0) return "限 " + rule.dest.join("、").replace(/kr-|jp-/g,"") + " 地區";
   if (rule.cty && rule.cty.indexOf(g.cty) < 0) return "限 " + rule.cty.join("、") + " 地區，這件是 " + g.cty;
@@ -3885,7 +3892,11 @@ BLACKLIST.forEach(b => { BLMAP[b[0]] = b; BLMAP[b[2]] = b; });
 const blRow = b => '<div class="bitem"><em>' + b[0] + '</em><i>oid ' + b[2] + '</i><span>' + esc(b[1]) + '</span></div>';
 
 /* 回傳 {ok:bool, why:string} */
-function judge(code, id){
+/* opts.ignoreDay：算「這張碼適用哪些商品」時要忽略星期限制。
+   每日目的地碼若把「今天不是週一」也算成不能用，週二查週一的碼就會顯示 0 支，
+   但 KOL 本來就會提前查別天的碼（Alen 2026-09-22 回報）。
+   單品查詢（用商品查）不帶這個參數，仍然會提醒今天能不能用。 */
+function judge(code, id, opts){
   const r = RULES.r[code];
   const fr = FLASH_RULE[code];
   /* 明確指名商品的碼最優先，蓋過所有覆寫與黑名單 */
@@ -3920,7 +3931,7 @@ function judge(code, id){
   const dm = DAILY_META[code];
   if (dm) {
     const td = today.getDay();
-    if (dm.dows.indexOf(td) < 0)
+    if (dm.dows.indexOf(td) < 0 && !(opts && opts.ignoreDay))
       return {ok:false, why:"這張碼只有" + dm.dows.map(function(x){ return DAYNM[x]; }).join("、") + "能用"};
     return geoOK ? {ok:true, why:"今天可用，地區相符"} : {ok:null, why:"今天可用，但限「" + dm.dest + "」的商品"};
   }
@@ -3939,7 +3950,7 @@ function judge(code, id){
     const sc = scopeCat(code), g = geoOf(id);
     if (!geoCovered) {
       if (!sc || !g) return {ok:null, why: r.cin ? "限特定商品類別，需確認這件商品的類別" : "排除特定商品類別，需確認這件商品的類別"};
-      if (g.cat === "其他") return {ok:null, why:"這張碼限「" + sc.join("、") + "」類商品，但這件查不到類別"};
+      if (g.cat === "其他") return {ok:false, why:"這件是服務類商品，不在本碼限定的「" + sc.join("、") + "」內"};
       if (sc.indexOf(g.cat) < 0) return {ok:false, why:"這張碼限「" + sc.join("、") + "」商品，這件是「" + g.cat + "」"};
     } else if (sc && g && g.cat !== "其他" && sc.indexOf(g.cat) < 0) {
       return {ok:false, why:"這張碼限「" + sc.join("、") + "」商品，這件是「" + g.cat + "」"};
@@ -4098,7 +4109,7 @@ document.getElementById("cksel").addEventListener("change", e => {
   /* 從台灣近 90 天最熱門的 1,000 支商品裡，挑出這張碼可用與不可用的，直接列名字 */
   var blocked = [], usable = [], unsure = [];
   for (var oid in HOT_PRODS){
-    var v = judge(code, Number(oid));
+    var v = judge(code, Number(oid), {ignoreDay:true});
     if (v && v.ok === false) blocked.push([oid, HOT_PRODS[oid]]);
     else if (v && v.ok === true) usable.push([oid, HOT_PRODS[oid]]);
     else unsure.push([oid, HOT_PRODS[oid]]);
@@ -4121,7 +4132,20 @@ document.getElementById("cksel").addEventListener("change", e => {
                '<a href="' + esc(u) + '" target="_blank" rel="noopener">' + esc(b[1]) + '</a></label></li>';
       }).join("") + '</ul>';
   }
+  /* 整批都判不出來（規則說有類別限制但站上沒登記 CODE_GEO）就不要列清單。
+     給一份「需確認 800 多支」的名單，KOL 也無從確認，只是把問題丟回去。 */
+  if (!usable.length && unsure.length > blocked.length) {
+    out += '<div class="hotwrap"><p class="hotna">這張碼的適用範圍站上沒有登記資料，無法逐支比對。' +
+      '請以 KKday 結帳頁顯示的折抵金額為準，或向窗口確認適用類別。</p></div>' +
+      '<p class="ckmore">補上這張碼的適用商品類別之後，這裡就會跟其他折扣碼一樣列出可用清單。</p>';
+    PK_CODE = code; PK_OFF = 0;
+    ckout.innerHTML = '<div id="pickbox">' + pickHtml() + '</div>' + out;
+    return;
+  }
   out += '<div class="hotwrap">' +
+    (DAILY_META[code] ? '<p class="hotday">⚠️ 這張碼只有' +
+        DAILY_META[code].dows.map(function(x){ return DAYNM[x]; }).join("、") +
+        '能用，下面列的是它的適用商品，不代表今天就能折。</p>' : "") +
     '<p class="hotsum">只比對台灣近 90 天最熱門的 <b>1,000 支</b>商品，不是全站清單。</p>' +
     '<div class="hottabs">' +
       '<button class="hottab on" data-side="bad">不能用的 ' + blocked.length + ' 支</button>' +
