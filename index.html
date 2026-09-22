@@ -2517,7 +2517,12 @@ const dealCard = function(d, feat){
     (function(){
       /* 快閃碼未過期就蓋掉原本的碼與說明 */
       var sw = d.swap, live = sw && Date.now() <= new Date(sw.till + "T23:59:59+08:00").getTime();
-      var code = live ? sw.code : d.code, due = (live && sw.due) ? sw.due : d.due;
+      /* 已經有 plans（多組碼各自列出）就不要再單獨渲染一次主碼，
+         否則畫面上會出現「方案列完，下面又掛一顆一樣的碼」（2026-09-22 修）。
+         code 只給「單一折扣碼」的卡片用。快閃碼 swap 仍可覆蓋。 */
+      var hasPlans = !!(d.plans && d.plans.length);
+      var code = live ? sw.code : (hasPlans ? "" : d.code);
+      var due = (live && sw.due) ? sw.due : d.due;
       return (code ? '<div class="dcode"><span>折扣碼</span><button class="chip" data-code="' + esc(code) + '">' + esc(code) + '</button>' +
                (live ? '<i class="dswap">限時</i>' : "") + '</div>' : "") +
              (due ? '<div class="ddue">' + esc(due) + '</div>' : "");
