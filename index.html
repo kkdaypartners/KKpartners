@@ -671,6 +671,7 @@ overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
 .hotlist li{margin-bottom:2px}
 .hotlist li{color:var(--ink)}
 .hotmore{margin:8px 0 0;font-size:12.5px;color:var(--muted)}
+.chip.noco{cursor:default;border-style:solid;opacity:.9}
 .hotna{margin:0;font-size:13px;line-height:1.7;color:#8E3F2E;background:#FFF0EC;border:1px solid #F0D2CA;border-radius:10px;padding:12px 14px}
 .hotday{margin:0 0 8px;font-size:12.5px;font-weight:700;color:#8E3F2E;background:#FFF0EC;border:1px solid #F0D2CA;border-radius:8px;padding:8px 11px;line-height:1.55}
 .hotsum{margin:0 0 10px;font-size:12.5px;color:#8E3F2E;line-height:1.6}
@@ -2146,6 +2147,8 @@ const SOCIALS = [
 
 const GROUPS = [
   {id:"aff", tab:"夥伴專屬", lede:"只有 KKpartners 夥伴拿得到，優先推這一組。", items:[
+    {scope:"讀者專屬｜每人的碼不同", code:"READER92", show:"你的讀者折扣碼", benefit:"全站滿 2,500 享 92 折，上限折抵 300 元", till:"", pending:true},
+    {scope:"讀者專屬｜每人的碼不同", code:"READER94", show:"你的讀者折扣碼", benefit:"全站滿 1,500 享 94 折，上限折抵 200 元", till:"", pending:true},
     {scope:"全站適用", code:"KKAFF400", benefit:"單筆滿 5,000 折 400 元", till:"2026-09-30"},
     {scope:"全站適用", code:"KKAFF700", benefit:"單筆滿 8,000 折 700 元", till:"2026-09-30"},
     {scope:"全站適用", code:"KKAFF1000A", benefit:"單筆滿 10,000 折 1,000 元", till:"2026-09-30"},
@@ -2423,7 +2426,7 @@ const ext = u => u && !u.startsWith("#") ? ' target="_blank" rel="noopener"' : "
 const codeRow = it => {
   const cd = it.till ? cdHtml(it) : "";
   const till = it.till ? (cd || "至 " + it.till.replace(/-/g,"/")) : "依官網";
-  const chip = it.code ? '<button class="chip" data-code="' + esc(it.code) + '">' + esc(it.code) + '</button>'
+  const chip = it.code ? '<button class="chip' + (it.show ? " noco" : "") + '" data-code="' + esc(it.code) + '">' + esc(it.show || it.code) + '</button>'
              : it.nochip ? '<span></span>'
              : '<span class="chip none">免折扣碼</span>';
   const link = it.url ? '<a href="' + esc(it.url) + '" target="_blank" rel="noopener">前往</a>' : "";
@@ -2902,7 +2905,7 @@ function mCodeList(){
     out += '<div class="mcg"><h5>' + esc(g.tab) + '<i>' + live.length + ' 組</i></h5>' +
       '<div class="mcodes">' + live.map(function(it){
         return '<div class="mcrow">' +
-          '<button class="chip" data-code="' + esc(it.code) + '">' + esc(it.code) + '</button>' +
+          '<button class="chip' + (it.show ? " noco" : "") + '" data-code="' + esc(it.code) + '">' + esc(it.show || it.code) + '</button>' +
           '<div class="mcb"><b>' + esc(it.scope) + '</b><span>' + esc(it.benefit) + '</span></div>' +
         '</div>'; }).join("") + '</div></div>';
   });
@@ -3104,7 +3107,7 @@ H += '<section class="band band-wash" id="codes"><div class="inner">' +
 '<div class="ckpane" id="ck-code">' +
 '<div class="ckin"><select id="cksel"><option value="">選一張折扣碼⋯</option>' +
 ALLCODES.filter(function(c){ return c.code && NO_CHECK.indexOf(c.code) < 0; })
-  .map(function(c){ return '<option value="' + esc(c.code) + '">' + esc(c.code) + '　' + esc(c.scope) + '</option>'; }).join("") +
+  .map(function(c){ return '<option value="' + esc(c.code) + '">' + esc(c.show || c.code) + '　' + esc(c.scope) + '</option>'; }).join("") +
 '</select></div><div id="ckout"></div></div>' +
 '</div>' +
 
@@ -3903,7 +3906,12 @@ function isPromotable(oid){
   const g = geoOf(Number(oid));
   return !(g && g.cat === "其他");
 }
+/* 讀者折扣碼：每位夥伴拿到的字串都不一樣，所以前台顯示「你的讀者折扣碼」而不是某一組碼。
+   pending:true 代表排除清單還沒匯入，查詢時要說清楚不能只看全站黑名單就下結論。 */
 function judge(code, id, opts){
+  const _it = ALLCODES.filter(function(x){ return x.code === code; })[0];
+  if (_it && _it.pending)
+    return {ok:null, why:"讀者碼的專屬排除清單尚未匯入，請以結帳頁顯示為準"};
   const r = RULES.r[code];
   const fr = FLASH_RULE[code];
   /* 明確指名商品的碼最優先，蓋過所有覆寫與黑名單 */
