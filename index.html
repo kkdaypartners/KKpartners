@@ -990,7 +990,6 @@ footer a{color:var(--brand)}
     <a href="#benefit">專屬福利</a>
     <a href="#picks">每週選品</a>
     <a href="#packs">主題資源包</a>
-    <a href="#free">0 元商品</a>
     <a href="#event">本月檔期</a>
     <a href="#codes">折扣碼</a>
     <a href="#sponsor">贊助</a>
@@ -3391,7 +3390,7 @@ H += '<section class="band band-wash" id="packs"><div class="inner">' +
 '<p class="lede">把單品整理成一整包，寫部落格或長文時整組複製就能用。連結會自動帶上你的 CID。</p>' +
 '<div class="pktabs" role="tablist">' + PACKS.map(function(p, i){
   return '<button class="pktab' + (i === 0 ? " on" : "") + '" data-p="' + esc(p.id) + '">' + esc(p.tab) + '</button>';
-}).join("") + '</div>' +
+}).join("") + '<button class="pktab" data-p="free0">0 元商品</button></div>' +
 PACKS.map(function(p, i){
   return '<div class="pkpane' + (i === 0 ? " on" : "") + '" data-p="' + esc(p.id) + '">' +
     '<p class="pklede">' + esc(p.lede) + '</p>' +
@@ -3412,28 +3411,21 @@ PACKS.map(function(p, i){
           '</label>'; }).join("") +
       '</div></div>'; }).join("") +
   '</div>'; }).join("") +
-'<p class="ckmore">客單價是近 90 天台灣訂單的中位數，給你評估要主打哪一支。冬季主題過季會換掉，每季更新一次。</p>' +
-'</div></section>';
-
-H += '<section class="band" id="free"><div class="inner">' +
-'<h2>0 元商品</h2>' +
-'<p class="lede">粉絲不用花錢就能領，最好用的引流鉤子。連結會自動帶上你的 CID。</p>' +
-FREE_ITEMS.map(function(g){
-  return '<div class="freegrp" data-c="' + esc(g.c) + '">' +
-    '<div class="freetop"><h3 class="freehd">' + esc(g.c) + '</h3>' +
-      '<button class="freeall">全選</button>' +
-      '<button class="freebulk" disabled>複製勾選的 0 支</button>' +
-    '</div><div class="freegrid">' +
-    g.list.map(function(f){
-      return '<div class="freecard">' +
-        '<input type="checkbox" class="freeck" data-u="' + esc(prodUrl(f.id)) + '" data-n="' + esc(f.n) + '" data-k="' + esc(FREE_KIND[f.k] || FREE_KIND.tax) + '">' +
-        '<a class="freego" data-u="' + esc(prodUrl(f.id)) + '" href="' + esc(prodUrl(f.id)) + '" target="_blank" rel="noopener">' +
-        '<b>' + esc(f.n) + '</b>' +
-        '<u>' + esc(FREE_KIND[f.k] || FREE_KIND.tax) + '</u></a>' +
-        '<button class="freecopy" data-u="' + esc(prodUrl(f.id)) + '" data-n="' + esc(f.n) + '" data-k="' + esc(FREE_KIND[f.k] || FREE_KIND.tax) + '" title="複製這一支">複製</button>' +
-      '</div>'; }).join("") +
-  '</div></div>'; }).join("") +
-'<p class="ckmore">這些商品本身不計佣金，但粉絲領完券通常會接著買別的——把它當入口，後面再導到有佣金的商品。</p>' +
+'<div class="pkpane" data-p="free0">' +
+  '<p class="pklede">粉絲不用花錢就能領，最好用的引流鉤子。本身不計佣金，但領完券通常會接著買別的，把它當入口。</p>' +
+  '<div class="pkbar"><button class="pkall">全選這個主題</button>' +
+    '<button class="pkbulk" disabled>複製勾選的 0 支</button></div>' +
+  FREE_ITEMS.map(function(g){
+    return '<div class="pkgrp"><div class="pkghd"><h3 class="pkgh">' + esc(g.c) + '</h3></div><div class="pkgrid">' +
+      g.list.map(function(f){
+        var dsc = FREE_KIND[f.k] || FREE_KIND.tax;
+        return '<label class="pkitem">' +
+          '<input type="checkbox" class="pkck" data-n="' + esc(f.n) + '" data-u="' + esc(prodUrl(f.id)) + '" data-note="' + esc(dsc) + '">' +
+          '<span><b>' + esc(f.n) + '</b><u>' + esc(dsc) + '</u></span>' +
+        '</label>'; }).join("") +
+    '</div></div>'; }).join("") +
+'</div>' +
+'<p class="ckmore">推薦理由來自同事的選品整理與近 90 天銷量。冬季主題過季會換掉，每季更新一次。</p>' +
 '</div></section>';
 
 H += buildEvent();
