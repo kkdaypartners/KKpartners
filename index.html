@@ -610,9 +610,10 @@ body.adminonly #codes #ck-prod{display:none}
    碼本身做成淡青底膠囊就夠醒目（2026-09-23 改）。 */
 #packs .pkfee{display:flex;align-items:center;gap:10px;margin:0 0 14px;
   font-size:13.5px;color:var(--mid);line-height:1.5;flex-wrap:wrap}
+/* 深底一定要配 #fff 並明確指定，不要靠繼承——先前深綠底配深綠字整個看不見。 */
 #packs .pkfee b{display:inline-block;font-family:var(--mono);font-size:17px;font-weight:800;
-  letter-spacing:.06em;color:#fff;background:var(--mid);border-radius:8px;padding:7px 14px;
-  box-shadow:0 2px 8px rgba(14,122,133,.25)}
+  letter-spacing:.06em;color:#fff !important;background:var(--mid);border-radius:8px;
+  padding:7px 14px;box-shadow:0 2px 8px rgba(14,122,133,.25);text-shadow:none}
 .pkgrp{margin:0 0 18px}
 .pkgh{font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--brand);margin:0}
 .pkgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:9px}
@@ -1319,7 +1320,7 @@ const PACKS = [
      {n:"日本", promo:"https://www.kkday.com/zh-tw/promo/autumn-in-japan",
       code:"26AWJPTOUR", codeNote:"日本行程體驗不限門檻 93 折，最高折 1,000",
       items:[
-       {id:158778, aop:28132, n:"黑部立山楓紅三日遊｜室堂紅葉・上高地・白川鄉", note:"客單近三萬，長線主力"},
+       {id:158778, aop:28132, n:"黑部立山楓紅三日遊｜室堂紅葉・上高地・白川鄉", note:"長線主力，行程天數長、內容紮實"},
        {id:601669, aop:6012, n:"北海道層雲峽賞楓一日遊｜銀河瀑布・黑岳纜車", note:"北海道楓況最早，10 月上旬就能寫"},
        {id:669845, aop:3572, n:"香嵐溪夜楓一日遊｜虎溪山永保寺・名古屋往返", note:"夜楓題材，畫面辨識度高"},
        {id:287555, aop:2762, n:"九州系島｜雷山千如寺賞紅葉", note:"九州線，避開關西人潮"},
@@ -1353,7 +1354,7 @@ const PACKS = [
        {id:135964, aop:3454, n:"白川鄉一日遊｜含展望台・可選飯店接送", note:"可上展望台，畫面最好拍"},
        {id:17716,  n:"名古屋一日遊｜白川鄉＆飛驒高山老街", note:"經典組合"},
        {id:28049,  n:"金澤一日遊｜五箇山＆白川鄉＆飛驒高山", note:"金澤出發，串北陸線"},
-       {id:137376, aop:9170, n:"白川鄉＆金澤二日遊｜兼六園・東茶屋街", note:"二日遊客單較高"}]}
+       {id:137376, aop:9170, n:"白川鄉＆金澤二日遊｜兼六園・東茶屋街", note:"二日遊，可深度寫金澤與白川鄉"}]}
    ]},
   {id:"ginzan", img:"img/pk-ginzan.webp", tab:"銀山溫泉", lede:"千與千尋湯屋取景地，冬季點燈與藏王樹冰可以一起寫。",
    groups:[
@@ -1374,7 +1375,7 @@ const PACKS = [
       items:[
        {id:151492, aop:19736, n:"破冰船二日遊｜紋別 GARINKO＆層雲峽冰瀑祭｜札幌出發", note:"台灣市場 YoY 提升，9 月預估 MoM +90%，全日程保證出發"},
        {id:135943, aop:17836, n:"道東流冰體驗二日遊｜GARINKO III＆層雲峽", note:"同線替代方案"},
-       {id:146864, aop:21690, n:"知床・網走流冰二日遊｜極光號＆流冰觸摸", note:"入住五星溫泉飯店，客單最高"},
+       {id:146864, aop:21690, n:"知床・網走流冰二日遊｜極光號＆流冰觸摸", note:"入住五星溫泉飯店，規格最高"},
        {id:259458, aop:11224, n:"流冰二日遊｜流冰漫步＆極光號・單人同價", note:"單人同價，一個人也能去"},
        {id:154373, aop:10720, n:"新造船 GARINKO III・IMERU 流冰破冰船", note:"新船題材"}]}
    ]},
@@ -1410,7 +1411,7 @@ const PACKS = [
    groups:[
      {n:"日本", items:[
        {id:142125, aop:7638, n:"沖繩全島包車一日遊｜立即確認", note:"沖繩包車量最大"},
-       {id:133661, aop:10591, n:"大阪、京都、奈良、神戶 10 小時來回包車", note:"關西主力，客單破萬"},
+       {id:133661, aop:10591, n:"大阪、京都、奈良、神戶 10 小時來回包車", note:"關西主力，一車走完大阪京都奈良神戶"},
        {id:29426,  n:"沖繩包車｜客製 1／2 日・中文司機", note:"5–49 座車型可選"},
        {id:134740, aop:3461, n:"大阪－關西機場／京都／神戶專屬包車接送", note:"點對點接送，門檻低"}]},
      {n:"東南亞", items:[
@@ -1446,7 +1447,7 @@ const PACKS = [
        {id:158405, aop:8588, n:"濟州航空・高雄｜首爾／釜山", note:"南部出發"},
        {id:135911, aop:8909, n:"易斯達・桃園｜首爾／濟州／釜山／清州", note:"四地可選"},
        {id:139665, aop:9350, n:"泰瑞・高雄｜首爾／濟州／釜山", note:"南部出發替代"},
-       {id:147248, aop:14544, n:"釜山航空・高雄－釜山｜2 人成行", note:"客單最高的韓國線"},
+       {id:147248, aop:14544, n:"釜山航空・高雄－釜山｜2 人成行", note:"釜山直飛，2 人成行"},
        {id:154052, aop:7088, n:"濟州航空・桃園｜釜山", note:"門檻最低"},
        {id:146962, aop:9288, n:"真航空・桃園｜首爾／釜山／濟州", note:"1 人成行"},
        {id:144562, aop:9188, n:"釜山航空・桃園｜釜山・2 人成行", note:"釜山直飛"}]},
@@ -3916,7 +3917,7 @@ function fillCodes(){
     try { c = bestCode(Number(el.getAttribute("data-oid")), Number(el.getAttribute("data-aop"))||0); } catch (err) { c = null; }
     if (!c) continue;
     el.innerHTML = '<span>可搭折扣碼</span><b>' + esc(c.code) + '</b><u>' + esc(c.benefit) +
-      (c._cut ? '　→ 客單 ' + c._aop.toLocaleString() + ' 實折約 ' + c._cut.toLocaleString() + ' 元' : "") + '</u>';
+      (c._cut ? '　→ 這支約可折 ' + c._cut.toLocaleString() + ' 元' : "") + '</u>';
     el.hidden = false;
     var row = el.closest(".pkrow"), btn = row && row.querySelector(".mkpick");
     if (btn){ btn.setAttribute("data-code", c.code); btn.setAttribute("data-cinfo", c.benefit); }
@@ -4741,8 +4742,10 @@ document.addEventListener("click", function(e){
          同一個主題裡不同商品的客單差很多，整包掛同一張碼常常有人吃不到門檻。 */
       var c = null;
       try { c = bestCode(Number(x.dataset.id), Number(x.dataset.aop) || 0); } catch(e) {}
+      /* 不寫出客單金額——那是 KKday 的成交數據，夥伴百科雖是內部工具但 KOL 看得到，
+         等於把定價與毛利結構透露給外部合作對象（2026-09-23 移除）。只講折抵即可。 */
       if (c) out += "　折扣碼 " + c.code + "：" + c.benefit +
-        (c._cut ? "（客單約 " + c._aop.toLocaleString() + " 可折 " + c._cut.toLocaleString() + " 元）" : "") + "\n";
+        (c._cut ? "（這支約可折 " + c._cut.toLocaleString() + " 元）" : "") + "\n";
       out += withCid(x.dataset.u) + "\n\n";
     });
   });
