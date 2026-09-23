@@ -434,7 +434,8 @@ h3{font-size:19px;font-weight:700;margin:34px 0 10px}
 .railbtn:hover{background:var(--brand);color:#fff;border-color:var(--brand)}
 .railbtn.on{display:grid}
 @media (max-width:720px){.railbtn{display:none!important}.deals>.deal{flex:0 0 78%}}
-.deal{background:#fff;border-radius:18px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column}
+/* 區塊底色現在會自動交錯，白卡可能落在白底上，一定要有框線才看得出邊界。 */
+.deal{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column}
 /* 還沒到上架日的檔期：整張反灰、圖片去色、按鈕停用，時間一到（重新整理）自動恢復 */
 /* 頂部導覽列是固定的，錨點要留出高度，不然跳過去標題會被壓在列底下 */
 section[id],div[id="check"],div[id="codelist"]{scroll-margin-top:76px}
@@ -592,7 +593,9 @@ body.adminonly #codes #ck-prod{display:none}
 .navdda{display:inline-flex;align-items:center;gap:6px}
 .navdda i{width:6px;height:6px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg) translateY(-2px);transition:transform .18s;opacity:.7}
 .navdd.on .navdda i{transform:rotate(-135deg) translateY(-1px)}
-.navddp{display:none;position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);z-index:80;background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px;box-shadow:0 14px 44px rgba(9,60,66,.18);min-width:230px;max-height:70vh;overflow:auto}
+/* nav 有 overflow-x:auto（手機橫向捲動用），絕對定位的面板會被裁掉，
+   所以改用 fixed 並在開啟時用 JS 算位置（2026-09-23 修）。 */
+.navddp{display:none;position:fixed;z-index:80;background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px;box-shadow:0 14px 44px rgba(9,60,66,.18);min-width:230px;max-height:70vh;overflow:auto}
 .navdd.on .navddp{display:block}
 .navddp button{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;background:none;border:0;border-radius:9px;padding:9px 12px;font-size:14px;font-weight:700;color:var(--ink);cursor:pointer;text-align:left;white-space:nowrap}
 .navddp button:hover{background:rgba(38,190,201,.12);color:var(--mid)}
@@ -624,7 +627,7 @@ body.adminonly #codes #ck-prod{display:none}
 @media (max-width:760px){.pkmenu{max-width:none}.pkmpanel{flex-direction:column}
   .pkmleft{flex:none;border-right:0;border-bottom:1px solid var(--line);max-height:200px}}
 #packs .pktabs{display:none}
-#packs .pktabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+#packs .pktabs{display:none !important}
 .pktab{background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 15px;font-size:13.5px;font-weight:700;color:var(--mid);cursor:pointer;white-space:nowrap}
 .pktab.on{background:var(--mid);border-color:var(--mid);color:#fff}
 .pkpane{display:none}
@@ -4896,7 +4899,13 @@ document.addEventListener("click", function(e){
   if (a) {
     e.preventDefault();
     const me = a.closest(".navdd");
-    document.querySelectorAll(".navdd").forEach(function(n){ n.classList.toggle("on", n === me && !me.classList.contains("on")); });
+    const willOpen = !me.classList.contains("on");
+    document.querySelectorAll(".navdd").forEach(function(n){ n.classList.toggle("on", n === me && willOpen); });
+    if (willOpen) {
+      const r = a.getBoundingClientRect(), pn = me.querySelector(".navddp");
+      pn.style.top = (r.bottom + 10) + "px";
+      pn.style.left = Math.max(10, Math.min(r.left, window.innerWidth - 250)) + "px";
+    }
     return;
   }
   if (!e.target.closest(".navdd"))
