@@ -1178,6 +1178,10 @@ const PSCOPE = {"cty":["?","Japan","Taiwan","Korea","Europe","TH","Hong Kong and
 /* 每張折扣碼的適用地區。cty 國家白名單、dest 城市白名單，兩者都沒填就代表不限地區。
    這是依折扣碼名稱與訴求推得的，發現誤判就改這裡。 */
 const CODE_GEO = {
+  /* 2026-09-23：這兩組原本沒設地區，導致韓國商品被配到日本專用碼。
+     新增折扣碼時，只要 scope 寫了國家就一定要同步補 CODE_GEO。 */
+  "26AWJPTOUR": {cty:["Japan"]},
+  "KBEAUTY88":  {cty:["South Korea"]},
   "ZCK9ZMG":{nocat:["票券通票","景點門票","包車"]},
   "918TKT5000":{cat:["機票"]}, "919TKT5000":{cat:["機票"]},
   "26918LC":{cty:["Taiwan"]},
@@ -3050,7 +3054,9 @@ function bestCode(oid, aop){
   var price = (typeof aop==="number" && aop>0) ? aop : 0;
   var pool = all.filter(function(it){ return live(it) && ok(it.code); });
   if (!pool.length) return null;
-  if (!price) return pool[0];
+  /* 沒有客單資料就不推薦——寧可不給，也不要猜一張吃不到門檻的碼。
+     先前會回 pool[0]，結果新上架商品一律被配到「滿 5,000 折 400」（2026-09-23 修）。 */
+  if (!price) return null;
 
   var scored = pool.map(function(it){
     var only = (typeof FLASH_RULE!=="undefined" && FLASH_RULE[it.code] && FLASH_RULE[it.code].only) ? 1 : 0;
