@@ -628,10 +628,8 @@ body.adminonly #codes #ck-prod{display:none}
   .pkmleft{flex:none;border-right:0;border-bottom:1px solid var(--line);max-height:200px}}
 /* 主題膠囊：區塊內直接切換主題（2026-09-23 Alen 要求恢復，導覽列下拉照留） */
 #packs .pktabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
-/* 主題膠囊與折扣碼分頁（.tabs button）同一套尺寸與配色，兩區看起來才一致（2026-09-23）。
-   一定要 font:inherit——按鈕不繼承字型，少了這行字型、行高會跟別顆不同。 */
-.pktab{flex:0 0 auto;font:inherit;font-size:15px;font-weight:600;line-height:1.4;padding:9px 17px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;white-space:nowrap}
-.pktab.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.pktab{background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 15px;font-size:13.5px;font-weight:700;color:var(--mid);cursor:pointer;white-space:nowrap}
+.pktab.on{background:var(--mid);border-color:var(--mid);color:#fff}
 .pkpane{display:none}
 .pkpane.on{display:block}
 .pkhero{margin:0 0 14px}
@@ -1386,8 +1384,8 @@ const PACKS = [
      {n:"韓國", items:[
        {id:267638, aop:1535, n:"KKday 獨家｜Inspire Arena 演唱會接駁車＋機場送機", note:"演唱會接駁是獨家，追星族剛需", img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_scm_5848/20260428044345_VEdN1/jpg"},
        {id:267656, aop:1291, n:"KKday 獨家｜高陽體育場 K-POP 接駁巴士", note:"同上，散場直達機場", img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_scm_5849/20260901045415_JNAdI/png"},
-       {id:528542, aop:1522, n:"KKday 獨家｜仁川亞運主體育場演唱會接駁", note:"演唱會接駁系列"},
-       {id:594103, aop:106,  n:"KKday 獨家｜釜山 Nundongja 眼鏡店 30 分鐘快速配鏡", note:"30 年老店獨家合作，題材少見"},
+       {id:528542, aop:1522, n:"KKday 獨家｜仁川亞運主體育場演唱會接駁", note:"演唱會接駁系列", img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_scm_5857/20260708124934_r5NVS/png"},
+       {id:594103, aop:106,  n:"KKday 獨家｜釜山 Nundongja 眼鏡店 30 分鐘快速配鏡", note:"30 年老店獨家合作，題材少見", img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_594103/20260526042210_bUAzB/jpg"},
        {id:569432, aop:113,  n:"KKday 獨家｜K-Eyewear 配鏡（弘大／聖水／江南／明洞）", note:"四店可選"},
        {id:17612,  aop:2240, n:"KKday 獨家｜濟州島西歸浦日間豪華遊艇", note:"獨家促銷價"}]},
      {n:"港澳", items:[
