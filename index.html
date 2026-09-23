@@ -604,9 +604,13 @@ body.adminonly #codes #ck-prod{display:none}
 .pkbulk:disabled{background:var(--line);color:var(--muted);cursor:default}
 .pkghd{display:flex;align-items:baseline;gap:10px;margin:0 0 8px}
 .pkpromo{font-size:12px;font-weight:700;color:var(--mid);text-decoration:none;border-bottom:1px solid rgba(14,122,133,.35)}
-.pkcode{display:inline-flex;align-items:baseline;gap:9px;background:#fff;border:1px dashed var(--mid);border-radius:9px;padding:7px 12px;margin:0 0 12px;max-width:100%;flex-wrap:wrap}
-.pkcode b{font-family:var(--mono);font-size:13px;color:var(--mid);letter-spacing:.04em}
-.pkcode span{font-size:12px;color:var(--muted)}
+/* 折扣碼不再用虛線外框（撐滿一整行很難看，而且 .pkcode 這個 class
+   在每週選品也有用，樣式會互相干擾）。改成跟在說明行後面的一行小字，
+   碼本身做成淡青底膠囊就夠醒目（2026-09-23 改）。 */
+#packs .pkfee{display:block;margin:0 0 12px;font-size:12.5px;color:var(--muted);line-height:1.9}
+#packs .pkfee b{display:inline-block;font-family:var(--mono);font-size:12px;font-weight:700;
+  letter-spacing:.04em;color:var(--mid);background:rgba(38,190,201,.14);
+  border-radius:6px;padding:3px 8px;margin-right:8px}
 .pkgrp{margin:0 0 18px}
 .pkgh{font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--brand);margin:0}
 .pkgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:9px}
@@ -3491,7 +3495,7 @@ PACKS.map(function(p, i){
   return '<div class="pkpane' + (i === 0 ? " on" : "") + '" data-p="' + esc(p.id) + '">' +
     (p.img ? '<div class="pkhero"><img loading="lazy" src="' + esc(p.img) + '" alt=""></div>' : "") +
     (p.lede ? '<p class="pklede">' + esc(p.lede) + '</p>' : "") +
-    (p.code ? '<div class="pkcode"><b>' + esc(p.code) + '</b><span>' + esc(p.codeNote || "") + '</span></div>' : "") +
+    (p.code ? '<p class="pkfee"><b>' + esc(p.code) + '</b>' + esc(p.codeNote || "") + '</p>' : "") +
     '<div class="pkbar"><button class="pkall">全選這個主題</button>' +
       '<button class="pkbulk" disabled>複製勾選的 0 支</button></div>' +
     p.groups.map(function(g){
@@ -4717,8 +4721,9 @@ document.addEventListener("click", function(e){
   let out = "【" + title + "】\n";
   /* 主題有指定折扣碼（例如機票的 KKFLY、美妝的 KBEAUTY88）就固定寫在最前面，
      個別商品下面仍會標各自最划算的那張。 */
-  const pc = pane.querySelector(".pkcode");
-  if (pc) out += "指定折扣碼 " + pc.querySelector("b").textContent + "：" + pc.querySelector("span").textContent + "\n";
+  const pc = pane.querySelector(".pkfee");
+  if (pc) out += "指定折扣碼 " + pc.querySelector("b").textContent + "：" +
+    pc.textContent.replace(pc.querySelector("b").textContent, "").trim() + "\n";
   out += "\n";
   pane.querySelectorAll(".pkgrp").forEach(function(g){
     const sel = [...g.querySelectorAll(".pkck:checked")];
