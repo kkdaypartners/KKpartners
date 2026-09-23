@@ -588,6 +588,8 @@ body.adminonly #codes #ck-prod{display:none}
 .freebulk{background:var(--mid);color:#fff;border:none;border-radius:999px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer}
 .freebulk:disabled{background:var(--line);color:var(--muted);cursor:default}
 .freeck{flex:0 0 auto;accent-color:var(--mid);margin:0}
+.pksel{display:none;width:100%;margin:0 0 16px;padding:12px 14px;font-size:15px;font-weight:700;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:12px;appearance:none}
+@media (max-width:760px){.pksel{display:block}#packs .pktabs{display:none}}
 #packs .pktabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
 .pktab{background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 15px;font-size:13.5px;font-weight:700;color:var(--mid);cursor:pointer;white-space:nowrap}
 .pktab.on{background:var(--mid);border-color:var(--mid);color:#fff}
@@ -767,7 +769,9 @@ border:1px solid #F0D2CA;border-radius:999px;padding:2px 8px;margin-left:8px}
 .hottab{font-size:13px;font-weight:700;color:var(--mid);background:#fff;border:1px solid var(--line);
 border-radius:999px;padding:7px 15px;cursor:pointer}
 .hottab.on{background:var(--mid);color:#fff;border-color:var(--mid)}
-.hotbar{display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap}.hotcopy{background:var(--mid);color:#fff;border:none;border-radius:999px;padding:7px 14px;font-size:12.5px;font-weight:700;cursor:pointer}.hotcopy:disabled{background:var(--line);color:var(--muted);cursor:default}.hotall{background:none;border:none;color:var(--mid);font-size:12.5px;font-weight:700;cursor:pointer;text-decoration:underline}.hotsel{list-style:none;margin:0;padding:0}.hotsel li{margin:0 0 4px}.hotsel label{display:flex;gap:8px;align-items:flex-start;cursor:pointer}.hotsel input{margin-top:3px;flex:0 0 auto;accent-color:var(--mid)}
+.hotbar{display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap}.hotcopy{background:var(--mid);color:#fff;border:none;border-radius:999px;padding:7px 14px;font-size:12.5px;font-weight:700;cursor:pointer}.hotcopy:disabled{background:var(--line);color:var(--muted);cursor:default}.hotall{background:none;border:none;color:var(--mid);font-size:12.5px;font-weight:700;cursor:pointer;text-decoration:underline}.hotsel{list-style:none;margin:0;padding:0}.hotsel li{margin:0 0 4px}.hotsel li{display:flex;gap:8px;align-items:flex-start;margin:0 0 5px}.hotsel input{margin-top:4px;flex:0 0 auto;accent-color:var(--mid);cursor:pointer}
+.hotgo{background:none;border:0;padding:0;font:inherit;color:var(--mid);cursor:pointer;text-align:left;line-height:1.55;border-bottom:1px solid rgba(14,122,133,.28)}
+.hotgo:hover{border-bottom-color:var(--mid)}
 .hotlist.good a{color:var(--mid);text-decoration:none;border-bottom:1px solid rgba(14,122,133,.3)}.hotlist.good a:hover{border-bottom-color:var(--mid)}
 .hotlist{padding:14px 16px;border-radius:10px}
 .hotlist.bad{background:#FFF6F4;border-left:4px solid #B4543F}
@@ -1428,18 +1432,33 @@ const PACKS = [
        {id:153331, aop:821,  n:"鳥取・松江區域周遊券｜eMCO 電子票", note:"山陰小區域，單價低"},
        {id:126027, aop:4428, n:"西遊紀行・瀨戶內地區鐵路周遊 7 日券", note:"瀨戶內跳島"}]}
    ]},
-  {id:"charter", tab:"包車", lede:"高客單、成團率高，適合家庭與長輩客群。",
+  {id:"charter", tab:"包車接送", lede:"機場接送是量最大的一類，成團率高、門檻低。客製化與詢價型商品不列入——那類無法分潤。",
    groups:[
-     {n:"日本", items:[
-       {id:142125, aop:7638, n:"沖繩全島包車一日遊｜立即確認", note:"沖繩包車量最大"},
-       {id:133661, aop:10591, n:"大阪、京都、奈良、神戶 10 小時來回包車", note:"關西主力，一車走完大阪京都奈良神戶"},
-       {id:29426,  n:"沖繩包車｜客製 1／2 日・中文司機", note:"5–49 座車型可選"},
-       {id:134740, aop:3461, n:"大阪－關西機場／京都／神戶專屬包車接送", note:"點對點接送，門檻低"}]},
-     {n:"東南亞", items:[
-       {id:3431,   n:"泰國機場包車接送｜BKK／DMK－曼谷市區", note:"量最大的接送商品"},
-       {id:137705, aop:1526, n:"峇里島包車體驗｜6／10 小時客製行程", note:"中英日韓語言司機可選"}]},
      {n:"台灣", items:[
-       {id:570459, aop:1580, n:"基隆港口接送｜全省往返基隆港・賓士商務車", note:"郵輪客配套，可與郵輪包一起寫"}]}
+       {id:1781,   aop:949,  n:"桃園國際機場接送｜接機含舉牌服務", note:"站上量最大的接送商品"},
+       {id:138845, aop:950,  n:"桃園機場接送｜全台各地市區專車", note:"全台可接，南部客也適用"},
+       {id:570329, aop:938,  n:"TPE 桃園機場接送｜經濟型 5 人座", note:"固定車型明碼標價"},
+       {id:570559, aop:1220, n:"TPE 桃園機場接送｜經濟型 9 人座", note:"家庭或多人適用"},
+       {id:267863, aop:177,  n:"機場巴士｜桃園機場－新竹轉運站", note:"單價最低的入門選項"},
+       {id:570459, aop:1564, n:"基隆港口接送｜全省往返・賓士商務車", note:"郵輪客配套，可與郵輪包一起寫"}]},
+     {n:"日本", items:[
+       {id:151505, aop:3037, n:"東京｜成田・羽田・迪士尼接送｜可選中文司機", note:"禮遇專案價，中文司機是賣點"},
+       {id:532273, aop:2984, n:"TYO 成田機場接送｜舒適型 10 座", note:"大團體適用"},
+       {id:18551,  aop:1316, n:"東京利木津巴士｜羽田・成田至市區・迪士尼", note:"單價低、班次多"},
+       {id:174325, aop:3229, n:"日本拼車一日遊｜東京 23 區與近郊", note:"一人可成團"},
+       {id:142125, aop:7637, n:"沖繩全島包車一日遊｜立即確認", note:"沖繩量最大，立即確認不用等"},
+       {id:133661, aop:10591, n:"大阪、京都、奈良、神戶 10 小時來回包車", note:"關西主力，一車走完四城"},
+       {id:134740, aop:3478, n:"大阪－關西機場／京都／神戶專屬包車接送", note:"點對點接送"}]},
+     {n:"韓國", items:[
+       {id:569507, aop:1512, n:"SEL 仁川機場接送｜經濟型 7 座", note:"韓國量最大的接送"},
+       {id:157235, aop:1719, n:"仁川／金浦機場接送｜往返首爾市中心", note:"兩個機場都能用"},
+       {id:526339, aop:724,  n:"仁川機場接送｜機場巴士票（豪華巴士）", note:"門檻最低"},
+       {id:18410,  aop:2261, n:"釜山專車接送｜金海機場・KTX 站 ↔ 市區", note:"釜山線"}]},
+     {n:"東南亞", items:[
+       {id:130539, aop:667,  n:"曼谷機場接送｜至市區、芭達雅、華欣、大城", note:"泰國量最大"},
+       {id:3431,   aop:1104, n:"泰國機場包車接送｜BKK／DMK－曼谷市區", note:"包車形式，行李多適用"},
+       {id:134096, aop:683,  n:"泰國機場包車｜廊曼／素萬那普 ↔ 多城市", note:"可到考艾與七岩"},
+       {id:128295, aop:826,  n:"越南包車｜峴港巴拿山往返私人包車", note:"巴拿山行程配套"}]}
    ]},
   {id:"flight", tab:"機票", code:"KKFLY", codeNote:"機票滿 7,000 折 300",
    lede:"客單最高的一類，含稅含行李、1 人成行是主要賣點。",
@@ -3509,9 +3528,12 @@ function buildEvent(){
 }
 /* 0 元商品專區（每週選品分析之後、本月檔期之前） */
 /* 主題資源包（0 元商品之前） */
-H += '<section class="band band-wash" id="packs"><div class="inner">' +
+H += '<section class="band" id="packs"><div class="inner">' +
 '<h2>主題資源包</h2>' +
 '<p class="lede">把單品整理成一整包，寫部落格或長文時整組複製就能用。連結會自動帶上你的 CID。</p>' +
+'<select class="pksel" id="pksel" aria-label="選擇主題">' + PACKS.map(function(p, i){
+  return '<option value="' + esc(p.id) + '"' + (i === 0 ? " selected" : "") + '>' + esc(p.tab) + '</option>';
+}).join("") + '<option value="free0">0 元商品</option></select>' +
 '<div class="pktabs" role="tablist">' + PACKS.map(function(p, i){
   return '<button class="pktab' + (i === 0 ? " on" : "") + '" data-p="' + esc(p.id) + '">' + esc(p.tab) + '</button>';
 }).join("") + '<button class="pktab" data-p="free0">0 元商品</button></div>' +
@@ -4629,8 +4651,9 @@ document.getElementById("cksel").addEventListener("change", e => {
       '</div>' +
       '<ul class="hotsel">' + arr.map(function(b){
         var u = withCid(prodUrl(b[0]));
-        return '<li><label><input type="checkbox" data-n="' + esc(b[1]) + '" data-u="' + esc(u) + '">' +
-               '<a href="' + esc(u) + '" target="_blank" rel="noopener">' + esc(b[1]) + '</a></label></li>';
+        return '<li><input type="checkbox" class="freeck2" data-n="' + esc(b[1]) + '" data-u="' + esc(u) + '">' +
+               '<button type="button" class="hotgo" data-pv="' + b[0] + '" data-n="' + esc(b[1]) + '">' +
+               esc(b[1]) + '</button></li>';
       }).join("") + '</ul>';
   }
   /* 整批都判不出來（規則說有類別限制但站上沒登記 CODE_GEO）就不要列清單。
@@ -4717,6 +4740,14 @@ document.addEventListener('click', function(e){
            '已複製 ' + picked.length + ' 支商品，含折扣條件與連結');
 });
 
+/* 窄螢幕改用下拉選單切主題——十一個膠囊在手機上會擠成三行 */
+document.addEventListener("change", function(e){
+  if (e.target.id !== "pksel") return;
+  const root = e.target.closest("#packs");
+  root.querySelectorAll(".pktab").forEach(function(b){ b.classList.toggle("on", b.dataset.p === e.target.value); });
+  root.querySelectorAll(".pkpane").forEach(function(x){ x.classList.toggle("on", x.dataset.p === e.target.value); });
+});
+
 /* 商品預覽彈窗：KOL 在挑商品時不想一直跳出去再回來（Alen 2026-09-23）。
    KKday 商品頁不能內嵌（幾乎所有電商都擋 iframe），所以改用站上既有的資料
    組一個預覽：推薦理由、最划算的折扣碼、帶 CID 的連結，要看完整方案再開新分頁。
@@ -4730,8 +4761,9 @@ FREE_ITEMS.forEach(function(g){ g.list.forEach(function(f){
   PV_IDX[f.id] = {n:f.n, note:FREE_KIND[f.k] || FREE_KIND.tax, grp:g.c, tab:"0 元商品", img:""};
 });});
 
-function pvOpen(id){
-  const x = PV_IDX[id]; if (!x) return;
+function pvOpen(id, fallbackName){
+  const x = PV_IDX[id] || (fallbackName ? {n:fallbackName, note:"", grp:"折扣碼查詢", tab:"可用商品", img:"", aop:0} : null);
+  if (!x) return;
   let c = null;
   try { c = bestCode(Number(id), x.aop || 0); } catch(e) {}
   const u = withCid(prodUrl(id));
@@ -4757,8 +4789,8 @@ function pvClose(){
   document.body.style.overflow = "";
 }
 document.addEventListener("click", function(e){
-  const g = e.target.closest(".pkgo");
-  if (g) { pvOpen(Number(g.dataset.pv)); return; }
+  const g = e.target.closest(".pkgo, .hotgo");
+  if (g) { pvOpen(Number(g.dataset.pv), g.dataset.n || ""); return; }
   const cp = e.target.closest("[data-pvcopy]");
   if (cp) {
     const id = Number(cp.dataset.pvcopy), x = PV_IDX[id];
@@ -4776,6 +4808,8 @@ document.addEventListener("keydown", function(e){ if (e.key === "Escape") pvClos
 document.addEventListener("click", function(e){
   const tab = e.target.closest(".pktab");
   if (tab) {
+    const psel = document.getElementById("pksel");
+    if (psel) psel.value = tab.dataset.p;
     const root = tab.closest("#packs");
     root.querySelectorAll(".pktab").forEach(function(b){ b.classList.toggle("on", b === tab); });
     root.querySelectorAll(".pkpane").forEach(function(x){ x.classList.toggle("on", x.dataset.p === tab.dataset.p); });
