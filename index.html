@@ -1402,7 +1402,7 @@ const PACKS = [
      {n:"其他", items:[
        {id:143059, aop:7300, n:"金廈小三通｜機票＋接駁＋船票・三地出發", note:"量最大的機票類商品"}]}
    ]},
-  {id:"kbeauty", tab:"K-Beauty", lede:"KBEAUTY88 加碼 420 組，9/24 開始可用。首爾主打一站式變美，釜山與江原道走療癒路線。",
+  {id:"kbeauty", tab:"K-Beauty", lede:"",
    groups:[
      {n:"首爾｜一站式變美", promo:"https://www.kkday.com/zh-tw/promo/korea-beauty-festival",
       items:[
@@ -1691,6 +1691,25 @@ const DEALS = [
     why: "原價 2,400 直接砍到 600 日圓，直降 1,800，折數少見，數字本身就是賣點，不用多解釋。東京鐵塔正對面的高空夜景，畫面好拍、受眾廣，秋冬去東京的都能推。",
     code: "26SEP95",
     due: "折扣碼 26SEP95 不限門檻 95 折、單筆最高折 NT$150，9/30 到期",
+  },
+  {
+    tag: "韓國美妝節",
+    name: "Korea Beauty Festival｜K-Beauty 88 折",
+    url: "https://www.kkday.com/zh-tw/promo/korea-beauty-festival",
+    from: "2026-09-24",
+    till: "2026-10-05",
+    soonmsg: "09/24 開跑",
+    img: "img/kbf-1000.webp",
+    price: "體驗 88 折，最高折 450",
+    why: "韓國觀光公社與文化體育觀光部主辦的官方美妝節，KKday 是合作通路。主打的不是逛街購物，而是「活進當地人的生活」——首爾療癒 Spa、清潭洞明星髮型師、韓妞在逛的保養選物店。這個切角比一般的購物文好寫，也比較不會跟別人撞題。首爾可打一站式變美（彩妝改造＋韓服攝影），釜山與江原道則走溫泉、滑雪、渡假村的 Wellness 路線，跟冬季檔期能互相導流。",
+    code: "KBEAUTY88",
+    due: "指定 K-Beauty 體驗 88 折，最高折抵 450 元。訂購期間 9/24–12/31，使用期限至 2027/2/28。加碼 420 組，市場共用、用完為止。",
+    note: [
+      "折扣碼 9/24 才生效，今天先發文的話不要叫粉絲現在輸入",
+      "420 組是各市場共用，不是台灣獨享，先搶先用",
+      "活動主視覺標示的festival期間是 6/24–9/30，但折扣碼可用到 12/31，兩者不同不要寫混",
+      "完整適用商品清單尚未取得，推薦前先用「查商品能不能用」確認"
+    ]
   },
   {
     tag: "限時促銷",
@@ -3427,7 +3446,7 @@ H += '<section class="band band-wash" id="packs"><div class="inner">' +
 PACKS.map(function(p, i){
   return '<div class="pkpane' + (i === 0 ? " on" : "") + '" data-p="' + esc(p.id) + '">' +
     (p.img ? '<div class="pkhero"><img loading="lazy" src="' + esc(p.img) + '" alt=""></div>' : "") +
-    '<p class="pklede">' + esc(p.lede) + '</p>' +
+    (p.lede ? '<p class="pklede">' + esc(p.lede) + '</p>' : "") +
     '<div class="pkbar"><button class="pkall">全選這個主題</button>' +
       '<button class="pkbulk" disabled>複製勾選的 0 支</button></div>' +
     p.groups.map(function(g){
