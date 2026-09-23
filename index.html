@@ -579,9 +579,14 @@ body.adminonly #codes #ck-prod{display:none}
    改用品牌淡青底，一眼看得出是獨立區塊（2026-09-23）。 */
 #free{background:rgba(38,190,201,.07);border-top:1px solid rgba(38,190,201,.22);border-bottom:1px solid rgba(38,190,201,.22)}
 #free .freecard{border-color:rgba(38,190,201,.25)}
+.freetop{display:flex;align-items:center;gap:9px;margin:0 0 9px;flex-wrap:wrap}
+.freeall{background:none;border:none;color:var(--mid);font-size:12px;font-weight:700;cursor:pointer;text-decoration:underline;padding:0}
+.freebulk{background:var(--mid);color:#fff;border:none;border-radius:999px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer}
+.freebulk:disabled{background:var(--line);color:var(--muted);cursor:default}
+.freeck{flex:0 0 auto;accent-color:var(--mid);margin:0}
 .freegrp{margin:0 0 22px}
 .freegrp:last-of-type{margin-bottom:0}
-.freehd{font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--mid);margin:0 0 9px}
+.freehd{font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--mid);margin:0}
 .freegrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
 .freecard{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 12px 11px 15px;transition:transform .15s,box-shadow .15s}
 .freecard:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(9,60,66,.12)}
@@ -3201,11 +3206,17 @@ H += '<section class="band" id="free"><div class="inner">' +
 '<h2>0 元商品</h2>' +
 '<p class="lede">粉絲不用花錢就能領，最好用的引流鉤子。連結會自動帶上你的 CID。</p>' +
 FREE_ITEMS.map(function(g){
-  return '<div class="freegrp"><h3 class="freehd">' + esc(g.c) + '</h3><div class="freegrid">' +
+  return '<div class="freegrp" data-c="' + esc(g.c) + '">' +
+    '<div class="freetop"><h3 class="freehd">' + esc(g.c) + '</h3>' +
+      '<button class="freeall">全選</button>' +
+      '<button class="freebulk" disabled>複製勾選的 0 支</button>' +
+    '</div><div class="freegrid">' +
     g.list.map(function(f){
-      return '<div class="freecard"><a class="freego" data-u="' + esc(prodUrl(f.id)) + '" href="' + esc(prodUrl(f.id)) + '" target="_blank" rel="noopener">' +
+      return '<div class="freecard">' +
+        '<input type="checkbox" class="freeck" data-u="' + esc(prodUrl(f.id)) + '" data-n="' + esc(f.n) + '">' +
+        '<a class="freego" data-u="' + esc(prodUrl(f.id)) + '" href="' + esc(prodUrl(f.id)) + '" target="_blank" rel="noopener">' +
         '<b>' + esc(f.n) + '</b></a>' +
-        '<button class="freecopy" data-u="' + esc(prodUrl(f.id)) + '" data-n="' + esc(f.n) + '" title="複製帶 CID 的連結">複製</button>' +
+        '<button class="freecopy" data-u="' + esc(prodUrl(f.id)) + '" data-n="' + esc(f.n) + '" title="複製這一支">複製</button>' +
       '</div>'; }).join("") +
   '</div></div>'; }).join("") +
 '<p class="ckmore">這些商品本身不計佣金，但粉絲領完券通常會接著買別的——把它當入口，後面再導到有佣金的商品。</p>' +
@@ -4373,7 +4384,38 @@ document.addEventListener('click', function(e){
 });
 
 /* 0 元商品：點擊時才補上 CID（組裝階段 MYCID 尚未初始化） */
+function freeSync(grp){
+  const n = grp.querySelectorAll(".freeck:checked").length;
+  const b = grp.querySelector(".freebulk");
+  b.textContent = "複製勾選的 " + n + " 支"; b.disabled = !n;
+  const all = grp.querySelector(".freeall");
+  const tot = grp.querySelectorAll(".freeck").length;
+  all.textContent = (n === tot && tot) ? "取消全選" : "全選";
+}
+document.addEventListener("change", function(e){
+  const ck = e.target.closest(".freeck");
+  if (ck) freeSync(ck.closest(".freegrp"));
+});
 document.addEventListener("click", function(e){
+  const all = e.target.closest(".freeall");
+  if (all) {
+    const grp = all.closest(".freegrp");
+    const cks = [...grp.querySelectorAll(".freeck")];
+    const on = cks.every(function(x){ return x.checked; });
+    cks.forEach(function(x){ x.checked = !on; });
+    freeSync(grp); return;
+  }
+  const bulk = e.target.closest(".freebulk");
+  if (bulk) {
+    const grp = bulk.closest(".freegrp");
+    const picked = [...grp.querySelectorAll(".freeck:checked")];
+    if (!picked.length) return;
+    if (!MYCID) { toastMsg("先在上面填你的 CID"); document.getElementById("mycid").scrollIntoView({block:"center"}); return; }
+    copyText("【" + grp.dataset.c + "・0 元商品】\n粉絲不用花錢就能領，點連結直接領取\n\n" +
+      picked.map(function(x){ return "・" + x.dataset.n + "\n" + withCid(x.dataset.u); }).join("\n\n") + "\n",
+      "已複製 " + picked.length + " 支，連結都帶上你的 CID");
+    return;
+  }
   /* 複製鈕：一鍵複製帶自己 CID 的連結 */
   const cp = e.target.closest(".freecopy");
   if (cp) {
