@@ -588,6 +588,15 @@ body.adminonly #codes #ck-prod{display:none}
 .freebulk{background:var(--mid);color:#fff;border:none;border-radius:999px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer}
 .freebulk:disabled{background:var(--line);color:var(--muted);cursor:default}
 .freeck{flex:0 0 auto;accent-color:var(--mid);margin:0}
+.navdd{position:relative;display:inline-block}
+.navdda{display:inline-flex;align-items:center;gap:6px}
+.navdda i{width:6px;height:6px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg) translateY(-2px);transition:transform .18s;opacity:.7}
+.navdd.on .navdda i{transform:rotate(-135deg) translateY(-1px)}
+.navddp{display:none;position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);z-index:80;background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px;box-shadow:0 14px 44px rgba(9,60,66,.18);min-width:230px;max-height:70vh;overflow:auto}
+.navdd.on .navddp{display:block}
+.navddp button{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;background:none;border:0;border-radius:9px;padding:9px 12px;font-size:14px;font-weight:700;color:var(--ink);cursor:pointer;text-align:left;white-space:nowrap}
+.navddp button:hover{background:rgba(38,190,201,.12);color:var(--mid)}
+.navddp em{font-style:normal;font-size:11.5px;font-weight:700;color:var(--muted);background:var(--wash);border-radius:999px;padding:2px 7px}
 .pkmenu{position:relative;margin:0 0 16px;max-width:360px}
 .pkmbtn{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;
   background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 15px;
@@ -1055,7 +1064,10 @@ footer a{color:var(--brand)}
     <a href="#today">本週優惠</a>
     <a href="#benefit">專屬福利</a>
     <a href="#picks">每週選品</a>
-    <a href="#packs">主題資源包</a>
+    <span class="navdd" id="navdd">
+      <a href="#packs" class="navdda">主題資源包 <i></i></a>
+      <span class="navddp" id="navddp"></span>
+    </span>
     <a href="#event">本月檔期</a>
     <a href="#codes">折扣碼</a>
     <a href="#sponsor">贊助</a>
@@ -4849,6 +4861,35 @@ document.addEventListener('click', function(e){
     wash = !wash;
   });
 })();
+
+/* 導覽列的「主題資源包」下拉：直接從 PACKS 生成，新增主題會自動出現。
+   點主題就切到該分頁並捲過去，不用進到區塊再找（Alen 2026-09-23）。 */
+(function(){
+  const p = document.getElementById("navddp");
+  if (!p) return;
+  p.innerHTML = PACKS.map(function(x){
+    let n = 0; x.groups.forEach(function(g){ n += g.items.length; });
+    return '<button type="button" data-p="' + esc(x.id) + '">' + esc(x.tab) + '<em>' + n + '</em></button>';
+  }).join("") +
+  '<button type="button" data-p="free0">0 元商品<em>' +
+    FREE_ITEMS.reduce(function(a, g){ return a + g.list.length; }, 0) + '</em></button>';
+})();
+document.addEventListener("click", function(e){
+  const b = e.target.closest("#navddp button");
+  if (!b) return;
+  e.preventDefault();
+  pkmGo(b.dataset.p, "");
+  document.getElementById("packs").scrollIntoView({behavior:"smooth", block:"start"});
+  document.getElementById("navdd").classList.remove("on");
+});
+document.addEventListener("click", function(e){
+  const a = e.target.closest(".navdda");
+  if (a) { e.preventDefault(); document.getElementById("navdd").classList.toggle("on"); return; }
+  if (!e.target.closest("#navdd")) {
+    const n = document.getElementById("navdd");
+    if (n) n.classList.remove("on");
+  }
+});
 
 /* 兩欄下拉的互動 */
 function pkmSub(pid){
