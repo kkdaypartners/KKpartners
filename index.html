@@ -594,8 +594,9 @@ body.adminonly #codes #ck-prod{display:none}
 .pkpane{display:none}
 .pkpane.on{display:block}
 .pkhero{border-radius:14px;overflow:hidden;margin:0 0 14px;background:var(--wash)}
-.pkhero img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
-@media (min-width:900px){.pkhero img{aspect-ratio:21/9}}
+/* 主題圖多半是地圖、預測表這類資訊圖，裁切會把內容切掉，
+   所以不固定比例、不裁切，只限制最大高度（2026-09-23 修）。 */
+.pkhero img{width:100%;height:auto;max-height:360px;object-fit:contain;display:block;margin:0 auto}
 .pklede{margin:0 0 12px;font-size:13px;color:var(--muted);line-height:1.6}
 .pkbar{display:flex;align-items:center;gap:10px;margin:0 0 14px;flex-wrap:wrap}
 .pkall{background:none;border:none;color:var(--mid);font-size:12.5px;font-weight:700;cursor:pointer;text-decoration:underline;padding:0}
@@ -603,16 +604,17 @@ body.adminonly #codes #ck-prod{display:none}
 .pkbulk:disabled{background:var(--line);color:var(--muted);cursor:default}
 .pkghd{display:flex;align-items:baseline;gap:10px;margin:0 0 8px}
 .pkpromo{font-size:12px;font-weight:700;color:var(--mid);text-decoration:none;border-bottom:1px solid rgba(14,122,133,.35)}
-.pkcode{display:flex;align-items:baseline;gap:9px;background:#fff;border:1px dashed var(--mid);border-radius:9px;padding:7px 12px;margin:0 0 9px;flex-wrap:wrap}
+.pkcode{display:inline-flex;align-items:baseline;gap:9px;background:#fff;border:1px dashed var(--mid);border-radius:9px;padding:7px 12px;margin:0 0 12px;max-width:100%;flex-wrap:wrap}
 .pkcode b{font-family:var(--mono);font-size:13px;color:var(--mid);letter-spacing:.04em}
 .pkcode span{font-size:12px;color:var(--muted)}
 .pkgrp{margin:0 0 18px}
 .pkgh{font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--brand);margin:0}
 .pkgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:9px}
-.pkitem{display:flex;align-items:flex-start;gap:9px;background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px 13px;cursor:pointer}
+.pkitem{display:flex;align-items:flex-start;gap:9px;background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px 13px}
 .pkitem:hover{border-color:var(--mid)}
-.pkck{margin-top:3px;flex:0 0 auto;accent-color:var(--mid)}
-.pkitem span{min-width:0;display:flex;flex-direction:column;gap:2px}
+.pkck{margin-top:3px;flex:0 0 auto;accent-color:var(--mid);cursor:pointer}
+.pkgo{min-width:0;flex:1;display:flex;flex-direction:column;gap:2px;text-decoration:none;color:var(--ink)}
+.pkgo:hover b{color:var(--mid);text-decoration:underline}
 .pkitem b{font-size:13.5px;font-weight:700;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pkitem u{text-decoration:none;font-size:11.5px;line-height:1.5;color:var(--muted);white-space:normal}
 .freegrp{margin:0 0 22px}
@@ -3502,12 +3504,13 @@ PACKS.map(function(p, i){
 
         '<div class="pkgrid">' +
         g.items.map(function(x){
-          return '<label class="pkitem">' +
+          return '<div class="pkitem">' +
             '<input type="checkbox" class="pkck" data-n="' + esc(x.n) + '" data-u="' + esc(prodUrl(x.id)) +
               '" data-id="' + x.id + '" data-aop="' + (x.aop || 0) + '" data-note="' + esc(x.note || "") + '">' +
-            '<span><b>' + esc(x.n) + '</b>' +
-            (x.note ? '<u>' + esc(x.note) + '</u>' : "") + '</span>' +
-          '</label>'; }).join("") +
+            '<a class="pkgo" href="' + esc(prodUrl(x.id)) + '" target="_blank" rel="noopener">' +
+              '<b>' + esc(x.n) + '</b>' +
+              (x.note ? '<u>' + esc(x.note) + '</u>' : "") + '</a>' +
+          '</div>'; }).join("") +
       '</div></div>'; }).join("") +
   '</div>'; }).join("") +
 '<div class="pkpane" data-p="free0">' +
@@ -3518,10 +3521,11 @@ PACKS.map(function(p, i){
     return '<div class="pkgrp"><div class="pkghd"><h3 class="pkgh">' + esc(g.c) + '</h3></div><div class="pkgrid">' +
       g.list.map(function(f){
         var dsc = FREE_KIND[f.k] || FREE_KIND.tax;
-        return '<label class="pkitem">' +
+        return '<div class="pkitem">' +
           '<input type="checkbox" class="pkck" data-n="' + esc(f.n) + '" data-u="' + esc(prodUrl(f.id)) + '" data-note="' + esc(dsc) + '">' +
-          '<span><b>' + esc(f.n) + '</b><u>' + esc(dsc) + '</u></span>' +
-        '</label>'; }).join("") +
+          '<a class="pkgo" href="' + esc(prodUrl(f.id)) + '" target="_blank" rel="noopener">' +
+            '<b>' + esc(f.n) + '</b><u>' + esc(dsc) + '</u></a>' +
+        '</div>'; }).join("") +
     '</div></div>'; }).join("") +
 '</div>' +
 '<p class="ckmore">推薦理由來自同事的選品整理與近 90 天銷量。冬季主題過季會換掉，每季更新一次。</p>' +
