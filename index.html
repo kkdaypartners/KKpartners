@@ -574,7 +574,10 @@ body.adminonly #codes #ck-prod{display:none}
 .tags{flex-wrap:nowrap;overflow:hidden}
 .tags span{flex:0 1 auto}
 
-.freegrp{margin:0 0 20px}
+/* 0 元區用淺灰底與上下邊線，跟前後區塊明顯分開 */
+#free{background:var(--wash);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.freegrp{margin:0 0 22px}
+.freegrp:last-of-type{margin-bottom:0}
 .freehd{font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--mid);margin:0 0 9px}
 .freegrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
 .freecard{display:block;background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px 15px;text-decoration:none;color:var(--ink);transition:transform .15s,box-shadow .15s}
@@ -3149,10 +3152,7 @@ function buildEvent(){
   }
   return h + '</div></section>';
 }
-H += buildEvent();
-
-/* ── 2. 折扣碼 ─────────────────────────── */
-/* 0 元商品專區（每週選品分析之後） */
+/* 0 元商品專區（每週選品分析之後、本月檔期之前） */
 H += '<section class="band" id="free"><div class="inner">' +
 '<h2>0 元商品</h2>' +
 '<p class="lede">粉絲不用花錢就能領，最好用的引流鉤子。連結會自動帶上你的 CID。</p>' +
@@ -3165,6 +3165,9 @@ FREE_ITEMS.map(function(g){
 '<p class="ckmore">這些商品本身不計佣金，但粉絲領完券通常會接著買別的——把它當入口，後面再導到有佣金的商品。</p>' +
 '</div></section>';
 
+H += buildEvent();
+
+/* ── 2. 折扣碼 ─────────────────────────── */
 H += '<section class="band band-wash" id="codes"><div class="inner">' +
 '<h2>本月折扣碼</h2>' +
 '<p class="lede">點一下就複製，直接貼進貼文或限動。數量有限、用完為止，實際折抵以結帳頁為準。</p>' +
