@@ -301,7 +301,11 @@ h3{font-size:19px;font-weight:700;margin:34px 0 10px}
 .tabs button[aria-selected="true"]{background:var(--brand);border-color:var(--brand);color:#fff}
 .panel{display:none}
 .panel.on{display:block}
-.cnt{font-size:14px;color:var(--muted);margin:0 0 16px}
+/* 說明與組數原本用全形空格加間隔點串在一起，斷點不明顯、數字也沒份量。
+   改成左說明右數字，數字做成膠囊（2026-09-23）。 */
+.cnt{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 14px}
+.cnt span{font-size:13px;line-height:1.6;color:var(--muted)}
+.cnt b{flex:0 0 auto;font-size:12px;font-weight:800;color:var(--mid);background:var(--wash);border-radius:999px;padding:4px 11px;white-space:nowrap}
 
 /* 折扣碼 */
 .codes{display:grid;gap:10px}
@@ -3468,7 +3472,7 @@ TABS.map(function(g, i){
                }).join("") + '</div>';
   const n = g.id === "daily" ? DAILY.length : g.items.length;
   return '<div class="panel' + (i === 0 ? " on" : "") + '" id="p-' + g.id + '">' +
-    '<p class="cnt">' + esc(g.lede) + '　·　' + n + ' 組</p>' + body + '</div>';
+    '<div class="cnt"><span>' + esc(g.lede) + '</span><b>' + n + ' 組</b></div>' + body + '</div>';
 }).join("") +
 '</div></section>';
 
