@@ -4133,7 +4133,10 @@ document.getElementById("cksel").addEventListener("change", e => {
       (f.only ? "限定商品：" + f.only.join("、") : f.cat ? f.cat : "APP 限定") + '</b>' + esc(f.note) + '</div>';
     return;
   }
-  if (!r) {
+  /* 讀者碼不走 RULES，改用自己的排除清單（READER_EX_*），所以不能在這裡就退出。
+     2026-09-23：清單已匯入但這段先擋住，畫面仍顯示「還沒登記商品規則」。 */
+  const isReader = (code === "READER92" || code === "READER94");
+  if (!r && !isReader) {
     ckout.innerHTML = '<div class="hit warn2"><b>這張碼還沒有登記商品規則</b>' +
       (BANK_SCOPE[code] ? '登記的適用範圍是：' + esc(BANK_SCOPE[code]) + '。' : "") +
       '請以結帳頁實際試算為準。</div>';
