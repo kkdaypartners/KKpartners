@@ -578,7 +578,8 @@ body.adminonly #codes #ck-prod{display:none}
 .dmore summary:after{width:8px;height:8px;border-color:var(--mid)}
 .dmorebd{padding:2px 0 6px}
 .deal.big{grid-column:1/-1;flex-direction:row;box-shadow:0 0 0 2px var(--brand),var(--shadow)}
-.deal.big .dimg{flex:0 0 38%;max-width:380px}
+.deal.big a.dimg{display:block;cursor:pointer}a.dimg img{transition:transform .25s}a.dimg:hover img{transform:scale(1.03)}
+.dimg{flex:0 0 38%;max-width:380px}
 .deal.big .dimg img{height:auto;object-fit:contain}
 .deal.big .dbd{padding:28px 32px}
 .deal.big b{font-size:22px;letter-spacing:-.02em}
@@ -1771,14 +1772,15 @@ const DEALS = [  {
     name: "瑞士通行證｜買 4 送 1",
     url: "https://www.kkday.com/zh-tw/product/2524",
     till: "2026-10-01",
-    img: "img/p-c52f621c32.webp",
+    img: "img/swiss-1000.webp",
     why: "不限艙等，相當於 8 折起。長程線客單高，換算每日單價很好講。",
     price: "最便宜一天 NT$1,600",
+    plans: [
+      {n:"瑞士專屬", c:"SWISSWINTER26", x:"買 4 送 1、買 8 送 2", d:"銷售至 10/1，搭乘期間 10/1–12/31"},
+      {n:"全站加碼", c:"26SEP800", x:"滿 8,000 折 800", d:"9/25 前瑞士通行證也適用，可再省 800 元"}
+    ],
     code: "SWISSWINTER26",
-    /* 快閃期間改用檔期碼，到點自動換回上面的 code。台北時間，含當日 23:59:59 */
-    swap: { till: "2026-09-19", code: "26SWWINTER9",
-            due: "快閃至 9/19 23:59｜瑞士商品滿 NT$4,000 享 95 折，最高折 $1,800" },
-    due: "銷售至 10/1｜搭乘期間 10/1–12/31，任選連續 5 或 10 天"
+    due: "銷售至 10/1｜搭乘期間 10/1–12/31，任選連續 5 或 10 天。⚠️ 全站碼 26SEP800（滿 8,000 折 800）只到 9/25 能用在瑞士通行證，之後就不適用。"
   },
   {
     tag: "KKpartners 專屬",
@@ -1916,6 +1918,7 @@ const NEWS = [
    s/e 決定該則的顯示期間，過期自動不播；全部過期就整條不出現。
    兩則以上會每 6 秒自動輪播，滑鼠移上去暫停。 */
 const BANNERS = [
+  {t:"限時加碼", b:"瑞士通行證買 4 送 1，9/25 前再折 800", cta:"看方案", url:"#today", s:"2026-09-22", e:"2026-09-25"},
   {t:"KOL 專屬", b:"石垣島機票折後 3,388 起，明早 9:00 收單", cta:"看機票", url:"#today", s:"2026-09-22", e:"2026-09-23", until:"2026-09-23T09:00"},
   {t:"清倉機票", b:"越捷 桃園－峴港 折後 3,849 起，含稅含行李", cta:"看機票", url:"#today", s:"2026-09-21", e:"2026-09-26"},
   {t:"清倉機票", b:"華航 高雄－高松 折後 9,088 起，含稅含餐含行李", cta:"看機票", url:"#today", s:"2026-09-21", e:"2026-09-26"},
@@ -1930,6 +1933,7 @@ const BANNERS = [
    b=商品名（12 字內）、d=賣點一行（10 字內）、href=站內錨點。最多四則。
    可選 s/e：填了只在該期間顯示，過期自動讓位給後面的；不填＝一直顯示。 */
 const HIGHLIGHTS = [
+  {img:"img/swiss-1000.webp", t:"限時加碼", b:"瑞士通行證買4送1", d:"9/25 前再折 800", href:"#today", s:"2026-09-22", e:"2026-09-25"},
   {img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_246671/20240904130617_LpCC7/jpg", t:"KOL 專屬", b:"石垣島機票 3,388 起", d:"明早 9:00 收單・含行李", href:"#today", s:"2026-09-22", e:"2026-09-23", until:"2026-09-23T09:00"},
   {img:"img/thsr-1024.webp", t:"光復節連假", b:"高鐵車票 9/25 開搶", d:"輸碼 95 折・疏運 10/23–27", href:"#today", s:"2026-09-24", e:"2026-09-25"},
   {img:"img/roppongi-v3.webp",    t:"限時特惠", b:"六本木之丘展望台", d:"600 JPY・原價 2,400", href:"#today"},
@@ -2580,7 +2584,9 @@ const dealCard = function(d, feat){
           return '<a class="dgcell" href="' + esc(g.u) + '" target="_blank" rel="noopener">' +
             '<img loading="lazy" src="' + esc(g.img) + '" alt="">' +
             (g.tag || d.gridtag ? '<i class="dgtag">' + esc(g.tag || d.gridtag) + '</i>' : "") + '<b>' + esc(g.n) + '</b></a>'; }).join("") + '</div>'
-      : d.img ? '<div class="dimg"><img loading="lazy" src="' + esc(d.img) + '" alt="" onerror="this.closest(\'.dimg\').remove()"></div>' : "") +
+      : d.img ? (d.url
+          ? '<a class="dimg" href="' + esc(d.url) + '" target="_blank" rel="noopener"><img loading="lazy" src="' + esc(d.img) + '" alt="" onerror="this.closest(\'.dimg\').remove()"></a>'
+          : '<div class="dimg"><img loading="lazy" src="' + esc(d.img) + '" alt="" onerror="this.closest(\'.dimg\').remove()"></div>') : "") +
     '<div class="dbd">' +
     (dtag ? '<span class="deyebrow' + (dlast ? " end" : "") + '">' + esc(dtag) + '</span>' : "") +
     (feat ? '<span class="featflag">本週主打</span>' : "") +
