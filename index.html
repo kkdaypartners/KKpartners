@@ -2268,8 +2268,6 @@ const SOCIALS = [
 
 const GROUPS = [
   {id:"aff", tab:"夥伴專屬", lede:"只有 KKpartners 夥伴拿得到，優先推這一組。", items:[
-    {scope:"滿 2,500 這一檔｜每位夥伴的碼不同，請用自己的", code:"READER92", show:"讀者折扣碼（92 折）", benefit:"全站滿 2,500 享 92 折，上限折抵 300 元", till:""},
-    {scope:"滿 1,500 這一檔｜每位夥伴的碼不同，請用自己的", code:"READER94", show:"讀者折扣碼（94 折）", benefit:"全站滿 1,500 享 94 折，上限折抵 200 元", till:""},
     {scope:"全站適用", code:"KKAFF400", benefit:"單筆滿 5,000 折 400 元", till:"2026-09-30"},
     {scope:"全站適用", code:"KKAFF700", benefit:"單筆滿 8,000 折 700 元", till:"2026-09-30"},
     {scope:"全站適用", code:"KKAFF1000A", benefit:"單筆滿 10,000 折 1,000 元", till:"2026-09-30"},
@@ -2598,6 +2596,16 @@ DAILY.forEach(d => ALL.push({scope:d.label + "｜" + d.dest, code:d.code, benefi
    KOL 查了以為能用（Alen 2026-09-22 回報）。till 空白＝沒設效期，保留。 */
 const _TODAY_STR = new Date().toISOString().slice(0, 10);
 const ALLCODES = ALL.filter(function(x){ return !x.till || x.till >= _TODAY_STR; });
+
+/* 讀者碼不放進折扣碼清單：清單的用途是「複製來用」，但每位夥伴的碼都不一樣，
+   複製到 READER92 這個內部代號貼出去就是錯的（Alen 2026-09-23）。
+   這裡單獨保留，只供「用折扣碼查」的下拉選單查適用商品。 */
+const READER_CODES = [
+  {scope:"滿 2,500 這一檔｜每位夥伴的碼不同，請用自己的", code:"READER92", show:"讀者折扣碼（92 折）", benefit:"全站滿 2,500 享 92 折，上限折抵 300 元", till:""},
+  {scope:"滿 1,500 這一檔｜每位夥伴的碼不同，請用自己的", code:"READER94", show:"讀者折扣碼（94 折）", benefit:"全站滿 1,500 享 94 折，上限折抵 200 元", till:""}
+];
+ALLCODES.push.apply(ALLCODES, READER_CODES);
+
 
 /* 檔期碼一律帶活動頁連結，沒指定商品連結就用活動頁，避免複製出來只剩首頁 */
 EVENT.days.forEach(function(d){
