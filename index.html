@@ -594,15 +594,20 @@ body.adminonly #codes #ck-prod{display:none}
 .pkall{background:none;border:none;color:var(--mid);font-size:12.5px;font-weight:700;cursor:pointer;text-decoration:underline;padding:0}
 .pkbulk{background:var(--mid);color:#fff;border:none;border-radius:999px;padding:6px 14px;font-size:12.5px;font-weight:700;cursor:pointer}
 .pkbulk:disabled{background:var(--line);color:var(--muted);cursor:default}
+.pkghd{display:flex;align-items:baseline;gap:10px;margin:0 0 8px}
+.pkpromo{font-size:12px;font-weight:700;color:var(--mid);text-decoration:none;border-bottom:1px solid rgba(14,122,133,.35)}
+.pkcode{display:flex;align-items:baseline;gap:9px;background:#fff;border:1px dashed var(--mid);border-radius:9px;padding:7px 12px;margin:0 0 9px;flex-wrap:wrap}
+.pkcode b{font-family:var(--mono);font-size:13px;color:var(--mid);letter-spacing:.04em}
+.pkcode span{font-size:12px;color:var(--muted)}
 .pkgrp{margin:0 0 18px}
-.pkgh{font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--brand);margin:0 0 8px}
+.pkgh{font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--brand);margin:0}
 .pkgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:9px}
 .pkitem{display:flex;align-items:flex-start;gap:9px;background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px 13px;cursor:pointer}
 .pkitem:hover{border-color:var(--mid)}
 .pkck{margin-top:3px;flex:0 0 auto;accent-color:var(--mid)}
 .pkitem span{min-width:0;display:flex;flex-direction:column;gap:2px}
 .pkitem b{font-size:13.5px;font-weight:700;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pkitem u{text-decoration:none;font-size:11.5px;color:var(--muted)}
+.pkitem u{text-decoration:none;font-size:11.5px;line-height:1.5;color:var(--muted);white-space:normal}
 .freegrp{margin:0 0 22px}
 .freegrp:last-of-type{margin-bottom:0}
 .freehd{font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--mid);margin:0}
@@ -1258,98 +1263,139 @@ const LINE_GROUP = "https://line.me/ti/g2/5xW0eWvngTt1v0ZGIhk56Ey13dcAL3uD0AIORw
    name 商品名／img 商品圖網址／url 商品頁／form 申請表單（還沒開好就留空字串）
    tags 重點標籤／due 截止日（沒有就留空） */
 /* 主題資源包：把單品整理成「一整包」，KOL 寫部落格時可以整組複製。
-   分頁＝主題，主題底下再分地區。每個層級都能勾選與批次複製，複製出來
-   直接是文章段落格式（標題＋商品名＋帶 CID 的連結）。
-   商品由 BigQuery 近 90–180 天訂單挑出，只收仍在架上且有實際銷量的。
-   ⚠️ 關鍵字撈出來的結果一定要人工過：滑雪會撈到小叮噹樂園與科工館室內兒童滑雪、
-      賞楓會撈到關西機場接送，這些都不是該主題的商品。
-   ⚠️ 每季更新一次，冬季主題（滑雪、破冰船、樹冰）過季要換掉。 */
+   分頁＝主題，主題底下再分地區／類型。每層都能勾選與批次複製，
+   複製出來是文章段落格式（小標＋商品名＋一句賣點＋帶 CID 的連結）。
+   note = 為什麼推這支（來自 2026-09-18 同事的選品整理與 BigQuery 銷量）。
+   promo = 該主題的活動頁；code = 這一包適用的折扣碼。
+   ⚠️ 關鍵字撈的結果一定要人工過：滑雪會撈到小叮噹樂園與科工館室內兒童滑雪、
+      賞楓會撈到關西機場接送，都不是該主題的商品。
+   ⚠️ 冬季主題（滑雪、破冰船、樹冰、點燈）過季要換掉，每季更新一次。 */
 const PACKS = [
-  {id:"ski", tab:"滑雪", lede:"雪季 12–3 月，現在寫剛好卡在讀者查資料的時間點。",
+  {id:"ski", tab:"滑雪", lede:"雪季 12 月至過年是出發高峰，現在正是讀者查資料的時間點。",
    groups:[
-     {n:"日本", items:[
-       {id:157140, n:"北海道滑雪團一日遊｜手稻滑雪場", aop:9498}]},
-     {n:"韓國", items:[
-       {id:5852,   n:"江原道 High One 滑雪二／三天團｜含教學", aop:18842},
-       {id:27366,  n:"SONO VIVALDI PARK 兩天一夜滑雪團", aop:18044},
-       {id:115178, n:"SONO VIVALDI PARK 三天兩夜・四天三夜", aop:14741},
-       {id:528295, n:"龍平滑雪住宿套餐｜1–5 晚", aop:14008},
-       {id:3620,   n:"芝山森林度假村滑雪一日遊｜首爾出發", aop:6950}]}
+     {n:"日本", promo:"https://www.kkday.com/zh-tw/promo/winter-in-japan",
+      code:"26AWJPTOUR", codeNote:"日本行程體驗不限門檻 93 折，最高折 1,000",
+      items:[
+       {id:157140, n:"北海道滑雪團一日遊｜手稻滑雪場", note:"銷售 TOP，9 月訂單已超過 7＋8 月總和，庫存充足要力推"},
+       {id:601836, n:"長野白馬栂池滑雪二日遊｜含纜車與雪具・可加購中文教練", note:"KKday 專屬團，爭取到稀缺的中文教練資源，毛利高"},
+       {id:621988, n:"長野龍王 MOUNTAIN RESORT 滑雪二日遊｜可加購中文教練", note:"同為專屬團，中文教練資源稀缺"}]},
+     {n:"韓國", promo:"https://www.kkday.com/zh-tw/promo/korea-winter",
+      items:[
+       {id:27366,  n:"江原道 SONO VIVALDI PARK 滑雪兩天一夜", note:"TOP1・85 折。附冰雪樂園，不會滑雪也能玩，Klook 今年尚未販售"},
+       {id:115178, n:"SONO VIVALDI PARK 三天兩夜／四天三夜", note:"TOP2・63 折，Klook 今年尚未販售"},
+       {id:528295, n:"龍平滑雪住宿套餐｜1–5 晚", note:"TOP3，住宿與滑雪一次搞定"},
+       {id:146949, n:"Elysian 伊利希安江村冬季滑雪一日遊｜首爾出發", note:"TOP4，當天來回門檻低"},
+       {id:13957,  n:"伊甸園山谷滑雪一日遊｜釜山出發・初學者友善", note:"釜山近郊唯一知名雪場，Klook 今年尚未販售"},
+       {id:5852,   n:"江原道 High One 滑雪二／三天團｜含教學", note:"含初中級課程與私人教練選項"}]},
+     {n:"機場接駁（新上架）",
+      items:[
+       {id:573532, n:"首爾／仁川機場 ↔ 龍平滑雪場接駁巴士", note:"新開純接駁，過去只有 daytour"},
+       {id:573804, n:"首爾／仁川機場 ↔ 阿爾卑西亞度假村接駁", note:"同上，適合自由行客"},
+       {id:573964, n:"首爾／仁川機場 ↔ High1 度假村接駁", note:"同上"},
+       {id:574009, n:"首爾 ↔ 鳳凰公園滑雪度假村接駁", note:"同上"}]}
    ]},
-  {id:"maple", tab:"賞楓", lede:"日本 10 月中至 12 月初、韓國 10 月下旬，長線客單高。",
+  {id:"maple", tab:"賞楓", lede:"今年紅葉預測出爐，11 月下旬是高點；韓國 10 月下旬先開始。",
    groups:[
-     {n:"日本", items:[
-       {id:158778, n:"黑部立山楓紅三日遊｜室堂紅葉・上高地・白川鄉", aop:28302},
-       {id:601669, n:"北海道層雲峽賞楓一日遊｜銀河瀑布・黑岳纜車", aop:6012},
-       {id:669845, n:"香嵐溪夜楓一日遊｜虎溪山永保寺・名古屋往返", aop:3572},
-       {id:287555, n:"九州系島｜雷山千如寺賞紅葉", aop:2774},
-       {id:529663, n:"九州紅葉巡禮一日遊｜九年庵・環境藝術之森", aop:1339}]},
-     {n:"韓國", items:[
-       {id:9120,  n:"雪嶽山國立公園秋季賞楓一日遊｜首爾出發", aop:4156},
-       {id:12339, n:"內藏山國家公園秋季賞楓一日遊", aop:3147}]}
+     {n:"日本", promo:"https://www.kkday.com/zh-tw/promo/autumn-in-japan",
+      code:"26AWJPTOUR", codeNote:"日本行程體驗不限門檻 93 折，最高折 1,000",
+      items:[
+       {id:158778, n:"黑部立山楓紅三日遊｜室堂紅葉・上高地・白川鄉", note:"客單近三萬，長線主力"},
+       {id:601669, n:"北海道層雲峽賞楓一日遊｜銀河瀑布・黑岳纜車", note:"北海道楓況最早，10 月上旬就能寫"},
+       {id:669845, n:"香嵐溪夜楓一日遊｜虎溪山永保寺・名古屋往返", note:"夜楓題材，畫面辨識度高"},
+       {id:287555, n:"九州系島｜雷山千如寺賞紅葉", note:"九州線，避開關西人潮"},
+       {id:529663, n:"九州紅葉巡禮一日遊｜九年庵・環境藝術之森", note:"11/14–12/10 限定"}]},
+     {n:"韓國｜江原道", promo:"https://www.kkday.com/zh-tw/promo/kto_traveldeeper",
+      items:[
+       {id:9120,  n:"雪嶽山國立公園秋季賞楓巡禮一日遊｜首爾出發", note:"韓國賞楓代表路線"},
+       {id:9102,  n:"江原道精選｜雪嶽山＋洛山寺經典一日遊", note:"7 折"},
+       {id:39355, n:"雪嶽山賞楓・秋遊束草｜三大路線任選", note:"新興寺／南怡島／束草海岸可選"}]},
+     {n:"韓國｜全羅道・大田・慶州",
+      items:[
+       {id:12339,  n:"內藏山國家公園秋季賞楓一日遊｜首爾／釜山出發", note:"內藏山主力"},
+       {id:3710,   n:"秋季限定楓葉｜內藏山國立公園｜首爾／釜山出發", note:"同區替代路線"},
+       {id:9147,   n:"內藏山＋全州韓屋村秋季賞楓一日遊", note:"賞楓加韓屋村，內容好寫"},
+       {id:146822, n:"內藏山一日遊｜可選在釜山下車", note:"南部客友善"},
+       {id:184482, n:"大田長泰山森林＆聖心堂麵包店一日遊", note:"長泰山＋名店麵包，差異化題材"},
+       {id:145375, n:"全州韓屋村之旅｜四季皆宜", note:"秋色與冬雪都能寫"},
+       {id:27790,  n:"慶州賞楓一日遊｜普門觀光區與歷史城區｜釜山出發", note:"慶州線"},
+       {id:172159, n:"慶州佛國寺、皇理團路一日遊｜釜山出發", note:"同區熱門景點"}]}
    ]},
-  {id:"shirakawa", tab:"白川鄉", lede:"點燈是一年只有四天的限定活動，其餘為常態合掌村行程。",
+  {id:"shirakawa", tab:"白川鄉", lede:"點燈一年只有四天，是全年最強的限定題材。",
    groups:[
-     {n:"點燈限定", items:[
-       {id:531214, n:"白川鄉點燈一日遊｜僅限四天・JR 高山站出發", aop:9142}]},
-     {n:"常態行程", items:[
-       {id:526215, n:"白川鄉合掌村一日遊｜1 人成團・名古屋出發", aop:3366},
-       {id:135964, n:"白川鄉一日遊｜含展望台・可選飯店接送", aop:3462},
-       {id:17716,  n:"名古屋一日遊｜白川鄉＆飛驒高山老街", aop:3092},
-       {id:28049,  n:"金澤一日遊｜五箇山＆白川鄉＆飛驒高山", aop:3254},
-       {id:137376, n:"白川鄉＆金澤二日遊｜兼六園・東茶屋街", aop:9316}]}
+     {n:"點燈限定", code:"26AWJPTOUR", codeNote:"日本行程體驗不限門檻 93 折，最高折 1,000",
+      items:[
+       {id:531214, n:"白川鄉點燈一日遊｜僅限四天・JR 高山站出發", note:"高山站出發是銷售 TOP，而且是 Klook 沒有的路線"},
+       {id:18610,  n:"白川鄉合掌村夜間點燈一日遊｜全日期確定成行・高山站出發", note:"全日期確定成行，不用擔心不成團"},
+       {id:136627, n:"童話世界白川鄉點燈一日遊｜名古屋出發", note:"全市場最低價，追加庫存開售，比 Klook 便宜 JPY 1,000–4,000"}]},
+     {n:"常態行程",
+      items:[
+       {id:526215, n:"白川鄉合掌村一日遊｜1 人成團・名古屋出發", note:"量最大的常態路線"},
+       {id:135964, n:"白川鄉一日遊｜含展望台・可選飯店接送", note:"可上展望台，畫面最好拍"},
+       {id:17716,  n:"名古屋一日遊｜白川鄉＆飛驒高山老街", note:"經典組合"},
+       {id:28049,  n:"金澤一日遊｜五箇山＆白川鄉＆飛驒高山", note:"金澤出發，串北陸線"},
+       {id:137376, n:"白川鄉＆金澤二日遊｜兼六園・東茶屋街", note:"二日遊客單較高"}]}
    ]},
-  {id:"ginzan", tab:"銀山溫泉", lede:"千與千尋湯屋取景地，冬季點燈與藏王樹冰可一起寫。",
+  {id:"ginzan", tab:"銀山溫泉", lede:"千與千尋湯屋取景地，冬季點燈與藏王樹冰可以一起寫。",
    groups:[
-     {n:"一日遊", items:[
-       {id:535840, n:"銀山溫泉・藏王纜車・御釜火山口一日遊｜仙台出發", aop:7372},
-       {id:285155, n:"銀山溫泉一日遊｜山寺健行＆足湯｜仙台出發", aop:5851},
-       {id:160112, n:"銀山溫泉・藏王樹冰・狐狸村拼車一日遊", aop:7629},
-       {id:196175, n:"銀山溫泉點燈・金蛇水神社｜全包式巴士", aop:9270}]},
-     {n:"二日遊", items:[
-       {id:182060, n:"東北二日遊｜銀山溫泉・藏王樹冰・狐狸村｜東京出發", aop:16016},
-       {id:535652, n:"冬季銀山溫泉二日遊｜藏王中央纜車・大內宿", aop:14846}]}
+     {n:"一日遊", code:"26AWJPTOUR", codeNote:"日本行程體驗不限門檻 93 折，最高折 1,000",
+      items:[
+       {id:535840, n:"銀山溫泉、藏王纜車、御釜火山口一日遊｜仙台出發", note:"業績 TOP1"},
+       {id:285155, n:"銀山溫泉一日遊｜山寺健行＆足湯｜仙台出發", note:"行程輕鬆，親子與長輩友善"},
+       {id:160112, n:"銀山溫泉・藏王樹冰・狐狸村拼車一日遊", note:"三個點一次收，CP 值題材"},
+       {id:196175, n:"銀山溫泉點燈・金蛇水神社｜全包式巴士", note:"點燈題材"}]},
+     {n:"二日遊",
+      items:[
+       {id:182060, n:"東北二日遊｜銀山溫泉・藏王樹冰・狐狸村｜東京出發", note:"業績 TOP2。與 Klook 價差不到 10 元，但對方銷量是我們三倍、我方庫存 4,000＋有壓力，需要力推"},
+       {id:535652, n:"冬季銀山溫泉二日遊｜藏王中央纜車・大內宿", note:"加碼大內宿"}]}
    ]},
   {id:"icebreaker", tab:"破冰船", lede:"流冰季 1–3 月，熱門日期現在就要訂，客單兩萬起跳。",
    groups:[
-     {n:"北海道", items:[
-       {id:151492, n:"破冰船二日遊｜紋別 GARINKO＆層雲峽冰瀑祭", aop:19736},
-       {id:135943, n:"道東流冰體驗二日遊｜GARINKO III＆層雲峽", aop:17836},
-       {id:146864, n:"知床・網走流冰二日遊｜極光號＆流冰觸摸", aop:21424},
-       {id:259458, n:"流冰二日遊｜流冰漫步＆極光號・單人同價", aop:10776},
-       {id:154373, n:"新造船 GARINKO III・IMERU 流冰破冰船", aop:10720}]}
+     {n:"北海道", code:"WIN1200", codeNote:"冬季超早鳥：行程體驗滿 10,000 折 1,200",
+      items:[
+       {id:151492, n:"破冰船二日遊｜紋別 GARINKO＆層雲峽冰瀑祭｜札幌出發", note:"台灣市場 YoY 提升，9 月預估 MoM +90%，全日程保證出發"},
+       {id:135943, n:"道東流冰體驗二日遊｜GARINKO III＆層雲峽", note:"同線替代方案"},
+       {id:146864, n:"知床・網走流冰二日遊｜極光號＆流冰觸摸", note:"入住五星溫泉飯店，客單最高"},
+       {id:259458, n:"流冰二日遊｜流冰漫步＆極光號・單人同價", note:"單人同價，一個人也能去"},
+       {id:154373, n:"新造船 GARINKO III・IMERU 流冰破冰船", note:"新船題材"}]}
+   ]},
+  {id:"jrpass", tab:"JR PASS", lede:"滑雪與賞楓都會帶動 JR PASS 需求，而且 10/1 就要漲價。",
+   groups:[
+     {n:"漲價倒數",
+      items:[
+       {id:20291, n:"JR PASS 全國版｜寄送台灣", note:"10/1 漲價。9/30 前買的票可在 12/30 前兌換。依過往經驗漲價前兩週會集中購買，宣傳要提早"}]}
    ]},
   {id:"charter", tab:"包車", lede:"高客單、成團率高，適合家庭與長輩客群。",
    groups:[
      {n:"日本", items:[
-       {id:142125, n:"沖繩全島包車一日遊｜立即確認", aop:7650},
-       {id:133661, n:"大阪、京都、奈良、神戶 10 小時來回包車", aop:10626},
-       {id:29426,  n:"沖繩包車｜客製 1／2 日・中文司機", aop:9553},
-       {id:134740, n:"大阪－關西機場／京都／神戶專屬包車接送", aop:3478}]},
+       {id:142125, n:"沖繩全島包車一日遊｜立即確認", note:"沖繩包車量最大"},
+       {id:133661, n:"大阪、京都、奈良、神戶 10 小時來回包車", note:"關西主力，客單破萬"},
+       {id:29426,  n:"沖繩包車｜客製 1／2 日・中文司機", note:"5–49 座車型可選"},
+       {id:134740, n:"大阪－關西機場／京都／神戶專屬包車接送", note:"點對點接送，門檻低"}]},
      {n:"東南亞", items:[
-       {id:3431,   n:"泰國機場包車接送｜BKK／DMK－曼谷市區", aop:1110},
-       {id:137705, n:"峇里島包車體驗｜6／10 小時客製行程", aop:1524}]},
+       {id:3431,   n:"泰國機場包車接送｜BKK／DMK－曼谷市區", note:"量最大的接送商品"},
+       {id:137705, n:"峇里島包車體驗｜6／10 小時客製行程", note:"中英日韓語言司機可選"}]},
      {n:"台灣", items:[
-       {id:570459, n:"基隆港口接送｜全省往返基隆港・賓士商務車", aop:1564}]}
+       {id:570459, n:"基隆港口接送｜全省往返基隆港・賓士商務車", note:"郵輪客配套，可與郵輪包一起寫"}]}
    ]},
   {id:"flight", tab:"機票", lede:"客單最高的一類，含稅含行李、1 人成行是主要賣點。",
    groups:[
      {n:"日本", items:[
-       {id:135442, n:"酷航・桃園出發｜北海道 6／7 天計劃機票", aop:14880},
-       {id:135223, n:"酷航・桃園出發｜東京 5 天計劃機票・含行李", aop:10988},
-       {id:154340, n:"亞洲航空・桃園出發｜九州福岡 5 天・1 人成行", aop:10864},
-       {id:151729, n:"樂桃航空・桃園出發｜名古屋 5 天計劃機票", aop:10338}]},
+       {id:135442, n:"酷航・桃園出發｜北海道 6／7 天計劃機票", note:"客單近 1.5 萬"},
+       {id:135223, n:"酷航・桃園出發｜東京 5 天計劃機票・含行李", note:"日本線量最大"},
+       {id:154340, n:"亞洲航空・桃園出發｜九州福岡 5 天・1 人成行", note:"抗漲超低票價"},
+       {id:151729, n:"樂桃航空・桃園出發｜名古屋 5 天計劃機票", note:"名古屋線，可串白川鄉"}]},
      {n:"韓國", items:[
-       {id:138818, n:"自選航空・桃園／台中／高雄｜韓國計劃機票", aop:13038},
-       {id:139665, n:"泰瑞航空・高雄出發｜首爾／濟州／釜山", aop:8830},
-       {id:135911, n:"易斯達航空・桃園出發｜首爾／濟州／釜山／清州", aop:8488}]},
+       {id:138818, n:"自選航空・桃園／台中／高雄｜韓國計劃機票", note:"三地出發，客單最高"},
+       {id:139665, n:"泰瑞航空・高雄出發｜首爾／濟州／釜山", note:"南部客友善"},
+       {id:135911, n:"易斯達航空・桃園出發｜首爾／濟州／釜山／清州", note:"1 人成行含行李"}]},
      {n:"其他", items:[
-       {id:143059, n:"金廈小三通｜機票＋接駁＋船票・三地出發", aop:7400}]}
+       {id:143059, n:"金廈小三通｜機票＋接駁＋船票・三地出發", note:"量最大的機票類商品"}]}
    ]},
-  {id:"cruise", tab:"郵輪", lede:"單筆金額最高，兩組郵輪專屬碼滿 3 萬折 2,000、滿 5 萬折 3,000。",
+  {id:"cruise", tab:"郵輪", lede:"單筆金額最高的品類，兩組郵輪專屬碼可搭。",
    groups:[
-     {n:"日本線", items:[
-       {id:575458, n:"MSC 榮耀號｜新增三四人房・基隆／那霸／東京出發", aop:0}]}
+     {n:"日本線", code:"EXCUZ2000", codeNote:"郵輪滿 30,000 折 2,000；滿 5 萬另有 EXCUZ3000 折 3,000",
+      items:[
+       {id:575458, n:"MSC 榮耀號｜新增三四人房・基隆／那霸／東京出發", note:"新增三人房與四人房，家庭客需求打開"}]}
    ]}
 ];
 
@@ -2405,6 +2451,7 @@ const GROUPS = [
   ]},
   {id:"daily", tab:"每日目的地", lede:"依星期輪替，今天可用的會標起來。", items:[]},
   {id:"cat", tab:"類別與地區", lede:"依這檔內容的目的地或商品類別挑一個搭。", items:[
+    {scope:"日本｜行程與體驗", code:"26AWJPTOUR", benefit:"不限門檻 93 折，最高折 1,000 元", till:""},
     {scope:"韓國｜首爾指定體驗行程", code:"FINDSEOUL20", benefit:"滿 TWD 1,271 折 TWD 636（USD 20），限 9 支指定商品", till:"2026-10-31"},
     {scope:"韓國｜韓劇拍攝地指定行程", code:"26KDRAMA15", benefit:"滿 2,000 折 450，限 25 支指定商品", till:"2026-12-31"},
     {scope:"台灣｜Taiwan PASS 台鐵版", code:"TWPASS94", benefit:"結帳直接 94 折，折抵無上限", till:"2026-12-31", url:"https://www.kkday.com/zh-tw/product/284326"},
@@ -3351,12 +3398,17 @@ PACKS.map(function(p, i){
     '<div class="pkbar"><button class="pkall">全選這個主題</button>' +
       '<button class="pkbulk" disabled>複製勾選的 0 支</button></div>' +
     p.groups.map(function(g){
-      return '<div class="pkgrp"><h3 class="pkgh">' + esc(g.n) + '</h3><div class="pkgrid">' +
+      return '<div class="pkgrp"><div class="pkghd"><h3 class="pkgh">' + esc(g.n) + '</h3>' +
+        (g.promo ? '<a class="pkpromo" data-u="' + esc(g.promo) + '" href="' + esc(g.promo) + '" target="_blank" rel="noopener">活動頁 ›</a>' : "") +
+        '</div>' +
+        (g.code ? '<div class="pkcode"><b>' + esc(g.code) + '</b><span>' + esc(g.codeNote || "") + '</span></div>' : "") +
+        '<div class="pkgrid">' +
         g.items.map(function(x){
           return '<label class="pkitem">' +
-            '<input type="checkbox" class="pkck" data-n="' + esc(x.n) + '" data-u="' + esc(prodUrl(x.id)) + '">' +
+            '<input type="checkbox" class="pkck" data-n="' + esc(x.n) + '" data-u="' + esc(prodUrl(x.id)) +
+              '" data-note="' + esc(x.note || "") + '">' +
             '<span><b>' + esc(x.n) + '</b>' +
-            (x.aop ? '<u>常見客單 NT$ ' + x.aop.toLocaleString() + '</u>' : "") + '</span>' +
+            (x.note ? '<u>' + esc(x.note) + '</u>' : "") + '</span>' +
           '</label>'; }).join("") +
       '</div></div>'; }).join("") +
   '</div>'; }).join("") +
@@ -4575,7 +4627,16 @@ document.addEventListener("click", function(e){
     const sel = [...g.querySelectorAll(".pkck:checked")];
     if (!sel.length) return;
     out += "◆ " + g.querySelector(".pkgh").textContent + "\n";
-    sel.forEach(function(x){ out += "・" + x.dataset.n + "\n" + withCid(x.dataset.u) + "\n\n"; });
+    const promo = g.querySelector(".pkpromo");
+    if (promo) out += "活動頁：" + withCid(promo.dataset.u) + "\n";
+    const code = g.querySelector(".pkcode");
+    if (code) out += "折扣碼：" + code.querySelector("b").textContent + "（" + code.querySelector("span").textContent + "）\n";
+    out += "\n";
+    sel.forEach(function(x){
+      out += "・" + x.dataset.n + "\n";
+      if (x.dataset.note) out += "　" + x.dataset.note + "\n";
+      out += withCid(x.dataset.u) + "\n\n";
+    });
   });
   copyText(out, "已複製 " + picked.length + " 支，連結都帶上你的 CID");
 });
