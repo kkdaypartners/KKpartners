@@ -591,6 +591,7 @@ body.adminonly #codes #ck-prod{display:none}
 .freecard{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 12px 11px 15px;transition:transform .15s,box-shadow .15s}
 .freecard:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(9,60,66,.12)}
 .freego{flex:1;min-width:0;text-decoration:none;color:var(--ink)}
+.freego u{text-decoration:none;display:block;font-size:11.5px;line-height:1.5;color:var(--muted);margin-top:3px;white-space:normal}
 .freecard b{font-size:14px;font-weight:700;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
 .freecopy{flex:0 0 auto;background:var(--wash);border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-size:12px;font-weight:700;color:var(--mid);cursor:pointer}
 .freecopy:hover{background:var(--mid);border-color:var(--mid);color:#fff}
@@ -1249,40 +1250,51 @@ const LINE_GROUP = "https://line.me/ti/g2/5xW0eWvngTt1v0ZGIhk56Ey13dcAL3uD0AIORw
       但點進去是「已兌換完畢」。必須另外看「近 7 天是否還有訂單」——
       7 天掛零就是領完了或沒人要，一律拿掉（2026-09-23 昇恆昌那批就是這樣漏掉的）。
    ⚠️ 名單每週更新，重跑方式見交接文件「每週更新待辦」。 */
+/* 券的用法通則：商品頁沒有統一格式的說明，供應商也沒給表，
+   所以先按類別寫「不精確但不會錯」的一句話，之後拿到正式說明再逐支補。
+   tax  = 免稅／折價券（百貨、藥妝、OUTLET）
+   pass = 城市通行證與優惠碼（明洞、江南、Grab 這類）
+   gift = 限量實體贈品（少女峰透卡） */
+const FREE_KIND = {
+  tax:  "線上免費領取，到店出示 QR 即可享免稅與店家折扣，實際折數依現場公告",
+  pass: "線上免費領取，內含多家店的優惠與贈品，到店出示即可使用",
+  gift: "線上免費領取，到指定地點兌換實體贈品，數量有限換完為止"
+};
+
 const FREE_ITEMS = [
-  {c:"韓國", list:[{id:531429, n:"樂天超市 LOTTE Mart 優惠券"},
-    {id:145380, n:"樂天免稅店市中心店優惠券"},
-    {id:531191, n:"新世界免稅店 Gold Pass 折扣卡"},
-    {id:547572, n:"樂天百貨釜山總店｜冰淇淋券"},
-    {id:185470, n:"明洞通行證｜禮品與優惠券"},
-    {id:138057, n:"韓際新世界免稅店折扣券"},
-    {id:579523, n:"MONEYBOX 釜山換匯優惠券"},
-    {id:579990, n:"現代免稅店手機優惠券"},
-    {id:286925, n:"官方 K-POP 照片卡店優惠券"},
-    {id:250982, n:"江南通行證｜免費禮品與優惠"}]},
-  {c:"日本", list:[{id:151129, n:"驚安的殿堂 唐吉訶德 折價券"},
-    {id:134038, n:"三井 OUTLET 免稅折價券"},
-    {id:583193, n:"PREMIUM OUTLETS 折扣券"},
-    {id:181157, n:"Kokumin 國民藥妝購物券"},
-    {id:141718, n:"Alpen 免稅優惠券"},
-    {id:162299, n:"Tsuruba 藥妝店免稅折扣券"},
-    {id:157713, n:"XEBIO 運動集團免稅折扣券"},
-    {id:147676, n:"Cocokara Fine 免稅優惠券"},
-    {id:249996, n:"東武百貨購物優惠券"},
-    {id:150433, n:"京王百貨店免稅優惠券"},
-    {id:147691, n:"松本清免稅優惠券"},
-    {id:161743, n:"西武・SOGO 百貨免稅優惠券"},
-    {id:263772, n:"眼鏡市場免稅優惠券"}]},
-  {c:"台灣", list:[{id:123380, n:"全台 MITSUI OUTLET PARK 優惠券"},
+  {c:"韓國", list:[{id:531429, k:"tax", n:"樂天超市 LOTTE Mart 優惠券"},
+    {id:145380, k:"tax", n:"樂天免稅店市中心店優惠券"},
+    {id:531191, k:"tax", n:"新世界免稅店 Gold Pass 折扣卡"},
+    {id:547572, k:"tax", n:"樂天百貨釜山總店｜冰淇淋券"},
+    {id:185470, k:"pass", n:"明洞通行證｜禮品與優惠券"},
+    {id:138057, k:"tax", n:"韓際新世界免稅店折扣券"},
+    {id:579523, k:"pass", n:"MONEYBOX 釜山換匯優惠券"},
+    {id:579990, k:"tax", n:"現代免稅店手機優惠券"},
+    {id:286925, k:"pass", n:"官方 K-POP 照片卡店優惠券"},
+    {id:250982, k:"pass", n:"江南通行證｜免費禮品與優惠"}]},
+  {c:"日本", list:[{id:151129, k:"tax", n:"驚安的殿堂 唐吉訶德 折價券"},
+    {id:134038, k:"tax", n:"三井 OUTLET 免稅折價券"},
+    {id:583193, k:"tax", n:"PREMIUM OUTLETS 折扣券"},
+    {id:181157, k:"tax", n:"Kokumin 國民藥妝購物券"},
+    {id:141718, k:"tax", n:"Alpen 免稅優惠券"},
+    {id:162299, k:"tax", n:"Tsuruba 藥妝店免稅折扣券"},
+    {id:157713, k:"tax", n:"XEBIO 運動集團免稅折扣券"},
+    {id:147676, k:"tax", n:"Cocokara Fine 免稅優惠券"},
+    {id:249996, k:"tax", n:"東武百貨購物優惠券"},
+    {id:150433, k:"tax", n:"京王百貨店免稅優惠券"},
+    {id:147691, k:"tax", n:"松本清免稅優惠券"},
+    {id:161743, k:"tax", n:"西武・SOGO 百貨免稅優惠券"},
+    {id:263772, k:"tax", n:"眼鏡市場免稅優惠券"}]},
+  {c:"台灣", list:[{id:123380, k:"tax", n:"全台 MITSUI OUTLET PARK 優惠券"},
     ]},
-  {c:"泰國", list:[{id:580199, n:"Grab 旅遊通行證優惠碼"},
-    {id:307163, n:"王權免稅電子優惠券"},
-    {id:139679, n:"ONESIAM 全球訪客卡"},
-    {id:140768, n:"中央購物中心遊客歡迎套餐"}]},
-  {c:"歐洲", list:[{id:677147, n:"少女峰限量拍照透卡｜瑞士"},
-    {id:553841, n:"Landquart 暢貨中心購物券｜瑞士"}]},
+  {c:"泰國", list:[{id:580199, k:"pass", n:"Grab 旅遊通行證優惠碼"},
+    {id:307163, k:"tax", n:"王權免稅電子優惠券"},
+    {id:139679, k:"pass", n:"ONESIAM 全球訪客卡"},
+    {id:140768, k:"tax", n:"中央購物中心遊客歡迎套餐"}]},
+  {c:"歐洲", list:[{id:677147, k:"gift", n:"少女峰限量拍照透卡｜瑞士"},
+    {id:553841, k:"tax", n:"Landquart 暢貨中心購物券｜瑞士"}]},
   {c:"其他", list:[
-    {id:375325, n:"旅行通行證促銷代碼｜新加坡"}]}
+    {id:375325, k:"pass", n:"旅行通行證促銷代碼｜新加坡"}]}
 ];
 
 const SPONSOR_ITEMS = [
@@ -3213,10 +3225,11 @@ FREE_ITEMS.map(function(g){
     '</div><div class="freegrid">' +
     g.list.map(function(f){
       return '<div class="freecard">' +
-        '<input type="checkbox" class="freeck" data-u="' + esc(prodUrl(f.id)) + '" data-n="' + esc(f.n) + '">' +
+        '<input type="checkbox" class="freeck" data-u="' + esc(prodUrl(f.id)) + '" data-n="' + esc(f.n) + '" data-k="' + esc(FREE_KIND[f.k] || FREE_KIND.tax) + '">' +
         '<a class="freego" data-u="' + esc(prodUrl(f.id)) + '" href="' + esc(prodUrl(f.id)) + '" target="_blank" rel="noopener">' +
-        '<b>' + esc(f.n) + '</b></a>' +
-        '<button class="freecopy" data-u="' + esc(prodUrl(f.id)) + '" data-n="' + esc(f.n) + '" title="複製這一支">複製</button>' +
+        '<b>' + esc(f.n) + '</b>' +
+        '<u>' + esc(FREE_KIND[f.k] || FREE_KIND.tax) + '</u></a>' +
+        '<button class="freecopy" data-u="' + esc(prodUrl(f.id)) + '" data-n="' + esc(f.n) + '" data-k="' + esc(FREE_KIND[f.k] || FREE_KIND.tax) + '" title="複製這一支">複製</button>' +
       '</div>'; }).join("") +
   '</div></div>'; }).join("") +
 '<p class="ckmore">這些商品本身不計佣金，但粉絲領完券通常會接著買別的——把它當入口，後面再導到有佣金的商品。</p>' +
@@ -4412,7 +4425,7 @@ document.addEventListener("click", function(e){
     if (!picked.length) return;
     if (!MYCID) { toastMsg("先在上面填你的 CID"); document.getElementById("mycid").scrollIntoView({block:"center"}); return; }
     copyText("【" + grp.dataset.c + "・0 元商品】\n粉絲不用花錢就能領，點連結直接領取\n\n" +
-      picked.map(function(x){ return "・" + x.dataset.n + "\n" + withCid(x.dataset.u); }).join("\n\n") + "\n",
+      picked.map(function(x){ return "・" + x.dataset.n + "\n" + x.dataset.k + "\n" + withCid(x.dataset.u); }).join("\n\n") + "\n",
       "已複製 " + picked.length + " 支，連結都帶上你的 CID");
     return;
   }
@@ -4420,7 +4433,7 @@ document.addEventListener("click", function(e){
   const cp = e.target.closest(".freecopy");
   if (cp) {
     if (!MYCID) { toastMsg("先在上面填你的 CID"); document.getElementById("mycid").scrollIntoView({block:"center"}); return; }
-    copyText(cp.dataset.n + "\n" + withCid(cp.dataset.u) + "\n", "已複製，連結已帶上你的 CID");
+    copyText(cp.dataset.n + "\n" + cp.dataset.k + "\n" + withCid(cp.dataset.u) + "\n", "已複製，連結已帶上你的 CID");
     return;
   }
   const a = e.target.closest(".freego");
