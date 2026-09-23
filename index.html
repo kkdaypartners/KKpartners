@@ -1283,7 +1283,7 @@ const LINE_GROUP = "https://line.me/ti/g2/5xW0eWvngTt1v0ZGIhk56Ey13dcAL3uD0AIORw
       賞楓會撈到關西機場接送，都不是該主題的商品。
    ⚠️ 冬季主題（滑雪、破冰船、樹冰、點燈）過季要換掉，每季更新一次。 */
 const PACKS = [
-  {id:"ski", tab:"滑雪", lede:"雪季 12 月至過年是出發高峰，現在正是讀者查資料的時間點。",
+  {id:"ski", img:"img/pk-ski.webp", tab:"滑雪", lede:"雪季 12 月至過年是出發高峰，現在正是讀者查資料的時間點。",
    groups:[
      {n:"日本", promo:"https://www.kkday.com/zh-tw/promo/winter-in-japan",
       code:"26AWJPTOUR", codeNote:"日本行程體驗不限門檻 93 折，最高折 1,000",
@@ -1370,11 +1370,36 @@ const PACKS = [
        {id:259458, aop:11224, n:"流冰二日遊｜流冰漫步＆極光號・單人同價", note:"單人同價，一個人也能去"},
        {id:154373, aop:10720, n:"新造船 GARINKO III・IMERU 流冰破冰船", note:"新船題材"}]}
    ]},
-  {id:"jrpass", img:"img/pk-jrpass.webp", tab:"JR PASS", lede:"滑雪與賞楓都會帶動 JR PASS 需求，而且 10/1 就要漲價。",
+  {id:"jrpass", img:"img/pk-jrpass.webp", tab:"JR PASS", lede:"滑雪與賞楓都會帶動 JR PASS 需求，全國版 10/1 漲價。",
    groups:[
-     {n:"漲價倒數",
-      items:[
-       {id:20291, aop:15833, n:"JR PASS 全國版｜寄送台灣", note:"10/1 漲價。9/30 前買的票可在 12/30 前兌換。依過往經驗漲價前兩週會集中購買，宣傳要提早"}]}
+     {n:"全國與跨區", items:[
+       {id:20291, aop:15833, n:"全日本鐵路通票 JR PASS 全國版", note:"10/1 漲價。9/30 前買的票可在 12/30 前兌換，漲價前兩週會集中購買，宣傳要提早"},
+       {id:6681,  aop:10012, n:"JR PASS 東日本鐵路周遊券", note:"東日本主力"},
+       {id:20316, aop:12612, n:"JR PASS 東北・南北海道鐵路周遊券", note:"銀山溫泉與破冰船的交通配套"},
+       {id:20314, aop:10242, n:"山陽＆山陰＆北九州地區鐵路周遊券", note:"跨三區長天數"}]},
+     {n:"關西・北陸", items:[
+       {id:20317, aop:4724,  n:"JR 關西廣域鐵路周遊 5 日券", note:"關西量最大"},
+       {id:20310, aop:6597,  n:"JR PASS 關西＆廣島地區鐵路周遊 5 日券", note:"關西延伸廣島"},
+       {id:25777, aop:1323,  n:"JR 關西地區鐵路周遊券", note:"短天數入門款"},
+       {id:136346, aop:819,  n:"關西迷你鐵路周遊券｜eMCO 電子票", note:"門檻最低，適合首次到訪"},
+       {id:20286, aop:3883,  n:"關西＆北陸地區鐵路周遊 7 日券", note:"可串白川鄉與金澤"},
+       {id:20306, aop:2756,  n:"JR PASS 北陸地區鐵路周遊券", note:"北陸單區"},
+       {id:20259, aop:7804,  n:"JR PASS 高山＆北陸地區周遊券", note:"白川鄉行程的交通首選"},
+       {id:20301, aop:9738,  n:"立山黑部＆高山＆松本地區周遊券", note:"黑部立山賞楓必備"}]},
+     {n:"北海道・東京・九州", items:[
+       {id:122531, aop:5437, n:"北海道 JR PASS 鐵路周遊券", note:"滑雪與破冰船客的交通"},
+       {id:158964, aop:6374, n:"JR 東京廣域周遊券", note:"東京近郊一次玩"},
+       {id:3494,  aop:5890,  n:"JR Pass 九州鐵路周遊券｜北九州／南九州／全九州", note:"九州賞楓可搭"},
+       {id:150953, aop:1418, n:"JR 九州電子周遊券 MOBILEPASS・福岡廣域版", note:"電子票免換票"}]},
+     {n:"中國・四國・山陰", items:[
+       {id:20311, aop:6520,  n:"岡山＆廣島＆山口地區鐵路周遊 5 日券", note:"山陽線主力"},
+       {id:20315, aop:4734,  n:"JR 山陽＆山陰地區鐵路周遊 7 日券", note:"跨山陽山陰"},
+       {id:125457, aop:4092, n:"四國鐵路周遊券 All Shikoku Rail Pass", note:"四國唯一選擇"},
+       {id:153331, aop:821,  n:"鳥取・松江區域周遊券｜eMCO 電子票", note:"山陰小區域，單價低"},
+       {id:126027, aop:4428, n:"西遊紀行・瀨戶內地區鐵路周遊 7 日券", note:"瀨戶內跳島"}]},
+     {n:"商務與單程", items:[
+       {id:285152, aop:2728, n:"JR 日本鐵路｜西日本 e5489 線上訂位", note:"站上量最大的 JR 商品，單程訂位用"},
+       {id:250068, aop:2441, n:"JR 日本鐵路｜東日本 えきねっと 線上訂位", note:"同上，東日本版"}]}
    ]},
   {id:"charter", img:"img/pk-charter.webp", tab:"包車", lede:"高客單、成團率高，適合家庭與長輩客群。",
    groups:[
@@ -1389,21 +1414,42 @@ const PACKS = [
      {n:"台灣", items:[
        {id:570459, aop:1580, n:"基隆港口接送｜全省往返基隆港・賓士商務車", note:"郵輪客配套，可與郵輪包一起寫"}]}
    ]},
-  {id:"flight", img:"img/pk-flight.webp", tab:"機票", lede:"客單最高的一類，含稅含行李、1 人成行是主要賣點。",
+  {id:"flight", img:"img/pk-flight.webp", tab:"機票", code:"KKFLY", codeNote:"機票滿 7,000 折 300",
+   lede:"客單最高的一類，含稅含行李、1 人成行是主要賣點。",
    groups:[
-     {n:"日本", items:[
-       {id:135442, aop:14880, n:"酷航・桃園出發｜北海道 6／7 天計劃機票", note:"客單近 1.5 萬"},
-       {id:135223, aop:10988, n:"酷航・桃園出發｜東京 5 天計劃機票・含行李", note:"日本線量最大"},
-       {id:154340, aop:11088, n:"亞洲航空・桃園出發｜九州福岡 5 天・1 人成行", note:"抗漲超低票價"},
-       {id:151729, aop:10788, n:"樂桃航空・桃園出發｜名古屋 5 天計劃機票", note:"名古屋線，可串白川鄉"}]},
+     {n:"日本｜東京・大阪・名古屋", items:[
+       {id:135223, aop:10988, n:"酷航・桃園｜東京 5 天計劃機票・含行李", note:"日本線量最大"},
+       {id:137109, aop:12588, n:"樂桃・桃園｜東京 5 天・早去晚回", note:"早去晚回，天數用好用滿"},
+       {id:142756, aop:13638, n:"樂桃・桃園｜大阪 5 天計劃機票", note:"關西主力"},
+       {id:182833, aop:13188, n:"樂桃・高雄｜大阪 6 天計劃機票", note:"南部出發"},
+       {id:151729, aop:10788, n:"樂桃・桃園｜名古屋 5 天計劃機票", note:"可串白川鄉與立山黑部"}]},
+     {n:"日本｜北海道・九州・其他", items:[
+       {id:135442, aop:14888, n:"酷航・桃園｜北海道 6／7 天計劃機票", note:"滑雪與破冰船客的機票"},
+       {id:529695, aop:15888, n:"亞航・桃園｜北海道 6 天・加贈好禮", note:"北海道替代選擇"},
+       {id:135455, aop:12388, n:"台灣虎航・高雄｜北海道 5／6 天・限量清倉", note:"南部出發北海道"},
+       {id:154340, aop:11088, n:"亞航・桃園｜九州福岡 5 天・抗漲超低價", note:"九州賞楓可搭"},
+       {id:133364, aop:9788,  n:"台灣虎航・高雄｜仙台 5／6 天・限量清倉", note:"東北線，銀山溫泉交通"},
+       {id:156842, aop:12380, n:"台灣虎航・高雄｜小松 4／5 天", note:"北陸門戶，白川鄉近"},
+       {id:154792, aop:8960,  n:"台灣虎航・桃園｜福島 4／5 天・保證有位", note:"東北替代路線"},
+       {id:133427, aop:11000, n:"樂桃・桃園｜沖繩 5 天計劃機票", note:"沖繩主力"},
+       {id:154601, aop:9988,  n:"亞航・桃園｜沖繩 4 天・午去晚回", note:"短天數沖繩"},
+       {id:134520, aop:12688, n:"樂桃・桃園｜沖繩 4 天自選航班", note:"航班可自選"}]},
      {n:"韓國", items:[
-       {id:138818, aop:9038, n:"自選航空・桃園／台中／高雄｜韓國計劃機票", note:"三地出發，客單最高"},
-       {id:139665, aop:9350, n:"泰瑞航空・高雄出發｜首爾／濟州／釜山", note:"南部客友善"},
-       {id:135911, aop:8888, n:"易斯達航空・桃園出發｜首爾／濟州／釜山／清州", note:"1 人成行含行李"}]},
+       {id:138818, aop:9038, n:"自選航空・桃園／台中／高雄｜韓國計劃機票", note:"韓國線量最大，三地出發"},
+       {id:137021, aop:9388, n:"泰瑞・松山／桃園｜首爾／大邱／濟州", note:"松山出發，市區近"},
+       {id:157399, aop:7438, n:"泰瑞・台中－仁川｜首爾計畫機票", note:"中部出發"},
+       {id:158405, aop:8588, n:"濟州航空・高雄｜首爾／釜山", note:"南部出發"},
+       {id:135911, aop:8909, n:"易斯達・桃園｜首爾／濟州／釜山／清州", note:"四地可選"},
+       {id:139665, aop:9350, n:"泰瑞・高雄｜首爾／濟州／釜山", note:"南部出發替代"},
+       {id:147248, aop:14544, n:"釜山航空・高雄－釜山｜2 人成行", note:"客單最高的韓國線"},
+       {id:154052, aop:7088, n:"濟州航空・桃園｜釜山", note:"門檻最低"},
+       {id:146962, aop:9288, n:"真航空・桃園｜首爾／釜山／濟州", note:"1 人成行"},
+       {id:144562, aop:9188, n:"釜山航空・桃園｜釜山・2 人成行", note:"釜山直飛"}]},
      {n:"其他", items:[
-       {id:143059, aop:7300, n:"金廈小三通｜機票＋接駁＋船票・三地出發", note:"量最大的機票類商品"}]}
+       {id:143059, aop:7400, n:"金廈小三通｜機票＋接駁＋船票", note:"量最大的機票類商品"},
+       {id:182324, aop:7476, n:"越捷・桃園｜越南峴港 5／6 天", note:"東南亞線"}]}
    ]},
-  {id:"kbeauty", tab:"K-Beauty", lede:"",
+  {id:"kbeauty", img:"img/pk-kbeauty.webp", tab:"韓國美妝保養", code:"KBEAUTY88", codeNote:"指定體驗 88 折，最高折 450；訂購 9/24–12/31", lede:"",
    groups:[
      {n:"首爾｜一站式變美", promo:"https://www.kkday.com/zh-tw/promo/korea-beauty-festival",
       items:[
@@ -3446,6 +3492,7 @@ PACKS.map(function(p, i){
   return '<div class="pkpane' + (i === 0 ? " on" : "") + '" data-p="' + esc(p.id) + '">' +
     (p.img ? '<div class="pkhero"><img loading="lazy" src="' + esc(p.img) + '" alt=""></div>' : "") +
     (p.lede ? '<p class="pklede">' + esc(p.lede) + '</p>' : "") +
+    (p.code ? '<div class="pkcode"><b>' + esc(p.code) + '</b><span>' + esc(p.codeNote || "") + '</span></div>' : "") +
     '<div class="pkbar"><button class="pkall">全選這個主題</button>' +
       '<button class="pkbulk" disabled>複製勾選的 0 支</button></div>' +
     p.groups.map(function(g){
@@ -3464,7 +3511,6 @@ PACKS.map(function(p, i){
       '</div></div>'; }).join("") +
   '</div>'; }).join("") +
 '<div class="pkpane" data-p="free0">' +
-  '<div class="pkhero"><img loading="lazy" src="img/pk-free0.webp" alt=""></div>' +
   '<p class="pklede">粉絲不用花錢就能領，最好用的引流鉤子。本身不計佣金，但領完券通常會接著買別的，把它當入口。</p>' +
   '<div class="pkbar"><button class="pkall">全選這個主題</button>' +
     '<button class="pkbulk" disabled>複製勾選的 0 支</button></div>' +
@@ -4667,7 +4713,12 @@ document.addEventListener("click", function(e){
   if (!MYCID) { toastMsg("先在上面填你的 CID"); document.getElementById("mycid").scrollIntoView({block:"center"}); return; }
   const title = pane.parentElement.querySelector('.pktab[data-p="' + pane.dataset.p + '"]').textContent;
   /* 依子分類分段輸出，貼進部落格就是現成的段落結構 */
-  let out = "【" + title + "】\n\n";
+  let out = "【" + title + "】\n";
+  /* 主題有指定折扣碼（例如機票的 KKFLY、美妝的 KBEAUTY88）就固定寫在最前面，
+     個別商品下面仍會標各自最划算的那張。 */
+  const pc = pane.querySelector(".pkcode");
+  if (pc) out += "指定折扣碼 " + pc.querySelector("b").textContent + "：" + pc.querySelector("span").textContent + "\n";
+  out += "\n";
   pane.querySelectorAll(".pkgrp").forEach(function(g){
     const sel = [...g.querySelectorAll(".pkck:checked")];
     if (!sel.length) return;
