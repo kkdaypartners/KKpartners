@@ -1056,6 +1056,17 @@ footer a{color:var(--brand)}
 
 .dsub{margin:26px 0 10px;font-size:15px;font-weight:700;letter-spacing:.02em;opacity:.78}
 .dsub:first-of-type{margin-top:14px}
+
+/* 手機版漢堡選單裡的兩個下拉（2026-09-23 修）：
+   1. .navdda 是 span 裡的第一個子元素，被 nav a:first-child 拿掉上框線 → 補回來。
+   2. 面板改成選單內直接展開（不浮動），免得被選單遮住或定位跑掉。 */
+@media (max-width:820px){
+  nav .navdd{display:block}
+  nav .navdd > a.navdda{display:flex;justify-content:space-between;border-top:1px solid var(--line)}
+  nav .navdd .navddp{position:static;box-shadow:none;border:0;border-radius:0;min-width:0;max-height:none;
+      overflow:visible;padding:0 0 8px;background:var(--wash)}
+  nav .navdd .navddp button{padding:12px 24px 12px 38px;font-size:15px;border-radius:0}
+}
 </style>
 </head>
 <body>
@@ -5201,6 +5212,8 @@ document.addEventListener("click", function(e){
     btn.setAttribute("aria-expanded", open ? "true" : "false");
     return;
   }
+  /* 點選單裡的「主題資源包／折扣碼」只是展開子選單，不能把整個選單收掉 */
+  if (e.target.closest && e.target.closest(".navdda")) return;
   if (bar.classList.contains("navopen")) {
     bar.classList.remove("navopen");
     const b = document.getElementById("menubtn");
