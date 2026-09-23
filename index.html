@@ -4926,9 +4926,13 @@ function pkmGo(pid, groupName){
   root.querySelectorAll(".pktab").forEach(function(b){ b.classList.toggle("on", b.dataset.p === pid); });
   root.querySelectorAll(".pkpane").forEach(function(x){ x.classList.toggle("on", x.dataset.p === pid); });
   const lbl = root.querySelector('.pkmitem[data-p="' + pid + '"]');
-  document.getElementById("pkmnow").textContent = lbl ? lbl.childNodes[0].textContent : pid;
-  document.getElementById("pkmpanel").classList.remove("on");
-  document.getElementById("pkmbtn").setAttribute("aria-expanded", "false");
+  /* 區塊內的兩欄下拉已移除（2026-09-23），這三個元素不存在；沒防呆會在這裡拋錯，
+     導覽列下拉點了沒反應就是這個原因。 */
+  const now = document.getElementById("pkmnow"), pnl = document.getElementById("pkmpanel"),
+        pbt = document.getElementById("pkmbtn");
+  if (now) now.textContent = lbl ? lbl.childNodes[0].textContent : pid;
+  if (pnl) pnl.classList.remove("on");
+  if (pbt) pbt.setAttribute("aria-expanded", "false");
   if (groupName) {
     const pane = root.querySelector('.pkpane[data-p="' + pid + '"]');
     const hit = [...pane.querySelectorAll(".pkgh")].filter(function(h){ return h.textContent === groupName; })[0];
