@@ -574,6 +574,12 @@ body.adminonly #codes #ck-prod{display:none}
 .tags{flex-wrap:nowrap;overflow:hidden}
 .tags span{flex:0 1 auto}
 
+.freegrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.freecard{display:flex;flex-direction:column;gap:3px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;text-decoration:none;color:var(--ink);transition:transform .15s,box-shadow .15s}
+.freecard:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(9,60,66,.12)}
+.freecard i{font-style:normal;font-size:10.5px;font-weight:800;letter-spacing:.06em;color:var(--brand)}
+.freecard b{font-size:14.5px;font-weight:700;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.freecard u{text-decoration:none;font-size:11.5px;color:var(--muted)}
 .dnotel li:before{content:"";position:absolute;left:3px;top:7px;width:4px;height:4px;border-radius:50%;background:var(--mid);opacity:.55}
 .deal.soon{position:relative;box-shadow:0 2px 10px rgba(9,60,66,.06)}
 .deal.soon .dimg img{filter:grayscale(1);opacity:.5}
@@ -1215,6 +1221,23 @@ const LINE_GROUP = "https://line.me/ti/g2/5xW0eWvngTt1v0ZGIhk56Ey13dcAL3uD0AIORw
 /* 特殊商品贊助：供應商指定的商品，直接開表單給夥伴填。沒有開放時留空陣列 [] 即可
    name 商品名／img 商品圖網址／url 商品頁／form 申請表單（還沒開好就留空字串）
    tags 重點標籤／due 截止日（沒有就留空） */
+/* 0 元商品專區：粉絲不用花錢就能點進去領，KOL 拿來引流的鉤子。
+   名單由 BigQuery 近 90 天訂單驗證「最高實付 = 0」篩出，不是靠商品名有「免費」兩個字。
+   已排除「交通聯票限定」的贈品（yoxi 搭車金、7-11 飲品券、旅電借電金）——
+   那些要先買聯票才拿得到，不是真的 0 元。o = 近 90 天訂單數。 */
+const FREE_ITEMS = [
+  {id:531429, n:"樂天超市 LOTTE Mart 行動版優惠券", c:"韓國", o:15879},
+  {id:609360, n:"昇恆昌 RICHCLUB 免稅券｜買免稅先領券", c:"台灣", o:12837},
+  {id:123380, n:"全台 MITSUI OUTLET PARK 優惠券", c:"台灣", o:7954},
+  {id:151129, n:"驚安的殿堂 唐吉訶德 折價優惠券", c:"日本", o:6947},
+  {id:145380, n:"樂天免稅店市中心店優惠券", c:"韓國", o:3934},
+  {id:579523, n:"MONEYBOX 釜山換匯優惠券", c:"韓國", o:2679},
+  {id:134038, n:"三井 OUTLET 免稅折價券", c:"日本", o:2544},
+  {id:138758, n:"釜山治癒小物限量免費兌換券", c:"韓國", o:1666},
+  {id:185470, n:"明洞通行證｜免費禮品與優惠券", c:"韓國", o:941},
+  {id:583193, n:"PREMIUM OUTLETS 折扣優惠券", c:"日本", o:782}
+];
+
 const SPONSOR_ITEMS = [
   {
     name: "【KKday 獨家】臺北彩虹觀光巴士｜9/30 妮妃雅特別場",
@@ -2673,6 +2696,21 @@ let H = "";
         (n.url ? '<a href="' + esc(n.url) + '">' + body + '</a>' : '<span>' + body + '</span>') + '</li>';
     }).join("") + '</ul></div></section>';
 })();
+
+/* 0 元商品專區 */
+H += '<section class="band" id="free"><div class="inner">' +
+'<h2>0 元商品</h2>' +
+'<p class="lede">粉絲不用花錢就能領，最好用的引流鉤子。連結會自動帶上你的 CID，點進去領券也算你的曝光。</p>' +
+'<div class="freegrid">' + FREE_ITEMS.map(function(f){
+  /* 這裡是頁面組裝階段，MYCID 還沒初始化，不能呼叫 withCid()。
+     先放原始網址，點擊時再補上 CID（見下方 .freecard 的處理）。 */
+  return '<a class="freecard" data-u="' + esc(prodUrl(f.id)) + '" href="' + esc(prodUrl(f.id)) + '" target="_blank" rel="noopener">' +
+    '<i>' + esc(f.c) + '</i>' +
+    '<b>' + esc(f.n) + '</b>' +
+    '<u>近 90 天 ' + f.o.toLocaleString() + ' 筆</u>' +
+  '</a>'; }).join("") + '</div>' +
+'<p class="ckmore">這些商品本身不計佣金，但粉絲領完券通常會接著買別的——把它當入口，後面再導到有佣金的商品。</p>' +
+'</div></section>';
 
 H += '<section class="band band-wash" id="today"><div class="inner">' +
 '<h2>本週特別優惠</h2>' +
@@ -4290,6 +4328,16 @@ document.addEventListener('click', function(e){
   const body = picked.map(function(x){ return '・' + x.dataset.n + '\n' + x.dataset.u; }).join('\n\n');
   copyText(head + body + '\n',
            '已複製 ' + picked.length + ' 支商品，含折扣條件與連結');
+});
+
+/* 0 元商品：點擊時才補上 CID（組裝階段 MYCID 尚未初始化） */
+document.addEventListener("click", function(e){
+  const a = e.target.closest(".freecard");
+  if (!a) return;
+  const base = a.dataset.u || a.getAttribute("href");
+  if (!MYCID) { e.preventDefault(); toastMsg("先在上面填你的 CID，連結才會算你的"); 
+    document.getElementById("mycid").scrollIntoView({block:"center"}); return; }
+  a.setAttribute("href", withCid(base));
 });
 
 /* 用商品查 */
