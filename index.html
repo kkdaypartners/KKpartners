@@ -1069,7 +1069,10 @@ footer a{color:var(--brand)}
       <span class="navddp" id="navddp"></span>
     </span>
     <a href="#event">本月檔期</a>
-    <a href="#codes">折扣碼</a>
+    <span class="navdd" id="navdd2">
+      <a href="#codes" class="navdda">折扣碼 <i></i></a>
+      <span class="navddp" id="navddp2"></span>
+    </span>
     <a href="#sponsor">贊助</a>
     <a href="#payout">佣金</a>
     <a href="#ask">問題來信</a>
@@ -3611,18 +3614,6 @@ function buildEvent(){
 H += '<section class="band" id="packs"><div class="inner">' +
 '<h2>主題資源包</h2>' +
 '<p class="lede">把單品整理成一整包，寫部落格或長文時整組複製就能用。連結會自動帶上你的 CID。</p>' +
-/* 兩欄下拉：左欄主題、右欄該主題的子分類。十一個膠囊並排太擠，
-   而且看不出每個主題底下有什麼（Alen 2026-09-23 指定這種型式）。 */
-'<div class="pkmenu">' +
-  '<button type="button" class="pkmbtn" id="pkmbtn" aria-expanded="false">' +
-    '<span id="pkmnow">' + esc(PACKS[0].tab) + '</span><i></i></button>' +
-  '<div class="pkmpanel" id="pkmpanel">' +
-    '<div class="pkmcol pkmleft">' + PACKS.map(function(p, i){
-      return '<button type="button" class="pkmitem' + (i === 0 ? " on" : "") + '" data-p="' + esc(p.id) + '">' +
-             esc(p.tab) + '<em>' + p.groups.length + '</em></button>';
-    }).join("") + '<button type="button" class="pkmitem" data-p="free0">0 元商品<em>' + FREE_ITEMS.length + '</em></button></div>' +
-    '<div class="pkmcol pkmright" id="pkmright"></div>' +
-  '</div>' +
 '</div>' +
 '<div class="pktabs" role="tablist">' + PACKS.map(function(p, i){
   return '<button class="pktab' + (i === 0 ? " on" : "") + '" data-p="' + esc(p.id) + '">' + esc(p.tab) + '</button>';
@@ -4116,8 +4107,8 @@ document.addEventListener("click", e => {
 });
 /* admin 模式：只留折扣碼與選品、競品與重點商品兩區。 */
 if (ADMIN) try {
-  const nav = document.querySelector(".bar nav");
-  if (nav) nav.innerHTML = '<a href="#codes">折扣碼與選品</a>';
+  /* 2026-09-23：不再把導覽列砍成單一連結。工作區是日常主要介面，
+     砍掉導覽等於每次都要手動捲，而且下拉選單會一起被清空。 */
   document.body.classList.add("adminonly");
 
 } catch (err) { console.error("admin 模式初始化失敗", err); }
@@ -4865,6 +4856,12 @@ document.addEventListener('click', function(e){
 /* 導覽列的「主題資源包」下拉：直接從 PACKS 生成，新增主題會自動出現。
    點主題就切到該分頁並捲過去，不用進到區塊再找（Alen 2026-09-23）。 */
 (function(){
+  /* 折扣碼的下拉：列出五個分頁與組數 */
+  const c = document.getElementById("navddp2");
+  if (c) c.innerHTML = GROUPS.map(function(g){
+    const n = (g.items || []).filter(function(x){ return x.code; }).length;
+    return '<button type="button" data-tab="' + esc(g.id) + '">' + esc(g.tab) + '<em>' + n + '</em></button>';
+  }).join("");
   const p = document.getElementById("navddp");
   if (!p) return;
   p.innerHTML = PACKS.map(function(x){
@@ -4875,6 +4872,18 @@ document.addEventListener('click', function(e){
     FREE_ITEMS.reduce(function(a, g){ return a + g.list.length; }, 0) + '</em></button>';
 })();
 document.addEventListener("click", function(e){
+  /* 折扣碼下拉：切到該分頁並捲過去 */
+  const cb = e.target.closest("#navddp2 button");
+  if (cb) {
+    e.preventDefault();
+    const t = document.querySelector('#codelist button[data-g="' + cb.dataset.tab + '"]') ||
+              [...document.querySelectorAll("#codelist button")].filter(function(x){
+                return x.dataset.g === cb.dataset.tab; })[0];
+    if (t) t.click();
+    document.getElementById("codes").scrollIntoView({behavior:"smooth", block:"start"});
+    cb.closest(".navdd").classList.remove("on");
+    return;
+  }
   const b = e.target.closest("#navddp button");
   if (!b) return;
   e.preventDefault();
@@ -4884,11 +4893,14 @@ document.addEventListener("click", function(e){
 });
 document.addEventListener("click", function(e){
   const a = e.target.closest(".navdda");
-  if (a) { e.preventDefault(); document.getElementById("navdd").classList.toggle("on"); return; }
-  if (!e.target.closest("#navdd")) {
-    const n = document.getElementById("navdd");
-    if (n) n.classList.remove("on");
+  if (a) {
+    e.preventDefault();
+    const me = a.closest(".navdd");
+    document.querySelectorAll(".navdd").forEach(function(n){ n.classList.toggle("on", n === me && !me.classList.contains("on")); });
+    return;
   }
+  if (!e.target.closest(".navdd"))
+    document.querySelectorAll(".navdd").forEach(function(n){ n.classList.remove("on"); });
 });
 
 /* 兩欄下拉的互動 */
