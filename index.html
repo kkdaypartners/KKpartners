@@ -574,12 +574,12 @@ body.adminonly #codes #ck-prod{display:none}
 .tags{flex-wrap:nowrap;overflow:hidden}
 .tags span{flex:0 1 auto}
 
-.freegrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
-.freecard{display:flex;flex-direction:column;gap:3px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;text-decoration:none;color:var(--ink);transition:transform .15s,box-shadow .15s}
+.freegrp{margin:0 0 20px}
+.freehd{font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--mid);margin:0 0 9px}
+.freegrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.freecard{display:block;background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px 15px;text-decoration:none;color:var(--ink);transition:transform .15s,box-shadow .15s}
 .freecard:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(9,60,66,.12)}
-.freecard i{font-style:normal;font-size:10.5px;font-weight:800;letter-spacing:.06em;color:var(--brand)}
-.freecard b{font-size:14.5px;font-weight:700;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.freecard u{text-decoration:none;font-size:11.5px;color:var(--muted)}
+.freecard b{font-size:14px;font-weight:700;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
 .dnotel li:before{content:"";position:absolute;left:3px;top:7px;width:4px;height:4px;border-radius:50%;background:var(--mid);opacity:.55}
 .deal.soon{position:relative;box-shadow:0 2px 10px rgba(9,60,66,.06)}
 .deal.soon .dimg img{filter:grayscale(1);opacity:.5}
@@ -1221,21 +1221,16 @@ const LINE_GROUP = "https://line.me/ti/g2/5xW0eWvngTt1v0ZGIhk56Ey13dcAL3uD0AIORw
 /* 特殊商品贊助：供應商指定的商品，直接開表單給夥伴填。沒有開放時留空陣列 [] 即可
    name 商品名／img 商品圖網址／url 商品頁／form 申請表單（還沒開好就留空字串）
    tags 重點標籤／due 截止日（沒有就留空） */
-/* 0 元商品專區：粉絲不用花錢就能點進去領，KOL 拿來引流的鉤子。
-   名單由 BigQuery 近 90 天訂單驗證「最高實付 = 0」篩出，不是靠商品名有「免費」兩個字。
-   已排除「交通聯票限定」的贈品（yoxi 搭車金、7-11 飲品券、旅電借電金）——
-   那些要先買聯票才拿得到，不是真的 0 元。o = 近 90 天訂單數。 */
+/* 0 元商品專區：依地區分組，粉絲不用花錢就能領，是 KOL 的引流鉤子。
+   名單由 BigQuery 近 90 天訂單驗證「最高實付 = 0」篩出，不是靠商品名有「免費」兩字。
+   已排除「交通聯票限定」的贈品（yoxi 搭車金、7-11 飲品券、旅電借電金）——那些要先買聯票。
+   ⚠️ 名單會變動，每週更新一次，重跑方式見交接文件「每週更新待辦」。 */
 const FREE_ITEMS = [
-  {id:531429, n:"樂天超市 LOTTE Mart 行動版優惠券", c:"韓國", o:15879},
-  {id:609360, n:"昇恆昌 RICHCLUB 免稅券｜買免稅先領券", c:"台灣", o:12837},
-  {id:123380, n:"全台 MITSUI OUTLET PARK 優惠券", c:"台灣", o:7954},
-  {id:151129, n:"驚安的殿堂 唐吉訶德 折價優惠券", c:"日本", o:6947},
-  {id:145380, n:"樂天免稅店市中心店優惠券", c:"韓國", o:3934},
-  {id:579523, n:"MONEYBOX 釜山換匯優惠券", c:"韓國", o:2679},
-  {id:134038, n:"三井 OUTLET 免稅折價券", c:"日本", o:2544},
-  {id:138758, n:"釜山治癒小物限量免費兌換券", c:"韓國", o:1666},
-  {id:185470, n:"明洞通行證｜免費禮品與優惠券", c:"韓國", o:941},
-  {id:583193, n:"PREMIUM OUTLETS 折扣優惠券", c:"日本", o:782}
+  {c:"韓國", list:[{id:531429, n:"樂天超市 LOTTE Mart 優惠券"}, {id:145380, n:"樂天免稅店市中心店優惠券"}, {id:531191, n:"新世界免稅店 Gold Pass 折扣卡"}, {id:547572, n:"樂天百貨釜山總店｜冰淇淋券"}, {id:579523, n:"MONEYBOX 釜山換匯優惠券"}, {id:138758, n:"釜山治癒小物限量兌換券"}, {id:185470, n:"明洞通行證｜禮品與優惠券"}, {id:138057, n:"韓際新世界免稅店折扣券"}, {id:135682, n:"新羅免稅店優惠折扣券"}]},
+  {c:"日本", list:[{id:151129, n:"驚安的殿堂 唐吉訶德 折價券"}, {id:134038, n:"三井 OUTLET 免稅折價券"}, {id:583193, n:"PREMIUM OUTLETS 折扣券"}, {id:181157, n:"Kokumin 國民藥妝購物券"}, {id:141718, n:"Alpen 免稅優惠券"}, {id:581733, n:"東京車站一番街 300 日圓折價券"}, {id:162299, n:"Tsuruba 藥妝店免稅折扣券"}]},
+  {c:"台灣", list:[{id:609360, n:"昇恆昌 RICHCLUB 免稅券"}, {id:123380, n:"全台 MITSUI OUTLET PARK 優惠券"}]},
+  {c:"泰國", list:[{id:580199, n:"Grab 旅遊通行證優惠碼"}, {id:307163, n:"王權免稅電子優惠券"}, {id:139679, n:"ONESIAM 全球訪客卡"}, {id:140768, n:"中央購物中心遊客歡迎套餐"}]},
+  {c:"其他", list:[{id:581024, n:"Grab 旅遊通行證優惠碼｜越南"}, {id:375325, n:"旅行通行證促銷代碼｜新加坡"}]}
 ];
 
 const SPONSOR_ITEMS = [
@@ -2697,21 +2692,6 @@ let H = "";
     }).join("") + '</ul></div></section>';
 })();
 
-/* 0 元商品專區 */
-H += '<section class="band" id="free"><div class="inner">' +
-'<h2>0 元商品</h2>' +
-'<p class="lede">粉絲不用花錢就能領，最好用的引流鉤子。連結會自動帶上你的 CID，點進去領券也算你的曝光。</p>' +
-'<div class="freegrid">' + FREE_ITEMS.map(function(f){
-  /* 這裡是頁面組裝階段，MYCID 還沒初始化，不能呼叫 withCid()。
-     先放原始網址，點擊時再補上 CID（見下方 .freecard 的處理）。 */
-  return '<a class="freecard" data-u="' + esc(prodUrl(f.id)) + '" href="' + esc(prodUrl(f.id)) + '" target="_blank" rel="noopener">' +
-    '<i>' + esc(f.c) + '</i>' +
-    '<b>' + esc(f.n) + '</b>' +
-    '<u>近 90 天 ' + f.o.toLocaleString() + ' 筆</u>' +
-  '</a>'; }).join("") + '</div>' +
-'<p class="ckmore">這些商品本身不計佣金，但粉絲領完券通常會接著買別的——把它當入口，後面再導到有佣金的商品。</p>' +
-'</div></section>';
-
 H += '<section class="band band-wash" id="today"><div class="inner">' +
 '<h2>本週特別優惠</h2>' +
 '<p class="lede">' + (DEAL_DATE ? esc(DEAL_DATE) + ' 更新。' : "") + '這週最值得推的幾檔，附上推的理由與適用的折扣碼。</p>' +
@@ -3172,6 +3152,19 @@ function buildEvent(){
 H += buildEvent();
 
 /* ── 2. 折扣碼 ─────────────────────────── */
+/* 0 元商品專區（每週選品分析之後） */
+H += '<section class="band" id="free"><div class="inner">' +
+'<h2>0 元商品</h2>' +
+'<p class="lede">粉絲不用花錢就能領，最好用的引流鉤子。連結會自動帶上你的 CID。</p>' +
+FREE_ITEMS.map(function(g){
+  return '<div class="freegrp"><h3 class="freehd">' + esc(g.c) + '</h3><div class="freegrid">' +
+    g.list.map(function(f){
+      return '<a class="freecard" data-u="' + esc(prodUrl(f.id)) + '" href="' + esc(prodUrl(f.id)) + '" target="_blank" rel="noopener">' +
+        '<b>' + esc(f.n) + '</b></a>'; }).join("") +
+  '</div></div>'; }).join("") +
+'<p class="ckmore">這些商品本身不計佣金，但粉絲領完券通常會接著買別的——把它當入口，後面再導到有佣金的商品。</p>' +
+'</div></section>';
+
 H += '<section class="band band-wash" id="codes"><div class="inner">' +
 '<h2>本月折扣碼</h2>' +
 '<p class="lede">點一下就複製，直接貼進貼文或限動。數量有限、用完為止，實際折抵以結帳頁為準。</p>' +
