@@ -561,6 +561,19 @@ body.adminonly #codes #ck-prod{display:none}
   background:rgba(14,122,133,.07);border-radius:8px;padding:9px 12px}
 .dnotel{list-style:none;display:grid;gap:5px}
 .dnotel li{position:relative;padding-left:14px;font-size:12.5px;line-height:1.5}
+/* ── 單行規則（2026-09-23 全站補齊）──────────────────────────
+   標題與標籤類元素一律不換行，超出以「…」截斷。
+   先前只鎖了商品卡標題 .dttl，其餘 11 類仍會折行——贊助卡標題、選品標題、
+   本週重點副標、折扣碼膠囊、標籤都中招。改樣式時請把同類元素一起檢查。
+   例外只有兩處：卡片注意事項 .dnotel li 與即時快訊 .newslist li，
+   那兩處是完整句子，截斷會讓資訊消失，比折行更糟。 */
+.pbody b, .pkhd, .hlpill b, .hlpill u, .dprow i, .pkcode b,
+.chip, .scope, .tags span, .pdue, .featflag{
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.pbody b, .pkhd{display:block}
+.tags{flex-wrap:nowrap;overflow:hidden}
+.tags span{flex:0 1 auto}
+
 .dnotel li:before{content:"";position:absolute;left:3px;top:7px;width:4px;height:4px;border-radius:50%;background:var(--mid);opacity:.55}
 .deal.soon{position:relative;box-shadow:0 2px 10px rgba(9,60,66,.06)}
 .deal.soon .dimg img{filter:grayscale(1);opacity:.5}
