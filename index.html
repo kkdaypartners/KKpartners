@@ -584,6 +584,25 @@ body.adminonly #codes #ck-prod{display:none}
 .freebulk{background:var(--mid);color:#fff;border:none;border-radius:999px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer}
 .freebulk:disabled{background:var(--line);color:var(--muted);cursor:default}
 .freeck{flex:0 0 auto;accent-color:var(--mid);margin:0}
+#packs .pktabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.pktab{background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 15px;font-size:13.5px;font-weight:700;color:var(--mid);cursor:pointer;white-space:nowrap}
+.pktab.on{background:var(--mid);border-color:var(--mid);color:#fff}
+.pkpane{display:none}
+.pkpane.on{display:block}
+.pklede{margin:0 0 12px;font-size:13px;color:var(--muted);line-height:1.6}
+.pkbar{display:flex;align-items:center;gap:10px;margin:0 0 14px;flex-wrap:wrap}
+.pkall{background:none;border:none;color:var(--mid);font-size:12.5px;font-weight:700;cursor:pointer;text-decoration:underline;padding:0}
+.pkbulk{background:var(--mid);color:#fff;border:none;border-radius:999px;padding:6px 14px;font-size:12.5px;font-weight:700;cursor:pointer}
+.pkbulk:disabled{background:var(--line);color:var(--muted);cursor:default}
+.pkgrp{margin:0 0 18px}
+.pkgh{font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--brand);margin:0 0 8px}
+.pkgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:9px}
+.pkitem{display:flex;align-items:flex-start;gap:9px;background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px 13px;cursor:pointer}
+.pkitem:hover{border-color:var(--mid)}
+.pkck{margin-top:3px;flex:0 0 auto;accent-color:var(--mid)}
+.pkitem span{min-width:0;display:flex;flex-direction:column;gap:2px}
+.pkitem b{font-size:13.5px;font-weight:700;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pkitem u{text-decoration:none;font-size:11.5px;color:var(--muted)}
 .freegrp{margin:0 0 22px}
 .freegrp:last-of-type{margin-bottom:0}
 .freehd{font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--mid);margin:0}
@@ -965,6 +984,7 @@ footer a{color:var(--brand)}
     <a href="#today">本週優惠</a>
     <a href="#benefit">專屬福利</a>
     <a href="#picks">每週選品</a>
+    <a href="#packs">主題資源包</a>
     <a href="#free">0 元商品</a>
     <a href="#event">本月檔期</a>
     <a href="#codes">折扣碼</a>
@@ -1237,6 +1257,102 @@ const LINE_GROUP = "https://line.me/ti/g2/5xW0eWvngTt1v0ZGIhk56Ey13dcAL3uD0AIORw
 /* 特殊商品贊助：供應商指定的商品，直接開表單給夥伴填。沒有開放時留空陣列 [] 即可
    name 商品名／img 商品圖網址／url 商品頁／form 申請表單（還沒開好就留空字串）
    tags 重點標籤／due 截止日（沒有就留空） */
+/* 主題資源包：把單品整理成「一整包」，KOL 寫部落格時可以整組複製。
+   分頁＝主題，主題底下再分地區。每個層級都能勾選與批次複製，複製出來
+   直接是文章段落格式（標題＋商品名＋帶 CID 的連結）。
+   商品由 BigQuery 近 90–180 天訂單挑出，只收仍在架上且有實際銷量的。
+   ⚠️ 關鍵字撈出來的結果一定要人工過：滑雪會撈到小叮噹樂園與科工館室內兒童滑雪、
+      賞楓會撈到關西機場接送，這些都不是該主題的商品。
+   ⚠️ 每季更新一次，冬季主題（滑雪、破冰船、樹冰）過季要換掉。 */
+const PACKS = [
+  {id:"ski", tab:"滑雪", lede:"雪季 12–3 月，現在寫剛好卡在讀者查資料的時間點。",
+   groups:[
+     {n:"日本", items:[
+       {id:157140, n:"北海道滑雪團一日遊｜手稻滑雪場", aop:9498}]},
+     {n:"韓國", items:[
+       {id:5852,   n:"江原道 High One 滑雪二／三天團｜含教學", aop:18842},
+       {id:27366,  n:"SONO VIVALDI PARK 兩天一夜滑雪團", aop:18044},
+       {id:115178, n:"SONO VIVALDI PARK 三天兩夜・四天三夜", aop:14741},
+       {id:528295, n:"龍平滑雪住宿套餐｜1–5 晚", aop:14008},
+       {id:3620,   n:"芝山森林度假村滑雪一日遊｜首爾出發", aop:6950}]}
+   ]},
+  {id:"maple", tab:"賞楓", lede:"日本 10 月中至 12 月初、韓國 10 月下旬，長線客單高。",
+   groups:[
+     {n:"日本", items:[
+       {id:158778, n:"黑部立山楓紅三日遊｜室堂紅葉・上高地・白川鄉", aop:28302},
+       {id:601669, n:"北海道層雲峽賞楓一日遊｜銀河瀑布・黑岳纜車", aop:6012},
+       {id:669845, n:"香嵐溪夜楓一日遊｜虎溪山永保寺・名古屋往返", aop:3572},
+       {id:287555, n:"九州系島｜雷山千如寺賞紅葉", aop:2774},
+       {id:529663, n:"九州紅葉巡禮一日遊｜九年庵・環境藝術之森", aop:1339}]},
+     {n:"韓國", items:[
+       {id:9120,  n:"雪嶽山國立公園秋季賞楓一日遊｜首爾出發", aop:4156},
+       {id:12339, n:"內藏山國家公園秋季賞楓一日遊", aop:3147}]}
+   ]},
+  {id:"shirakawa", tab:"白川鄉", lede:"點燈是一年只有四天的限定活動，其餘為常態合掌村行程。",
+   groups:[
+     {n:"點燈限定", items:[
+       {id:531214, n:"白川鄉點燈一日遊｜僅限四天・JR 高山站出發", aop:9142}]},
+     {n:"常態行程", items:[
+       {id:526215, n:"白川鄉合掌村一日遊｜1 人成團・名古屋出發", aop:3366},
+       {id:135964, n:"白川鄉一日遊｜含展望台・可選飯店接送", aop:3462},
+       {id:17716,  n:"名古屋一日遊｜白川鄉＆飛驒高山老街", aop:3092},
+       {id:28049,  n:"金澤一日遊｜五箇山＆白川鄉＆飛驒高山", aop:3254},
+       {id:137376, n:"白川鄉＆金澤二日遊｜兼六園・東茶屋街", aop:9316}]}
+   ]},
+  {id:"ginzan", tab:"銀山溫泉", lede:"千與千尋湯屋取景地，冬季點燈與藏王樹冰可一起寫。",
+   groups:[
+     {n:"一日遊", items:[
+       {id:535840, n:"銀山溫泉・藏王纜車・御釜火山口一日遊｜仙台出發", aop:7372},
+       {id:285155, n:"銀山溫泉一日遊｜山寺健行＆足湯｜仙台出發", aop:5851},
+       {id:160112, n:"銀山溫泉・藏王樹冰・狐狸村拼車一日遊", aop:7629},
+       {id:196175, n:"銀山溫泉點燈・金蛇水神社｜全包式巴士", aop:9270}]},
+     {n:"二日遊", items:[
+       {id:182060, n:"東北二日遊｜銀山溫泉・藏王樹冰・狐狸村｜東京出發", aop:16016},
+       {id:535652, n:"冬季銀山溫泉二日遊｜藏王中央纜車・大內宿", aop:14846}]}
+   ]},
+  {id:"icebreaker", tab:"破冰船", lede:"流冰季 1–3 月，熱門日期現在就要訂，客單兩萬起跳。",
+   groups:[
+     {n:"北海道", items:[
+       {id:151492, n:"破冰船二日遊｜紋別 GARINKO＆層雲峽冰瀑祭", aop:19736},
+       {id:135943, n:"道東流冰體驗二日遊｜GARINKO III＆層雲峽", aop:17836},
+       {id:146864, n:"知床・網走流冰二日遊｜極光號＆流冰觸摸", aop:21424},
+       {id:259458, n:"流冰二日遊｜流冰漫步＆極光號・單人同價", aop:10776},
+       {id:154373, n:"新造船 GARINKO III・IMERU 流冰破冰船", aop:10720}]}
+   ]},
+  {id:"charter", tab:"包車", lede:"高客單、成團率高，適合家庭與長輩客群。",
+   groups:[
+     {n:"日本", items:[
+       {id:142125, n:"沖繩全島包車一日遊｜立即確認", aop:7650},
+       {id:133661, n:"大阪、京都、奈良、神戶 10 小時來回包車", aop:10626},
+       {id:29426,  n:"沖繩包車｜客製 1／2 日・中文司機", aop:9553},
+       {id:134740, n:"大阪－關西機場／京都／神戶專屬包車接送", aop:3478}]},
+     {n:"東南亞", items:[
+       {id:3431,   n:"泰國機場包車接送｜BKK／DMK－曼谷市區", aop:1110},
+       {id:137705, n:"峇里島包車體驗｜6／10 小時客製行程", aop:1524}]},
+     {n:"台灣", items:[
+       {id:570459, n:"基隆港口接送｜全省往返基隆港・賓士商務車", aop:1564}]}
+   ]},
+  {id:"flight", tab:"機票", lede:"客單最高的一類，含稅含行李、1 人成行是主要賣點。",
+   groups:[
+     {n:"日本", items:[
+       {id:135442, n:"酷航・桃園出發｜北海道 6／7 天計劃機票", aop:14880},
+       {id:135223, n:"酷航・桃園出發｜東京 5 天計劃機票・含行李", aop:10988},
+       {id:154340, n:"亞洲航空・桃園出發｜九州福岡 5 天・1 人成行", aop:10864},
+       {id:151729, n:"樂桃航空・桃園出發｜名古屋 5 天計劃機票", aop:10338}]},
+     {n:"韓國", items:[
+       {id:138818, n:"自選航空・桃園／台中／高雄｜韓國計劃機票", aop:13038},
+       {id:139665, n:"泰瑞航空・高雄出發｜首爾／濟州／釜山", aop:8830},
+       {id:135911, n:"易斯達航空・桃園出發｜首爾／濟州／釜山／清州", aop:8488}]},
+     {n:"其他", items:[
+       {id:143059, n:"金廈小三通｜機票＋接駁＋船票・三地出發", aop:7400}]}
+   ]},
+  {id:"cruise", tab:"郵輪", lede:"單筆金額最高，兩組郵輪專屬碼滿 3 萬折 2,000、滿 5 萬折 3,000。",
+   groups:[
+     {n:"日本線", items:[
+       {id:575458, n:"MSC 榮耀號｜新增三四人房・基隆／那霸／東京出發", aop:0}]}
+   ]}
+];
+
 /* 0 元商品專區：依地區分組，粉絲不用花錢就能領，是 KOL 的引流鉤子。
    篩選方式：BigQuery 近 90 天 zh-tw 訂單「最高實付 = 0」且商品仍在架上
    （prod_sale_stat_note = Product OnShelf），再人工剔除三類假 0 元：
@@ -3222,6 +3338,31 @@ function buildEvent(){
   return h + '</div></section>';
 }
 /* 0 元商品專區（每週選品分析之後、本月檔期之前） */
+/* 主題資源包（0 元商品之前） */
+H += '<section class="band band-wash" id="packs"><div class="inner">' +
+'<h2>主題資源包</h2>' +
+'<p class="lede">把單品整理成一整包，寫部落格或長文時整組複製就能用。連結會自動帶上你的 CID。</p>' +
+'<div class="pktabs" role="tablist">' + PACKS.map(function(p, i){
+  return '<button class="pktab' + (i === 0 ? " on" : "") + '" data-p="' + esc(p.id) + '">' + esc(p.tab) + '</button>';
+}).join("") + '</div>' +
+PACKS.map(function(p, i){
+  return '<div class="pkpane' + (i === 0 ? " on" : "") + '" data-p="' + esc(p.id) + '">' +
+    '<p class="pklede">' + esc(p.lede) + '</p>' +
+    '<div class="pkbar"><button class="pkall">全選這個主題</button>' +
+      '<button class="pkbulk" disabled>複製勾選的 0 支</button></div>' +
+    p.groups.map(function(g){
+      return '<div class="pkgrp"><h3 class="pkgh">' + esc(g.n) + '</h3><div class="pkgrid">' +
+        g.items.map(function(x){
+          return '<label class="pkitem">' +
+            '<input type="checkbox" class="pkck" data-n="' + esc(x.n) + '" data-u="' + esc(prodUrl(x.id)) + '">' +
+            '<span><b>' + esc(x.n) + '</b>' +
+            (x.aop ? '<u>常見客單 NT$ ' + x.aop.toLocaleString() + '</u>' : "") + '</span>' +
+          '</label>'; }).join("") +
+      '</div></div>'; }).join("") +
+  '</div>'; }).join("") +
+'<p class="ckmore">客單價是近 90 天台灣訂單的中位數，給你評估要主打哪一支。冬季主題過季會換掉，每季更新一次。</p>' +
+'</div></section>';
+
 H += '<section class="band" id="free"><div class="inner">' +
 '<h2>0 元商品</h2>' +
 '<p class="lede">粉絲不用花錢就能領，最好用的引流鉤子。連結會自動帶上你的 CID。</p>' +
@@ -4402,6 +4543,52 @@ document.addEventListener('click', function(e){
   const body = picked.map(function(x){ return '・' + x.dataset.n + '\n' + x.dataset.u; }).join('\n\n');
   copyText(head + body + '\n',
            '已複製 ' + picked.length + ' 支商品，含折扣條件與連結');
+});
+
+/* 主題資源包：分頁切換、勾選、批次複製 */
+document.addEventListener("click", function(e){
+  const tab = e.target.closest(".pktab");
+  if (tab) {
+    const root = tab.closest("#packs");
+    root.querySelectorAll(".pktab").forEach(function(b){ b.classList.toggle("on", b === tab); });
+    root.querySelectorAll(".pkpane").forEach(function(x){ x.classList.toggle("on", x.dataset.p === tab.dataset.p); });
+    return;
+  }
+  const all = e.target.closest(".pkall");
+  if (all) {
+    const pane = all.closest(".pkpane");
+    const cks = [...pane.querySelectorAll(".pkck")];
+    const on = cks.every(function(x){ return x.checked; });
+    cks.forEach(function(x){ x.checked = !on; });
+    pkSync(pane); return;
+  }
+  const bulk = e.target.closest(".pkbulk");
+  if (!bulk) return;
+  const pane = bulk.closest(".pkpane");
+  const picked = [...pane.querySelectorAll(".pkck:checked")];
+  if (!picked.length) return;
+  if (!MYCID) { toastMsg("先在上面填你的 CID"); document.getElementById("mycid").scrollIntoView({block:"center"}); return; }
+  const title = pane.parentElement.querySelector('.pktab[data-p="' + pane.dataset.p + '"]').textContent;
+  /* 依子分類分段輸出，貼進部落格就是現成的段落結構 */
+  let out = "【" + title + "】\n\n";
+  pane.querySelectorAll(".pkgrp").forEach(function(g){
+    const sel = [...g.querySelectorAll(".pkck:checked")];
+    if (!sel.length) return;
+    out += "◆ " + g.querySelector(".pkgh").textContent + "\n";
+    sel.forEach(function(x){ out += "・" + x.dataset.n + "\n" + withCid(x.dataset.u) + "\n\n"; });
+  });
+  copyText(out, "已複製 " + picked.length + " 支，連結都帶上你的 CID");
+});
+function pkSync(pane){
+  const n = pane.querySelectorAll(".pkck:checked").length;
+  const b = pane.querySelector(".pkbulk");
+  b.textContent = "複製勾選的 " + n + " 支"; b.disabled = !n;
+  const tot = pane.querySelectorAll(".pkck").length;
+  pane.querySelector(".pkall").textContent = (n === tot && tot) ? "取消全選" : "全選這個主題";
+}
+document.addEventListener("change", function(e){
+  const ck = e.target.closest(".pkck");
+  if (ck) pkSync(ck.closest(".pkpane"));
 });
 
 /* 0 元商品：點擊時才補上 CID（組裝階段 MYCID 尚未初始化） */
