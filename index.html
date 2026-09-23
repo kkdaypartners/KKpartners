@@ -4723,7 +4723,8 @@ document.addEventListener('click', function(e){
    ⚠️ 不顯示客單價——那是成交數據，KOL 看得到就等於外流定價結構。 */
 const PV_IDX = {};
 PACKS.forEach(function(p){ p.groups.forEach(function(g){ g.items.forEach(function(x){
-  PV_IDX[x.id] = {n:x.n, note:x.note || "", grp:g.n, tab:p.tab, img:p.img || ""};
+  /* aop 只用來算最划算的折扣碼，絕不渲染出來 */
+  PV_IDX[x.id] = {n:x.n, note:x.note || "", grp:g.n, tab:p.tab, img:p.img || "", aop:x.aop || 0};
 });});});
 FREE_ITEMS.forEach(function(g){ g.list.forEach(function(f){
   PV_IDX[f.id] = {n:f.n, note:FREE_KIND[f.k] || FREE_KIND.tax, grp:g.c, tab:"0 元商品", img:""};
@@ -4732,7 +4733,7 @@ FREE_ITEMS.forEach(function(g){ g.list.forEach(function(f){
 function pvOpen(id){
   const x = PV_IDX[id]; if (!x) return;
   let c = null;
-  try { c = bestCode(Number(id), 0); } catch(e) {}
+  try { c = bestCode(Number(id), x.aop || 0); } catch(e) {}
   const u = withCid(prodUrl(id));
   const box = document.getElementById("pvsheet");
   box.innerHTML =
@@ -4762,7 +4763,7 @@ document.addEventListener("click", function(e){
   if (cp) {
     const id = Number(cp.dataset.pvcopy), x = PV_IDX[id];
     if (!MYCID) { toastMsg("先在上面填你的 CID"); return; }
-    let c = null; try { c = bestCode(id, 0); } catch(err) {}
+    let c = null; try { c = bestCode(id, x.aop || 0); } catch(err) {}
     copyText(x.n + "\n" + (c ? "折扣碼 " + c.code + "：" + c.benefit + "\n" : "") +
       withCid(prodUrl(id)) + "\n", "已複製，連結已帶上你的 CID");
     return;
