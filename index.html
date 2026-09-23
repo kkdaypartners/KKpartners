@@ -583,9 +583,12 @@ body.adminonly #codes #ck-prod{display:none}
 .freegrp:last-of-type{margin-bottom:0}
 .freehd{font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--mid);margin:0 0 9px}
 .freegrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
-.freecard{display:block;background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px 15px;text-decoration:none;color:var(--ink);transition:transform .15s,box-shadow .15s}
+.freecard{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 12px 11px 15px;transition:transform .15s,box-shadow .15s}
 .freecard:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(9,60,66,.12)}
+.freego{flex:1;min-width:0;text-decoration:none;color:var(--ink)}
 .freecard b{font-size:14px;font-weight:700;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+.freecopy{flex:0 0 auto;background:var(--wash);border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-size:12px;font-weight:700;color:var(--mid);cursor:pointer}
+.freecopy:hover{background:var(--mid);border-color:var(--mid);color:#fff}
 .dnotel li:before{content:"";position:absolute;left:3px;top:7px;width:4px;height:4px;border-radius:50%;background:var(--mid);opacity:.55}
 .deal.soon{position:relative;box-shadow:0 2px 10px rgba(9,60,66,.06)}
 .deal.soon .dimg img{filter:grayscale(1);opacity:.5}
@@ -1265,9 +1268,8 @@ const FREE_ITEMS = [
     {id:147691, n:"松本清免稅優惠券"},
     {id:161743, n:"西武・SOGO 百貨免稅優惠券"},
     {id:263772, n:"眼鏡市場免稅優惠券"}]},
-  {c:"台灣", list:[
-    {id:123380, n:"全台 MITSUI OUTLET PARK 優惠券"},
-    {id:574798, n:"歐樂沃築夢城堡｜抵用券"}]},
+  {c:"台灣", list:[{id:123380, n:"全台 MITSUI OUTLET PARK 優惠券"},
+    ]},
   {c:"泰國", list:[{id:580199, n:"Grab 旅遊通行證優惠碼"},
     {id:307163, n:"王權免稅電子優惠券"},
     {id:139679, n:"ONESIAM 全球訪客卡"},
@@ -3201,8 +3203,10 @@ H += '<section class="band" id="free"><div class="inner">' +
 FREE_ITEMS.map(function(g){
   return '<div class="freegrp"><h3 class="freehd">' + esc(g.c) + '</h3><div class="freegrid">' +
     g.list.map(function(f){
-      return '<a class="freecard" data-u="' + esc(prodUrl(f.id)) + '" href="' + esc(prodUrl(f.id)) + '" target="_blank" rel="noopener">' +
-        '<b>' + esc(f.n) + '</b></a>'; }).join("") +
+      return '<div class="freecard"><a class="freego" data-u="' + esc(prodUrl(f.id)) + '" href="' + esc(prodUrl(f.id)) + '" target="_blank" rel="noopener">' +
+        '<b>' + esc(f.n) + '</b></a>' +
+        '<button class="freecopy" data-u="' + esc(prodUrl(f.id)) + '" data-n="' + esc(f.n) + '" title="複製帶 CID 的連結">複製</button>' +
+      '</div>'; }).join("") +
   '</div></div>'; }).join("") +
 '<p class="ckmore">這些商品本身不計佣金，但粉絲領完券通常會接著買別的——把它當入口，後面再導到有佣金的商品。</p>' +
 '</div></section>';
@@ -4370,7 +4374,14 @@ document.addEventListener('click', function(e){
 
 /* 0 元商品：點擊時才補上 CID（組裝階段 MYCID 尚未初始化） */
 document.addEventListener("click", function(e){
-  const a = e.target.closest(".freecard");
+  /* 複製鈕：一鍵複製帶自己 CID 的連結 */
+  const cp = e.target.closest(".freecopy");
+  if (cp) {
+    if (!MYCID) { toastMsg("先在上面填你的 CID"); document.getElementById("mycid").scrollIntoView({block:"center"}); return; }
+    copyText(cp.dataset.n + "\n" + withCid(cp.dataset.u) + "\n", "已複製，連結已帶上你的 CID");
+    return;
+  }
+  const a = e.target.closest(".freego");
   if (!a) return;
   const base = a.dataset.u || a.getAttribute("href");
   if (!MYCID) { e.preventDefault(); toastMsg("先在上面填你的 CID，連結才會算你的"); 
