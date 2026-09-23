@@ -588,8 +588,33 @@ body.adminonly #codes #ck-prod{display:none}
 .freebulk{background:var(--mid);color:#fff;border:none;border-radius:999px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer}
 .freebulk:disabled{background:var(--line);color:var(--muted);cursor:default}
 .freeck{flex:0 0 auto;accent-color:var(--mid);margin:0}
-.pksel{display:none;width:100%;margin:0 0 16px;padding:12px 14px;font-size:15px;font-weight:700;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:12px;appearance:none}
-@media (max-width:760px){.pksel{display:block}#packs .pktabs{display:none}}
+.pkmenu{position:relative;margin:0 0 16px;max-width:360px}
+.pkmbtn{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;
+  background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 15px;
+  font-size:15px;font-weight:800;color:var(--ink);cursor:pointer}
+.pkmbtn i{width:9px;height:9px;border-right:2.5px solid var(--mid);border-bottom:2.5px solid var(--mid);
+  transform:rotate(45deg) translateY(-2px);transition:transform .18s}
+.pkmbtn[aria-expanded="true"] i{transform:rotate(-135deg) translateY(-2px)}
+.pkmpanel{display:none;position:absolute;top:calc(100% + 6px);left:0;z-index:60;
+  background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  box-shadow:0 12px 40px rgba(9,60,66,.16);min-width:min(520px,92vw)}
+.pkmpanel.on{display:flex}
+.pkmcol{padding:8px;min-width:0}
+.pkmleft{flex:0 0 190px;border-right:1px solid var(--line);background:var(--wash);
+  max-height:340px;overflow:auto}
+.pkmright{flex:1;max-height:340px;overflow:auto}
+.pkmhd{margin:4px 8px 6px;font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--muted)}
+.pkmitem,.pkmsub{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;
+  background:none;border:0;border-radius:9px;padding:9px 11px;font-size:14px;font-weight:700;
+  color:var(--ink);cursor:pointer;text-align:left}
+.pkmitem em,.pkmsub em{font-style:normal;font-size:11.5px;font-weight:700;color:var(--muted);
+  background:#fff;border-radius:999px;padding:2px 7px;flex:0 0 auto}
+.pkmitem.on{background:#fff;color:var(--mid)}
+.pkmitem:hover,.pkmsub:hover{background:rgba(38,190,201,.1);color:var(--mid)}
+.pkmsub em{background:var(--wash)}
+@media (max-width:760px){.pkmenu{max-width:none}.pkmpanel{flex-direction:column}
+  .pkmleft{flex:none;border-right:0;border-bottom:1px solid var(--line);max-height:200px}}
+#packs .pktabs{display:none}
 #packs .pktabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
 .pktab{background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 15px;font-size:13.5px;font-weight:700;color:var(--mid);cursor:pointer;white-space:nowrap}
 .pktab.on{background:var(--mid);border-color:var(--mid);color:#fff}
@@ -3574,9 +3599,19 @@ function buildEvent(){
 H += '<section class="band" id="packs"><div class="inner">' +
 '<h2>主題資源包</h2>' +
 '<p class="lede">把單品整理成一整包，寫部落格或長文時整組複製就能用。連結會自動帶上你的 CID。</p>' +
-'<select class="pksel" id="pksel" aria-label="選擇主題">' + PACKS.map(function(p, i){
-  return '<option value="' + esc(p.id) + '"' + (i === 0 ? " selected" : "") + '>' + esc(p.tab) + '</option>';
-}).join("") + '<option value="free0">0 元商品</option></select>' +
+/* 兩欄下拉：左欄主題、右欄該主題的子分類。十一個膠囊並排太擠，
+   而且看不出每個主題底下有什麼（Alen 2026-09-23 指定這種型式）。 */
+'<div class="pkmenu">' +
+  '<button type="button" class="pkmbtn" id="pkmbtn" aria-expanded="false">' +
+    '<span id="pkmnow">' + esc(PACKS[0].tab) + '</span><i></i></button>' +
+  '<div class="pkmpanel" id="pkmpanel">' +
+    '<div class="pkmcol pkmleft">' + PACKS.map(function(p, i){
+      return '<button type="button" class="pkmitem' + (i === 0 ? " on" : "") + '" data-p="' + esc(p.id) + '">' +
+             esc(p.tab) + '<em>' + p.groups.length + '</em></button>';
+    }).join("") + '<button type="button" class="pkmitem" data-p="free0">0 元商品<em>' + FREE_ITEMS.length + '</em></button></div>' +
+    '<div class="pkmcol pkmright" id="pkmright"></div>' +
+  '</div>' +
+'</div>' +
 '<div class="pktabs" role="tablist">' + PACKS.map(function(p, i){
   return '<button class="pktab' + (i === 0 ? " on" : "") + '" data-p="' + esc(p.id) + '">' + esc(p.tab) + '</button>';
 }).join("") + '<button class="pktab" data-p="free0">0 元商品</button></div>' +
@@ -3584,7 +3619,7 @@ PACKS.map(function(p, i){
   return '<div class="pkpane' + (i === 0 ? " on" : "") + '" data-p="' + esc(p.id) + '">' +
     (p.img ? '<div class="pkhero"><img loading="lazy" src="' + esc(p.img) + '" alt=""></div>' : "") +
     (p.lede ? '<p class="pklede">' + esc(p.lede) + '</p>' : "") +
-    (p.code ? '<p class="pkfee"><b>' + esc(p.code) + '</b>' + esc(p.codeNote || "") + '</p>' : "") +
+
     '<div class="pkbar"><button class="pkall">全選這個主題</button>' +
       '<button class="pkbulk" disabled>複製勾選的 0 支</button></div>' +
     p.groups.map(function(g){
@@ -4783,12 +4818,73 @@ document.addEventListener('click', function(e){
            '已複製 ' + picked.length + ' 支商品，含折扣條件與連結');
 });
 
-/* 窄螢幕改用下拉選單切主題——十一個膠囊在手機上會擠成三行 */
-document.addEventListener("change", function(e){
-  if (e.target.id !== "pksel") return;
-  const root = e.target.closest("#packs");
-  root.querySelectorAll(".pktab").forEach(function(b){ b.classList.toggle("on", b.dataset.p === e.target.value); });
-  root.querySelectorAll(".pkpane").forEach(function(x){ x.classList.toggle("on", x.dataset.p === e.target.value); });
+/* 相鄰區塊底色自動交錯：手動在每個 section 指定 band-wash 已經撞過三次
+   （packs 接 event、ask 接 rivals 都是白接白）。改成渲染後掃一遍自動排，
+   以後新增區塊或調整順序都不必再記得改底色。band-brand 是特例，跳過不動。 */
+(function(){
+  const secs = [...document.querySelectorAll("section.band")];
+  let wash = false;
+  secs.forEach(function(x){
+    if (x.classList.contains("band-brand")) { wash = false; return; }
+    x.classList.toggle("band-wash", wash);
+    wash = !wash;
+  });
+})();
+
+/* 兩欄下拉的互動 */
+function pkmSub(pid){
+  const p = PACKS.filter(function(x){ return x.id === pid; })[0];
+  const gs = p ? p.groups.map(function(g){ return {n:g.n, c:g.items.length}; })
+                : FREE_ITEMS.map(function(g){ return {n:g.c, c:g.list.length}; });
+  document.getElementById("pkmright").innerHTML =
+    '<p class="pkmhd">依地區</p>' + gs.map(function(g){
+      return '<button type="button" class="pkmsub" data-p="' + esc(pid) + '" data-g="' + esc(g.n) + '">' +
+             esc(g.n) + '<em>' + g.c + '</em></button>'; }).join("");
+}
+function pkmGo(pid, groupName){
+  const root = document.getElementById("packs");
+  root.querySelectorAll(".pktab").forEach(function(b){ b.classList.toggle("on", b.dataset.p === pid); });
+  root.querySelectorAll(".pkpane").forEach(function(x){ x.classList.toggle("on", x.dataset.p === pid); });
+  const lbl = root.querySelector('.pkmitem[data-p="' + pid + '"]');
+  document.getElementById("pkmnow").textContent = lbl ? lbl.childNodes[0].textContent : pid;
+  document.getElementById("pkmpanel").classList.remove("on");
+  document.getElementById("pkmbtn").setAttribute("aria-expanded", "false");
+  if (groupName) {
+    const pane = root.querySelector('.pkpane[data-p="' + pid + '"]');
+    const hit = [...pane.querySelectorAll(".pkgh")].filter(function(h){ return h.textContent === groupName; })[0];
+    if (hit) setTimeout(function(){ hit.scrollIntoView({behavior:"smooth", block:"center"}); }, 60);
+  }
+}
+document.addEventListener("click", function(e){
+  const btn = e.target.closest("#pkmbtn");
+  if (btn) {
+    const pn = document.getElementById("pkmpanel");
+    const open = pn.classList.toggle("on");
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    if (open) pkmSub(document.querySelector(".pkmitem.on").dataset.p);
+    return;
+  }
+  const it = e.target.closest(".pkmitem");
+  if (it) {
+    document.querySelectorAll(".pkmitem").forEach(function(b){ b.classList.toggle("on", b === it); });
+    pkmSub(it.dataset.p);
+    pkmGo(it.dataset.p, "");
+    return;
+  }
+  const sub = e.target.closest(".pkmsub");
+  if (sub) { pkmGo(sub.dataset.p, sub.dataset.g); return; }
+  if (!e.target.closest(".pkmenu")) {
+    const pn = document.getElementById("pkmpanel");
+    if (pn) { pn.classList.remove("on");
+      document.getElementById("pkmbtn").setAttribute("aria-expanded","false"); }
+  }
+});
+document.addEventListener("mouseover", function(e){
+  const it = e.target.closest(".pkmitem");
+  if (it && document.getElementById("pkmpanel").classList.contains("on")) {
+    document.querySelectorAll(".pkmitem").forEach(function(b){ b.classList.toggle("on", b === it); });
+    pkmSub(it.dataset.p);
+  }
 });
 
 /* 商品預覽彈窗：KOL 在挑商品時不想一直跳出去再回來（Alen 2026-09-23）。
@@ -4877,9 +4973,7 @@ document.addEventListener("click", function(e){
   let out = "【" + title + "】\n";
   /* 主題有指定折扣碼（例如機票的 KKFLY、美妝的 KBEAUTY88）就固定寫在最前面，
      個別商品下面仍會標各自最划算的那張。 */
-  const pc = pane.querySelector(".pkfee");
-  if (pc) out += "指定折扣碼 " + pc.querySelector("b").textContent + "：" +
-    pc.textContent.replace(pc.querySelector("b").textContent, "").trim() + "\n";
+
   out += "\n";
   pane.querySelectorAll(".pkgrp").forEach(function(g){
     const sel = [...g.querySelectorAll(".pkck:checked")];
