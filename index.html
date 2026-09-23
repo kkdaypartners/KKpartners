@@ -4489,7 +4489,17 @@ const readerBlocked = function(code, id){
 
 /* 讀者折扣碼：每位夥伴拿到的字串都不一樣，所以前台顯示「你的讀者折扣碼」而不是某一組碼。
    pending:true 代表排除清單還沒匯入，查詢時要說清楚不能只看全站黑名單就下結論。 */
+/* 人工排除：實際試過不能用、但資料判定可用的個案。
+   商品主檔的類別跟折扣碼系統的分類不一定一致——例如貢多拉遊愛河在主檔是
+   「行程＆體驗」，KKAFFTOUR88 限行程體驗所以判成可用，但實際結帳折不了
+   （Alen 2026-09-23 回報）。這類只能靠人工補，發現一支補一支。
+   格式：碼 → 不能用的商品編號陣列。 */
+const MANUAL_EX = {
+  "KKAFFTOUR88": [100730]
+};
 function judge(code, id, opts){
+  if (MANUAL_EX[code] && MANUAL_EX[code].indexOf(Number(id)) >= 0)
+    return {ok:false, why:"這支實際結帳折不了，已人工排除"};
   if (code === "READER92" || code === "READER94") {
     if (readerBlocked(code, id))
       return {ok:false, why:"在讀者折扣碼的排除清單裡"};
