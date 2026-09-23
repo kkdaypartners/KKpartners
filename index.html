@@ -593,6 +593,9 @@ body.adminonly #codes #ck-prod{display:none}
 .pktab.on{background:var(--mid);border-color:var(--mid);color:#fff}
 .pkpane{display:none}
 .pkpane.on{display:block}
+.pkhero{border-radius:14px;overflow:hidden;margin:0 0 14px;background:var(--wash)}
+.pkhero img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+@media (min-width:900px){.pkhero img{aspect-ratio:21/9}}
 .pklede{margin:0 0 12px;font-size:13px;color:var(--muted);line-height:1.6}
 .pkbar{display:flex;align-items:center;gap:10px;margin:0 0 14px;flex-wrap:wrap}
 .pkall{background:none;border:none;color:var(--mid);font-size:12.5px;font-weight:700;cursor:pointer;text-decoration:underline;padding:0}
@@ -1302,7 +1305,7 @@ const PACKS = [
        {id:573964, aop:1192, n:"首爾／仁川機場 ↔ High1 度假村接駁", note:"同上"},
        {id:574009, aop:1788, n:"首爾 ↔ 鳳凰公園滑雪度假村接駁", note:"同上"}]}
    ]},
-  {id:"maple", tab:"賞楓", lede:"今年紅葉預測出爐，11 月下旬是高點；韓國 10 月下旬先開始。",
+  {id:"maple", img:"img/pk-maple.webp", tab:"賞楓", lede:"今年紅葉預測出爐，11 月下旬是高點；韓國 10 月下旬先開始。",
    groups:[
      {n:"日本", promo:"https://www.kkday.com/zh-tw/promo/autumn-in-japan",
       code:"26AWJPTOUR", codeNote:"日本行程體驗不限門檻 93 折，最高折 1,000",
@@ -1328,7 +1331,7 @@ const PACKS = [
        {id:27790,  n:"慶州賞楓一日遊｜普門觀光區與歷史城區｜釜山出發", note:"慶州線"},
        {id:172159, aop:1336, n:"慶州佛國寺、皇理團路一日遊｜釜山出發", note:"同區熱門景點"}]}
    ]},
-  {id:"shirakawa", tab:"白川鄉", lede:"點燈一年只有四天，是全年最強的限定題材。",
+  {id:"shirakawa", img:"img/pk-shirakawa.webp", tab:"白川鄉", lede:"點燈一年只有四天，是全年最強的限定題材。",
    groups:[
      {n:"點燈限定", code:"26AWJPTOUR", codeNote:"日本行程體驗不限門檻 93 折，最高折 1,000",
       items:[
@@ -1343,7 +1346,7 @@ const PACKS = [
        {id:28049,  n:"金澤一日遊｜五箇山＆白川鄉＆飛驒高山", note:"金澤出發，串北陸線"},
        {id:137376, aop:9170, n:"白川鄉＆金澤二日遊｜兼六園・東茶屋街", note:"二日遊客單較高"}]}
    ]},
-  {id:"ginzan", tab:"銀山溫泉", lede:"千與千尋湯屋取景地，冬季點燈與藏王樹冰可以一起寫。",
+  {id:"ginzan", img:"img/pk-ginzan.webp", tab:"銀山溫泉", lede:"千與千尋湯屋取景地，冬季點燈與藏王樹冰可以一起寫。",
    groups:[
      {n:"一日遊", code:"26AWJPTOUR", codeNote:"日本行程體驗不限門檻 93 折，最高折 1,000",
       items:[
@@ -1356,7 +1359,7 @@ const PACKS = [
        {id:182060, aop:15986, n:"東北二日遊｜銀山溫泉・藏王樹冰・狐狸村｜東京出發", note:"業績 TOP2。與 Klook 價差不到 10 元，但對方銷量是我們三倍、我方庫存 4,000＋有壓力，需要力推"},
        {id:535652, aop:14846, n:"冬季銀山溫泉二日遊｜藏王中央纜車・大內宿", note:"加碼大內宿"}]}
    ]},
-  {id:"icebreaker", tab:"破冰船", lede:"流冰季 1–3 月，熱門日期現在就要訂，客單兩萬起跳。",
+  {id:"icebreaker", img:"img/pk-icebreaker.webp", tab:"破冰船", lede:"流冰季 1–3 月，熱門日期現在就要訂，客單兩萬起跳。",
    groups:[
      {n:"北海道", code:"WIN1200", codeNote:"冬季超早鳥：行程體驗滿 10,000 折 1,200",
       items:[
@@ -1366,13 +1369,13 @@ const PACKS = [
        {id:259458, aop:11224, n:"流冰二日遊｜流冰漫步＆極光號・單人同價", note:"單人同價，一個人也能去"},
        {id:154373, aop:10720, n:"新造船 GARINKO III・IMERU 流冰破冰船", note:"新船題材"}]}
    ]},
-  {id:"jrpass", tab:"JR PASS", lede:"滑雪與賞楓都會帶動 JR PASS 需求，而且 10/1 就要漲價。",
+  {id:"jrpass", img:"img/pk-jrpass.webp", tab:"JR PASS", lede:"滑雪與賞楓都會帶動 JR PASS 需求，而且 10/1 就要漲價。",
    groups:[
      {n:"漲價倒數",
       items:[
        {id:20291, aop:15833, n:"JR PASS 全國版｜寄送台灣", note:"10/1 漲價。9/30 前買的票可在 12/30 前兌換。依過往經驗漲價前兩週會集中購買，宣傳要提早"}]}
    ]},
-  {id:"charter", tab:"包車", lede:"高客單、成團率高，適合家庭與長輩客群。",
+  {id:"charter", img:"img/pk-charter.webp", tab:"包車", lede:"高客單、成團率高，適合家庭與長輩客群。",
    groups:[
      {n:"日本", items:[
        {id:142125, aop:7638, n:"沖繩全島包車一日遊｜立即確認", note:"沖繩包車量最大"},
@@ -1385,7 +1388,7 @@ const PACKS = [
      {n:"台灣", items:[
        {id:570459, aop:1580, n:"基隆港口接送｜全省往返基隆港・賓士商務車", note:"郵輪客配套，可與郵輪包一起寫"}]}
    ]},
-  {id:"flight", tab:"機票", lede:"客單最高的一類，含稅含行李、1 人成行是主要賣點。",
+  {id:"flight", img:"img/pk-flight.webp", tab:"機票", lede:"客單最高的一類，含稅含行李、1 人成行是主要賣點。",
    groups:[
      {n:"日本", items:[
        {id:135442, aop:14880, n:"酷航・桃園出發｜北海道 6／7 天計劃機票", note:"客單近 1.5 萬"},
@@ -1410,7 +1413,7 @@ const PACKS = [
        {id:158792, aop:2107, n:"釜山 Club D Oasis｜汗蒸幕・Spa 與水上樂園", note:"近 120 天 1,589 筆，這一包裡最好賣的一支"},
        {id:536751, aop:6273, n:"High1 度假村滑雪及雪世界一日遊｜首爾出發", note:"可對接冬季旅遊檔期，與滑雪包互相導流"}]}
    ]},
-  {id:"cruise", tab:"郵輪", lede:"單筆金額最高的品類，基隆與香港出發都有，免轉機免長假是主賣點。",
+  {id:"cruise", img:"img/pk-cruise.webp", tab:"郵輪", lede:"單筆金額最高的品類，基隆與香港出發都有，免轉機免長假是主賣點。",
    groups:[
      {n:"MSC 地中海郵輪", code:"EXCUZ2000", codeNote:"郵輪滿 30,000 折 2,000；滿 5 萬另有 EXCUZ3000 折 3,000",
       items:[
@@ -3423,6 +3426,7 @@ H += '<section class="band band-wash" id="packs"><div class="inner">' +
 }).join("") + '<button class="pktab" data-p="free0">0 元商品</button></div>' +
 PACKS.map(function(p, i){
   return '<div class="pkpane' + (i === 0 ? " on" : "") + '" data-p="' + esc(p.id) + '">' +
+    (p.img ? '<div class="pkhero"><img loading="lazy" src="' + esc(p.img) + '" alt=""></div>' : "") +
     '<p class="pklede">' + esc(p.lede) + '</p>' +
     '<div class="pkbar"><button class="pkall">全選這個主題</button>' +
       '<button class="pkbulk" disabled>複製勾選的 0 支</button></div>' +
@@ -3442,6 +3446,7 @@ PACKS.map(function(p, i){
       '</div></div>'; }).join("") +
   '</div>'; }).join("") +
 '<div class="pkpane" data-p="free0">' +
+  '<div class="pkhero"><img loading="lazy" src="img/pk-free0.webp" alt=""></div>' +
   '<p class="pklede">粉絲不用花錢就能領，最好用的引流鉤子。本身不計佣金，但領完券通常會接著買別的，把它當入口。</p>' +
   '<div class="pkbar"><button class="pkall">全選這個主題</button>' +
     '<button class="pkbulk" disabled>複製勾選的 0 支</button></div>' +
