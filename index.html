@@ -575,7 +575,10 @@ body.adminonly #codes #ck-prod{display:none}
 .tags span{flex:0 1 auto}
 
 /* 0 元區用淺灰底與上下邊線，跟前後區塊明顯分開 */
-#free{background:var(--wash);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+/* 0 元區不能用 var(--wash)——那跟上面的每週選品分析同色，兩區會連成一片。
+   改用品牌淡青底，一眼看得出是獨立區塊（2026-09-23）。 */
+#free{background:rgba(38,190,201,.07);border-top:1px solid rgba(38,190,201,.22);border-bottom:1px solid rgba(38,190,201,.22)}
+#free .freecard{border-color:rgba(38,190,201,.25)}
 .freegrp{margin:0 0 22px}
 .freegrp:last-of-type{margin-bottom:0}
 .freehd{font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--mid);margin:0 0 9px}
@@ -953,6 +956,7 @@ footer a{color:var(--brand)}
     <a href="#today">本週優惠</a>
     <a href="#benefit">專屬福利</a>
     <a href="#picks">每週選品</a>
+    <a href="#free">0 元商品</a>
     <a href="#event">本月檔期</a>
     <a href="#codes">折扣碼</a>
     <a href="#sponsor">贊助</a>
