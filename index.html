@@ -632,11 +632,11 @@ body.adminonly #codes #ck-prod{display:none}
 .pktab.on{background:var(--mid);border-color:var(--mid);color:#fff}
 .pkpane{display:none}
 .pkpane.on{display:block}
-.pkhero{border-radius:14px;overflow:hidden;margin:0 0 14px;background:#fff}
-/* 主題圖多半是地圖、預測表這類資訊圖，裁切會把內容切掉，
-   所以不固定比例、不裁切，只限制最大高度（2026-09-23 修）。 */
-/* 主題圖是資訊圖，滿版顯示才看得清楚；不裁切、不限高，隨寬度等比縮放。 */
-.pkhero img{width:100%;height:auto;display:block}
+.pkhero{margin:0 0 14px}
+/* 主題圖是資訊圖（地圖、預測表），不裁切，只限高 420px、置中等比縮放。
+   2026-09-23：原本圖跑出 .inner（寬度不受 1060px 限制），在大螢幕變成整面滿版；
+   已修正外框閉合，並加上限高。 */
+.pkhero img{display:block;width:auto;max-width:100%;max-height:420px;height:auto;margin:0 auto;border-radius:14px}
 .pklede{margin:0 0 12px;font-size:13px;color:var(--muted);line-height:1.6}
 .pkbar{display:flex;align-items:center;gap:10px;margin:0 0 14px;flex-wrap:wrap}
 .pkall{background:none;border:none;color:var(--mid);font-size:12.5px;font-weight:700;cursor:pointer;text-decoration:underline;padding:0}
@@ -3617,7 +3617,6 @@ function buildEvent(){
 H += '<section class="band" id="packs"><div class="inner">' +
 '<h2>主題資源包</h2>' +
 '<p class="lede">把單品整理成一整包，寫部落格或長文時整組複製就能用。連結會自動帶上你的 CID。</p>' +
-'</div>' +
 '<div class="pktabs" role="tablist">' + PACKS.map(function(p, i){
   return '<button class="pktab' + (i === 0 ? " on" : "") + '" data-p="' + esc(p.id) + '">' + esc(p.tab) + '</button>';
 }).join("") + '<button class="pktab" data-p="free0">0 元商品</button></div>' +
