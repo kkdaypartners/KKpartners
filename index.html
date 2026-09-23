@@ -1652,9 +1652,9 @@ const FREE_ITEMS = [
     {id:579523, k:"pass", n:"MONEYBOX 釜山換匯優惠券"},
     {id:579990, k:"tax", n:"現代免稅店手機優惠券"},
     {id:286925, k:"pass", n:"官方 K-POP 照片卡店優惠券"},
-    {id:250982, k:"pass", n:"江南通行證｜免費禮品與優惠"}]},
-  {c:"日本", list:[{id:151129, k:"tax", n:"驚安的殿堂 唐吉訶德 折價券"},
-    {id:134038, k:"tax", n:"三井 OUTLET 免稅折價券"},
+    {id:250982, k:"pass", n:"江南通行證｜免費禮品與優惠", img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_250982/20260309064149_LDtDv/jpg"}]},
+  {c:"日本", list:[{id:151129, k:"tax", n:"驚安的殿堂 唐吉訶德 折價券", img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_151129/20250204053005_qPFMz/jpg"},
+    {id:134038, k:"tax", n:"三井 OUTLET 免稅折價券", img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_134038/20240509072008_V4u9W/png"},
     {id:583193, k:"tax", n:"PREMIUM OUTLETS 折扣券"},
     {id:181157, k:"tax", n:"Kokumin 國民藥妝購物券"},
     {id:141718, k:"tax", n:"Alpen 免稅優惠券"},
@@ -4999,7 +4999,7 @@ PACKS.forEach(function(p){ p.groups.forEach(function(g){ g.items.forEach(functio
   PV_IDX[x.id] = {n:x.n, note:x.note || "", grp:g.n, tab:p.tab, img:x.img || p.img || "", aop:x.aop || 0};
 });});});
 FREE_ITEMS.forEach(function(g){ g.list.forEach(function(f){
-  PV_IDX[f.id] = {n:f.n, note:FREE_KIND[f.k] || FREE_KIND.tax, grp:g.c, tab:"0 元商品", img:""};
+  PV_IDX[f.id] = {n:f.n, note:FREE_KIND[f.k] || FREE_KIND.tax, grp:g.c, tab:"0 元商品", img:f.img || ""};
 });});
 
 function pvOpen(id, fallbackName){
