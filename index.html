@@ -596,7 +596,8 @@ body.adminonly #codes #ck-prod{display:none}
 .pkhero{border-radius:14px;overflow:hidden;margin:0 0 14px;background:#fff}
 /* 主題圖多半是地圖、預測表這類資訊圖，裁切會把內容切掉，
    所以不固定比例、不裁切，只限制最大高度（2026-09-23 修）。 */
-.pkhero img{width:100%;height:auto;max-height:360px;object-fit:contain;display:block;margin:0 auto}
+/* 主題圖是資訊圖，滿版顯示才看得清楚；不裁切、不限高，隨寬度等比縮放。 */
+.pkhero img{width:100%;height:auto;display:block}
 .pklede{margin:0 0 12px;font-size:13px;color:var(--muted);line-height:1.6}
 .pkbar{display:flex;align-items:center;gap:10px;margin:0 0 14px;flex-wrap:wrap}
 .pkall{background:none;border:none;color:var(--mid);font-size:12.5px;font-weight:700;cursor:pointer;text-decoration:underline;padding:0}
@@ -1377,7 +1378,7 @@ const PACKS = [
        {id:259458, aop:11224, n:"流冰二日遊｜流冰漫步＆極光號・單人同價", note:"單人同價，一個人也能去"},
        {id:154373, aop:10720, n:"新造船 GARINKO III・IMERU 流冰破冰船", note:"新船題材"}]}
    ]},
-  {id:"jrpass", img:"img/pk-jrpass.webp", tab:"JR PASS", lede:"滑雪與賞楓都會帶動 JR PASS 需求，全國版 10/1 漲價。",
+  {id:"jrpass", tab:"JR PASS", lede:"滑雪與賞楓都會帶動 JR PASS 需求，全國版 10/1 漲價。",
    groups:[
      {n:"全國與跨區", items:[
        {id:20291, aop:15833, n:"全日本鐵路通票 JR PASS 全國版", note:"10/1 漲價。9/30 前買的票可在 12/30 前兌換，漲價前兩週會集中購買，宣傳要提早"},
@@ -1418,7 +1419,7 @@ const PACKS = [
      {n:"台灣", items:[
        {id:570459, aop:1580, n:"基隆港口接送｜全省往返基隆港・賓士商務車", note:"郵輪客配套，可與郵輪包一起寫"}]}
    ]},
-  {id:"flight", img:"img/pk-flight.webp", tab:"機票", code:"KKFLY", codeNote:"機票滿 7,000 折 300",
+  {id:"flight", tab:"機票", code:"KKFLY", codeNote:"機票滿 7,000 折 300",
    lede:"客單最高的一類，含稅含行李、1 人成行是主要賣點。",
    groups:[
      {n:"日本｜東京・大阪・名古屋", items:[
@@ -1464,7 +1465,7 @@ const PACKS = [
        {id:158792, aop:2107, n:"釜山 Club D Oasis｜汗蒸幕・Spa 與水上樂園", note:"近 120 天 1,589 筆，這一包裡最好賣的一支"},
        {id:536751, aop:6273, n:"High1 度假村滑雪及雪世界一日遊｜首爾出發", note:"可對接冬季旅遊檔期，與滑雪包互相導流"}]}
    ]},
-  {id:"cruise", img:"img/pk-cruise.webp", tab:"郵輪", lede:"單筆金額最高的品類，基隆與香港出發都有，免轉機免長假是主賣點。",
+  {id:"cruise", tab:"郵輪", lede:"單筆金額最高的品類，基隆與香港出發都有，免轉機免長假是主賣點。",
    groups:[
      {n:"MSC 地中海郵輪", code:"EXCUZ2000", codeNote:"郵輪滿 30,000 折 2,000；滿 5 萬另有 EXCUZ3000 折 3,000",
       items:[
