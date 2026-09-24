@@ -2512,93 +2512,47 @@ const POPUP = [
 ];
 
 const EVENT = {
-  name: "全站狂撒 777｜月中快閃 72H",
-  s: "2026-09-17",
-  e: "2026-09-19",
-  url: "https://www.kkday.com/zh-tw/promo/flashday",
-  note: "APP 限定券只能在 App 內使用，發文時記得標明。買一送一方案 13:00 才上架，有標折扣碼的要在結帳頁輸入。",
+  name: "嗨 Go! 飛航日｜泰瑞航空 韓國",
+  s:    "2026-09-27",
+  e:    "2026-10-11",
+  url:  "https://www.kkday.com/zh-tw/promo/27-flash-sale",
+  note: "每月 27 號的飛航日。9/27 上午 10:00 準時開搶，泰瑞航空韓國機票最低 5,888 起。" +
+        "這次因為卡到中秋與韓國、台灣連假，特別跟泰瑞爭取把活動延長到 10/11，" +
+        "比平常的三天長很多，發文節奏可以拉開。" +
+        "⚠️ 活動頁 9/25 才生效，提早發連結會是空的。" +
+        "⚠️ 折扣碼的排除清單尚未取得，推薦前先用「查商品能不能用」確認。",
   perks: [
-    {t:"全站鋪底折", d:"滿 NT$3,000 現折 $200"},
-    {t:"全站滿額送", d:"滿 NT$10,000 送 777 點"},
-    {t:"郵輪加碼折", d:"郵輪滿 NT$40,000 現折 $2,000"},
-    {t:"9/19 限定", d:"全站點數 3 倍送"}
+    "9/27 當天全站消費滿萬，加贈 1,000 點 KKday Points",
+    "9/26–9/27 全球訂房點數 2 倍送",
+    "票價為扣除 300 元折扣碼前的原價"
   ],
   days: [
     {
-      date: "2026-09-17", label: "9/17 首日",
+      date:  "2026-09-27",
+      label: "9/27 開搶日",
       codes: [
-        {scope:"全期間｜郵輪", code:"KKCRZ", benefit:"郵輪領券現折 $2,000", till:"2026-09-19"},
-        {scope:"全期間｜全站", code:"917GO200", benefit:"滿 NT$3,000 現折 $200", till:"2026-09-19"},
-        {time:"11:00", scope:"APP 限定｜全站 1 折券", code:"QMSRC3R", benefit:"APP 限定，數量有限", till:"2026-09-17"},
-        {time:"11:00", scope:"APP 限定｜全站 7 折券", code:"N4AM39U", benefit:"APP 限定，數量有限", till:"2026-09-17"},
-        {time:"13:00", scope:"買一送一重頭戲", code:"MWEDUAG", benefit:"僅限豪華版關西樂享周遊券一檔", till:"2026-09-17"},
-        {time:"16:00", scope:"瑞士商品限時開賣", code:"26SWWINTER9", benefit:"瑞士商品滿 4,000 享 95 折，最高折 $1,800", till:"2026-09-19"},
-        {time:"20:00", scope:"機票立減", code:"917TKT5000", benefit:"滿 NT$5,030 現折 $5,000，機票最低 $688 起", till:"2026-09-17"},
-        {time:"20:00", scope:"2027 名人郵輪千禧號", code:"W9FRCYD", benefit:"滿 NT$70,000 現折 $20,000", till:"2026-09-19"},
-        {time:"21:00", scope:"APP 限定｜夜間全站 1 折券", code:"9FPJJDA", benefit:"夜間特殺，APP 限定", till:"2026-09-17"},
-        {time:"21:00", scope:"APP 限定｜夜間全站 7 折券", code:"3WZUEX7", benefit:"夜間特殺，APP 限定", till:"2026-09-17"}
-      ],
-      bogo: [
-        {name:"豪華版關西樂享周遊券（可選日本環球影城 1 日券）", url:"https://www.kkday.com/zh-tw/product/528208", img:"https://image.kkday.com/v2/image/get/s1.kkday.com/product_528208/20260522030638_UfvUB/jpg", deal:"買一送一", code:"MWEDUAG", why:"可選日本環球影城 1 日券，加碼暢遊關西人氣設施"},
-        {name:"豪華版沖繩樂享周遊券｜巴士一日遊三選一＋可選水族館門票", url:"https://www.kkday.com/zh-tw/product/634699", img:"https://image.kkday.com/v2/image/get/s1.kkday.com/product_634699/20260730013953_3hWSQ/jpg", deal:"買一送一", why:"巴士一日遊三選一＋可選美麗海水族館"},
-        {name:"九州阿蘇山一日遊｜上色見熊野座神社與黑川溫泉", url:"https://www.kkday.com/zh-tw/product/271227", img:"https://image.kkday.com/v2/image/get/s1.kkday.com/product_271227/20250731032958_GCHL5/jpg", deal:"買一送一", why:"螢火之森取景地，近看阿蘇活火山與黑川溫泉"},
-        {name:"北海道登別＆洞爺湖雙線路一日遊", url:"https://www.kkday.com/zh-tw/product/185814", img:"https://image.kkday.com/v2/image/get/s1.kkday.com/product_scm_12832/20260810055655_LJ3B8/jpg", deal:"買一送一", why:"洞爺湖展望台＋熊牧場＋地獄谷，1 人成團"},
-        {name:"天橋立與伊根舟屋一日遊｜大阪/京都出發｜含遊船與智恩寺", url:"https://www.kkday.com/zh-tw/product/770690", img:"https://image.kkday.com/v2/image/get/s1.kkday.com/product_770690/20260909060024_rCc56/png", deal:"買一送一", why:"日本三景天橋立＋伊根舟屋，1 人成團"},
-        {name:"京都一日遊｜伏見稻荷大社、宇治、勝尾寺經典路線", url:"https://www.kkday.com/zh-tw/product/270305", img:"https://image.kkday.com/v2/image/get/s1.kkday.com/product_270305/20260410050835_KWoXQ/png", deal:"買一送一", why:"千本鳥居、抹茶宇治、勝尾寺祈福一次走完"},
-        {name:"高雄鈴鹿賽道樂園一日暢遊券・卡丁車體驗", url:"https://www.kkday.com/zh-tw/product/114876", img:"https://image.kkday.com/v2/image/get/s1.kkday.com/product_114876/20210104053017_lf0hw/jpg", deal:"買一送一", why:"日本鈴鹿唯一海外授權，即訂即用"}
-      ]
-    },
-    {
-      date: "2026-09-18", label: "9/18 第二日",
-      img: {pc:"img/flash-0918-pc.webp", mo:"img/flash-0918-mo.webp"},
-      codes: [
-        {scope:"全期間｜郵輪", code:"KKCRZ", benefit:"郵輪領券現折 $2,000", till:"2026-09-19"},
-        {scope:"全期間｜全站", code:"917GO200", benefit:"滿 NT$3,000 現折 $200", till:"2026-09-19"},
-        {scope:"三天通用｜瑞士", code:"26SWWINTER9", benefit:"瑞士商品滿 4,000 享 95 折，最高折 $1,800", till:"2026-09-19"},
-        {time:"11:00", scope:"APP 限定｜全站 1 折券", code:"T9EWJWN", benefit:"APP 限定，數量有限", till:"2026-09-18"},
-        {time:"11:00", scope:"APP 限定｜全站 7 折券", code:"B397UMX", benefit:"APP 限定，數量有限", till:"2026-09-18"},
-        {time:"13:00", scope:"買一送一重頭戲", code:"XETMRXH", benefit:"僅限豪華版關西樂享周遊券一檔，可選日本環球影城 1 日券", till:"2026-09-18"},
-        {time:"13:00", scope:"小琉球來回船票", code:"26918LC", benefit:"領券兩人同行 5 折", till:"2026-09-18", url:"https://www.kkday.com/zh-tw/product/100243"},
-        {time:"20:00", scope:"機票立減", code:"918TKT5000", benefit:"滿 NT$5,030 現折 $5,000，含稅含行李", till:"2026-09-18"},
-        {time:"21:00", scope:"APP 限定｜夜間全站 1 折券", code:"LDFBYJD", benefit:"夜間特殺，APP 限定", till:"2026-09-18"},
-        {time:"21:00", scope:"APP 限定｜夜間全站 7 折券", code:"YEGQ74B", benefit:"夜間特殺，APP 限定", till:"2026-09-18"}
-      ],
-      bogo: [
-        {name:"豪華版關西樂享周遊券（可選日本環球影城 1 日券）", url:"https://www.kkday.com/zh-tw/product/528208", img:"https://image.kkday.com/v2/image/get/s1.kkday.com/product_528208/20260522030638_UfvUB/jpg", deal:"買一送一", code:"XETMRXH", why:"9/18 專屬碼，跟 9/17 不同組"},
-        {name:"日本長崎豪斯登堡門票｜Huis Ten Bosch", url:"https://www.kkday.com/zh-tw/product/18555", img:"https://image.kkday.com/v2/image/get/s1.kkday.com/product_18555/20260908091939_VIsUg/jpg", deal:"買一送一", why:"歐式主題樂園，夜晚燈光秀不容錯過"},
-        {name:"富士山一日遊｜新倉山淺間公園・忍野八海・河口湖大石公園", url:"https://www.kkday.com/zh-tw/product/573307", img:"https://image.kkday.com/v2/image/get/s1.kkday.com/product_573307/20260526031056_8FGuu/jpg", deal:"買一送一", why:"一站打卡富士山五大地標，不繞路"},
-        {name:"群馬一日遊｜新宿出發：薰衣草/賞楓、松葉蟹宴、採果體驗", url:"https://www.kkday.com/zh-tw/product/155295", img:"https://image.kkday.com/v2/image/get/s1.kkday.com/product_scm_14305/20260623092303_9HIE7/png", deal:"買一送一", why:"秋季吹割瀑布賞楓，可選松葉蟹宴"},
-        {name:"新北烏來一日遊｜雲仙樂園、內洞森林公園、烏來老街", url:"https://www.kkday.com/zh-tw/product/248810", img:"https://image.kkday.com/v2/image/get/s1.kkday.com/product_248810/20250630150303_sBs4h/png", deal:"買一送一", why:"1 人成行，每人加贈烏來香腸一隻"},
-        {name:"嘉義阿里山一日遊：秘境合掌村、得恩亞納、奮起湖（台中出發）", url:"https://www.kkday.com/zh-tw/product/114095", img:"https://image.kkday.com/v2/image/get/s1.kkday.com/product_114095/20201210020759_OpWhI/jpg", deal:"買一送一", why:"台版合掌村得恩亞納，四人成團小車"},
-        {name:"屏東東港 - 小琉球來回船票預訂", url:"https://www.kkday.com/zh-tw/product/100243", img:"https://image.kkday.com/v2/image/get/s1.kkday.com/product_100243/20200610083420_h6jVc/jpg", deal:"買一送一", why:"東港往返 25 分鐘直達小琉球"},
-        {name:"北投溫泉｜日勝生加賀屋國際溫泉飯店入浴券", url:"https://www.kkday.com/zh-tw/product/34176", img:"https://image.kkday.com/v2/image/get/s1.kkday.com/product_34176/20231102063145_noSQe/jpg", deal:"買一送一", why:"青磺白磺雙泉，日式湯屋與大眾裸湯"}
-      ]
-    },
-    {
-      date: "2026-09-19", label: "9/19 最後一日",
-      img: {pc:"img/flash-0919-pc.webp", mo:"img/flash-0919-mo.webp"},
-      highlight: "全天限定：全站點數 3 倍送，不需折扣碼，直接下單就有",
-      codes: [
-        {scope:"全期間｜郵輪", code:"KKCRZ", benefit:"郵輪領券現折 $2,000", till:"2026-09-19"},
-        {scope:"全期間｜全站", code:"917GO200", benefit:"滿 NT$3,000 現折 $200", till:"2026-09-19"},
-        {scope:"三天通用｜瑞士", code:"26SWWINTER9", benefit:"瑞士商品滿 4,000 享 95 折，最高折 $1,800", till:"2026-09-19"},
-        {time:"11:00", scope:"APP 限定｜全站 1 折券", code:"GY4CKJ4", benefit:"APP 限定，數量有限", till:"2026-09-19"},
-        {time:"11:00", scope:"APP 限定｜全站 7 折券", code:"TZ6QQ3Z", benefit:"APP 限定，數量有限", till:"2026-09-19"},
-        {time:"13:00", scope:"買一送一重頭戲", code:"7CQRGSM", benefit:"僅限豪華版關西樂享周遊券一檔，可選日本環球影城 1 日券", till:"2026-09-19"},
-        {time:"20:00", scope:"機票立減", code:"919TKT5000", benefit:"滿 NT$5,030 現折 $5,000，含稅含行李", till:"2026-09-19"},
-        {time:"20:00", scope:"倒數 4 小時｜全站加碼 9 折券", code:"ZCK9ZMG", benefit:"全站加碼，限最後四小時", till:"2026-09-19"},
-        {time:"21:00", scope:"APP 限定｜夜間全站 1 折券", code:"9CDTSXF", benefit:"壓軸夜間特殺，APP 限定", till:"2026-09-19"},
-        {time:"21:00", scope:"APP 限定｜夜間全站 7 折券", code:"EJTSYZZ", benefit:"壓軸夜間特殺，APP 限定", till:"2026-09-19"}
-      ],
-      bogo: [
-        {name:"豪華版關西樂享周遊券（可選日本環球影城 1 日券）", url:"https://www.kkday.com/zh-tw/product/528208", img:"https://image.kkday.com/v2/image/get/s1.kkday.com/product_528208/20260522030638_UfvUB/jpg", deal:"買一送一", code:"7CQRGSM", why:"9/19 專屬碼，跟前兩天不同組"},
-        {name:"富士山一日遊｜新倉山淺間公園・忍野八海・河口湖大石公園", url:"https://www.kkday.com/zh-tw/product/573307", img:"https://image.kkday.com/v2/image/get/s1.kkday.com/product_573307/20260526031056_8FGuu/jpg", deal:"買一送一", why:"一站打卡富士山五大地標，不繞路"},
-        {name:"天橋立一日遊｜京都伊根舟屋與伊根灣遊船", url:"https://www.kkday.com/zh-tw/product/25439", img:"https://image.kkday.com/v2/image/get/s1.kkday.com/product_29695/20260624031640_bKjux/png", deal:"買一送一", why:"股見飛龍絕景＋伊根灣遊船，1 人成團"},
-        {name:"富士山YETI滑雪場一日遊｜東京出發、專業教練指導", url:"https://www.kkday.com/zh-tw/product/151891", img:"https://image.kkday.com/v2/image/get/s1.kkday.com/product_151891/20250812070329_CRq2u/jpg", deal:"買一送一", why:"日本最早開的滑雪場，中文教練帶新手"},
-        {name:"滋賀箱館山滑雪場一日遊｜大阪出發日本滑雪體驗", url:"https://www.kkday.com/zh-tw/product/137860", img:"https://image.kkday.com/v2/image/get/s1.kkday.com/product_137860/20251114072019_aEKlK/png", deal:"買一送一", why:"10 條雪道，中文教練小班新手教學"}
+        {time:"10:00", scope:"搶購機票",          code:"FLYDAYTKT300",  benefit:"限 3 天，折 $300",   till:"2026-09-29"},
+        {time:"10:00", scope:"搶購機加酒",        code:"FLYDAYPKG888",  benefit:"限 3 天，折 $888",   till:"2026-09-29"},
+        {time:"10:00", scope:"指定機票",          code:"FLYDAY500TKT",  benefit:"限 3 天，折 $500",   till:"2026-09-29"},
+        {time:"10:00", scope:"指定迷你團／機加酒", code:"FLYDAY1000PKG", benefit:"限 3 天，折 $1,000", till:"2026-09-29"},
+        {time:"10:00", scope:"指定郵輪",          code:"FLYDAY2000CUZ", benefit:"限 3 天，折 $2,000", till:"2026-09-29"},
+        {time:"10:00", scope:"指定郵輪＋機票",    code:"FLYDAY3000FUZ", benefit:"限 3 天，折 $3,000", till:"2026-09-29"}
       ]
     }
-  ]
+  ],
+  fares: {
+    title: "泰瑞航空韓國線｜開搶價（未扣折扣碼）",
+    rows: [
+      {r:"松山－金浦", p:"7,988"},
+      {r:"桃園－濟州", p:"6,188"},
+      {r:"桃園－大邱", p:"6,188"},
+      {r:"台中－仁川", p:"6,188"},
+      {r:"高雄－仁川", p:"6,188"},
+      {r:"高雄－金浦", p:"6,188"},
+      {r:"高雄－濟州", p:"6,988"},
+      {r:"高雄－釜山", p:"6,988"}
+    ]
+  }
 };
 
 /* 快閃整點 APP 全站券排除票券通票（Alen 2026-09-18 確認，快閃券特有）。
@@ -2679,6 +2633,12 @@ const GROUPS = [
   {id:"daily", tab:"每日目的地", lede:"依星期輪替，今天可用的會標起來。", items:[]},
   {id:"cat", tab:"類別與地區", lede:"依這檔內容的目的地或商品類別挑一個搭。", items:[
     {scope:"郵輪｜皇家加勒比指定航次", code:"RCIKKDAY", benefit:"全單 95 折，限 4 支指定商品", till:"2026-12-31"},
+    {scope:"飛航日｜搶購機票", code:"FLYDAYTKT300", benefit:"限 3 天，折 300 元", till:"2026-09-29"},
+    {scope:"飛航日｜搶購機加酒", code:"FLYDAYPKG888", benefit:"限 3 天，折 888 元", till:"2026-09-29"},
+    {scope:"飛航日｜指定機票", code:"FLYDAY500TKT", benefit:"限 3 天，折 500 元", till:"2026-09-29"},
+    {scope:"飛航日｜指定迷你團／機加酒", code:"FLYDAY1000PKG", benefit:"限 3 天，折 1,000 元", till:"2026-09-29"},
+    {scope:"飛航日｜指定郵輪", code:"FLYDAY2000CUZ", benefit:"限 3 天，折 2,000 元", till:"2026-09-29"},
+    {scope:"飛航日｜指定郵輪＋機票", code:"FLYDAY3000FUZ", benefit:"限 3 天，折 3,000 元", till:"2026-09-29"},
     {scope:"日本｜行程與體驗", code:"26AWJPTOUR", benefit:"不限門檻 93 折，最高折 1,000 元", till:""},
     {scope:"韓國｜首爾指定體驗行程", code:"FINDSEOUL20", benefit:"滿 TWD 1,271 折 TWD 636（USD 20），限 9 支指定商品", till:"2026-10-31"},
     {scope:"韓國｜韓劇拍攝地指定行程", code:"26KDRAMA15", benefit:"滿 2,000 折 450，限 25 支指定商品", till:"2026-12-31"},
@@ -4522,6 +4482,13 @@ const TOUR_CODES = ["KKAFFTOUR88"];
 const DAILY_CODES = ["HMCDAY","BSDAY","SEADAY","JPDAY","SELDAY","TWDAY","EADAY","OCDAY"];
 const DAILY_NOCAT = ["交通", "包車", "機票", "機加酒", "住宿", "網路", "其他"];
 
+/* 飛航日的六組碼：排除清單尚未取得，所以先全部標為「需確認」而不是「可用」。
+   它們限定的是「搶購機票／指定機票／指定郵輪」這類活動選品，
+   沒有清單就無從判斷哪些商品吃得到（Alen 2026-09-23 會逐一提供）。
+   拿到清單後改成 FLASH_RULE 的 only 陣列，並把這裡刪掉。 */
+const FLYDAY_PENDING = ["FLYDAYTKT300","FLYDAYPKG888","FLYDAY500TKT",
+                        "FLYDAY1000PKG","FLYDAY2000CUZ","FLYDAY3000FUZ"];
+
 const MANUAL_EX = {
   "KKAFFTOUR88": [100730]
 };
@@ -4530,6 +4497,8 @@ function judge(code, id, opts){
     return {ok:false, why:"這支實際結帳折不了，已人工排除"};
   if (TOUR_CODES.indexOf(code) >= 0 && !TOUR_ONLY.has(Number(id)))
     return {ok:false, why:"這張碼限「行程」，這件不是觀光行程類"};
+  if (FLYDAY_PENDING.indexOf(code) >= 0)
+    return {ok:null, why:"飛航日的適用商品清單尚未提供，請以活動頁與結帳頁為準"};
   if (DAILY_CODES.indexOf(code) >= 0) {
     const _g = geoOf(Number(id)) || {};
     if (DAILY_NOCAT.indexOf(_g.cat) >= 0)
