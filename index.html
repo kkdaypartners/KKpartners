@@ -2818,6 +2818,7 @@ const EVENT = {
   days: [
     {
       date:  "2026-09-27",
+      until: "2026-10-11",      /* 折扣碼延長到 10/11，分頁跟著留到那天 */
       label: "9/27 開搶日",
       codes: [
         {time:"10:00", scope:"搶購機票",          code:"FLYDAYTKT300",  benefit:"延長至 10/11，折 $300",   till:"2026-10-11"},
@@ -3162,6 +3163,9 @@ function slotGrace(it){
 
 function slotExpired(dateStr, timeStr, it){
   if (!dateStr || !timeStr) return false;
+  /* 2026-09-24：效期比搶購日長的碼（例如飛航日延長到 10/11）不是一次性快閃券，
+     到 till 當天結束才算過期；否則開搶後幾分鐘就被移除，連折扣碼區都會被刪掉 */
+  if (it && it.till && it.till > dateStr) return Date.now() > new Date(it.till + "T23:59:59+08:00").getTime();
   const t = String(timeStr).match(/(\d{1,2}):(\d{2})/);
   if (!t) return false;
   /* 明確以台北時間組出截止點，不依賴瀏覽器所在時區 */
@@ -3262,7 +3266,7 @@ const TABS = (EV_LIVE ? [{
   items: (function(){
     var seen = {}, out = [];
     EVENT.days.forEach(function(d){
-      if (dayDiff(d.date) < 0) return;
+      if (dayDiff(d.until || d.date) < 0) return;
       liveCodes(d).forEach(function(it){
         if (seen[it.code]) return;
         seen[it.code] = 1;
@@ -3817,7 +3821,7 @@ function buildEvent(){
     }).join("") + '</div>';
 
   if (!over) {
-    const todayIdx = Math.max(0, EVENT.days.findIndex(function(d){ return dayDiff(d.date) >= 0; }));
+    const todayIdx = Math.max(0, EVENT.days.findIndex(function(d){ return dayDiff(d.until || d.date) >= 0; }));
     h += '<div class="evbox">' +
       '<div class="evhd"><div><b>' + esc(EVENT.name) + '</b>' +
       '<span class="evwhen">' + fmt(EVENT.s) + ' – ' + fmt(EVENT.e) + '</span></div>' + badge + '</div>' +
@@ -3828,12 +3832,12 @@ function buildEvent(){
       '<a class="btn" href="' + esc(EVENT.url) + '" target="_blank" rel="noopener">看活動頁</a>' +
       '<div class="daytabs">' + EVENT.days.map(function(d, i){
         const dd = dayDiff(d.date);
-        if (dd < 0) return "";          /* 已結束的日子直接不顯示 */
-        const tag = dd === 0 ? "・今天" : "・" + dd + " 天後";
+        if (dayDiff(d.until || d.date) < 0) return "";          /* 已結束的日子直接不顯示 */
+        const tag = dd === 0 ? "・今天" : dd > 0 ? "・" + dd + " 天後" : "・延長至 " + fmt(d.until);
         return '<button data-day="' + i + '" aria-selected="' + (i === todayIdx) + '">' + esc(d.label) + tag + '</button>';
       }).join("") + '</div>' +
       EVENT.days.map(function(d, i){
-        if (dayDiff(d.date) < 0) return "";   /* 已結束的日子連內容一起移除 */
+        if (dayDiff(d.until || d.date) < 0) return "";   /* 已結束的日子連內容一起移除 */
         return '<div class="daypane' + (i === todayIdx ? " on" : "") + '" id="day-' + i + '">' +
           (d.highlight ? '<div class="dayhl">' + esc(d.highlight) + '</div>' : "") +
           (d.img ? '<a class="dayimg" href="' + esc(d.img.pc || d.img.mo) + '" target="_blank" rel="noopener" title="點開看大圖">' +
@@ -3848,8 +3852,9 @@ function buildEvent(){
                     const row = codeRow(it);
                     return it.time ? row.replace('<div class="scope">', '<div class="scope"><i class="tslot">' + esc(it.time) + '</i>') : row;
                   }).join("") + '</div>'
-                : '<p class="empty">本日整點搶購已全部結束，下方的買一送一仍可正常推廣。</p>');
+                : '<p class="empty">本日整點搶購已全部結束' + ((d.bogo && d.bogo.length) ? '，下方的買一送一仍可正常推廣' : '') + '。</p>');
           })() +
+          ((d.bogo && d.bogo.length) ? (   /* 沒有買一送一的檔期（例如飛航日）整塊不顯示 */
           '<h3>買一送一與指定優惠</h3>' +
           '<div class="warn bogotip"><b>發文前先看這裡</b>' +
           '<ol><li>買一送一方案 <b>13:00 才上架</b>，在那之前進商品頁看不到。</li>' +
@@ -3865,7 +3870,8 @@ function buildEvent(){
             (x.code ? '<div class="dcode"><span>折扣碼</span><button class="chip" data-code="' + esc(x.code) + '">' + esc(x.code) + '</button></div>' : "") +
             '<div class="pbtns"><a class="btn" href="' + esc(x.url) + '" target="_blank" rel="noopener">看商品</a>' +
             '<button class="btn alt mkpost" data-code="' + esc(x.code || "") + '" data-benefit="' + esc(x.name + (x.deal ? "｜" + x.deal : "")) + '" data-url="' + esc(x.url) + '" data-event="' + esc(EVENT.url || "") + '" data-perks="1">複製貼文</button>' +
-            '</div></div></div>'; }).join("") + '</div></div></div>';
+            '</div></div></div>'; }).join("") + '</div></div></div>'
+          ) : "");
       }).join("") + '</div>';
   }
   return h + '</div></section>';
@@ -4440,8 +4446,8 @@ renderCid();
   function liveCount(){
     /* 有效券數 × 1000 + 還沒過的天數，任一變動就重繪 */
     const codes = EVENT.days.reduce(function(n, d){
-      return n + (dayDiff(d.date) < 0 ? 0 : liveCodes(d).length); }, 0);
-    const days = EVENT.days.filter(function(d){ return dayDiff(d.date) >= 0; }).length;
+      return n + (dayDiff(d.until || d.date) < 0 ? 0 : liveCodes(d).length); }, 0);
+    const days = EVENT.days.filter(function(d){ return dayDiff(d.until || d.date) >= 0; }).length;
     return codes * 1000 + days;
   }
   let last = liveCount();
@@ -4458,7 +4464,7 @@ renderCid();
       if (panes[k].classList.contains("on")) { openIdx = k; break; }
     }
     /* 若原本停在已結束的那天，跨日後自動落到第一個還有效的分頁 */
-    if (openIdx >= Math.max(1, EVENT.days.filter(function(d){ return dayDiff(d.date) >= 0; }).length)) openIdx = 0;
+    if (openIdx >= Math.max(1, EVENT.days.filter(function(d){ return dayDiff(d.until || d.date) >= 0; }).length)) openIdx = 0;
     const wrap = document.createElement("div");
     wrap.innerHTML = buildEvent();
     const fresh = wrap.firstElementChild;
@@ -4600,7 +4606,7 @@ renderCid();
       if (P.img) wrap.innerHTML = '<img loading="lazy" src="' + esc(P.img) + '" alt="' + esc(P.name) + '">';
       return;
     }
-    const day = EVENT.days.filter(function(d){ return dayDiff(d.date) >= 0; })[0];
+    const day = EVENT.days.filter(function(d){ return dayDiff(d.until || d.date) >= 0; })[0];
     if (!day || !day.img) return;
     wrap.innerHTML =
       '<picture>' +
