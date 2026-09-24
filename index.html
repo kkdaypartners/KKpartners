@@ -3587,10 +3587,12 @@ function buildEvent(){
 }
 /* 0 元商品專區（每週選品分析之後、本月檔期之前） */
 /* 主題資源包（0 元商品之前） */
+/* 整區都要包在 .inner 裡，否則沒有 max-width 限制會撐滿整個螢幕，
+   左右內容直接被切掉（2026-09-24 修）。這個 </div> 當初移除區塊內下拉時
+   被留在標題後面，導致圖片與清單全部跑到 .inner 外面。 */
 H += '<section class="band" id="packs"><div class="inner">' +
 '<h2>主題資源包</h2>' +
 '<p class="lede">把單品整理成一整包，寫部落格或長文時整組複製就能用。連結會自動帶上你的 CID。</p>' +
-'</div>' +
 '<div class="pktabs" role="tablist">' + PACKS.map(function(p, i){
   return '<button class="pktab' + (i === 0 ? " on" : "") + '" data-p="' + esc(p.id) + '">' + esc(p.tab) + '</button>';
 }).join("") + '<button class="pktab" data-p="free0">0 元商品</button></div>' +
