@@ -846,7 +846,10 @@ border-radius:999px;padding:7px 15px;cursor:pointer}
 .paytbl{width:100%;border-collapse:collapse;margin:14px 0 6px;font-size:14px;background:#fff;border-radius:10px;overflow:hidden}
 .paytbl th,.paytbl td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
 .paytbl th{background:#EAF7F8;font-weight:700}
-.paytbl td.n{text-align:right;font-variant-numeric:tabular-nums}
+.paytbl td.n,.paytbl th.n{text-align:right;font-variant-numeric:tabular-nums}
+.paytbl th:nth-child(1),.paytbl td:nth-child(1){width:18%}
+.paytbl th:nth-child(2),.paytbl td:nth-child(2){width:32%}
+.paytbl th:nth-child(3),.paytbl td:nth-child(3){width:28%}
 .paywrap{overflow-x:auto}
 .hotgo{background:none;border:0;padding:0;font:inherit;color:var(--mid);cursor:pointer;text-align:left;line-height:1.55;border-bottom:1px solid rgba(14,122,133,.28)}
 .hotgo:hover{border-bottom-color:var(--mid)}
@@ -4144,7 +4147,7 @@ H += '<section class="band band-wash" id="payout"><div class="inner">' +
 '</div>' +
 '<div class="eq">月總佣金 = A × R</div>' +
 '<h3>推一單能分多少？</h3>' +
-'<div class="paywrap"><table class="paytbl"><thead><tr><th>級距</th><th>商品類型</th><th>客單約</th><th>一單分潤約</th></tr></thead><tbody>' +
+'<div class="paywrap"><table class="paytbl"><thead><tr><th>級距</th><th>商品類型</th><th class="n">客單約</th><th class="n">一單分潤約</th></tr></thead><tbody>' +
 '<tr><td>★ 入門</td><td>一般門票、網卡</td><td class="n">NT$ 3,200 以下</td><td class="n">NT$ 160 以下</td></tr>' +
 '<tr><td>★★ 中</td><td>一日遊、主題樂園</td><td class="n">NT$ 3,200–8,000</td><td class="n">NT$ 160–400</td></tr>' +
 '<tr><td>★★★ 中高</td><td>包車、郊區行程</td><td class="n">NT$ 8,000–19,200</td><td class="n">NT$ 400–960</td></tr>' +
