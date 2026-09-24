@@ -626,24 +626,20 @@ body.adminonly #codes #ck-prod{display:none}
 .pkmsub em{background:var(--wash)}
 @media (max-width:760px){.pkmenu{max-width:none}.pkmpanel{flex-direction:column}
   .pkmleft{flex:none;border-right:0;border-bottom:1px solid var(--line);max-height:200px}}
-.pksel{display:block;width:100%;max-width:340px;margin:0 0 16px;padding:12px 15px;font-size:15px;font-weight:700;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:12px;cursor:pointer}
-#packs .pktabs{display:none}
-#packs .pktabs{display:none !important}
+#packs #packs .pktabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
 .pktab{background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 15px;font-size:13.5px;font-weight:700;color:var(--mid);cursor:pointer;white-space:nowrap}
 .pktab.on{background:var(--mid);border-color:var(--mid);color:#fff}
 .pkpane{display:none}
 .pkpane.on{display:block}
-/* 主題圖高度用「容器固定比例」鎖死，不要靠 max-height 或 height:auto——
-   那兩種寫法在寬螢幕上都會讓 1600×900 的原圖等比放大成一整面牆，
-   已經跑版兩次（2026-09-23）。容器定比例、圖用 contain 塞進去，
-   不管原圖多大、螢幕多寬，高度都可預測。 */
-.pkhero{border-radius:14px;overflow:hidden;margin:0 0 14px;background:#fff;aspect-ratio:16/9;max-height:300px;display:flex;align-items:center;justify-content:center}
-@media (min-width:760px){.pkhero{aspect-ratio:21/6;max-height:240px}}
-@media (min-width:1200px){.pkhero{max-height:220px}}
+/* 主題圖：容器固定比例鎖死高度（不要用 max-height 或 height:auto，寬螢幕會變一面牆），
+   圖用 cover 填滿並置中——contain 會在左右留白邊，Alen 反覆說過要滿版（2026-09-24）。 */
+.pkhero{border-radius:14px;overflow:hidden;margin:0 0 14px;background:var(--wash);aspect-ratio:16/9;max-height:300px}
+@media (min-width:760px){.pkhero{aspect-ratio:21/7;max-height:270px}}
+@media (min-width:1200px){.pkhero{max-height:260px}}
 /* 主題圖多半是地圖、預測表這類資訊圖，裁切會把內容切掉，
    所以不固定比例、不裁切，只限制最大高度（2026-09-23 修）。 */
 /* 主題圖是資訊圖，滿版顯示才看得清楚；不裁切、不限高，隨寬度等比縮放。 */
-.pkhero img{width:100%;height:100%;object-fit:contain;object-position:center;display:block;margin:0 auto}
+.pkhero img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
 .pklede{margin:0 0 12px;font-size:13px;color:var(--muted);line-height:1.6}
 .pkbar{display:flex;align-items:center;gap:10px;margin:0 0 14px;flex-wrap:wrap}
 .pkall{background:none;border:none;color:var(--mid);font-size:12.5px;font-weight:700;cursor:pointer;text-decoration:underline;padding:0}
@@ -3596,12 +3592,6 @@ function buildEvent(){
 H += '<section class="band" id="packs"><div class="inner">' +
 '<h2>主題資源包</h2>' +
 '<p class="lede">把單品整理成一整包，寫部落格或長文時整組複製就能用。連結會自動帶上你的 CID。</p>' +
-'<select class="pksel" id="pksel" aria-label="切換主題">' + PACKS.map(function(p, i){
-  var n = 0; p.groups.forEach(function(g){ n += g.items.length; });
-  return '<option value="' + esc(p.id) + '"' + (i === 0 ? " selected" : "") + '>' +
-         esc(p.tab) + '（' + n + ' 支）</option>';
-}).join("") + '<option value="free0">0 元商品（' +
-  FREE_ITEMS.reduce(function(a, g){ return a + g.list.length; }, 0) + ' 支）</option></select>' +
 '<div class="pktabs" role="tablist">' + PACKS.map(function(p, i){
   return '<button class="pktab' + (i === 0 ? " on" : "") + '" data-p="' + esc(p.id) + '">' + esc(p.tab) + '</button>';
 }).join("") + '<button class="pktab" data-p="free0">0 元商品</button></div>' +
@@ -4957,8 +4947,6 @@ function pkmGo(pid, groupName){
   const root = document.getElementById("packs");
   root.querySelectorAll(".pktab").forEach(function(b){ b.classList.toggle("on", b.dataset.p === pid); });
   root.querySelectorAll(".pkpane").forEach(function(x){ x.classList.toggle("on", x.dataset.p === pid); });
-  const psel = document.getElementById("pksel");
-  if (psel) psel.value = pid;
   const lbl = root.querySelector('.pkmitem[data-p="' + pid + '"]');
   /* pkmnow 是舊的區塊內下拉標籤，已移除；改用 #pksel 顯示目前主題。 */
   if (groupName) {
@@ -4968,13 +4956,6 @@ function pkmGo(pid, groupName){
   }
 }
 
-
-/* 區塊內的主題切換：導覽列下拉在頁面頂端，捲到區塊時看不到，
-   所以區塊裡也要有一個（Alen 2026-09-24 回報按鈕不見）。 */
-document.addEventListener("change", function(e){
-  if (e.target.id !== "pksel") return;
-  pkmGo(e.target.value, "");
-});
 
 /* 商品預覽彈窗：KOL 在挑商品時不想一直跳出去再回來（Alen 2026-09-23）。
    KKday 商品頁不能內嵌（幾乎所有電商都擋 iframe），所以改用站上既有的資料
@@ -5036,8 +5017,6 @@ document.addEventListener("keydown", function(e){ if (e.key === "Escape") pvClos
 document.addEventListener("click", function(e){
   const tab = e.target.closest(".pktab");
   if (tab) {
-    const psel = document.getElementById("pksel");
-    if (psel) psel.value = tab.dataset.p;
     const root = tab.closest("#packs");
     root.querySelectorAll(".pktab").forEach(function(b){ b.classList.toggle("on", b === tab); });
     root.querySelectorAll(".pkpane").forEach(function(x){ x.classList.toggle("on", x.dataset.p === tab.dataset.p); });
