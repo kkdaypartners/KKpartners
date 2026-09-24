@@ -349,6 +349,8 @@ h3{font-size:19px;font-weight:700;margin:34px 0 10px}
 .perkrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:18px 0}
 .perkit{background:var(--wash);border-radius:10px;padding:12px 14px}
 .perkit b{display:block;font-size:14px;white-space:nowrap}
+.evbtns{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.evbtns .btn{margin:0}
 .perkit span{font-size:13px;color:var(--muted);white-space:nowrap}
 .tslot{font-style:normal;background:var(--ink);color:#fff;border-radius:5px;padding:2px 8px;margin-right:8px;font-family:var(--mono);font-size:12px}
 .ben{background:#fff;border-radius:18px;box-shadow:var(--shadow);display:grid;grid-template-columns:1fr;overflow:hidden;align-items:stretch}
@@ -2813,8 +2815,8 @@ const EVENT = {
   img:  "img/flyday-wide.webp",
   note: "",
   perks: [
-    {t:"滿萬贈 1,000 點",  d:"9/27 滿萬加贈 1,000 點"},
-    {t:"訂房點數 2 倍",    d:"9/26–27 全球訂房 2 倍"},
+    {t:"滿萬贈 1,000 點",  d:"9/27 滿萬加贈 1,000 點", until:"2026-09-27"},
+    {t:"訂房點數 2 倍",    d:"9/26–27 全球訂房 2 倍", until:"2026-09-27"},
     {t:"活動延長到 10/11", d:"折扣碼也延到 10/11"}
   ],
   days: [
@@ -3829,9 +3831,10 @@ function buildEvent(){
       '<span class="evwhen">' + fmt(EVENT.s) + ' – ' + fmt(EVENT.e) + '</span></div>' + badge + '</div>' +
       (EVENT.img ? '<div class="evhero"><img loading="lazy" src="' + esc(EVENT.img) + '" alt=""></div>' : "") +
       (EVENT.note ? '<p class="evnote">' + esc(EVENT.note) + '</p>' : "") +
-      '<div class="perkrow">' + EVENT.perks.map(function(p){
+      '<div class="perkrow">' + EVENT.perks.filter(function(p){ return !p.until || dayDiff(p.until) >= 0; }).map(function(p){
         return '<div class="perkit"><b>' + esc(p.t) + '</b><span>' + esc(p.d) + '</span></div>'; }).join("") + '</div>' +
-      '<a class="btn" href="' + esc(EVENT.url) + '" target="_blank" rel="noopener">看活動頁</a>' +
+      '<div class="evbtns"><a class="btn" href="' + esc(EVENT.url) + '" target="_blank" rel="noopener">看活動頁</a>' +
+      '<button type="button" class="btn alt evcopy">複製活動介紹</button></div>' +
       '<div class="daytabs">' + EVENT.days.map(function(d, i){
         const dd = dayDiff(d.date);
         if (dayDiff(d.until || d.date) < 0) return "";          /* 已結束的日子直接不顯示 */
@@ -4396,6 +4399,54 @@ document.addEventListener("click", e => {
     a.body.map(rep).join("\n") + "\n", "整封信已複製，貼到信箱補資料就能寄");
 });
 
+
+/* 複製活動介紹（2026-09-24 Alen 要求）：把檔期整理成一則可直接發給粉絲的介紹，
+   全部從 EVENT 組出來——換檔期只要改 EVENT，這段不用動。連結帶夥伴自己的 CID。 */
+document.addEventListener("click", function(e){
+  if (!e.target.closest(".evcopy")) return;
+  if (!MYCID) { toastMsg("先在上面填你的 CID"); document.getElementById("mycid").scrollIntoView({block:"center"}); return; }
+  const E = EVENT, L = [];
+  const range = fmt(E.s) + (E.e && E.e !== E.s ? "–" + fmt(E.e) : "");
+  L.push("【" + E.name + "】" + range);
+  /* 開搶時間：還沒過的第一個搶購日＋最早的整點 */
+  const up = (E.days || []).filter(function(d){ return dayDiff(d.date) >= 0; })[0];
+  if (up) {
+    const times = (up.codes || []).map(function(c){ return c.time; }).filter(Boolean).sort();
+    if (times.length) L.push("⏰ " + fmt(up.date) + " " + times[0] + " 準時開搶");
+  }
+  if (E.fares && E.fares.rows && E.fares.rows.length) {
+    const nums = E.fares.rows.map(function(r){ return Number(String(r.p).replace(/[^\d]/g, "")); }).filter(Boolean);
+    if (nums.length) L.push("✈️ " + String(E.fares.title || "").replace(/（[^）]*）/g, "").split("｜")[0] +
+      " 開搶價 " + Math.min.apply(null, nums).toLocaleString() + " 起");
+  }
+  /* 折扣碼：只收還有效的，同一支碼只留一筆 */
+  const seen = {}, codes = [];
+  (E.days || []).forEach(function(d){
+    if (dayDiff(d.until || d.date) < 0) return;
+    liveCodes(d).forEach(function(c){ if (!seen[c.code]) { seen[c.code] = 1; codes.push(c); } });
+  });
+  if (codes.length) {
+    const till = codes.map(function(c){ return c.till || ""; }).sort().pop();
+    L.push("");
+    L.push("🎟️ 活動折扣碼" + (till ? "（" + fmt(till) + " 前有效）" : "") + "：");
+    codes.forEach(function(c){
+      L.push("・" + c.scope + "｜" + c.code + "｜" + String(c.benefit || "").replace(/^延長至[^，]*，/, ""));
+    });
+  }
+  const perks = (E.perks || []).filter(function(p){ return !p.until || dayDiff(p.until) >= 0; });
+  if (perks.length) {
+    L.push("");
+    L.push("🎁 全站加碼：");
+    perks.forEach(function(p){ L.push("・" + p.t + "：" + p.d); });
+  }
+  L.push("");
+  L.push("👉 活動頁：" + withCid(E.url));
+  L.push("");
+  L.push("【這裡寫你自己想推的重點，至少一兩句】");
+  L.push("");
+  L.push("#KKday #KKdaytw");
+  copyText(L.join("\n"), "活動介紹已複製，記得補上自己的推薦重點");
+});
 document.addEventListener("click", e => {
   const b = e.target.closest(".mkpost");
   if (!b) return;
