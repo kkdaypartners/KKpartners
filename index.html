@@ -838,6 +838,10 @@ border-radius:999px;padding:7px 15px;cursor:pointer}
 .tplbd ul{margin:0;padding-left:20px;font-size:14px}
 .tplex{margin-top:10px}
 .tplex>summary{cursor:pointer;font-size:14px;color:#0E7A85}
+.starleg{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin:10px 0 14px;padding:10px 14px;background:#FFF8E1;border-radius:10px;font-size:13px;color:var(--ink)}
+.starleg b{color:#8A6400}
+.starleg span{white-space:nowrap;color:#5b4a14}
+.starleg a{margin-left:auto;white-space:nowrap}
 .pkstar{font-style:normal;color:#E0A100;letter-spacing:-1px;margin-right:5px}
 .paytbl{width:100%;border-collapse:collapse;margin:14px 0 6px;font-size:14px;background:#fff;border-radius:10px;overflow:hidden}
 .paytbl th,.paytbl td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
@@ -3964,6 +3968,10 @@ H += '<section class="band" id="packs"><div class="inner">' +
 '<div class="pktabs" role="tablist">' + PACKS.map(function(p, i){
   return '<button class="pktab' + (i === 0 ? " on" : "") + '" data-p="' + esc(p.id) + '">' + esc(p.tab) + '</button>';
 }).join("") + '<button class="pktab" data-p="free0">0 元商品</button></div>' +
+'<div class="starleg"><b>★ 是什麼？</b>推一單大約能分多少佣金（依客單估，佣金 5%）：' +
+  '<span>★ 約 NT$160 以下</span><span>★★ 約 NT$160–400</span><span>★★★ 約 NT$400–960</span><span>★★★★ NT$960 以上</span>' +
+  '<a href="#payout">看對照表 ›</a></div>' +
+
 PACKS.map(function(p, i){
   return '<div class="pkpane' + (i === 0 ? " on" : "") + '" data-p="' + esc(p.id) + '">' +
     (p.img ? '<div class="pkhero"><img loading="lazy" src="' + esc(p.img) + '" alt=""></div>' : "") +
@@ -4139,9 +4147,10 @@ H += '<section class="band band-wash" id="payout"><div class="inner">' +
 '<div class="eq">月總佣金 = A × R</div>' +
 '<h3>推一單能分多少？</h3>' +
 '<div class="paywrap"><table class="paytbl"><thead><tr><th>級距</th><th>商品類型</th><th>客單約</th><th>一單分潤約</th></tr></thead><tbody>' +
-'<tr><td>★ 入門</td><td>一般門票</td><td class="n">NT$ 770</td><td class="n">NT$ 40</td></tr>' +
-'<tr><td>★★ 中</td><td>一日遊</td><td class="n">NT$ 5,200</td><td class="n">NT$ 260</td></tr>' +
-'<tr><td>★★★ 中高</td><td>包車、郊區行程</td><td class="n">NT$ 12,800–19,200</td><td class="n">NT$ 640–960</td></tr>' +
+'<tr><td>★ 入門</td><td>一般門票、網卡</td><td class="n">NT$ 3,200 以下</td><td class="n">NT$ 160 以下</td></tr>' +
+'<tr><td>★★ 中</td><td>一日遊、主題樂園</td><td class="n">NT$ 3,200–8,000</td><td class="n">NT$ 160–400</td></tr>' +
+'<tr><td>★★★ 中高</td><td>包車、郊區行程</td><td class="n">NT$ 8,000–19,200</td><td class="n">NT$ 400–960</td></tr>' +
+'<tr><td>★★★★ 高</td><td>機加酒、多日團、通行證</td><td class="n">NT$ 19,200 以上</td><td class="n">NT$ 960 以上</td></tr>' +
 '</tbody></table></div>' +
 '<p class="eqn">以佣金 5% 估算，實際比例依商品類型與合作條件。門票一篇文常成交 4–5 單，中高價位 1–2 單，但合計分潤可以差到 10 倍。站上商品與清單標的 ★ 就是這個級距。</p>' +
 '<p class="eqn">A 是實際支付金額（扣掉折扣券後），R 是商品類型對應的佣金比例。實際比例需<a href="https://kkpartners.kkday.com/affiliate/help" target="_blank" rel="noopener">登入 KKpartners 查看</a>。供應商或客戶取消的訂單不計入。</p>' +
@@ -5318,6 +5327,10 @@ document.getElementById("cksel").addEventListener("change", e => {
         DAILY_META[code].dows.map(function(x){ return DAYNM[x]; }).join("、") +
         '能用，下面列的是它的適用商品，不代表今天就能折。</p>' : "") +
     '<p class="hotsum">只比對台灣近 90 天最熱門的 <b>965 支</b>商品，不是全站清單；免稅券、代辦、貴賓室、行李運送等服務類商品不列入。</p>' +
+    '<div class="starleg"><b>★ 是什麼？</b>推一單大約能分多少佣金（依客單估，佣金 5%）：' +
+  '<span>★ 約 NT$160 以下</span><span>★★ 約 NT$160–400</span><span>★★★ 約 NT$400–960</span><span>★★★★ NT$960 以上</span>' +
+  '<a href="#payout">看對照表 ›</a></div>' +
+
     '<div class="hottabs">' +
       '<button class="hottab on" data-side="bad">不能用的 ' + blocked.length + ' 支</button>' +
       '<button class="hottab" data-side="ok">可以用的 ' + usable.length + ' 支</button>' +
