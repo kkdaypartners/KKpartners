@@ -347,8 +347,8 @@ h3{font-size:19px;font-weight:700;margin:34px 0 10px}
 .evnote{font-size:14.5px;color:var(--muted);margin:10px 0 16px;max-width:62ch}
 .perkrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:18px 0}
 .perkit{background:var(--wash);border-radius:10px;padding:12px 14px}
-.perkit b{display:block;font-size:14px}
-.perkit span{font-size:13px;color:var(--muted)}
+.perkit b{display:block;font-size:14px;white-space:nowrap}
+.perkit span{font-size:13px;color:var(--muted);white-space:nowrap}
 .tslot{font-style:normal;background:var(--ink);color:#fff;border-radius:5px;padding:2px 8px;margin-right:8px;font-family:var(--mono);font-size:12px}
 .ben{background:#fff;border-radius:18px;box-shadow:var(--shadow);display:grid;grid-template-columns:1fr;overflow:hidden;align-items:stretch}
 .benimg{display:flex;align-items:center;justify-content:center}
@@ -1900,6 +1900,26 @@ const DEALS = [
     due: "折扣碼 26SEP95 不限門檻 95 折、單筆最高折 NT$150，9/30 到期",
   },
   {
+    tag: "光復節連假",
+    name: "高鐵光復節｜9/25 開搶",
+    url: "https://www.kkday.com/zh-tw/transportation/taiwan",
+    from: "2026-09-24",
+    till: "2026-09-26",
+    soonmsg: "09/25 00:00 開搶",
+    demote: "2026-09-25T12:00",
+    img: "img/thsr-1024.webp",
+    price: "輸碼 95 折，另有聰明選時 65 折起",
+    why: "光復節連假 10/24–10/26，高鐵疏運期間 10/23–10/27，開放預售日就是 9/25（五）凌晨。搶票題材的急迫感是真的、不用硬造，而且每次連假都固定有人在找。建議 9/24 就先發預告貼文卡位，隔天凌晨開搶時再補一則。",
+    code: "THSR26OF5",
+    due: "⏰ 開搶：2026/9/25（五）00:00 準時釋票，建議 23:59 先把頁面開好。🎯 適用搭乘期間：2026/10/23（五）～10/27（二）高鐵疏運日期。🎟️ THSR26OF5 滿 NT$2,200 享 95 折，可搭原活動聰明選時 65 折起。",
+    note: [
+      "折扣碼以文字為準：THSR26OF5，第 7 碼是字母 O 不是數字 0",
+      "KV 上印成 THSR260F5 是錯的，發文請複製文字不要看圖打",
+      "座位為系統派位，無法選位，同行者不保證連續劃位",
+      "常態訂票限 29 天內；連假疏運為特別釋票，以官方公告為準"
+    ]
+  },
+  {
     tag: "韓國美妝節",
     name: "韓國美妝節｜體驗 88 折",
     url: "https://www.kkday.com/zh-tw/promo/korea-beauty-festival",
@@ -2015,26 +2035,6 @@ const DEALS = [
       "姓名須對照護照正本填寫，填錯的改票費與損失由旅客自負",
       "無機上餐；行李加購須在開票前處理，開票後不受理",
       "護照效期需比回國日多 6 個月以上"
-    ]
-  },
-  {
-    tag: "光復節連假",
-    name: "高鐵光復節車票｜9/25 開搶",
-    url: "https://www.kkday.com/zh-tw/transportation/taiwan",
-    from: "2026-09-24",
-    till: "2026-09-26",
-    soonmsg: "09/25 00:00 開搶",
-    demote: "2026-09-25T12:00",
-    img: "img/thsr-1024.webp",
-    price: "輸碼 95 折，另有聰明選時 65 折起",
-    why: "光復節連假 10/24–10/26，高鐵疏運期間 10/23–10/27，開放預售日就是 9/25（五）凌晨。搶票題材的急迫感是真的、不用硬造，而且每次連假都固定有人在找。建議 9/24 就先發預告貼文卡位，隔天凌晨開搶時再補一則。",
-    code: "THSR26OF5",
-    due: "⏰ 開搶：2026/9/25（五）00:00 準時釋票，建議 23:59 先把頁面開好。🎯 適用搭乘期間：2026/10/23（五）～10/27（二）高鐵疏運日期。🎟️ THSR26OF5 滿 NT$2,200 享 95 折，可搭原活動聰明選時 65 折起。",
-    note: [
-      "折扣碼以文字為準：THSR26OF5，第 7 碼是字母 O 不是數字 0",
-      "KV 上印成 THSR260F5 是錯的，發文請複製文字不要看圖打",
-      "座位為系統派位，無法選位，同行者不保證連續劃位",
-      "常態訂票限 29 天內；連假疏運為特別釋票，以官方公告為準"
     ]
   },
   {
@@ -2545,9 +2545,9 @@ const EVENT = {
   img:  "img/flyday-wide.webp",
   note: "",
   perks: [
-    {t:"滿萬贈 1,000 點",  d:"9/27 當天全站消費滿萬，加贈 1,000 點 KKday Points"},
-    {t:"訂房點數 2 倍",    d:"9/26–9/27 全球訂房點數 2 倍送"},
-    {t:"活動延長到 10/11", d:"卡到中秋與韓國、台灣連假，特別跟泰瑞爭取延長"}
+    {t:"滿萬贈 1,000 點",  d:"9/27 滿萬加贈 1,000 點"},
+    {t:"訂房點數 2 倍",    d:"9/26–27 全球訂房 2 倍"},
+    {t:"活動延長到 10/11", d:"中秋連假特別延長"}
   ],
   days: [
     {
