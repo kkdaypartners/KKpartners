@@ -1412,6 +1412,23 @@ function payTier(aop){
   return a >= 19200 ? 4 : a >= 8000 ? 3 : a >= 3200 ? 2 : 1;
 }
 const EXCL_RE = /獨家|專屬|限定|KKday|迷你團|客製|保證出發/;
+/* 中高價品（★★★ 以上）的貼文順序：切角 → 為什麼值得 → 連結 → 最後才放折扣碼（Alen 2026-09-24）。
+   一開頭就講折扣，會把貴的品拉進比價戰場；折扣碼在這裡是最後推一把，不是購買理由。 */
+function angleOf(name){
+  const n = String(name || "");
+  if (/滑雪|雪場|極光|賞楓|紅葉|楓葉|上高地|賞櫻/.test(n))
+    return ["時機", "例：12 月出發的滑雪團現在訂還有位子，11 月才找就只剩貴的時段"];
+  if (/破冰|流冰|保證出發|保證成行|保證有位/.test(n))
+    return ["避雷", "例：同樣的行程有兩種方案，差在保不保證出發，天候取消行程就空一天"];
+  if (/通行證|PASS|周遊券|鐵路|火車票/i.test(n))
+    return ["成本比較", "例：同樣的路線單買車票要多少？買通行證又是多少？幾天回本"];
+  if (/包車|專車|客製/.test(n))
+    return ["成本比較", "例：租車＋油錢＋停車＋保險四個人分攤多少？包車又是多少？差多少值不值得"];
+  if (/機票|機加酒|自由行|郵輪|飯店|住宿/.test(n))
+    return ["成本比較", "例：機票和飯店分開訂 vs 套裝，同樣日期差多少"];
+  return ["痛點", "例：帶爸媽去，我為什麼不自己轉車——行李不用搬、累了就休息"];
+}
+function isPremium(id){ return payTier(PAOV[Number(id)]) >= 3; }
 /* 客單（台幣、四捨五入到百位）：BigQuery tableau_order_all 近 90 天 TW 訂單，US$ 客單 × 32。
    2026-09-24 重算——PICKRANK 的 AOP 欄有錯（蘭嶼租機車寫 51,000、實際約 1,200；Rapi:t 寫 12,000、實際約 600），
    級距與「約可折」都改用這份。key 同時收 oid 與 mid。 */
@@ -4525,6 +4542,20 @@ document.addEventListener("click", e => {
     } catch (err) { prods = ""; }
   }
 
+  const pid = ((b.dataset.url || "").match(/\/product\/(\d+)/) || [])[1];
+  if (pid && isPremium(pid)) {
+    const card = b.closest(".deal");
+    const nm = card && card.querySelector(".dttl") ? card.querySelector(".dttl").textContent : b.dataset.benefit.split("｜")[0];
+    const ang = angleOf(b.dataset.benefit);
+    const cb = b.dataset.code ? (ALLCODES.filter(function(k){ return k.code === b.dataset.code; })[0] || {}).benefit : "";
+    const t2 = "【切角：" + ang[0] + "】在這裡寫你的開頭 hook\n（" + ang[1] + "）" +
+      "\n\n【為什麼值得：寫你的比較或試算，至少兩三句】" +
+      "\n\n" + nm + "\n👉 " + url + prods + perks +
+      (b.dataset.code ? "\n\n最後推一把：結帳輸入 " + b.dataset.code + (cb ? "（" + cb + "）" : "") : "") +
+      "\n\n#KKday #KKdaytw";
+    copyText(t2, "中高價品貼文已複製：先寫切角與比較，折扣碼放最後");
+    return;
+  }
   const text = b.dataset.benefit + (b.dataset.code ? "\n折扣碼：" + b.dataset.code : "") +
     "\n👉 " + url + prods + perks +
     "\n\n【這裡寫你自己實際使用的感受，至少一兩句】\n票券、交通、行程我都是在 KKday 上訂的，操作很快就找得到想要的商品。" +
@@ -5221,7 +5252,7 @@ document.getElementById("cksel").addEventListener("change", e => {
         var note = HOT_NOTE[b[0]] || "";
         var cut = /約可折/.test(why) ? why.replace(/^.*(這張碼約可折[^・]*).*$/, "$1") : "";
         return '<li><input type="checkbox" class="freeck2" data-n="' + esc(b[1]) + '" data-u="' + esc(u) +
-               '" data-w="' + esc(why) + '" data-r="' + esc(note) + '" data-c="' + esc(cut) + '">' +
+               '" data-w="' + esc(why) + '" data-r="' + esc(note) + '" data-c="' + esc(cut) + '" data-p="' + (isPremium(b[0]) ? 1 : 0) + '">' +
                '<span class="hotbody"><button type="button" class="hotgo" data-pv="' + b[0] + '" data-n="' +
                esc(b[1]) + '">' + esc(b[1]) + '</button>' +
                (note ? '<span class="hotnote">' + esc(note) + '</span>' : "") +
@@ -5309,6 +5340,7 @@ document.addEventListener('click', function(e){
   }
   const body = picked.map(function(x){
     const r = x.dataset.r || '', c = x.dataset.c || '';
+    if (x.dataset.p === '1') return '・' + x.dataset.n + (r ? '\n　' + r : '') + '\n' + x.dataset.u + (c ? '\n　（最後推一把：' + c + '）' : '');
     return '・' + x.dataset.n + (r ? '\n　' + r : '') + (c ? '\n　' + c : '') + '\n' + x.dataset.u;
   }).join('\n\n');
   copyText(head + body + '\n',
@@ -5475,6 +5507,15 @@ document.addEventListener("click", function(e){
     if (!x) { toastMsg("複製失敗，請重新點開商品"); return; }
     if (!MYCID) { toastMsg("先在上面填你的 CID"); return; }
     let c = null; try { c = pvCode(id, x); } catch(err) {}
+    if (isPremium(id)) {
+      const ang = angleOf(x.n);
+      copyText("【切角：" + ang[0] + "】在這裡寫你的開頭 hook\n（" + ang[1] + "）\n\n" +
+        "【為什麼值得：寫你的比較或試算，至少兩三句】\n\n" +
+        x.n + "\n" + (x.note ? x.note + "\n" : "") + "👉 " + withCid(prodUrl(id)) + "\n" +
+        (c ? "\n最後推一把：結帳輸入 " + c.code + "（" + c.benefit + "）\n" : ""),
+        "中高價品貼文已複製：先寫切角與比較，折扣碼放最後");
+      return;
+    }
     copyText(x.n + "\n" + (x.note ? x.note + "\n" : "") +
       (c ? "折扣碼 " + c.code + "：" + c.benefit + "\n" : "") +
       withCid(prodUrl(id)) + "\n", "已複製，連結已帶上你的 CID");
