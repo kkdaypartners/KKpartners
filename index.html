@@ -4943,7 +4943,7 @@ document.addEventListener("click", function(e){
     document.querySelectorAll(".navdd").forEach(function(n){ n.classList.remove("on"); });
 });
 
-/* 兩欄下拉的互動 */
+/* 舊的區塊內兩欄下拉已移除，只保留導覽列下拉仍需要的兩個函式。 */
 function pkmSub(pid){
   const p = PACKS.filter(function(x){ return x.id === pid; })[0];
   const gs = p ? p.groups.map(function(g){ return {n:g.n, c:g.items.length}; })
@@ -4960,46 +4960,14 @@ function pkmGo(pid, groupName){
   const psel = document.getElementById("pksel");
   if (psel) psel.value = pid;
   const lbl = root.querySelector('.pkmitem[data-p="' + pid + '"]');
-  document.getElementById("pkmnow").textContent = lbl ? lbl.childNodes[0].textContent : pid;
-  document.getElementById("pkmpanel").classList.remove("on");
-  document.getElementById("pkmbtn").setAttribute("aria-expanded", "false");
+  /* pkmnow 是舊的區塊內下拉標籤，已移除；改用 #pksel 顯示目前主題。 */
   if (groupName) {
     const pane = root.querySelector('.pkpane[data-p="' + pid + '"]');
     const hit = [...pane.querySelectorAll(".pkgh")].filter(function(h){ return h.textContent === groupName; })[0];
     if (hit) setTimeout(function(){ hit.scrollIntoView({behavior:"smooth", block:"center"}); }, 60);
   }
 }
-document.addEventListener("click", function(e){
-  const btn = e.target.closest("#pkmbtn");
-  if (btn) {
-    const pn = document.getElementById("pkmpanel");
-    const open = pn.classList.toggle("on");
-    btn.setAttribute("aria-expanded", open ? "true" : "false");
-    if (open) pkmSub(document.querySelector(".pkmitem.on").dataset.p);
-    return;
-  }
-  const it = e.target.closest(".pkmitem");
-  if (it) {
-    document.querySelectorAll(".pkmitem").forEach(function(b){ b.classList.toggle("on", b === it); });
-    pkmSub(it.dataset.p);
-    pkmGo(it.dataset.p, "");
-    return;
-  }
-  const sub = e.target.closest(".pkmsub");
-  if (sub) { pkmGo(sub.dataset.p, sub.dataset.g); return; }
-  if (!e.target.closest(".pkmenu")) {
-    const pn = document.getElementById("pkmpanel");
-    if (pn) { pn.classList.remove("on");
-      document.getElementById("pkmbtn").setAttribute("aria-expanded","false"); }
-  }
-});
-document.addEventListener("mouseover", function(e){
-  const it = e.target.closest(".pkmitem");
-  if (it && document.getElementById("pkmpanel").classList.contains("on")) {
-    document.querySelectorAll(".pkmitem").forEach(function(b){ b.classList.toggle("on", b === it); });
-    pkmSub(it.dataset.p);
-  }
-});
+
 
 /* 區塊內的主題切換：導覽列下拉在頁面頂端，捲到區塊時看不到，
    所以區塊裡也要有一個（Alen 2026-09-24 回報按鈕不見）。 */
