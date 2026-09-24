@@ -338,6 +338,12 @@ h3{font-size:19px;font-weight:700;margin:34px 0 10px}
 .evhd{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .evhd b{font-size:24px;font-weight:800;letter-spacing:-.02em}
 .evwhen{font-size:14px;color:var(--muted);margin-left:12px;font-variant-numeric:tabular-nums}
+/* 檔期主視覺：跟主題圖同一套規則——比例跟圖一致（1600×900＝16:9）、
+   大小用 max-width 控制、margin auto 置中。 */
+.evhero{width:100%;max-width:880px;aspect-ratio:16/9;margin:18px auto;
+  border-radius:14px;overflow:hidden;background:var(--wash)}
+.evhero img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+@media (max-width:760px){.evhero{max-width:none}}
 .evnote{font-size:14.5px;color:var(--muted);margin:10px 0 16px;max-width:62ch}
 .perkrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:18px 0}
 .perkit{background:var(--wash);border-radius:10px;padding:12px 14px}
@@ -1883,7 +1889,7 @@ const DEALS = [
   },
   {
     tag: "韓國美妝節",
-    name: "Korea Beauty Festival｜K-Beauty 88 折",
+    name: "韓國美妝節｜體驗 88 折",
     url: "https://www.kkday.com/zh-tw/promo/korea-beauty-festival",
     from: "2026-09-24",
     till: "2026-10-05",
@@ -2524,6 +2530,7 @@ const EVENT = {
   s:    "2026-09-27",
   e:    "2026-10-11",
   url:  "https://www.kkday.com/zh-tw/promo/27-flash-sale",
+  img:  "img/flyday-wide.webp",
   note: "每月 27 號的飛航日。9/27 上午 10:00 準時開搶，泰瑞航空韓國機票最低 5,888 起。" +
         "這次因為卡到中秋與韓國、台灣連假，特別跟泰瑞爭取把活動延長到 10/11，" +
         "比平常的三天長很多，發文節奏可以拉開。" +
@@ -3539,6 +3546,7 @@ function buildEvent(){
     h += '<div class="evbox">' +
       '<div class="evhd"><div><b>' + esc(EVENT.name) + '</b>' +
       '<span class="evwhen">' + fmt(EVENT.s) + ' – ' + fmt(EVENT.e) + '</span></div>' + badge + '</div>' +
+      (EVENT.img ? '<div class="evhero"><img loading="lazy" src="' + esc(EVENT.img) + '" alt=""></div>' : "") +
       (EVENT.note ? '<p class="evnote">' + esc(EVENT.note) + '</p>' : "") +
       '<div class="perkrow">' + EVENT.perks.map(function(p){
         return '<div class="perkit"><b>' + esc(p.t) + '</b><span>' + esc(p.d) + '</span></div>'; }).join("") + '</div>' +
