@@ -632,11 +632,17 @@ body.adminonly #codes #ck-prod{display:none}
 .pktab.on{background:var(--mid);border-color:var(--mid);color:#fff}
 .pkpane{display:none}
 .pkpane.on{display:block}
-.pkhero{border-radius:14px;overflow:hidden;margin:0 0 14px;background:#fff}
+/* 主題圖高度用「容器固定比例」鎖死，不要靠 max-height 或 height:auto——
+   那兩種寫法在寬螢幕上都會讓 1600×900 的原圖等比放大成一整面牆，
+   已經跑版兩次（2026-09-23）。容器定比例、圖用 contain 塞進去，
+   不管原圖多大、螢幕多寬，高度都可預測。 */
+.pkhero{border-radius:14px;overflow:hidden;margin:0 0 14px;background:#fff;aspect-ratio:16/9;max-height:300px;display:flex;align-items:center;justify-content:center}
+@media (min-width:760px){.pkhero{aspect-ratio:21/6;max-height:240px}}
+@media (min-width:1200px){.pkhero{max-height:220px}}
 /* 主題圖多半是地圖、預測表這類資訊圖，裁切會把內容切掉，
    所以不固定比例、不裁切，只限制最大高度（2026-09-23 修）。 */
 /* 主題圖是資訊圖，滿版顯示才看得清楚；不裁切、不限高，隨寬度等比縮放。 */
-.pkhero img{width:100%;height:auto;display:block}
+.pkhero img{width:100%;height:100%;object-fit:contain;display:block}
 .pklede{margin:0 0 12px;font-size:13px;color:var(--muted);line-height:1.6}
 .pkbar{display:flex;align-items:center;gap:10px;margin:0 0 14px;flex-wrap:wrap}
 .pkall{background:none;border:none;color:var(--mid);font-size:12.5px;font-weight:700;cursor:pointer;text-decoration:underline;padding:0}
