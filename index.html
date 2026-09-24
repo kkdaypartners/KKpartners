@@ -2086,6 +2086,25 @@ const DEALS = [
     ]
   },
   {
+    tag: "限時優惠",
+    name: "歐鐵全境通行證｜5 折起",
+    url: "https://www.kkday.com/zh-tw/product/119917",
+    from: "2026-09-24",
+    till: "2026-09-30",
+    until: "2026-09-30T23:59",
+    showAt: "2026-09-24T18:00",
+    img: "https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_119917/20260923090556_tLXrc/png",
+    price: "最低 5 折起＋送 20GB eSIM",
+    why: "歐鐵全境通行證 33 國無限搭，一張票就能跨國跑，長程線客單高、分潤好看。這次最低 5 折起，KKday 再獨家加贈 20GB eSIM，網卡直接省下來，比價時很好講。可提前 11 個月買、出發前再啟用，正在排明年春夏歐洲行的讀者現在就能下手。",
+    due: "⏰ 限時 9/24–9/30。💰 最低 5 折起（依方案不同，以商品頁為準）。🎁 KKday 獨家加贈 20GB eSIM。",
+    note: [
+      "統一 9/24 18:00 後才能對外發文，之前請勿曝光",
+      "5 折起為部分方案與天數，實際價格以商品頁為準",
+      "通行證不含訂位費：高鐵、夜車、跨國列車需另外訂位付費",
+      "可提前 11 個月購買，啟用前都不用決定出發日"
+    ]
+  },
+  {
     tag: "韓國美妝節",
     name: "韓國美妝節｜體驗 88 折",
     url: "https://www.kkday.com/zh-tw/promo/korea-beauty-festival",
@@ -2606,6 +2625,7 @@ const BENEFITS = [
    只會顯示「同一天」的項目，最多五則，新的排前面。
    工作區（?admin=1）不受日期限制、永遠顯示，方便先看版面。 */
 const NEWS = [
+  {t:"2026-09-24T18:00", showAt:"2026-09-24T18:00", b:"歐鐵全境通行證限時 5 折起，KKday 獨家加贈 20GB eSIM", url:"#today"},
   {t:"2026-09-27T20:00", b:"機票立減碼開放，滿額現折（實際碼與門檻依當天公告）", url:"#codelist"},
   {t:"2026-09-27T13:00", b:"買一送一檔次上架，數量有限先搶先贏",           url:"#today"},
   {t:"2026-09-27T11:00", b:"APP 限定全站折價券釋出，只能在 App 內使用",     url:"#codelist"},
@@ -2621,6 +2641,7 @@ const BANNERS = [
   {t:"清倉機票", b:"越捷峴港 3,849 起", cta:"看機票", url:"#today", s:"2026-09-21", e:"2026-09-26"},
   {t:"清倉機票", b:"華航高松 9,088 起", cta:"看機票", url:"#today", s:"2026-09-21", e:"2026-09-26"},
   {t:"光復節連假", b:"高鐵 9/25 00:00 開搶", cta:"看搶票重點", url:"#today", s:"2026-09-24", e:"2026-09-25"},
+  {t:"限時優惠", b:"歐鐵通行證 5 折起", cta:"看優惠", url:"#today", s:"2026-09-24", e:"2026-09-30", showAt:"2026-09-24T18:00"},
   {t:"限時特惠", b:"六本木夜景 600 日圓", cta:"看商品", url:"#today",   s:"2026-09-21", e:"2026-09-30"},
   {t:"夥伴福利", b:"F1 新加坡補助 5 折", cta:"看福利", url:"#benefit", s:"2026-09-21", e:"2026-10-05"},
   {t:"倒數最後", b:"JR PASS 10/1 漲價", cta:"看商品", url:"#today",   s:"2026-09-21", e:"2026-09-30"}
@@ -2634,6 +2655,7 @@ const HIGHLIGHTS = [
   {img:"img/swiss-1000.webp", t:"限時加碼", b:"瑞士通行證", d:"買 4 送 1", href:"#today", s:"2026-09-22", e:"2026-09-25"},
   {img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_246671/20240904130617_LpCC7/jpg", t:"KOL 專屬", b:"石垣島機票 3,388 起", d:"明早 9:00 收單・含行李", href:"#today", s:"2026-09-22", e:"2026-09-23", until:"2026-09-23T09:00"},
   {img:"img/thsr-1024.webp", t:"光復節連假", b:"高鐵 9/25 開搶", d:"95 折・10/23–27", href:"#today", s:"2026-09-24", e:"2026-09-25"},
+  {img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_119917/20260923090556_tLXrc/png", t:"限時優惠", b:"歐鐵通行證", d:"5 折起・送 eSIM", href:"#today", s:"2026-09-24", e:"2026-09-30", showAt:"2026-09-24T18:00"},
   {img:"img/roppongi-v3.webp",    t:"限時特惠", b:"六本木夜景", d:"只要 600 日圓", href:"#today"},
   {img:"img/jrpass-fare-v2.webp", t:"倒數最後", b:"JR PASS",  d:"10/1 漲價前鎖舊價",   href:"#today"},
   {img:"img/f1-benefit-wide.webp",t:"夥伴福利", b:"F1 新加坡",  d:"補助 5 折", href:"#benefit"},
@@ -2665,11 +2687,24 @@ const POPUP = [
   name:  "高鐵光復節 9/25 開搶",
   s:     "2026-09-24",
   e:     "2026-09-25",
+  until: "2026-09-25T12:00",
   badge: "今晚午夜開搶・輸碼再享 95 折",
   desc:  "搭乘期間 10/23–10/27（高鐵疏運日期），連假為 10/24–10/26。建議 23:59 先把頁面開好。",
   img:   "img/thsr-1024.webp",
   url:   "#today",
   cta:   "看搶票重點"
+},
+{
+  name:  "歐鐵全境通行證 5 折起",
+  s:     "2026-09-25",
+  e:     "2026-09-30",
+  showAt: "2026-09-25T12:00",
+  until: "2026-09-30T23:59",
+  badge: "限時到 9/30・獨家送 20GB eSIM",
+  desc:  "33 國無限搭乘，最低 5 折起，KKday 再加贈 20GB eSIM。可提前 11 個月購買，出發前再啟用。",
+  img:   "https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_119917/20260923090556_tLXrc/png",
+  url:   "#today",
+  cta:   "看歐鐵優惠"
 },
 {
   name:  "清倉機票｜越捷 桃園－峴港 折後 3,849 起",
@@ -3199,6 +3234,7 @@ const newExpired = d => d.kind === "new" && d.added && dayDiff(d.added) <= -NEW_
 const LIVE_DEALS = DEALS.filter(function(d){
   if (d.till && dayDiff(d.till) < 0) return false;          /* 已過期，直接不顯示 */
   if (d.until && pastAt(d.until)) return false;              /* 指定時刻一到就下架 */
+  if (d.showAt && !pastAt(d.showAt)) return false;           /* 統一對外時間前完全不出現（不反灰預告） */
   /* dow：每週固定星期才出現（0=日 1=一 … 6=六）。給每週固定檔期用，
      例如釜山通行證每週二。不填＝不限星期，一般卡片不受影響。 */
   if (d.dow && d.dow.indexOf(new Date().getDay()) === -1) return false;
@@ -3288,7 +3324,7 @@ let H = "";
 (function(){
   if (typeof NEWS === "undefined" || !NEWS || !NEWS.length) return;
   const todayStr = new Date().toISOString().slice(0,10);
-  const mine = NEWS.filter(function(n){ return String(n.t).slice(0,10) === todayStr; });
+  const mine = NEWS.filter(function(n){ return String(n.t).slice(0,10) === todayStr && !(n.showAt && !pastAt(n.showAt)); });
   const show = mine.length ? mine : (ADMIN ? NEWS : []);
   if (!show.length) return;
   const preview = !mine.length;
@@ -4378,6 +4414,7 @@ renderCid();
     if (x.s && dayDiff(x.s) > 0) return false;      /* 還沒到開始日 */
     if (x.e && dayDiff(x.e) < 0) return false;      /* 已過期 */
     if (pastAt(x.until)) return false;              /* 指定時刻已到 */
+    if (x.showAt && !pastAt(x.showAt)) return false;  /* 統一對外時間前不出現 */
     return true;
   });
   if (!LIVE_HL.length) return;
@@ -4404,7 +4441,7 @@ renderCid();
 /* ── 頂端橫幅列：輪播 BANNERS，與彈窗各自獨立 ───────────────── */
 (function(){
   if (typeof BANNERS === "undefined" || !BANNERS) return;
-  const live = BANNERS.filter(function(x){ return dayDiff(x.s) <= 0 && dayDiff(x.e) >= 0 && !pastAt(x.until); });
+  const live = BANNERS.filter(function(x){ return dayDiff(x.s) <= 0 && dayDiff(x.e) >= 0 && !pastAt(x.until) && !(x.showAt && !pastAt(x.showAt)); });
   if (!live.length) return;
   const key = "kkp_bar_" + live.map(function(x){ return x.b; }).join("|").slice(0,80);
   const today = new Date().toISOString().slice(0,10);
@@ -4468,7 +4505,7 @@ renderCid();
 (function(){
   const PL = (typeof POPUP !== "undefined" && POPUP)
     ? (Array.isArray(POPUP) ? POPUP : [POPUP]) : [];
-  const P = PL.filter(function(x){ return dayDiff(x.s) <= 0 && dayDiff(x.e) >= 0 && !pastAt(x.until); })[0] || null;
+  const P = PL.filter(function(x){ return dayDiff(x.s) <= 0 && dayDiff(x.e) >= 0 && !pastAt(x.until) && !(x.showAt && !pastAt(x.showAt)); })[0] || null;
   const SRC = P || EVENT;
   const ds = dayDiff(SRC.s), de = dayDiff(SRC.e);
   if (de < 0 || ds > 1) return;
