@@ -74,6 +74,7 @@ img{max-width:100%;height:auto}
 .mrep .mcg h5 i{font-style:normal;font-weight:500;font-size:12px;color:var(--muted);margin-left:7px}
 .mrep .mcodes{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .mrep .mcrow{display:flex;gap:9px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:8px;padding:7px 9px}
+.mcrow .chip{flex:0 0 auto;overflow:visible;text-overflow:clip;padding:8px 10px}
 .mrep .mcb{min-width:0;font-size:12px;line-height:1.45}
 .mrep .mcb b{display:block;color:var(--deep)}
 .mrep .mcb span{color:var(--muted)}
@@ -1392,42 +1393,42 @@ const PACKS = [
    lede:"只有 KKday 有的商品。被問到「為什麼不買別家」時，這一區就是答案——不用比價格，因為別家根本沒有。詢價型包車與交通聯票限定的贈品不列入，那類無法分潤。",
    groups:[
      {n:"日本", items:[
-       {id:573307, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_573307/20260526031056_8FGuu/jpg", aop:1500, n:"KKday 專屬團｜東京富士山打卡一日遊", note:"專屬團，新倉山淺間公園、忍野八海、河口湖一次收"},
-       {id:148912, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_scm_12322/20260907033602_dlbZr/png", aop:3300, n:"富士山經典一日遊｜1 人成團・可升級 A5 黑毛和牛", note:"獨家和牛升級方案，別家沒有"},
-       {id:284721, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_scm_13202/20260908041942_hrxCZ/png", aop:4100, n:"大阪出發｜勝尾寺・嵐山・清水寺｜可升級神戶牛", note:"獨家 A5 神戶牛午餐"},
-       {id:581733, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_581733/20260512010939_AdGJn/png", aop:1500, n:"KKday 獨家｜東京車站一番街 300 日圓折價券", note:"獨家券，量最大的獨家商品"},
+       {id:573307, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_573307/20260526031056_8FGuu/jpg", aop:1500, n:"KKday 專屬團｜東京富士山打卡一日遊", note:"新倉山淺間公園、忍野八海、河口湖一次收"},
+       {id:148912, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_scm_12322/20260907033602_dlbZr/png", aop:3300, t:"富士山一日遊｜升級 A5 和牛", n:"富士山經典一日遊｜1 人成團・可升級 A5 黑毛和牛", note:"獨家和牛升級方案，別家沒有"},
+       {id:284721, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_scm_13202/20260908041942_hrxCZ/png", aop:4100, t:"勝尾寺・嵐山・清水寺｜神戶牛", n:"大阪出發｜勝尾寺・嵐山・清水寺｜可升級神戶牛", note:"獨家 A5 神戶牛午餐"},
+       {id:581733, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_581733/20260512010939_AdGJn/png", aop:1500, t:"東京車站一番街 300 日圓券", n:"KKday 獨家｜東京車站一番街 300 日圓折價券", note:"獨家券，量最大的獨家商品"},
        {id:18204, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_scm_509/20260114075509_N9DJS/jpg",  aop:1800, n:"淺草和服浴衣體驗｜獨家可選攝影方案", note:"攝影方案是 KKday 獨家"},
-       {id:529231, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_529231/20250820062311_0eRcJ/jpg", aop:200,  n:"KKday 獨家｜吉伊卡哇拉麵豚池袋店入場券", note:"IP 聯名獨家，話題性強"},
-       {id:154146, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_154146/20231017092113_p7NVS/jpg", aop:3400, n:"KKday 獨家｜北海道螃蟹餐廳訂位｜三大螃蟹吃到飽", note:"獨家訂位權"},
-       {id:528834, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_528834/20250813133626_UYxd3/jpg", aop:7200, n:"KKday 獨家｜富士山親子一日遊・野生動物園叢林巴士", note:"親子限定獨家"},
-       {id:182624, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_182624/20240618065402_gjdHe/jpg", aop:2000, n:"香川讚岐手工烏龍麵體驗｜KKday 限定冷熱皆可", note:"限定方案"}]},
+       {id:529231, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_529231/20250820062311_0eRcJ/jpg", aop:200,  t:"吉伊卡哇拉麵豚池袋店入場券", n:"KKday 獨家｜吉伊卡哇拉麵豚池袋店入場券", note:"IP 聯名獨家，話題性強"},
+       {id:154146, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_154146/20231017092113_p7NVS/jpg", aop:3400, t:"北海道三大螃蟹吃到飽", n:"KKday 獨家｜北海道螃蟹餐廳訂位｜三大螃蟹吃到飽", note:"獨家訂位權"},
+       {id:528834, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_528834/20250813133626_UYxd3/jpg", aop:7200, t:"富士山親子一日・叢林巴士", n:"KKday 獨家｜富士山親子一日遊・野生動物園叢林巴士", note:"親子限定獨家"},
+       {id:182624, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_182624/20240618065402_gjdHe/jpg", aop:2000, t:"香川讚岐烏龍麵手作體驗", n:"香川讚岐手工烏龍麵體驗｜KKday 限定冷熱皆可", note:"限定方案"}]},
      {n:"台灣", items:[
-       {id:23914, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_23914/20200527033729_5jYWr/jpg",  aop:2900, n:"澎湖南方四島一日體驗｜獨家龍蝦洞・藍洞・七美", note:"獨家龍蝦洞航線，量最大的台灣獨家"},
-       {id:102159, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_102159/20220606022051_GznPm/jpg", aop:2700, n:"宜蘭龜山島賞鯨・繞島・登島｜獨家贈兒童繪本", note:"保證有位，獨家贈品"},
+       {id:23914, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_23914/20200527033729_5jYWr/jpg",  aop:2900, t:"南方四島｜龍蝦洞・藍洞・七美", n:"澎湖南方四島一日體驗｜獨家龍蝦洞・藍洞・七美", note:"獨家龍蝦洞航線，量最大的台灣獨家"},
+       {id:102159, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_102159/20220606022051_GznPm/jpg", aop:2700, t:"龜山島賞鯨・繞島・登島｜贈繪本", n:"宜蘭龜山島賞鯨・繞島・登島｜獨家贈兒童繪本", note:"保證有位，獨家贈品"},
        {id:33759, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_33759/20240331173254_46hQO/jpg",  aop:2800, n:"嘉義阿里山拼車一日遊｜獨家贈檜木甜甜圈", note:"1 人成團、保證出團"},
-       {id:2460, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_2460/20250606062832_a3Vja/jpg",   aop:7800, n:"澎湖忘憂島一日體驗｜獨家無人島與珊瑚秘境", note:"客單最高的台灣獨家"},
-       {id:33413, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_28441/20230730132027_2hQW5/jpg",  aop:2100, n:"日月潭＆清境農場拼車一日遊｜獨家贈 50 嵐", note:"1 人成團，台中出發"},
+       {id:2460, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_2460/20250606062832_a3Vja/jpg",   aop:7800, t:"澎湖忘憂島｜無人島＋珊瑚秘境", n:"澎湖忘憂島一日體驗｜獨家無人島與珊瑚秘境", note:"客單最高的台灣獨家"},
+       {id:33413, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_28441/20230730132027_2hQW5/jpg",  aop:2100, t:"日月潭＆清境拼車一日｜贈 50 嵐", n:"日月潭＆清境農場拼車一日遊｜獨家贈 50 嵐", note:"1 人成團，台中出發"},
        {id:130133, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_130133/20240822070252_xyxP6/jpg", aop:400,  n:"北投山水樂會館泡湯券｜大眾風呂", note:"KKday 推薦方案"},
        {id:100730, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_100730/20200609025558_4U2wW/jpg", aop:400,  n:"KKday 獨家套票｜高雄貢多拉遊愛河", note:"獨家套票組合"}]},
      {n:"韓國", items:[
-       {id:267638, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_scm_5848/20260428044345_VEdN1/jpg", aop:1500, n:"KKday 獨家｜Inspire Arena 演唱會接駁車＋機場送機", note:"演唱會接駁是獨家，追星族剛需"},
+       {id:267638, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_scm_5848/20260428044345_VEdN1/jpg", aop:1500, t:"Inspire Arena 接駁＋送機", n:"KKday 獨家｜Inspire Arena 演唱會接駁車＋機場送機", note:"演唱會接駁是獨家，追星族剛需"},
        {id:267656, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_scm_5849/20260901045415_JNAdI/png", aop:1300, n:"KKday 獨家｜高陽體育場 K-POP 接駁巴士", note:"同上，散場直達機場"},
-       {id:528542, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_scm_5857/20260708124934_r5NVS/png", aop:1500, n:"KKday 獨家｜仁川亞運主體育場演唱會接駁", note:"演唱會接駁系列"},
-       {id:594103, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_594103/20260526042210_bUAzB/jpg", aop:100,  n:"KKday 獨家｜釜山 Nundongja 眼鏡店 30 分鐘快速配鏡", note:"30 年老店獨家合作，題材少見"},
-       {id:569432, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_569432/20251230010630_ApYRc/jpg", aop:100,  n:"KKday 獨家｜K-Eyewear 配鏡（弘大／聖水／江南／明洞）", note:"四店可選"},
+       {id:528542, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_scm_5857/20260708124934_r5NVS/png", aop:1500, t:"仁川亞運主體育場演唱會接駁", n:"KKday 獨家｜仁川亞運主體育場演唱會接駁", note:"演唱會接駁系列"},
+       {id:594103, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_594103/20260526042210_bUAzB/jpg", aop:100,  t:"釜山 Nundongja 30 分鐘配鏡", n:"KKday 獨家｜釜山 Nundongja 眼鏡店 30 分鐘快速配鏡", note:"30 年老店獨家合作，題材少見"},
+       {id:569432, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_569432/20251230010630_ApYRc/jpg", aop:100,  t:"K-Eyewear 首爾 4 店配鏡", n:"KKday 獨家｜K-Eyewear 配鏡（弘大／聖水／江南／明洞）", note:"四店可選"},
        {id:17612, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_scm_10605/20260723031307_xERHT/jpg",  aop:2200, n:"KKday 獨家｜濟州島西歸浦日間豪華遊艇", note:"獨家促銷價"}]},
      {n:"港澳", items:[
-       {id:10445, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_10445/20250903085618_GyjKm/jpg",  aop:1300, n:"澳門船票｜上環 ↔ 氹仔金光飛航（獨家送 eSIM）", note:"獨家加送 eSIM，量最大的港澳獨家"},
-       {id:19071, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_19071/20240223024208_6b3AX/jpg",  aop:1500, n:"澳門船票｜上環 ↔ 外港／氹仔噴射飛航（獨家送 eSIM）", note:"同上，另一家船公司"},
-       {id:101007, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_101007/20200618074441_lrvZd/jpg", aop:2000, n:"澳門 teamLab 超自然空間門票｜獨家送 eSIM", note:"熱門展覽加獨家贈品"},
-       {id:141248, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_141248/20250123130428_z2NSV/jpg", aop:2500, n:"澳門旅遊塔 360° 旋轉餐廳下午茶｜獨家送 eSIM", note:"獨家優惠價"},
-       {id:265110, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_265110/20241216033330_w04lZ/jpg", aop:3000, n:"澳門 2049 Show｜張藝謀執導｜獨家送 eSIM", note:"美高梅大秀"},
+       {id:10445, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_10445/20250903085618_GyjKm/jpg",  aop:1300, t:"金光飛航 上環↔氹仔｜送 eSIM", n:"澳門船票｜上環 ↔ 氹仔金光飛航（獨家送 eSIM）", note:"獨家加送 eSIM，量最大的港澳獨家"},
+       {id:19071, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_19071/20240223024208_6b3AX/jpg",  aop:1500, t:"噴射飛航 上環↔外港｜送 eSIM", n:"澳門船票｜上環 ↔ 外港／氹仔噴射飛航（獨家送 eSIM）", note:"同上，另一家船公司"},
+       {id:101007, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_101007/20200618074441_lrvZd/jpg", aop:2000, t:"澳門 teamLab｜送 eSIM", n:"澳門 teamLab 超自然空間門票｜獨家送 eSIM", note:"熱門展覽加獨家贈品"},
+       {id:141248, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_141248/20250123130428_z2NSV/jpg", aop:2500, t:"旅遊塔旋轉餐廳下午茶｜送 eSIM", n:"澳門旅遊塔 360° 旋轉餐廳下午茶｜獨家送 eSIM", note:"獨家優惠價"},
+       {id:265110, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_265110/20241216033330_w04lZ/jpg", aop:3000, t:"澳門 2049 Show｜送 eSIM", n:"澳門 2049 Show｜張藝謀執導｜獨家送 eSIM", note:"美高梅大秀"},
        {id:527375, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_527375/20250806034253_og2mh/jpg", aop:200,  n:"KKday 獨家｜香港吉伊卡哇拉麵預約證", note:"IP 聯名，需預約才進得去"}]},
      {n:"東南亞與其他", items:[
-       {id:19531, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_19531/20251224062037_PdYH6/jpg",  aop:2100, n:"KKday 專屬團｜湄公河一日遊・美托檳椥搖船", note:"專屬團、保證出發"},
-       {id:153145, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_153145/20230929071430_kk2k1/jpg", aop:4800, n:"KKday 專屬團｜越南巴拿山一日遊・峴港出發", note:"含導遊，可選門票"},
-       {id:144324, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_144324/20260417110024_DeEiI/png", aop:2800, n:"KKday 特色旅遊｜美奈一日遊・白沙丘 ATV", note:"保證 1 人出發"},
-       {id:241590, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_241590/20250611045123_xP23O/png", aop:9200, n:"KKday 專屬團｜墨爾本企鵝遊行＆蒸汽火車｜10 人小團", note:"中文導遊小團，客單最高"},
+       {id:19531, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_19531/20251224062037_PdYH6/jpg",  aop:2100, t:"專屬團｜湄公河・美托檳椥搖船", n:"KKday 專屬團｜湄公河一日遊・美托檳椥搖船", note:"專屬團、保證出發"},
+       {id:153145, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_153145/20230929071430_kk2k1/jpg", aop:4800, t:"專屬團｜巴拿山一日・峴港出發", n:"KKday 專屬團｜越南巴拿山一日遊・峴港出發", note:"含導遊，可選門票"},
+       {id:144324, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_144324/20260417110024_DeEiI/png", aop:2800, t:"美奈一日遊・白沙丘 ATV", n:"KKday 特色旅遊｜美奈一日遊・白沙丘 ATV", note:"保證 1 人出發"},
+       {id:241590, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_241590/20250611045123_xP23O/png", aop:9200, t:"墨爾本企鵝＆蒸汽火車小團", n:"KKday 專屬團｜墨爾本企鵝遊行＆蒸汽火車｜10 人小團", note:"中文導遊小團，客單最高"},
        {id:148857, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_148857/20251123232652_Jgprf/jpg", aop:100,  n:"KKday 獨家｜雪梨 CBD 行李寄存", note:"實用型獨家"},
        {id:29259, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_29259/20230406034650_QJZBM/jpg",  aop:800,  n:"深圳野生動物園門票｜KKday 獨家優惠", note:"無限次任玩 7 大項目"}]}
    ]},
@@ -1697,7 +1698,7 @@ const FREE_ITEMS = [
 
 const SPONSOR_ITEMS = [
   {
-    name: "【KKday 獨家】臺北彩虹觀光巴士｜9/30 妮妃雅特別場",
+    name: "彩虹觀光巴士｜妮妃雅特別場",
     img: "https://image.kkday.com/v2/image/get/c_fill%2Ch_450%2Cq_60%2Ct_webp%2Cw_800/s1.kkday.com/product_122926/20260916074205_Klp7c/png",
     url: "https://www.kkday.com/zh-tw/product/122926",
     form: "mailto:affiliate@kkday.com?subject=%E5%BD%A9%E8%99%B9%E5%B7%B4%E5%A3%AB%209/30%20%E5%A6%AE%E5%A6%83%E9%9B%85%E7%89%B9%E5%88%A5%E5%A0%B4%E3%83%BB%E7%94%B3%E8%AB%8B&body=%E3%80%90%E5%BD%A9%E8%99%B9%E5%B7%B4%E5%A3%AB%209/30%20%E5%A6%AE%E5%A6%83%E9%9B%85%E7%89%B9%E5%88%A5%E5%A0%B4%E3%83%BB%E7%94%B3%E8%AB%8B%E8%A1%A8%E3%80%91%0A%E4%BB%A5%E4%B8%8B%E7%9A%86%E7%82%BA%E5%BF%85%E5%A1%AB%EF%BC%8C%E7%BC%BA%E9%A0%85%E6%81%95%E7%84%A1%E6%B3%95%E6%8E%92%E5%85%A5%E8%A9%95%E4%BC%B0%E3%80%82%0A%0A1.%20CID%20%E7%B7%A8%E8%99%9F%EF%BC%9A%0A2.%20%E7%A4%BE%E7%BE%A4%E5%90%8D%E7%A8%B1%E8%88%87%E9%80%A3%E7%B5%90%EF%BC%9A%0A3.%20%E4%B8%BB%E8%A6%81%E5%8F%97%E7%9C%BE%E8%88%87%E7%B2%89%E7%B5%B2%E6%95%B8%EF%BC%9A%0A4.%20%E8%81%AF%E7%B5%A1%E9%9B%BB%E8%A9%B1%EF%BC%88%E5%BF%85%E5%A1%AB%EF%BC%89%EF%BC%9A%0A5.%20LINE%20ID%20%E6%88%96%20LINE%20%E9%A1%AF%E7%A4%BA%E5%90%8D%E7%A8%B1%EF%BC%88%E5%BF%85%E5%A1%AB%EF%BC%89%EF%BC%9A%0A6.%209/30%20%E7%95%B6%E5%A4%A9%E5%8F%AF%E5%87%BA%E5%B8%AD%EF%BC%88%E6%98%AF%EF%BC%8F%E5%90%A6%EF%BC%89%EF%BC%9A%0A7.%20%E6%9B%9D%E5%85%89%E5%BD%A2%E5%BC%8F%EF%BC%88%E5%9C%96%E6%96%87%EF%BC%8F%E5%BD%B1%E7%89%87%E6%93%87%E4%B8%80%EF%BC%89%EF%BC%9A%0A8.%20%E9%81%8E%E5%BE%80%E7%9B%B8%E9%97%9C%E4%BD%9C%E5%93%81%E9%80%A3%E7%B5%90%EF%BC%9A%0A9.%20%E5%90%8C%E8%A1%8C%E4%BA%BA%E6%95%B8%EF%BC%9A%0A",
@@ -1707,7 +1708,7 @@ const SPONSOR_ITEMS = [
     isnew: true
   },
   {
-    name:"關東近郊購物一日遊｜好市多 COSTCO ＆三井 Outlet Park",
+    name:"關東購物一日｜COSTCO＆三井",
     img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_450%2Cq_60%2Ct_webp%2Cw_800/s1.kkday.com/product_701402/20260807094800_4tKil/jpg",
     url:"https://www.kkday.com/zh-tw/product/701402",
     form:"https://docs.google.com/forms/d/e/1FAIpQLSdxIiJRZPsvjNvWMXWThgjdGI1QkrjSJiq3SQSxj3logYAO-w/viewform",
@@ -1886,7 +1887,7 @@ const DEAL_DATE = "2026/09/16";
 const DEALS = [
   {
     tag: "特惠商品",
-    name: "東京六本木之丘展望台夜景門票",
+    name: "六本木之丘夜景門票",
     url: "https://www.kkday.com/zh-tw/product/18946",
     till: "2026-09-30",
     img: "img/roppongi-v3.webp",
@@ -1908,7 +1909,7 @@ const DEALS = [
     soonmsg: "09/25 00:00 開搶",
     demote: "2026-09-25T12:00",
     img: "img/thsr-1024.webp",
-    price: "輸碼 95 折，另有聰明選時 65 折起",
+    price: "輸碼 95 折＋聰明選時 65 折起",
     why: "光復節連假 10/24–10/26，高鐵疏運期間 10/23–10/27，開放預售日就是 9/25（五）凌晨。搶票題材的急迫感是真的、不用硬造，而且每次連假都固定有人在找。建議 9/24 就先發預告貼文卡位，隔天凌晨開搶時再補一則。",
     code: "THSR26OF5",
     due: "⏰ 開搶：2026/9/25（五）00:00 準時釋票，建議 23:59 先把頁面開好。🎯 適用搭乘期間：2026/10/23（五）～10/27（二）高鐵疏運日期。🎟️ THSR26OF5 滿 NT$2,200 享 95 折，可搭原活動聰明選時 65 折起。",
@@ -1972,7 +1973,7 @@ const DEALS = [
       {n:"小人國主題樂園門票（63 折）",     u:"https://www.kkday.com/zh-tw/product/27980"},
       {n:"花蓮遠雄海洋公園門票（78 折）",   u:"https://www.kkday.com/zh-tw/product/107922"}
     ],
-    price: "四園 49 折起，再疊 26SEP95 折上折",
+    price: "四園 49 折起，可再疊 95 折",
     why: "十月是玩台灣樂園最舒服的月份——暑假人潮退了、天氣轉涼不會曬到中暑，而光復節連假 10/24–10/26 又是三天。四園折數一次到位，六福村 49 折最殺，而且四支都能再疊 26SEP95（不限門檻 95 折）。四園客層分得很開，可以針對不同受眾各寫一篇：六福村打刺激設施與萬聖節墓碑鎮、義大打希臘場景與南部客、小人國打學齡前親子、遠雄打花蓮東海岸＋海豚秀。四支都是熱賣品，已售分別 60K+、10K+、20K+、50K+，評分 4.7～4.8。",
     code: "26SEP95",
     due: "26SEP95 不限門檻 95 折、單筆最高折 NT$150，2026/9/30 到期。⚠️ 折扣碼 9/30 就結束，但這幾檔樂園折數到 10 月還在——十月要推的話需要換一組還有效的碼。",
@@ -2068,13 +2069,13 @@ const DEALS = [
     till: "2026-09-28",
     gridtag: "88 折",
     grid: [
-      {n:"龜山島登島・賞鯨・繞島｜烏石傳奇", u:"https://www.kkday.com/zh-tw/product/601590",
+      {n:"烏石傳奇號", u:"https://www.kkday.com/zh-tw/product/601590",
        img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_601590/20260630065137_WIAsd/jpg"},
-      {n:"【保證成行】龜山島賞鯨趣｜1 人贈小禮", u:"https://www.kkday.com/zh-tw/product/575917",
+      {n:"保證成行", u:"https://www.kkday.com/zh-tw/product/575917",
        img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_575917/20260423065131_9JJQi/jpg"},
-      {n:"宜蘭龜山島登島賞鯨半日遊（已售 20K+）", u:"https://www.kkday.com/zh-tw/product/5297",
+      {n:"已售 2 萬+", u:"https://www.kkday.com/zh-tw/product/5297",
        img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_5297/20250126145138_u2TsX/jpg"},
-      {n:"【保證有位】賞鯨豚・繞島・登島｜贈兒童繪本", u:"https://www.kkday.com/zh-tw/product/102159",
+      {n:"保證有位", u:"https://www.kkday.com/zh-tw/product/102159",
        img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_102159/20220606022051_GznPm/jpg"}
     ],
     links: [
@@ -2105,8 +2106,8 @@ const DEALS = [
     price: [
       {n:"牌價",                  v:"9,888 起"},
       {n:"26SEP800",             v:"9,088"},
-      {n:"富邦 J 卡｜JCARD1000SEP", v:"折 1,000"},
-      {n:"新光無限卡｜SKBINF26Q3",  v:"折 2,500"}
+      {n:"富邦 J 卡", v:"折 1,000"},
+      {n:"新光無限卡", v:"折 2,500"}
     ],
     why: "高雄直飛日本四國，南部出發不用先北上，這個賣點在中南部 KOL 那邊很有感。含稅、含 23kg 託運、含機上餐，規格比廉航完整。早去午回（06:35 出發、13:35 回到高雄），玩好玩滿五到六天。四國、瀨戶內、直島這幾個題材寫過的人不多，內容缺口大。",
     code: "26SEP800",
@@ -2169,14 +2170,14 @@ const DEALS = [
   {
     kind: "new",
     tag: "新品上架",
-    name: "韓國猛男秀 TOUCH FIVE",
+    name: "猛男秀 TOUCH FIVE",
     url: "https://www.kkday.com/zh-tw/product/771872",
     till: "2026-09-30",
     img: "https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_771872/20260918024003_pVles/png",
     price: [
       {n:"R 座位票",            v:"NT$ 2,755"},
-      {n:"VIP 座位票（含飲品）",  v:"NT$ 3,970"},
-      {n:"VVIP 座位票（含飲品）", v:"NT$ 4,780"}
+      {n:"VIP 含飲品",  v:"NT$ 3,970"},
+      {n:"VVIP 含飲品", v:"NT$ 4,780"}
     ],
     why: "韓國現象級 Show Musical 首次登陸大灣區，原班人馬、原汁原味。韓國站在 KKday 是 4.8 分、190+ 則評價、賣破 2,000 張，是已經驗證會轉換的題材，過去只能飛韓國才看得到。澳門銀河 G Box，10/23–25 三天五場（週五 20:00／週六 17:00、21:00／週日 17:00、21:00），場次極少賣完就沒有。適合搭澳門銀河住宿與港澳自由行一起推。⚠️ 只演三天，曝光要在 10 月初前鋪完才有實際銷售窗口。",
     code: "26SEP95",
@@ -2191,7 +2192,7 @@ const DEALS = [
   {
     kind: "new",
     tag: "新品上架",
-    name: "六福村墓碑鎮搞鬼狂歡 95 折",
+    name: "六福村墓碑鎮 95 折",
     url: "https://www.kkday.com/zh-tw/product/26191",
     added: "2026-09-18",
     img: "https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_26191/20260910054712_E7Leh/jpg",
@@ -2294,7 +2295,7 @@ const DEALS = [
     url: "https://www.kkday.com/zh-tw/product/2247",
     img: "img/p-b39ee015a1.webp",
     why: "門票加周遊券加人氣周邊一次買齊，三個方案都還在。⚠️ 原本「固定 10,000 日圓起」的檔期已結束，文案不要再用那個價格與「比單買門票便宜」的說法。現在的角度改打折扣本身：方案一、二 95 折，方案三現折 JPY 1,000，外加 KKday 預訂免 1.5% 海外刷卡手續費。萬聖季敲磚與任天堂保證入園是這波最好講的兩個切角。",
-    price: "三方案 95 折起／最高現折 JPY 1,000",
+    price: "95 折起，最高折 1,000 日圓",
     code: "",
     due: "環球影城商品不適用一般折扣碼，只有下面三組指定套票碼可以折",
     plans: [
@@ -2305,12 +2306,12 @@ const DEALS = [
   },
   {
     tag: "倒數最後",
-    name: "JR PASS｜10/1 漲價",
+    name: "JR PASS 10/1 漲價",
     url: "https://www.kkday.com/zh-tw/product/20291",
     till: "2026-09-30",
     img: "img/jrpass-fare-v2.webp",
     why: "10/1 起全面調漲，9/30 前下單鎖住舊價。普通車廂大人 7 日 ¥50,000→¥53,000、14 日 ¥80,000→¥84,000、21 日 ¥100,000→¥105,000；綠色車廂 7 日 ¥70,000→¥74,000、14 日 ¥110,000→¥116,000、21 日 ¥140,000→¥147,000，漲幅 5～6%，一張現省 ¥3,000～¥7,000（兒童票同步調漲）。受眾非常明確：10～11 月賞楓、12 月底跨年與滑雪的旅客，現在買就鎖舊價，是少數「不買會後悔」型的急迫感題材。",
-    price: "普通車 7 日 ¥50,000（10/1 起 ¥53,000）",
+    price: "7 日券 ¥50,000，10/1 起漲價",
     code: "",
     due: "9/30 前購買的票券，最後兌換日 2026/12/30、最後使用日 2027/1/30；兌換期限以實體兌換券 MCO 上的開票日起算三個月為準"
   },
@@ -2425,9 +2426,9 @@ const BENEFITS = [
     mail: "affiliate@kkday.com",
     subject: "KKpartners 夥伴體驗福利-F1新加坡大獎賽",
     blocks: [
-      {t:"體驗福利", li:["申請資格：KKpartners 夥伴，本人與親友皆可申請","體驗項目：F1 新加坡大獎賽純門票，票種不限任選","費用：夥伴僅需負擔方案售價 5 折，機票與住宿自理"]},
-      {t:"曝光需求（可不審稿）", li:["體驗前：宣傳至少 1 則（IG Post／Reel 或 FB 貼文）","體驗後：現場精彩紀錄至少 1 則"]},
-      {t:"信件必填內容", li:["CID 編號","欲申請的票種與張數（例如 Grandstand 指定看台票／走動區 Walkabout）","預計提供的曝光項目與形式","同行人數（大人／小孩）"]}
+      {t:"體驗福利", li:["資格：KKpartners 夥伴，可帶親友","項目：F1 新加坡門票，票種任選","費用：售價 5 折，機酒自理"]},
+      {t:"曝光需求（可不審稿）", li:["體驗前：至少 1 則 IG 或 FB 貼文","體驗後：現場精彩紀錄至少 1 則"]},
+      {t:"信件必填內容", li:["CID 編號","欲申請的票種與張數","預計提供的曝光項目與形式","同行人數（大人／小孩）"]}
     ],
     warn: "本活動為夥伴內部獨家福利，非對外活動。請勿將訊息、折扣幅度或信件內容分享到社群或粉絲圈。報名不等於入選，需經 KKday 團隊審核後另行通知付款與出票。請先確認能配合賽事時間再來信。"
   }
@@ -2467,7 +2468,7 @@ const BANNERS = [
 const HIGHLIGHTS = [
   {img:"img/swiss-1000.webp", t:"限時加碼", b:"瑞士通行證買4送1", d:"9/25 前再折 800", href:"#today", s:"2026-09-22", e:"2026-09-25"},
   {img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_246671/20240904130617_LpCC7/jpg", t:"KOL 專屬", b:"石垣島機票 3,388 起", d:"明早 9:00 收單・含行李", href:"#today", s:"2026-09-22", e:"2026-09-23", until:"2026-09-23T09:00"},
-  {img:"img/thsr-1024.webp", t:"光復節連假", b:"高鐵車票 9/25 開搶", d:"輸碼 95 折・疏運 10/23–27", href:"#today", s:"2026-09-24", e:"2026-09-25"},
+  {img:"img/thsr-1024.webp", t:"光復節連假", b:"高鐵 9/25 開搶", d:"95 折・10/23–27", href:"#today", s:"2026-09-24", e:"2026-09-25"},
   {img:"img/roppongi-v3.webp",    t:"限時特惠", b:"六本木之丘展望台", d:"600 JPY・原價 2,400", href:"#today"},
   {img:"img/jrpass-fare-v2.webp", t:"倒數最後", b:"JR PASS 全國版",  d:"10/1 漲價前鎖舊價",   href:"#today"},
   {img:"img/f1-benefit-wide.webp",t:"夥伴福利", b:"F1 新加坡大獎賽",  d:"補助 5 折・親友可申請", href:"#benefit"},
@@ -3632,7 +3633,7 @@ PACKS.map(function(p, i){
             '<input type="checkbox" class="pkck" data-n="' + esc(x.n) + '" data-u="' + esc(prodUrl(x.id)) +
               '" data-id="' + x.id + '" data-aop="' + (x.aop || 0) + '" data-note="' + esc(x.note || "") + '">' +
             '<button type="button" class="pkgo" data-pv="' + x.id + '">' +
-              '<b>' + esc(x.n) + '</b>' +
+              '<b>' + esc(x.t || x.n) + '</b>' +
               (x.note ? '<u>' + esc(x.note) + '</u>' : "") + '</button>' +
           '</div>'; }).join("") +
       '</div></div>'; }).join("") +
