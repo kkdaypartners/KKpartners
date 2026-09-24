@@ -2836,6 +2836,7 @@ const EVENT = {
   ],
   fares: {
     title: "泰瑞航空韓國線｜開搶價（未扣折扣碼）",
+    code: "FLYDAYTKT300", cut: 300,   /* 複製活動介紹時直接扣掉：8 條航線都在 TKT300 的 3 支指名商品裡 */
     rows: [
       {r:"松山－金浦", p:"7,988"},
       {r:"桃園－濟州", p:"6,188"},
@@ -4416,8 +4417,13 @@ document.addEventListener("click", function(e){
   }
   if (E.fares && E.fares.rows && E.fares.rows.length) {
     const nums = E.fares.rows.map(function(r){ return Number(String(r.p).replace(/[^\d]/g, "")); }).filter(Boolean);
-    if (nums.length) L.push("✈️ " + String(E.fares.title || "").replace(/（[^）]*）/g, "").split("｜")[0] +
-      " 開搶價 " + Math.min.apply(null, nums).toLocaleString() + " 起");
+    if (nums.length) {
+      const lo = Math.min.apply(null, nums), cut = Number(E.fares.cut) || 0;
+      const nm = String(E.fares.title || "").replace(/（[^）]*）/g, "").split("｜")[0];
+      L.push("✈️ " + nm + (cut && E.fares.code
+        ? " 輸碼 " + E.fares.code + " 後 " + (lo - cut).toLocaleString() + " 起"
+        : " 開搶價 " + lo.toLocaleString() + " 起"));
+    }
   }
   /* 折扣碼：只收還有效的，同一支碼只留一筆 */
   const seen = {}, codes = [];
