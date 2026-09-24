@@ -2522,9 +2522,9 @@ const EVENT = {
         "⚠️ 活動頁 9/25 才生效，提早發連結會是空的。" +
         "⚠️ 折扣碼的排除清單尚未取得，推薦前先用「查商品能不能用」確認。",
   perks: [
-    "9/27 當天全站消費滿萬，加贈 1,000 點 KKday Points",
-    "9/26–9/27 全球訂房點數 2 倍送",
-    "票價為扣除 300 元折扣碼前的原價"
+    {t:"滿萬贈 1,000 點",  d:"9/27 當天全站消費滿萬，加贈 1,000 點 KKday Points"},
+    {t:"訂房點數 2 倍",    d:"9/26–9/27 全球訂房點數 2 倍送"},
+    {t:"活動延長到 10/11", d:"卡到中秋與韓國、台灣連假，特別跟泰瑞爭取延長"}
   ],
   days: [
     {
@@ -4493,13 +4493,13 @@ const MANUAL_EX = {
   "KKAFFTOUR88": [100730]
 };
 function judge(code, id, opts){
-  if (MANUAL_EX[code] && MANUAL_EX[code].indexOf(Number(id)) >= 0)
+  if (typeof MANUAL_EX !== "undefined" && MANUAL_EX[code] && MANUAL_EX[code].indexOf(Number(id)) >= 0)
     return {ok:false, why:"這支實際結帳折不了，已人工排除"};
-  if (TOUR_CODES.indexOf(code) >= 0 && !TOUR_ONLY.has(Number(id)))
+  if (typeof TOUR_CODES !== "undefined" && TOUR_CODES.indexOf(code) >= 0 && !TOUR_ONLY.has(Number(id)))
     return {ok:false, why:"這張碼限「行程」，這件不是觀光行程類"};
-  if (FLYDAY_PENDING.indexOf(code) >= 0)
+  if (typeof FLYDAY_PENDING !== "undefined" && FLYDAY_PENDING.indexOf(code) >= 0)
     return {ok:null, why:"飛航日的適用商品清單尚未提供，請以活動頁與結帳頁為準"};
-  if (DAILY_CODES.indexOf(code) >= 0) {
+  if (typeof DAILY_CODES !== "undefined" && DAILY_CODES.indexOf(code) >= 0) {
     const _g = geoOf(Number(id)) || {};
     if (DAILY_NOCAT.indexOf(_g.cat) >= 0)
       return {ok:null, why:"每日碼是否適用「" + _g.cat + "」類尚未確認，請以結帳頁為準"};
