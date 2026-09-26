@@ -5975,6 +5975,14 @@ q.addEventListener("input", () => {
   if (!out) out = '<p class="shint">沒有符合的項目，換個關鍵字試試。</p>';
   sres.innerHTML = out;
 });
+
+/* 外部連結帶 #錨點（例：百科網址#event）時，內容是 JS 畫出來的，瀏覽器載入當下找不到目標不會捲動，這裡補捲一次（hashjump） */
+(function(){
+  var h = decodeURIComponent((location.hash || "").slice(1));
+  if (!h) return;
+  function go(){ var t = document.getElementById(h); if (t) t.scrollIntoView({block:"start"}); }
+  setTimeout(go, 0); setTimeout(go, 600);
+})();
 </script>
 </body>
 </html>
