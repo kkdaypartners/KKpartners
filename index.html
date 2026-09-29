@@ -1250,7 +1250,7 @@ const BANK_SCOPE = {
   "FUBONTOKYO":"全東京商品，排除 JR 系列",
   "FUBONSKATING":"大魯閣滑輪商品（台北／台中）",
   "FUBONBASEBALL":"大魯閣棒壘球商品（全台）",
-  "26JCB09":"限指定商品（日韓港澳泰越票券／體驗／韓國演唱會接駁／日本鐵路），指定清單內的商品不受全站黑名單限制。每月換碼：10 月是 26JCB10，清單另給",
+  "26JCB09":"限日韓港澳泰越的指定商品（票券／體驗／韓國演唱會接駁／日本鐵路），指定清單內的商品不受全站黑名單限制。每月換碼：10 月是 26JCB10，清單另給",
   "JCBJPTRAIN":"限指定三檔商品：50068、285152、533579",
   "CTBCLP260917":"全球一日遊／體驗／交通／景點通票，排除黑名單與毛利 5% 以下",
   "ESUN26SEP1200":"全站商品，排除黑名單與毛利 5% 以下",
@@ -1398,7 +1398,8 @@ const CODE_GEO = {
   "LH50002":{cty:["Europe","North America","Australia","New Zealand"]},
   "FUBONLH500":{cty:["Europe","North America","Australia","New Zealand"]},
   "DBSJK2609":{cty:["Japan","Korea"],cat:["行程體驗"]},   /* Alen 2026-09-24：限行程體驗 */
-  /* 26JCB09：只認指名清單（RULES.s.s32），不再用地區判，否則清單內的商品會被地區擋掉（2026-09-29） */
+  /* 26JCB09：後台同時設了「地區允許：香港、日本、韓國、澳門、泰國、越南」＋指定商品清單（RULES.s.s32），兩個都要符合（2026-09-29 Alen 截圖確認） */
+  "26JCB09":{cty:["Japan","Korea","Hong Kong and Macau","TH","VN"]},
   "CUB26H2SP8":{cty:["Japan","Korea","TH","VN","ID","MY","SG","PH","Europe","North America","Australia","New Zealand"]},
   "TSNEW26":{cty:["TH","VN","ID","MY","SG","PH","Europe","North America","Australia","New Zealand"]},
   "CUBNEW26":{cty:["Japan","Europe","North America","Australia","New Zealand"]},
