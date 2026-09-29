@@ -1094,15 +1094,6 @@ footer a{color:var(--brand)}
 .pktier.tb{background:#E8F1F2;color:#2E6B73}.pktier.tm{background:#FFE9D6;color:#B4540A}.pktier.tp{background:#EFE7FA;color:#6A43A8}
 .tierlede{font-size:13px;line-height:2;color:var(--mid);margin:6px 0 4px}
 .tierlede .pktier{margin-left:0}
-.exgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:14px}
-.excard{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
-.excard .ext{font-size:11.5px;font-weight:800;color:var(--muted);letter-spacing:.04em}
-.excard a{font-weight:800;font-size:15px;color:var(--ink);text-decoration:none;line-height:1.4}
-.excard a:hover{text-decoration:underline}
-.excard p{margin:0;font-size:13px;color:var(--mid);line-height:1.6}
-.exguide{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-top:16px}
-.exguide h3{margin:0 0 8px;font-size:15px}
-.exguide ul{margin:0;padding-left:18px;font-size:13.5px;line-height:1.8;color:var(--mid)}
 .dayimg{display:block;position:relative;max-width:880px;margin:0 auto 18px;border-radius:14px;overflow:hidden;
   border:1px solid var(--line);background:var(--wash);line-height:0}
 .dayimg img{width:100%;aspect-ratio:16/9;height:auto;object-fit:cover;object-position:center;display:block}
@@ -4174,7 +4165,7 @@ function buildMonthly(){
 
 H += '<section class="band band-wash" id="picks"><div class="inner">' +
 '<h2>每週選品分析</h2>' +
-'<p class="lede">每週看一次數據再選品：哪些在漲、哪些真的會成交、現在寫接得到哪一波出發潮。沒得比價的獨家商品在下方 <a href="#exclusive">獨家品專區</a>。</p>' +
+'<p class="lede">每週看一次數據再選品：哪些在漲、哪些真的會成交、現在寫接得到哪一波出發潮。</p>' +
 (PICKS.length ? ('<div class="wktabs">' + PICKS.slice(0,4).map(function(p,wi){
     return '<button class="wktab' + (wi===0?' on':'') + '" data-wk="' + wi + '">' + esc(String(p.week).replace(/（.*$/,"")) + '</button>'; }).join("") + '<button class="wktab" data-wk="m">本月觀察</button></div>') +
   '<div class="picks">' + PICKS.slice(0,4).map(function(p,wi){
@@ -4189,7 +4180,7 @@ H += '<section class="band band-wash" id="picks"><div class="inner">' +
      '<span class="dsrc">' + esc(D.mkt) + '市場｜' + esc(D.win) + '｜資料截至 ' + esc(D.asof) + '</span>' +
    '</div>' : "") +
   (p.summary ? '<p>' + esc(p.summary) + '</p>' : "") +
-  (IT.some(function(i){ return i.tier; }) ? '<p class="tierlede"><span class="pktier tb">基本盤</span>入門價位，好成交、維持手感　<span class="pktier tm">主力</span>中價位，推一支的分潤最好，這期優先推　<span class="pktier tp">加碼</span>高價長線，適合已經在寫高價行程的人</p>' : "") +
+  (IT.some(function(i){ return i.tier; }) ? '<p class="tierlede"><span class="pktier tb">基本盤</span>好成交　<span class="pktier tm">主力</span>分潤最好・優先推　<span class="pktier tp">加碼</span>高價長線</p>' : "") +
   (IT.length ?
     '<div class="charts">' +
     '<div class="chartbox"><h4>近月熱度變化</h4>' +
@@ -4217,17 +4208,6 @@ H += '<section class="band band-wash" id="picks"><div class="inner">' +
   '</div>'; }).join("") + buildMonthly() + '</div>'
  : '<div class="open"><div class="hd"><span class="dot"></span>第一期準備中</div>' +
    '<p class="empty">每週選品分析即將開始，會在這裡更新，LINE 群也會同步公告。</p></div>') +
-'</div></section>';
-
-H += '<section class="band" id="exclusive"><div class="inner">' +
-'<h2>獨家品專區</h2>' +
-'<p class="lede">KKday 專屬團、專屬包車、獨家體驗：別的平台沒有同款，讀者沒得比價，不用靠折扣碼也推得動。</p>' +
-'<div class="exgrid"><div class="excard"><span class="ext">專屬團</span><a href="https://www.kkday.com/zh-tw/product/573307" target="_blank" rel="noopener">富士山打卡一日遊</a><p>KKday 專屬團，新倉山淺間公園、忍野八海一次收</p></div><div class="excard"><span class="ext">專屬團</span><a href="https://www.kkday.com/zh-tw/product/19531" target="_blank" rel="noopener">湄公河一日遊</a><p>KKday 專屬團，美托、檳椥搖船，保證出發</p></div><div class="excard"><span class="ext">專屬團</span><a href="https://www.kkday.com/zh-tw/product/123771" target="_blank" rel="noopener">武陵＋福壽山一日遊</a><p>KKday 專屬團，台北宜蘭出發</p></div><div class="excard"><span class="ext">專屬包車</span><a href="https://www.kkday.com/zh-tw/product/142125" target="_blank" rel="noopener">沖繩全島包車一日遊</a><p>專屬包車，立即確認，行程自己排</p></div><div class="excard"><span class="ext">專屬包車</span><a href="https://www.kkday.com/zh-tw/product/161744" target="_blank" rel="noopener">東京近郊包車一日遊</a><p>富士山、箱根、鎌倉、輕井澤都能包</p></div><div class="excard"><span class="ext">專屬包車</span><a href="https://www.kkday.com/zh-tw/product/134740" target="_blank" rel="noopener">大阪專屬包車接送</a><p>關西機場、京都、奈良、神戶單程接送</p></div><div class="excard"><span class="ext">專屬包車</span><a href="https://www.kkday.com/zh-tw/product/7666" target="_blank" rel="noopener">首爾近郊包車一日遊</a><p>KKday 獨家優惠，行程可自訂</p></div><div class="excard"><span class="ext">獨家體驗</span><a href="https://www.kkday.com/zh-tw/product/18204" target="_blank" rel="noopener">淺草和服浴衣體驗</a><p>KKday 獨家可選攝影方案</p></div><div class="excard"><span class="ext">獨家體驗</span><a href="https://www.kkday.com/zh-tw/product/154146" target="_blank" rel="noopener">北海道螃蟹吃到飽</a><p>KKday 獨家訂位，三大螃蟹吃到飽</p></div><div class="excard"><span class="ext">獨家體驗</span><a href="https://www.kkday.com/zh-tw/product/182624" target="_blank" rel="noopener">香川讚岐烏龍麵體驗</a><p>KKday 限定冷熱烏龍麵都能吃</p></div><div class="excard"><span class="ext">獨家體驗</span><a href="https://www.kkday.com/zh-tw/product/135365" target="_blank" rel="noopener">釜山甘川韓服體驗</a><p>KKday 限定特價，甘川文化村服飾租借</p></div><div class="excard"><span class="ext">獨家體驗</span><a href="https://www.kkday.com/zh-tw/product/23914" target="_blank" rel="noopener">澎湖南方四島一日遊</a><p>獨家龍蝦洞，藍洞、七美一次到</p></div></div>' +
-'<div class="exguide"><h3>這一季推什麼品類</h3><ul>' +
-'<li><b>多推包車、機加酒、郊區一日遊</b>：要比較、要算成本才決定得了，AI 摘要一段話答不完，讀者會點進你的文章。</li>' +
-'<li><b>門票、通行證少當主角</b>：價格公開、各平台都查得到，搜尋時 AI 直接列出比價，文章很難接到點擊。可以當配角放在行程文裡。</li>' +
-'<li><b>寫別人拿不到的東西</b>：實際成本試算、親自比較過的差異，這類內容 AI 只能引用、不能取代。</li>' +
-'</ul></div>' +
 '</div></section>';
 
 /* ── 0.5 本月檔期 ─────────────────────── */
