@@ -1090,6 +1090,9 @@ footer a{color:var(--brand)}
 
 
 .popimg picture{display:block;width:100%;height:100%}
+.pkintel{margin-top:10px;background:#FFF7E8;border:1px solid #F6D9A8;border-radius:12px;padding:10px 12px}
+.pkintel span{display:inline-block;font-size:11.5px;font-weight:800;color:#B4540A;background:#FFE9D6;border-radius:999px;padding:3px 9px;margin-bottom:6px}
+.pkintel ul{margin:0;padding-left:18px;font-size:13px;line-height:1.7;color:var(--ink)}
 .pktier{display:inline-block;font-size:11.5px;font-weight:800;line-height:1;padding:4px 8px;border-radius:999px;margin-right:8px;vertical-align:2px;white-space:nowrap}
 .pktier.tb{background:#E8F1F2;color:#2E6B73}.pktier.tm{background:#FFE9D6;color:#B4540A}.pktier.tp{background:#EFE7FA;color:#6A43A8}
 .tierlede{font-size:13px;line-height:2;color:var(--mid);margin:6px 0 4px}
@@ -2080,6 +2083,7 @@ const PICKS = [
         n: "九州紅葉巡禮一日遊｜九年庵・環境藝術之森",
         aop: 1700,
         url: "https://www.kkday.com/zh-tw/product/529663",
+        intel: ["買的人中位數提前 67 天訂，多數落在出發前 8–10 週", "84% 訂 11 月出發、16% 訂 12 月，現在就是下訂高峰", "過半是 2 人同行，約 4 成是獨旅"],
         tier: "基本盤",
         cr: 2.82,
         pct: 85,
@@ -2091,6 +2095,7 @@ const PICKS = [
         n: "北海道登別一日遊｜1 人成團・洞爺湖展望台",
         aop: 1700,
         url: "https://www.kkday.com/zh-tw/product/185814",
+        intel: ["中位數提前 85 天訂，4 分之 1 的人提前 4 個月就訂好", "出發集中在 12 月（29%）與 1 月（19%），接得上雪季", "獨旅、2 人、3–4 人各約 3 成，家庭客也不少"],
         tier: "基本盤",
         cr: 2.93,
         pct: 86,
@@ -2102,6 +2107,7 @@ const PICKS = [
         n: "北海道滑雪團一日遊｜手稻滑雪場",
         aop: 8300,
         url: "https://www.kkday.com/zh-tw/product/157140",
+        intel: ["中位數提前 113 天訂，多數人 3–4 個月前就訂好", "55% 在 12 月出發、33% 在 1 月，現在寫剛好接到下訂期", "55% 是 2 人同行，情侶、朋友檔為主"],
         tier: "主力",
         cr: 2.24,
         pct: 77,
@@ -2113,6 +2119,7 @@ const PICKS = [
         n: "九州包車｜中文司機・一日／多日遊",
         aop: 17900,
         url: "https://www.kkday.com/zh-tw/product/269107",
+        intel: ["中位數只提前 24 天訂，屬於臨時決定的品類", "8–9 月出發最多，12 月、11 月接著起量", "一單就是一台車，不按人頭計"],
         tier: "主力",
         cr: 1.49,
         pct: 44,
@@ -2124,6 +2131,7 @@ const PICKS = [
         n: "極地探險號破冰船 Polar Explorer I｜芬蘭",
         aop: 31300,
         url: "https://www.kkday.com/zh-tw/product/18133",
+        intel: ["中位數提前 143 天訂，將近 5 個月前就訂好", "41% 在 2 月出發、25% 在 1 月", "43% 獨旅、25% 2 人同行，3–4 人一起的也有約 25%"],
         tier: "加碼",
         cr: 3.39,
         pct: 90,
@@ -4165,7 +4173,7 @@ function buildMonthly(){
 
 H += '<section class="band band-wash" id="picks"><div class="inner">' +
 '<h2>每週選品分析</h2>' +
-'<p class="lede">每週看一次數據再選品：哪些在漲、哪些真的會成交、現在寫接得到哪一波出發潮。</p>' +
+'<p class="lede">每週看一次數據再選品：哪些在漲、哪些真的會成交、現在寫接得到哪一波出發潮。每支附「KKday 獨家數據」，寫進文章，AI 抄不走。</p>' +
 (PICKS.length ? ('<div class="wktabs">' + PICKS.slice(0,4).map(function(p,wi){
     return '<button class="wktab' + (wi===0?' on':'') + '" data-wk="' + wi + '">' + esc(String(p.week).replace(/（.*$/,"")) + '</button>'; }).join("") + '<button class="wktab" data-wk="m">本月觀察</button></div>') +
   '<div class="picks">' + PICKS.slice(0,4).map(function(p,wi){
@@ -4199,11 +4207,12 @@ H += '<section class="band band-wash" id="picks"><div class="inner">' +
        '</div>' +
        (i.read ? '<div class="pkread">' + esc(i.read) + '</div>' : "") +
        '<div class="pkwhy"><span>撰寫方向</span>' + esc(i.why) + '</div>' +
+       (i.intel && i.intel.length ? '<div class="pkintel"><span>KKday 獨家數據</span><ul>' + i.intel.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join("") + '</ul></div>' : "") +
        '<div class="pkcode" data-oid="' + oidOf(i.url) + '" data-aop="' + (i.aop || 0) + '" hidden></div>' +
        '<button class="mkpick" data-url="' + esc(i.url) + '" data-n="' + esc(i.n) +
          '" data-cr="' + i.cr.toFixed(2) + '" data-pct="' + i.pct + '" data-heat="' + signed(i.heat, 0) +
          '" data-rel="' + signed(rel, 0) + '" data-catcr="' + CAT +
-         '" data-why="' + esc(i.why) + '">複製素材</button>' +
+         '" data-why="' + esc(i.why) + '" data-intel="' + esc((i.intel || []).join("｜")) + '">複製素材</button>' +
      '</div>'; }).join("") + '</div>' : "") +
   '</div>'; }).join("") + buildMonthly() + '</div>'
  : '<div class="open"><div class="hd"><span class="dot"></span>第一期準備中</div>' +
@@ -4805,7 +4814,8 @@ document.addEventListener("click", e => {
     "【商品】" + b.dataset.n + "\n" +
     "【連結】" + withCid(b.dataset.url) + "\n" +
     (b.dataset.code ? "【折扣碼】" + b.dataset.code + "（" + b.dataset.cinfo + "）\n" : "") +
-    "【撰寫方向】" + b.dataset.why;
+    "【撰寫方向】" + b.dataset.why +
+    (b.dataset.intel ? "\n【KKday 獨家數據】（近半年台灣訂單，只有平台看得到）\n" + b.dataset.intel.split("｜").map(function(x){ return "・" + x; }).join("\n") : "");
   copyText(txt, "素材已複製");
 });
 /* admin 模式：只留折扣碼與選品、競品與重點商品兩區。 */
