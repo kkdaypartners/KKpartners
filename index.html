@@ -1949,7 +1949,7 @@ const PACKS = [
        {id:308717, t:"維斯塔華克山莊首爾飯店", n:"維斯塔華克山莊首爾飯店", note:"首爾飯店住宿"},
        {id:572833, t:"Pyunkang Yul 旗艦店折價券", n:"【KKday獨家】Pyunkang Yul 旗艦店及茶館折價券（含迎賓禮包）", note:"KKday 獨家，含迎賓禮包"}]}
    ]},
-  {id:"kpop", tab:"K-POP", lede:"追星行程：演唱會、音樂節、音樂節目錄影、偶像體驗。演出日期固定、陣容一公布就有搜尋量，發文時間抓在陣容公布後；接駁車是 KKday 獨家，散場直送機場最好寫。",
+  {id:"kpop", img:"img/pk-kpop.webp", tab:"K-POP", lede:"追星行程：演唱會、音樂節、音樂節目錄影、偶像體驗。演出日期固定、陣容一公布就有搜尋量，發文時間抓在陣容公布後；接駁車是 KKday 獨家，散場直送機場最好寫。",
    groups:[
      {n:"演唱會與音樂節",
       items:[
@@ -2333,6 +2333,25 @@ const PICKS = [
    tag  角標：爆品／新品／限時／回購王，留空就不顯示 */
 const DEAL_DATE = "2026/09/16";
 const DEALS = [
+  {
+    tag: "超殺促銷",
+    name: "曼谷船＋巴士通票｜31 元",
+    url: "https://www.kkday.com/zh-tw/product/550798",
+    from: "2026-09-30",
+    till: "2026-09-30",
+    img: "https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_550798/20260529093911_VnE40/png",
+    price: [
+      {n:"一日通行證", v:"NT$31"},
+      {n:"兌換期限", v:"買後 365 天內"}
+    ],
+    why: "ThaiGo 曼谷一日通票，湄南河電動船＋市區電動巴士整天無限搭，九月促銷方案只要 31 元。搭船到鄭王廟、大皇宮、暹羅天地，搭巴士到中央世界；App 掃 QR 就能上車。購買後 365 天內兌換就好，現在先買、明年去都能用，隨便一篇曼谷文都能放。",
+    due: "選「【九月促銷】泰式高爾夫一日通行證」方案。1 天前可免費取消。",
+    note: [
+      "要下載 ThaiGo App，在「通行證 → 兌換通行證」輸入 KKday 的 QR 或代碼",
+      "掃描後依方案時長（24／48／72 小時）有效",
+      "不含 BTS、MRT，要搭捷運請另外用兔子卡"
+    ]
+  },
   {
     tag: "最後釋票",
     name: "釜山煙火節｜最後一批",
@@ -3167,6 +3186,7 @@ const BANNERS = [
    b=商品名（12 字內）、d=賣點一行（10 字內）、href=站內錨點。最多四則。
    可選 s/e：填了只在該期間顯示，過期自動讓位給後面的；不填＝一直顯示。 */
 const HIGHLIGHTS = [
+  {img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_550798/20260529093911_VnE40/png", t:"超殺促銷", b:"曼谷船＋巴士", d:"一日通票 31 元", href:"#today", s:"2026-09-30", e:"2026-09-30"},
   {img:"img/flash-0928-sq.webp", t:"月底閃購", b:"APP 5 折券", d:"11 點、21 點開搶", href:"#event", s:"2026-09-28", e:"2026-09-28"},
   {img:"img/flash-0929-sq.webp", t:"月底閃購", b:"APP 5 折券", d:"11 點、21 點開搶", href:"#event", s:"2026-09-29", e:"2026-09-29"},
   {img:"img/flash-0930-sq.webp", t:"月底閃購", b:"APP 1 折券", d:"11 點、21 點開搶", href:"#event", s:"2026-09-30", e:"2026-09-30"},
@@ -3190,6 +3210,16 @@ const HIGHLIGHTS = [
    長檔期建議自己寫，不然會出現「還剩 101 天」這種沒有急迫感的字。
    url 可填站內錨點（#today）或外部網址；img 省略就沿用 HTML 裡的預設圖。 */
 const POPUP = [
+{
+  name:  "曼谷船＋巴士一日通票｜只要 31 元",
+  s:     "2026-09-30",
+  e:     "2026-09-30",
+  badge: "九月促銷・買後 365 天內兌換",
+  desc:  "湄南河電動船＋市區電動巴士整天無限搭，鄭王廟、大皇宮、暹羅天地都到得了。現在先買，明年去曼谷也能用。",
+  img:   "https://image.kkday.com/v2/image/get/c_fill%2Ch_900%2Cq_80%2Ct_webp%2Cw_1600/s1.kkday.com/product_550798/20260529093911_VnE40/png",
+  url:   "https://www.kkday.com/zh-tw/product/550798",
+  cta:   "看方案"
+},
 {
   name:  "月底閃購日｜9/28 首日",
   s:     "2026-09-28",
