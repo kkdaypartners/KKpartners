@@ -269,7 +269,8 @@ h3{font-size:19px;font-weight:700;margin:34px 0 10px}
 .ckpane.on{display:block}
 .ckin select{flex:1;font:inherit;font-size:15px;padding:12px 15px;border:1.5px solid var(--line);border-radius:10px;background:#fff;min-width:0}
 .ckin select:focus{outline:none;border-color:var(--brand)}
-.cksel2{margin-top:10px}.cksel2 select{font-size:13.5px;padding:9px 13px;color:var(--mid)}
+.cksel2{display:none!important}
+#ckout{margin-top:14px}
 .cknear{font:inherit;font-size:13px;font-weight:700;margin:4px 6px 0 0;padding:5px 10px;border:1px solid var(--brand);border-radius:999px;background:#fff;color:var(--deep);cursor:pointer}
 #ckcodemsg .hit{margin-top:10px}
 .blist{max-height:300px;overflow-y:auto;border:1px solid var(--line);border-radius:12px;margin-top:10px}
@@ -4683,7 +4684,7 @@ H += '<section class="band band-wash" id="codes"><div class="inner">' +
 '<button id="ckcodego">查詢</button></div>' +
 '<datalist id="ckcodes">' + ALLCODES.filter(function(c){ return c.code && NO_CHECK.indexOf(c.code) < 0; }).map(function(c){ return '<option value="' + esc(c.code) + '">' + esc(c.scope) + '</option>'; }).join("") + '</datalist>' +
 '<div id="ckcodemsg"></div>' +
-'<div class="ckin cksel2"><select id="cksel"><option value="">或從清單選一張⋯</option>' +
+'<div class="cksel2" hidden><select id="cksel" aria-hidden="true" tabindex="-1"><option value=""></option>' +
 ALLCODES.filter(function(c){ return c.code && NO_CHECK.indexOf(c.code) < 0; })
   .map(function(c){ return '<option value="' + esc(c.code) + '">' + esc(c.show || c.code) + '　' + esc(c.scope) + '</option>'; }).join("") +
 '</select></div><div id="ckout"></div></div>' +
