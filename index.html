@@ -1355,6 +1355,7 @@ const PSCOPE = {"cty":["?","Japan","Taiwan","Korea","Europe","TH","Hong Kong and
 /* 每張折扣碼的適用地區。cty 國家白名單、dest 城市白名單，兩者都沒填就代表不限地區。
    這是依折扣碼名稱與訴求推得的，發現誤判就改這裡。 */
 const CODE_GEO = {
+  "FUBON300H2":{cat:["景點門票","票券通票","行程體驗"]},
   "GNSTAY1":{cat:["住宿"], dest:["kr-busan","kr-gyeongju"]},
   "KKNPT50":{cty:["Hong Kong and Macau"]},
   "CUBEJP85OCT":{cty:["Japan"]},
@@ -1463,7 +1464,7 @@ const RULES = {"s":{"x0":"pzB_B-FzBCEKHDrBxDnHzBaZrBVrBDqGe4C_BhG9I_BGEzBBLpGuI4
 
 
 /* 這幾張的限制寫在銀行條款、不在折扣券系統裡，查了也只會顯示需確認，直接排除在查詢之外 */
-const NO_CHECK = ["DBS26","CTBCLP260917","FUBON300H2"];   /* SKBINF26Q3 已補類別（2026-09-24），移出 */
+const NO_CHECK = ["DBS26","CTBCLP260917"];   /* FUBON300H2 10 月已有排除清單＋類別規則，可以查了（2026-10-01 KOL 反映查不到） */   /* SKBINF26Q3 已補類別（2026-09-24），移出 */
 
 const UPDATED = "2026/09/15";
 const LINE_GROUP = "https://line.me/ti/g2/5xW0eWvngTt1v0ZGIhk56Ey13dcAL3uD0AIORw?utm_source=invitation&utm_medium=link_copy&utm_campaign=default";
