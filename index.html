@@ -6713,7 +6713,8 @@ q.addEventListener("input", () => {
 });
 
 /* 外部連結帶 #錨點（例：百科網址#event）時，內容是 JS 畫出來的，瀏覽器載入當下找不到目標不會捲動，這裡補捲一次（hashjump） */
-(function(){
+/* 直達連結：載入時跑一次，網址的 # 後面改變時（已經開著頁面再點連結）也要再跑（2026-10-01：開著百科再點 #code=LH1050 沒反應） */
+function hashJump(){
   var h = decodeURIComponent((location.hash || "").slice(1));
   if (!h) return;
   /* #packs-maple 這種連結：直接打開主題資源包的那一包（Alen 2026-10-01，文案要能帶到指定主題包） */
@@ -6735,7 +6736,9 @@ q.addEventListener("input", () => {
     var t = document.getElementById(h); if (t) t.scrollIntoView({block:"start"});
   }
   setTimeout(go, 0); setTimeout(go, 600);
-})();
+}
+hashJump();
+window.addEventListener("hashchange", hashJump);
 </script>
 </body><script data-goatcounter="https://kkpartners.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </html>
