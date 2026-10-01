@@ -642,6 +642,7 @@ body.adminonly #codes #ck-prod{display:none}
 @media (max-width:760px){.pkmenu{max-width:none}.pkmpanel{flex-direction:column}
   .pkmleft{flex:none;border-right:0;border-bottom:1px solid var(--line);max-height:200px}}
 #packs #packs .pktabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.pklink{margin:6px 0 14px;font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;align-items:center;gap:8px}.pklinkcp{font:inherit;font-size:13px;font-weight:700;color:var(--deep);background:#fff;border:1px solid var(--brand);border-radius:999px;padding:5px 12px;cursor:pointer}
 .pktab{background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 15px;font-size:13.5px;font-weight:700;color:var(--mid);cursor:pointer;white-space:nowrap}
 .pktab.on{background:var(--mid);border-color:var(--mid);color:#fff}
 .pkpane{display:none}
@@ -4650,6 +4651,11 @@ function buildEvent(){
   }
   return h + '</div></section>';
 }
+/* 主題包直達連結（#packs-<id>，2026-10-01） */
+document.addEventListener("click", function(e){
+  var b = e.target.closest(".pklinkcp"); if (!b) return;
+  copyText("https://kkdaypartners.github.io/KKpartners/#packs-" + b.dataset.p, "「" + b.dataset.t + "」直達連結已複製");
+});
 /* 0 元商品專區（每週選品分析之後、本月檔期之前） */
 /* 主題資源包（0 元商品之前） */
 /* 整區都要包在 .inner 裡，否則沒有 max-width 限制會撐滿整個螢幕，
@@ -4669,6 +4675,7 @@ PACKS.map(function(p, i){
   return '<div class="pkpane' + (i === 0 ? " on" : "") + '" data-p="' + esc(p.id) + '">' +
     (p.img ? '<div class="pkhero"><img loading="lazy" src="' + esc(p.img) + '" alt=""></div>' : "") +
     (p.lede ? '<p class="pklede">' + esc(p.lede) + '</p>' : "") +
+    '<p class="pklink"><button type="button" class="pklinkcp" data-p="' + esc(p.id) + '" data-t="' + esc(p.tab) + '">🔗 複製這包的直達連結</button><span>貼到 LINE，點了直接打開「' + esc(p.tab) + '」這一包</span></p>' +
     (POST_TPL[p.id] ? (function(t){
       return '<details class="tplbox"><summary>' + esc(t.title) + '</summary><div class="tplbd">' +
         '<p class="tplwhy">' + esc(t.why) + '</p>' +
