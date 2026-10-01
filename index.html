@@ -4651,6 +4651,14 @@ function buildEvent(){
   }
   return h + '</div></section>';
 }
+/* 切分頁時網址列跟著換成直達連結，KOL 直接從網址列複製也行（2026-10-01） */
+document.addEventListener("click", function(e){
+  var h = "";
+  var p = e.target.closest(".pktab"); if (p && p.dataset.p) h = "packs-" + p.dataset.p;
+  var c = e.target.closest(".cktabs button"); if (c && c.dataset.ck) h = "check-" + c.dataset.ck;
+  var g = e.target.closest("#codelist button[data-tab]"); if (g) h = "codes-" + g.dataset.tab;
+  if (h && history.replaceState) { try { history.replaceState(null, "", "#" + h); } catch (err) {} }
+});
 /* 主題包直達連結（#packs-<id>，2026-10-01） */
 document.addEventListener("click", function(e){
   var b = e.target.closest(".pklinkcp"); if (!b) return;
@@ -5505,6 +5513,8 @@ renderCid();
   document.getElementById("poplater").addEventListener("click", close);
   document.getElementById("popgo").addEventListener("click", close);
   pop.addEventListener("click", function(e){ if (e.target === pop) close(); });
+  /* 從直達連結（#packs-…、#check-…、#codes-… 等）進來的人是要看特定區塊，不要用彈窗擋住（2026-10-01） */
+  if (/^#(packs|check|codes|event|picks|today)/.test(location.hash || "")) return;
   setTimeout(function(){ pop.classList.add("on"); }, 700);
 })();
 
@@ -6545,8 +6555,15 @@ q.addEventListener("input", () => {
   /* #packs-maple 這種連結：直接打開主題資源包的那一包（Alen 2026-10-01，文案要能帶到指定主題包） */
   var pk = h.indexOf("packs-") === 0 ? h.slice(6) : "";
   if (pk) h = "packs";
+  /* #check-prod／#check-code：查詢工具的兩個分頁；#codes-aff 等：折扣碼分類（2026-10-01） */
+  var ck = h.indexOf("check-") === 0 ? h.slice(6) : "";
+  if (ck) h = "check";
+  var cg = h.indexOf("codes-") === 0 ? h.slice(6) : "";
+  if (cg) h = "codelist";
   function go(){
     if (pk) { var b = document.querySelector('.pktab[data-p="' + pk + '"]'); if (b && !b.classList.contains("on")) b.click(); }
+    if (ck) { var c = document.querySelector('.cktabs button[data-ck="' + ck + '"]'); if (c && c.getAttribute("aria-selected") !== "true") c.click(); }
+    if (cg) { var g = document.querySelector('#codelist button[data-tab="' + cg + '"]'); if (g && g.getAttribute("aria-selected") !== "true") g.click(); }
     var t = document.getElementById(h); if (t) t.scrollIntoView({block:"start"});
   }
   setTimeout(go, 0); setTimeout(go, 600);
