@@ -1096,6 +1096,7 @@ footer a{color:var(--brand)}
 
 
 .popimg picture{display:block;width:100%;height:100%}
+.pkpair{margin:10px 0 0;font-size:13px;color:var(--mid)}.pkpair span{display:inline-block;font-size:11.5px;font-weight:800;color:#0F7B3E;background:#E3F4EA;border-radius:999px;padding:3px 9px;margin-right:8px}.pkpair a{font-weight:700;color:var(--deep)}
 .pkcmp{margin-top:10px;background:#EEF6FF;border:1px solid #C9DFF7;border-radius:12px;padding:10px 12px}
 .pkcmp span{display:inline-block;font-size:11.5px;font-weight:800;color:#1F5FA8;background:#DCEBFB;border-radius:999px;padding:3px 9px;margin-bottom:6px}
 .pkcmp ol{margin:0;padding-left:20px;font-size:13px;line-height:1.7;color:var(--ink)}
@@ -2198,6 +2199,7 @@ const PICKS = [
         n: "九州紅葉巡禮一日遊｜九年庵・環境藝術之森",
         aop: 1700,
         url: "https://www.kkday.com/zh-tw/product/529663",
+        pair: {"id": 150984, "n": "九州由布院・金鱗湖一日遊"},
         cmp: {"vs": "九州紅葉一日團 vs 九州包車", "q": ["幾個人以上，包車平均每人會比跟團便宜？", "想在九年庵、環境藝術之森多拍一會兒，哪種玩法時間比較彈性？", "從福岡出發，一天實際能走完幾個紅葉點？"], "calc": "一日團：___ 元 × 人數　vs　包車：___ 元 ÷ 人數（平台數據：買一日團的過半是 2 人同行，就用 2 人和 4 人各算一次）"},
         intel: ["買的人中位數提前 67 天訂，多數落在出發前 8–10 週", "84% 訂 11 月出發、16% 訂 12 月，現在就是下訂高峰", "過半是 2 人同行，約 4 成是獨旅"],
         tier: "基本盤",
@@ -2211,6 +2213,7 @@ const PICKS = [
         n: "北海道登別一日遊｜1 人成團・洞爺湖展望台",
         aop: 1700,
         url: "https://www.kkday.com/zh-tw/product/185814",
+        pair: {"id": 155327, "n": "北海道旭川動物園冬季一日遊"},
         cmp: {"vs": "登別一日團 vs 自己搭車去登別", "q": ["札幌到登別自己搭車要轉幾次、單程多久？", "把交通、門票、時間都算進去，自己去真的比較省嗎？", "冬天加雪地摩托車，行程還排得完嗎？"], "calc": "一日團：___ 元　vs　自己去：來回車票 ___ 元＋景點門票 ___ 元＋多花的時間 ___ 小時"},
         intel: ["中位數提前 85 天訂，4 分之 1 的人提前 4 個月就訂好", "出發集中在 12 月（29%）與 1 月（19%），接得上雪季", "獨旅、2 人、3–4 人各約 3 成，家庭客也不少"],
         tier: "基本盤",
@@ -2224,6 +2227,7 @@ const PICKS = [
         n: "北海道滑雪團一日遊｜手稻滑雪場",
         aop: 8300,
         url: "https://www.kkday.com/zh-tw/product/157140",
+        pair: {"id": 155327, "n": "北海道旭川動物園冬季一日遊"},
         cmp: {"vs": "手稻滑雪一日團 vs 自己搭車去滑雪", "q": ["雪具、雪衣自己租加上來回交通，總共要花多少？", "第一次滑雪，需要教練嗎？跟團有沒有差？", "手稻跟其他札幌近郊雪場，人潮和難度差在哪？"], "calc": "一日團：___ 元　vs　自己去：交通 ___＋纜車 ___＋雪具租借 ___ 元（平台數據：55% 是 2 人同行，用 2 人算）"},
         intel: ["中位數提前 113 天訂，多數人 3–4 個月前就訂好", "55% 在 12 月出發、33% 在 1 月，現在寫剛好接到下訂期", "55% 是 2 人同行，情侶、朋友檔為主"],
         tier: "主力",
@@ -4558,11 +4562,12 @@ H += '<section class="band band-wash" id="picks"><div class="inner">' +
        (i.cmp ? '<div class="pkcmp"><span>比較題｜' + esc(i.cmp.vs) + '</span><ol>' + i.cmp.q.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join("") + '</ol>' + (i.cmp.calc ? '<p><b>試算骨架</b>' + esc(i.cmp.calc) + '</p>' : "") + '<em>這幾題要親自比過才答得出來，也是 AI 摘要答不完、會把讀者導向你文章的內容。</em></div>' : "") +
        (i.intel && i.intel.length ? '<div class="pkintel"><span>KKday 獨家數據</span><ul>' + i.intel.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join("") + '</ul></div>' : "") +
        ((i.cmp || (i.intel && i.intel.length)) ? '</div>' : "") +
+       (i.pair ? '<p class="pkpair"><span>搭配推薦</span><a href="https://www.kkday.com/zh-tw/product/' + i.pair.id + '" target="_blank" rel="noopener">' + esc(i.pair.n) + '</a>　這支的客人 7 天內常會再訂</p>' : "") +
        '<div class="pkcode" data-oid="' + oidOf(i.url) + '" data-aop="' + (i.aop || 0) + '" hidden></div>' +
        '<button class="mkpick" data-url="' + esc(i.url) + '" data-n="' + esc(i.n) +
          '" data-cr="' + i.cr.toFixed(2) + '" data-pct="' + i.pct + '" data-heat="' + signed(i.heat, 0) +
          '" data-rel="' + signed(rel, 0) + '" data-catcr="' + CAT +
-         '" data-why="' + esc(i.why) + '" data-intel="' + esc((i.intel || []).join("｜")) + '" data-cmp="' + esc(i.cmp ? JSON.stringify(i.cmp) : "") + '">複製素材</button>' +
+         '" data-why="' + esc(i.why) + '" data-intel="' + esc((i.intel || []).join("｜")) + '" data-cmp="' + esc(i.cmp ? JSON.stringify(i.cmp) : "") + '" data-pair="' + esc(i.pair ? i.pair.n + "｜" + i.pair.id : "") + '">複製素材</button>' +
      '</div>'; }).join("") + '</div>' : "") +
   '</div>'; }).join("") + buildMonthly() + '</div>'
  : '<div class="open"><div class="hd"><span class="dot"></span>第一期準備中</div>' +
@@ -5170,6 +5175,7 @@ document.addEventListener("click", e => {
     "【連結】" + withCid(b.dataset.url) + "\n" +
     (b.dataset.code ? "【折扣碼】" + b.dataset.code + "（" + b.dataset.cinfo + "）\n" : "") +
     "【撰寫方向】" + b.dataset.why +
+    (b.dataset.pair ? (function(){ var p = b.dataset.pair.split("｜"); return "\n【搭配推薦】" + p[0] + "（這支的客人 7 天內常會再訂）\n" + withCid("https://www.kkday.com/zh-tw/product/" + p[1]); })() : "") +
     (b.dataset.cmp ? (function(){ try { var c = JSON.parse(b.dataset.cmp); return "\n【比較題｜" + c.vs + "】（親自比過才寫得出來）\n" + c.q.map(function(x, k){ return (k + 1) + ". " + x; }).join("\n") + (c.calc ? "\n試算骨架：" + c.calc : ""); } catch (err) { return ""; } })() : "") +
     (b.dataset.intel ? "\n【KKday 獨家數據】（近半年台灣訂單，只有平台看得到）\n" + b.dataset.intel.split("｜").map(function(x){ return "・" + x; }).join("\n") : "");
   copyText(txt, "素材已複製");
