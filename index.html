@@ -1577,7 +1577,7 @@ const PACKS = [
        {id:148857, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_148857/20251123232652_Jgprf/jpg", aop:100,  n:"KKday 獨家｜雪梨 CBD 行李寄存", note:"實用型獨家"},
        {id:29259, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_29259/20230406034650_QJZBM/jpg",  aop:800,  n:"深圳野生動物園門票｜KKday 獨家優惠", note:"無限次任玩 7 大項目"}]}
    ]},
-  {id:"lianjia", tab:"雙十連假國旅", lede:"10/9–10/11 三天連假，來不及出國的就玩台灣。國旅多半出發前 3–4 天才訂，10/5–10/8 是下訂高峰。樂園門票、船票用 ALL95／ALL200；跳島、賞鯨這類行程用 KKTWOUR9（9 折、最高折 300）比較划算。",
+  {id:"lianjia", till:"2026-10-13", tab:"雙十連假國旅", lede:"10/9–10/11 三天連假，來不及出國的就玩台灣。國旅多半出發前 3–4 天才訂，10/5–10/8 是下訂高峰。樂園門票、船票用 ALL95／ALL200；跳島、賞鯨這類行程用 KKTWOUR9（9 折、最高折 300）比較划算。",
    groups:[
      {n:"台灣樂園", items:[
        {id:107922, aop:2000, t:"花蓮遠雄海洋公園", n:"花蓮遠雄海洋公園門票", note:"台灣樂園賣最好的一支"},
@@ -2033,6 +2033,8 @@ const PACKS = [
        {id:165534, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_165534/20240323115924_PZczr/jpg", aop:26600, n:"麗星郵輪｜基隆港出發 3 天 2 夜", note:"每人 7,500 起。週五出發週日回、免請假，比住飯店便宜"}]}
    ]}
 ];
+/* 主題包可設 till（例如連假包），過了那天就自動下架（2026-10-01） */
+for (let _k = PACKS.length - 1; _k >= 0; _k--) { if (PACKS[_k].till && PACKS[_k].till < twYmd()) PACKS.splice(_k, 1); }
 
 /* 0 元商品專區：依地區分組，粉絲不用花錢就能領，是 KOL 的引流鉤子。
    篩選方式：BigQuery 近 90 天 zh-tw 訂單「最高實付 = 0」且商品仍在架上
