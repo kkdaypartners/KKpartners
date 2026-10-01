@@ -1664,6 +1664,7 @@ const PACKS = [
      {n:"日本", promo:"https://www.kkday.com/zh-tw/promo/autumn-in-japan",
       code:"26AWJPTOUR", codeNote:"日本行程體驗不限門檻 93 折，最高折 1,000",
       items:[
+       {id:771835, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_771835/20260917072434_ma6sE/jpg", aop:0, t:"日光中禪寺湖遊覽船｜可自由上下船", n:"中禪寺湖遊覽船｜一周航線乘船票", note:"新品；菖蒲之濱下船走 10 分鐘到龍頭瀑布賞楓"},
        {id:158778, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_158778/20250814023251_13Sva/jpg", aop:28100, n:"黑部立山楓紅三日遊｜室堂紅葉・上高地・白川鄉", note:"長線主力，行程天數長、內容紮實"},
        {id:601669, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_scm_23303/20260610034925_285Po/jpg", aop:6000, n:"北海道層雲峽賞楓一日遊｜銀河瀑布・黑岳纜車", note:"北海道楓況最早，10 月上旬就能寫"},
        {id:669845, img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_scm_26539/20260731014626_AA0sD/png", aop:3600, n:"香嵐溪夜楓一日遊｜虎溪山永保寺・名古屋往返", note:"夜楓題材，畫面辨識度高"},
@@ -2795,6 +2796,24 @@ const DEALS = [
       "加購託運最晚出發前 10 個工作天告知，開票後不能加",
       "同行者座位不一定相鄰，去程未搭回程自動失效",
       "護照效期需滿 6 個月，資料請對照護照正本填寫"
+    ]
+  },
+  {
+    kind: "new",
+    tag: "新品上架",
+    name: "日光中禪寺湖遊覽船",
+    url: "https://www.kkday.com/zh-tw/product/771835",
+    added: "2026-10-01",
+    till: "2026-11-30",
+    img: "https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_771835/20260917072434_ma6sE/jpg",
+    price: "一周航線・可自由上下船",
+    why: "日光新品：中禪寺湖一周航線乘船票，可以自由上下船。出發港「船之駅中禪寺」旁就是華嚴瀑布、日光二荒山神社；菖蒲之濱碼頭走 10 分鐘到龍頭瀑布，9 月下旬起楓樹、菩提樹轉紅，是知名賞楓點。從東京來日光賞楓的人，搭船一圈就能串起湖邊景點。",
+    due: "營運到 11 月底，票價依季節不同；可免費取消。",
+    note: [
+      "要在現場櫃台滑動電子票兌換，到櫃台前不要先滑，滑了就算使用",
+      "同行者要一起到櫃台，票不能分開發",
+      "海拔高、氣溫比山下低，要帶保暖衣物；天候不佳可能停航",
+      "學齡前兒童免費"
     ]
   },
   {
@@ -5602,7 +5621,8 @@ const PGEO = (function(){
 const GEO_EXTRA = {
   725198: {cty:"North America", dest:"", cat:"行程體驗"},
   771698: {cty:"Japan", dest:"", cat:"行程體驗"},
-  771707: {cty:"Japan", dest:"", cat:"行程體驗"}
+  771707: {cty:"Japan", dest:"", cat:"行程體驗"},
+  771835: {cty:"Japan", dest:"", cat:"景點門票"}
 };
 function geoOf(id){
   const g = PGEO[id];
