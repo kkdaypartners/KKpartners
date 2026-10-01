@@ -2099,6 +2099,14 @@ const FREE_ITEMS = [
 
 const SPONSOR_ITEMS = [
   {
+    name: "排球少年 10 週年紀念展",
+    form: "https://forms.gle/5Zx3yJr4nixnadEx5",
+    tags: ["12/24 Open Day・每組 2 張票", "IG 粉絲 5,000 以上", "Reels 1 支或貼文 2 篇", "不審稿"],
+    due: "10/27",
+    until: "2026-10-27T23:59",
+    isnew: true
+  },
+  {
     name: "上海曲水蘭亭｜頂級水療",
     img: "https://image.kkday.com/v2/image/get/c_fill%2Ch_450%2Cq_60%2Ct_webp%2Cw_800/s1.kkday.com/product_580689/20260429095825_KdUVY/jpg",
     url: "https://www.kkday.com/zh-tw/product/580689",
@@ -4817,7 +4825,7 @@ H += '<section class="band" id="sponsor"><div class="inner">' +
   '<div class="pbtns">' +
   (p.form ? '<a class="btn" href="' + esc(p.form) + '" target="_blank" rel="noopener">我要申請</a>'
           : '<span class="btn off">表單準備中</span>') +
-  '<a class="btn alt" href="' + esc(p.url) + '" target="_blank" rel="noopener">看商品</a>' +
+  (p.url ? '<a class="btn alt" href="' + esc(p.url) + '" target="_blank" rel="noopener">看商品</a>' : "") +
   '</div></div></div>').join("") + '</div>'
  : '<p class="empty">目前沒有開放中的商品。新的贊助機會會放在這裡，也會在 LINE 群公告。</p>') +
 '<div class="note">這類商品是供應商主動指定合作的，<b>不需要先完成 KKpartners 聯盟行銷合作申請</b>，符合條件直接填表單就好。</div>' +
