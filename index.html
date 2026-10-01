@@ -2582,15 +2582,17 @@ const DEALS = [
     name: "瑞士通行證｜買 4 送 1",
     url: "https://www.kkday.com/zh-tw/product/2524",
     till: "2026-10-01",
+    until: "2026-10-01T12:00",
     img: "img/swiss-1000.webp",
     why: "不限艙等，相當於 8 折起。長程線客單高，換算每日單價很好講。",
     price: "最便宜一天 NT$1,600",
     plans: [
       {n:"瑞士專屬", c:"SWISSWINTER26", x:"買 4 送 1、買 8 送 2", d:"銷售至 10/1，搭乘期間 10/1–12/31"},
-      {n:"全站加碼", c:"26SEP800", x:"滿 8,000 折 800", d:"9/25 前瑞士通行證也適用，可再省 800 元"}
+      {n:"特別延長", c:"LH1050", x:"滿 15,000 折 1,050", d:"延長到 10/1 12:00"},
+      {n:"特別延長", c:"26SEP800", x:"滿 8,000 折 800", d:"延長到 10/1 12:00"}
     ],
     code: "SWISSWINTER26",
-    due: "銷售至 10/1｜搭乘期間 10/1–12/31，任選連續 5 或 10 天。⚠️ 全站碼 26SEP800（滿 8,000 折 800）只到 9/25 能用在瑞士通行證，之後就不適用。"
+    due: "⏰ 買 4 送 1 只到 10/1 12:00｜搭乘期間 10/1–12/31，任選連續 5 或 10 天。🎟️ LH1050（滿 15,000 折 1,050）、26SEP800（滿 8,000 折 800）特別延長到 10/1 12:00，擇一使用。"
   },
   {
     tag: "十月樂園季",
@@ -3642,7 +3644,7 @@ const GROUPS = [
   ]},
   {id:"site", tab:"全站與檔期", lede:"本月全站適用，門檻低、好推。檔期內發文的轉換通常最好。", items:[
     {scope:"全站低門檻", code:"26SEP95", benefit:"不限門檻 95 折，單筆最高折 NT$150", till:"2026-09-30", url:"https://www.kkday.com/zh-tw/promo/sep"},
-    {scope:"全站高門檻", code:"26SEP800", benefit:"滿 8,000 折 800 元", till:"2026-09-30", url:"https://www.kkday.com/zh-tw/promo/sep"},
+    {scope:"全站高門檻", code:"26SEP800", benefit:"滿 8,000 折 800 元（特別延長到 10/1 12:00）", till:"2026-10-01", url:"https://www.kkday.com/zh-tw/promo/sep"},
     {scope:"全站低門檻", code:"ALL95", benefit:"不限門檻 95 折，單筆最高折 NT$150", from:"2026-10-01", till:"2026-10-31", url:"https://www.kkday.com/zh-tw/promo/autumn_trip"},
     {scope:"全站滿額", code:"ALL200", benefit:"滿 3,000 折 200 元", from:"2026-10-01", till:"2026-10-31", url:"https://www.kkday.com/zh-tw/promo/autumn_trip"},
     {scope:"全站高門檻", code:"ALL600", benefit:"滿 8,000 折 600 元", from:"2026-10-01", till:"2026-10-31", url:"https://www.kkday.com/zh-tw/promo/autumn_trip"}
@@ -3693,7 +3695,8 @@ const GROUPS = [
     {scope:"新加坡 F1｜Premier Walkabout", code:"F1PREMWALK", benefit:"每張 3% off，最高折 USD 7", till:"2026-09-30", url:"https://www.kkday.com/zh-tw/product/129639"},
     {scope:"新加坡 F1｜門票＋景點 Bundle", code:"26F1CB", benefit:"單筆滿 8,000 享 97 折，最高折 1,000 元", till:"2026-09-30", url:"https://www.kkday.com/zh-tw/product/129639"},
     {scope:"巴黎迪士尼", code:"DLPTW95", benefit:"滿 USD 150 享 9 折，最高折 USD 25", from:"2026-10-01", till:"2026-12-31", url:"https://www.kkday.com/zh-tw/product/20829"},
-    {scope:"慶州／釜山住宿", code:"GNSTAY1", benefit:"滿 1,500 折 300 元", from:"2026-10-01", till:"2026-10-31", url:"https://www.kkday.com/zh-tw/promo/gyeongnam_spring"}
+    {scope:"慶州／釜山住宿", code:"GNSTAY1", benefit:"滿 1,500 折 300 元", from:"2026-10-01", till:"2026-10-31", url:"https://www.kkday.com/zh-tw/promo/gyeongnam_spring"},
+    {scope:"長程線｜指定歐美紐澳商品（含瑞士通行證）", code:"LH1050", benefit:"滿 15,000 折 1,050 元（特別延長到 10/1 12:00）", till:"2026-10-01"}
   ]},
   {id:"card", tab:"信用卡與支付", lede:"粉絲常問「用哪張卡最划算」，這區可以直接截圖回覆。", items:[
     {scope:"玉山銀行｜全卡", code:"ESUN26SEP1200", benefit:"全球商品滿 9,000 折 1,200 元", till:"2026-09-30", url:"https://www.kkday.com/zh-tw/promo/bank"},
@@ -3759,6 +3762,7 @@ const GROUPS = [
     {scope:"週五｜台新 Richart 卡", code:"TS261023", benefit:"10/23 限定：全球商品滿 3,000 折 240 元", from:"2026-10-17", till:"2026-10-23", url:"https://www.kkday.com/zh-tw/promo/richart"},
     {scope:"週六｜國泰世華 CUBE 卡", code:"", benefit:"搭配趣旅行權益，全站再享 3.3% 小樹點回饋", from:"2026-10-01", till:"2026-10-31", url:"https://www.kkday.com/zh-tw/promo/cube"}
   ]}
+
 ];
 /* 帶 from 的項目到那天才顯示、till 過了就不顯示（台北時間）；10/1 00:00 頁面會因檔期切換自動重整 */
 GROUPS.forEach(function(g){ g.items = (g.items || []).filter(function(it){ var t = twYmd(); return (!it.from || it.from <= t) && (!it.till || it.till >= t); }); });
@@ -5081,7 +5085,8 @@ function pruneExpiredSlots(){
       var hits = document.querySelectorAll('[data-code="' + it.code + '"]');
       for (var k = 0; k < hits.length; k++){
         var row = hits[k].closest(".code");
-        if (row) row.remove();
+        /* 只拿掉檔期時段那一列（有 .tslot）；同一張碼另外登記在一般分頁、被特別延長的不能跟著消失（LH1050，2026-10-01） */
+        if (row && row.querySelector(".tslot")) row.remove();
       }
     });
   }); });
