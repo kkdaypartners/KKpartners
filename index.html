@@ -780,6 +780,8 @@ border:1px solid #F0D2CA;border-radius:999px;padding:2px 8px;margin-left:8px}
 /* NEW 疊在圖片左上角，不佔文字流——否則 .pbody 是 column flex 會把它拉成整條，
    而且會把標題往下推，跟旁邊沒有 NEW 的卡片對不齊（2026-09-23 修）。 */
 .prod{position:relative}
+.prod.noimg .spnew{position:static;display:inline-block;align-self:flex-start;margin:0 0 8px;box-shadow:none}
+.prod.noimg .pbody{padding-top:20px}
 .spnew{position:absolute;top:10px;left:10px;z-index:2;width:auto;
   background:var(--down);color:#fff;font-size:10.5px;font-weight:800;letter-spacing:.06em;
   border-radius:999px;padding:4px 10px;box-shadow:0 2px 8px rgba(0,0,0,.25)}
@@ -4876,7 +4878,7 @@ H += '<section class="band" id="sponsor"><div class="inner">' +
   window.LIVE_SPONSOR = SPONSOR_ITEMS.filter(function(x){ return !pastAt(x.until); });
   return ""; })() +
 (LIVE_SPONSOR.length ? '<div class="prods">' + LIVE_SPONSOR.map(p =>
-  '<div class="prod">' +
+  '<div class="prod' + (p.img ? "" : " noimg") + '">' +
   (p.img ? '<img loading="lazy" src="' + esc(p.img) + '" alt="" onerror="this.remove()">' : "") +
   '<div class="pbody">' + (p.isnew ? '<span class="spnew">NEW</span>' : "") + '<b>' + esc(p.name) + '</b>' +
   (p.tags && p.tags.length ? '<div class="tags">' + p.tags.map(t => '<span>' + esc(t) + '</span>').join("") + '</div>' : "") +
