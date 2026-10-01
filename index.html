@@ -4730,7 +4730,7 @@ H += '<section class="band band-wash" id="codes"><div class="inner">' +
 '<div class="ckpane" id="ck-code">' +
 '<div class="ckin"><input id="ckcode" type="search" list="ckcodes" placeholder="直接輸入折扣碼，例如 KKAFFTOUR88" autocomplete="off" autocapitalize="characters" spellcheck="false">' +
 '<button id="ckcodego">查詢</button></div>' +
-'<datalist id="ckcodes">' + ALLCODES.filter(function(c){ return c.code && NO_CHECK.indexOf(c.code) < 0; }).map(function(c){ return '<option value="' + esc(c.code) + '">' + esc(c.scope) + '</option>'; }).join("") + '</datalist>' +
+'<datalist id="ckcodes">' + ALLCODES.filter(function(c){ return c.code && NO_CHECK.indexOf(c.code) < 0; }).map(function(c){ return '<option value="' + esc(c.code) + '">' + esc(c.scope + (c.benefit ? "｜" + c.benefit : "")) + '</option>'; }).join("") + '</datalist>' +
 '<div id="ckcodemsg"></div>' +
 '<div class="cksel2" hidden><select id="cksel" aria-hidden="true" tabindex="-1"><option value=""></option>' +
 ALLCODES.filter(function(c){ return c.code && NO_CHECK.indexOf(c.code) < 0; })
@@ -5541,9 +5541,15 @@ const PGEO = (function(){
   }
   return map;
 })();
+/* 新上架、還沒進 PGEO 的商品，手動補地區／類別（2026-10-01：熱門名單更新後 3 支「需確認」） */
+const GEO_EXTRA = {
+  725198: {cty:"North America", dest:"", cat:"行程體驗"},
+  771698: {cty:"Japan", dest:"", cat:"行程體驗"},
+  771707: {cty:"Japan", dest:"", cat:"行程體驗"}
+};
 function geoOf(id){
   const g = PGEO[id];
-  return g ? {cty:PSCOPE.cty[g[0]], dest:PSCOPE.dest[g[1]], cat:PSCOPE.cat[g[2]]} : null;
+  return g ? {cty:PSCOPE.cty[g[0]], dest:PSCOPE.dest[g[1]], cat:PSCOPE.cat[g[2]]} : (GEO_EXTRA[id] || null);
 }
 function catOnly(code, id){
   const rule = CODE_GEO[code];
