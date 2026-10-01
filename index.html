@@ -3394,6 +3394,10 @@ const NEWS = [
    s/e 決定該則的顯示期間，過期自動不播；全部過期就整條不出現。
    兩則以上會每 6 秒自動輪播，滑鼠移上去暫停。 */
 const BANNERS = [
+  {t:"十尚玩咖", b:"10 月全站最高折 600", cta:"看能用的商品", url:"#code=ALL95", s:"2026-10-01", e:"2026-10-31"},
+  {t:"雙十連假", b:"國旅主題包：樂園＋離島", cta:"打開主題包", url:"#packs-lianjia", s:"2026-10-01", e:"2026-10-09"},
+  {t:"週三限定", b:"東南亞日 SEADAY 93 折", cta:"看東南亞", url:"#packs-sea", s:"2026-10-07", e:"2026-10-07"},
+  {t:"合作機會", b:"排球少年展、京都 teamLab 開放報名", cta:"看合作", url:"#collab", s:"2026-10-01", e:"2026-10-27"},
   {t:"月底閃購日", b:"11:00 APP 全站 5 折券", cta:"看今天時段", url:"#event", s:"2026-09-28", e:"2026-09-28"},
   {t:"月底閃購日", b:"11:00 APP 全站 5 折券", cta:"看今天時段", url:"#event", s:"2026-09-29", e:"2026-09-29"},
   {t:"月底閃購日", b:"最後一天 APP 全站 1 折", cta:"看今天時段", url:"#event", s:"2026-09-30", e:"2026-09-30"},
@@ -3413,6 +3417,12 @@ const BANNERS = [
    b=商品名（12 字內）、d=賣點一行（10 字內）、href=站內錨點。最多四則。
    可選 s/e：填了只在該期間顯示，過期自動讓位給後面的；不填＝一直顯示。 */
 const HIGHLIGHTS = [
+  /* 2026-10-01：每一則都要給 s／e，沒填期限會一直掛著（六本木、JR PASS、F1 就是這樣過期還在） */
+  {img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/promo_7795_20260929190603/20260929110607_oC9nX/jpg", t:"十月全月", b:"十尚玩咖", d:"全站最高折 600", href:"#code=ALL95", s:"2026-10-01", e:"2026-10-31"},
+  {img:"img/pk-lianjia.webp", t:"雙十連假", b:"國旅主題包", d:"樂園＋離島", href:"#packs-lianjia", s:"2026-10-01", e:"2026-10-11"},
+  {img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_771487/20260914050112_CIBLD/png", t:"期間限定", b:"嵐山月燈路", d:"竹林點燈一日遊", href:"#today", s:"2026-10-01", e:"2026-11-08"},
+  {img:"img/pk-sea.webp", t:"週三限定", b:"東南亞日", d:"SEADAY 93 折", href:"#packs-sea", s:"2026-10-06", e:"2026-10-07"},
+  {img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_123906/20260930044108_MxAE3/png", t:"KKday 獨家", b:"東京聖誕市集", d:"線上買送馬克杯", href:"#today", s:"2026-10-01", e:"2026-10-31"},
   {img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_550798/20260529093911_VnE40/png", t:"超殺促銷", b:"曼谷船＋巴士", d:"一日通票 31 元", href:"#today", s:"2026-09-30", e:"2026-09-30"},
   {img:"img/flash-0928-sq.webp", t:"月底閃購", b:"APP 5 折券", d:"11 點、21 點開搶", href:"#event", s:"2026-09-28", e:"2026-09-28"},
   {img:"img/flash-0929-sq.webp", t:"月底閃購", b:"APP 5 折券", d:"11 點、21 點開搶", href:"#event", s:"2026-09-29", e:"2026-09-29"},
@@ -3421,9 +3431,9 @@ const HIGHLIGHTS = [
   {img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_246671/20240904130617_LpCC7/jpg", t:"KOL 專屬", b:"石垣島機票 3,388 起", d:"明早 9:00 收單・含行李", href:"#today", s:"2026-09-22", e:"2026-09-23", until:"2026-09-23T09:00"},
   {img:"img/thsr-1024.webp", t:"光復節連假", b:"高鐵 9/25 開搶", d:"95 折・10/23–27", href:"#today", s:"2026-09-24", e:"2026-09-25"},
   {img:"img/eurail-1024.webp", t:"限時優惠", b:"歐鐵通行證", d:"5 折起・送 eSIM", href:"#today", s:"2026-09-24", e:"2026-09-30"},
-  {img:"img/roppongi-v3.webp",    t:"限時特惠", b:"六本木夜景", d:"只要 600 日圓", href:"#today"},
-  {img:"img/jrpass-fare-v2.webp", t:"倒數最後", b:"JR PASS",  d:"10/1 漲價前鎖舊價",   href:"#today"},
-  {img:"img/f1-benefit-wide.webp",t:"夥伴福利", b:"F1 新加坡",  d:"補助 5 折", href:"#benefit"},
+  {img:"img/roppongi-v3.webp",    t:"限時特惠", b:"六本木夜景", d:"只要 600 日圓", href:"#today", e:"2026-09-30"},
+  {img:"img/jrpass-fare-v2.webp", t:"倒數最後", b:"JR PASS",  d:"10/1 漲價前鎖舊價",   href:"#today", e:"2026-09-30"},
+  {img:"img/f1-benefit-wide.webp",t:"夥伴福利", b:"F1 新加坡",  d:"補助 5 折", href:"#benefit", e:"2026-10-05"},
   {img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_259305/20241018115501_klNyr/jpg", t:"清倉機票", b:"酷航東京", d:"8,588 起・含行李", href:"#today", s:"2026-09-24", e:"2026-09-30"}
 ];
 
