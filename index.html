@@ -5638,7 +5638,7 @@ renderCid();
   document.getElementById("popgo").addEventListener("click", close);
   pop.addEventListener("click", function(e){ if (e.target === pop) close(); });
   /* 從直達連結（#packs-…、#check-…、#codes-… 等）進來的人是要看特定區塊，不要用彈窗擋住（2026-10-01） */
-  if (/^#(packs|check|codes|event|picks|today|collab|sponsor|benefit)/.test(location.hash || "")) return;
+  if (/^#(packs|check|codes|code=|event|picks|today|collab|sponsor|benefit)/.test(location.hash || "")) return;
   setTimeout(function(){ pop.classList.add("on"); }, 700);
 })();
 
@@ -6714,10 +6714,14 @@ q.addEventListener("input", () => {
   if (ck) h = "check";
   var cg = h.indexOf("codes-") === 0 ? h.slice(6) : "";
   if (cg) h = "codelist";
+  /* #code=LH1050：直接打開「用折扣碼查」並帶入這張碼查好（文案導流用，2026-10-01） */
+  var qc = h.indexOf("code=") === 0 ? h.slice(5) : "";
+  if (qc) { h = "check"; ck = "code"; }
   function go(){
     if (pk) { var b = document.querySelector('.pktab[data-p="' + pk + '"]'); if (b && !b.classList.contains("on")) b.click(); }
     if (ck) { var c = document.querySelector('.cktabs button[data-ck="' + ck + '"]'); if (c && c.getAttribute("aria-selected") !== "true") c.click(); }
     if (cg) { var g = document.querySelector('#codelist button[data-tab="' + cg + '"]'); if (g && g.getAttribute("aria-selected") !== "true") g.click(); }
+    if (qc) { var ci = document.getElementById("ckcode"), cb = document.getElementById("ckcodego"); if (ci && cb && ci.value.toUpperCase() !== qc.toUpperCase()) { ci.value = qc; cb.click(); } }
     var t = document.getElementById(h); if (t) t.scrollIntoView({block:"start"});
   }
   setTimeout(go, 0); setTimeout(go, 600);
