@@ -6535,7 +6535,13 @@ q.addEventListener("input", () => {
 (function(){
   var h = decodeURIComponent((location.hash || "").slice(1));
   if (!h) return;
-  function go(){ var t = document.getElementById(h); if (t) t.scrollIntoView({block:"start"}); }
+  /* #packs-maple 這種連結：直接打開主題資源包的那一包（Alen 2026-10-01，文案要能帶到指定主題包） */
+  var pk = h.indexOf("packs-") === 0 ? h.slice(6) : "";
+  if (pk) h = "packs";
+  function go(){
+    if (pk) { var b = document.querySelector('.pktab[data-p="' + pk + '"]'); if (b && !b.classList.contains("on")) b.click(); }
+    var t = document.getElementById(h); if (t) t.scrollIntoView({block:"start"});
+  }
   setTimeout(go, 0); setTimeout(go, 600);
 })();
 </script>
