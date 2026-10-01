@@ -1150,7 +1150,7 @@ footer a{color:var(--brand)}
       <a href="#codes" class="navdda">折扣碼 <i></i></a>
       <span class="navddp" id="navddp2"></span>
     </span>
-    <a href="#sponsor">贊助</a>
+    <a href="#collab">合作機會</a>
     <a href="#payout">佣金</a>
     <a href="#ask">問題來信</a>
   </nav>
@@ -4869,17 +4869,17 @@ TABS.map(function(g, i){
 
 /* ── 0.7 贊助與體驗 ───────────────────── */
 H += '<section class="band" id="sponsor"><div class="inner">' +
-'<h2>贊助與體驗</h2>' +
-'<p class="lede">兩種不一樣的申請方式。上面是供應商指定、直接填表就好的特殊商品；下面是你主動向系統申請的一般商品合作。</p>' +
+'<h2>合作機會（贊助與體驗）</h2>' +
+'<p class="lede">免費體驗、業配招募都在這裡。上面是現在開放報名的合作，填表就能申請；下面是你自己挑商品、向系統申請的一般合作。</p>' +
 
-'<div class="open">' +
-'<div class="hd"><span class="dot"></span>現在可以申請的商品</div>' +
+'<div class="open" id="collab">' +
+'<div class="hd"><span class="dot"></span>現在開放報名的合作 · ' + SPONSOR_ITEMS.filter(function(x){ return !pastAt(x.until); }).length + ' 個</div>' +
 (function(){ /* until：招募截止時刻一到自動下架，不用回來手動清 */
   window.LIVE_SPONSOR = SPONSOR_ITEMS.filter(function(x){ return !pastAt(x.until); });
   return ""; })() +
 (LIVE_SPONSOR.length ? '<div class="prods">' + LIVE_SPONSOR.map(p =>
   '<div class="prod' + (p.img ? "" : " noimg") + '">' +
-  (p.img ? '<img loading="lazy" src="' + esc(p.img) + '" alt="" onerror="this.remove()">' : "") +
+  (p.img ? '<img loading="lazy" src="' + esc(p.img) + '" alt="" onerror="this.parentNode.classList.add(\'noimg\');this.remove()">' : "") +
   '<div class="pbody">' + (p.isnew ? '<span class="spnew">NEW</span>' : "") + '<b>' + esc(p.name) + '</b>' +
   (p.tags && p.tags.length ? '<div class="tags">' + p.tags.map(t => '<span>' + esc(t) + '</span>').join("") + '</div>' : "") +
   (p.due ? '<div class="pdue">申請截止 ' + esc(p.due) + '</div>' : "") +
@@ -5609,7 +5609,7 @@ renderCid();
   document.getElementById("popgo").addEventListener("click", close);
   pop.addEventListener("click", function(e){ if (e.target === pop) close(); });
   /* 從直達連結（#packs-…、#check-…、#codes-… 等）進來的人是要看特定區塊，不要用彈窗擋住（2026-10-01） */
-  if (/^#(packs|check|codes|event|picks|today)/.test(location.hash || "")) return;
+  if (/^#(packs|check|codes|event|picks|today|collab|sponsor|benefit)/.test(location.hash || "")) return;
   setTimeout(function(){ pop.classList.add("on"); }, 700);
 })();
 
