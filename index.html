@@ -642,6 +642,8 @@ body.adminonly #codes #ck-prod{display:none}
 @media (max-width:760px){.pkmenu{max-width:none}.pkmpanel{flex-direction:column}
   .pkmleft{flex:none;border-right:0;border-bottom:1px solid var(--line);max-height:200px}}
 #packs #packs .pktabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.ckpick{cursor:pointer}.ckpick input{margin:0 10px 0 0;width:18px;height:18px;accent-color:var(--brand);flex:none}.ckpick em{font-style:normal;color:var(--muted);font-size:12px;margin-left:8px}
+.ckpickhint{margin:4px 0 6px;font-size:12.5px;color:var(--muted)}.ckpickbar{display:flex;gap:14px;align-items:center;margin-top:12px;flex-wrap:wrap}
 .pklink{margin:6px 0 14px;font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;align-items:center;gap:8px}.pklinkcp{font:inherit;font-size:13px;font-weight:700;color:var(--deep);background:#fff;border:1px solid var(--brand);border-radius:999px;padding:5px 12px;cursor:pointer}
 .pktab{background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 15px;font-size:13.5px;font-weight:700;color:var(--mid);cursor:pointer;white-space:nowrap}
 .pktab.on{background:var(--mid);border-color:var(--mid);color:#fff}
@@ -6487,13 +6489,18 @@ function runCheck(){
   ALLCODES.forEach(c => {
     if (!c.code || NO_CHECK.indexOf(c.code) >= 0) return;
     const j = judge(c.code, id);
-    (j.ok === null ? unk : j.ok ? ok : bad).push([c.code, j.why, c.g]);
+    (j.ok === null ? unk : j.ok ? ok : bad).push([c.code, j.why, c.g, c.benefit || "", c.till || "", c.scope || ""]);
   });
   let out = '<p class="ckmore">商品編號 <b>' + id + '</b>' + (b ? '：' + esc(b[1]) : "") + '</p>';
   if (OVBLOCK[id]) out += '<div class="hit bad"><b>' + esc(OVBLOCK[id]) + '</b>只有專門為這個商品開的指定碼才可能適用，一般折扣碼都不行。</div>';
   else if (b) out += '<div class="hit bad"><b>在全站折扣碼黑名單裡</b>任何折扣碼都折不了，不分碼別。</div>';
-  if (ok.length) out += '<div class="ckg yes"><h4><i></i>確定可以用 · ' + ok.length + ' 張</h4>' +
-    ok.map(x => '<div class="ckrow"><code>' + esc(x[0]) + '</code><span>' + esc(x[2] + (x[1] ? "　·　" + x[1] : "")) + '</span></div>').join("") + '</div>';
+  /* 可以用的碼可以勾選，一鍵複製「商品＋連結＋選的碼」（Alen 2026-10-01：讓 KOL 自己挑要套哪張） */
+  const pname = (b && b[1]) || HOT_PRODS[id] || (ONLY_NAMES[id] && ONLY_NAMES[id][0]) || "";
+  const pmid = Number((typeof MIDMAP !== "undefined" && MIDMAP[id]) || id);
+  if (ok.length) out += '<div class="ckg yes" data-id="' + pmid + '" data-n="' + esc(pname) + '"><h4><i></i>確定可以用 · ' + ok.length + ' 張</h4>' +
+    '<p class="ckpickhint">勾選要放進貼文的碼，按下面按鈕一次複製</p>' +
+    ok.map(x => '<label class="ckrow ckpick"><input type="checkbox" value="' + esc(x[0]) + '" data-b="' + esc(x[3]) + '" data-t="' + esc(x[4]) + '"><code>' + esc(x[0]) + '</code><span>' + esc(x[3] || x[2]) + (x[4] ? '<em>至 ' + esc(x[4].slice(5).replace("-", "/")) + '</em>' : "") + '</span></label>').join("") +
+    '<div class="ckpickbar"><button type="button" class="btn ckpickcp">複製商品＋選的折扣碼</button><button type="button" class="pklink ckpickall">全選</button></div></div>';
   if (bad.length) out += '<div class="ckg no"><h4><i></i>不能用 · ' + bad.length + ' 張</h4>' +
     bad.map(x => '<div class="ckrow"><code>' + esc(x[0]) + '</code><span>' + esc(x[1]) + '</span></div>').join("") + '</div>';
   if (unk.length) out += '<div class="ckg unk"><h4><i></i>要自己確認 · ' + unk.length + ' 張</h4>' +
@@ -6503,6 +6510,18 @@ function runCheck(){
   ckres.innerHTML = out;
 }
 document.getElementById("ckgo").addEventListener("click", runCheck);
+ckres.addEventListener("click", function(e){
+  const all = e.target.closest(".ckpickall");
+  if (all) { const bx = ckres.querySelectorAll(".ckpick input"); const on = [].some.call(bx, function(x){ return !x.checked; }); [].forEach.call(bx, function(x){ x.checked = on; }); all.textContent = on ? "全不選" : "全選"; return; }
+  const cp = e.target.closest(".ckpickcp"); if (!cp) return;
+  const box = cp.closest(".ckg"), sel = [].filter.call(box.querySelectorAll(".ckpick input"), function(x){ return x.checked; });
+  if (!sel.length) { toastMsg("先勾選要放的折扣碼"); return; }
+  if (!MYCID) { toastMsg("先在上面填你的 CID，連結才會算你的"); document.getElementById("mycid").scrollIntoView({block:"center"}); return; }
+  const url = withCid("https://www.kkday.com/zh-tw/product/" + box.dataset.id);
+  const t = (box.dataset.n ? box.dataset.n + "\n" : "") + url + "\n\n🔑 可用折扣碼\n" +
+    sel.map(function(x){ return "🎟️ " + x.value + (x.dataset.b ? "：" + x.dataset.b : "") + (x.dataset.t ? "（至 " + x.dataset.t.slice(5).replace("-", "/") + "）" : ""); }).join("\n") + "\n";
+  copyText(t, "已複製 " + sel.length + " 張碼和商品連結，連結帶上你的 CID");
+});
 ckin.addEventListener("keydown", e => { if (e.key === "Enter") runCheck(); });
 
 /* 搜尋 */
