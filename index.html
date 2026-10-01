@@ -1355,6 +1355,7 @@ const PSCOPE = {"cty":["?","Japan","Taiwan","Korea","Europe","TH","Hong Kong and
 /* 每張折扣碼的適用地區。cty 國家白名單、dest 城市白名單，兩者都沒填就代表不限地區。
    這是依折扣碼名稱與訴求推得的，發現誤判就改這裡。 */
 const CODE_GEO = {
+  "GNSTAY1":{cat:["住宿"], dest:["kr-busan","kr-gyeongju"]},
   "KKNPT50":{cty:["Hong Kong and Macau"]},
   "CUBEJP85OCT":{cty:["Japan"]},
   "CUBEJP9OCT":{cty:["Japan"]},
@@ -5775,7 +5776,17 @@ function judge(code, id, opts){
     return geoOK ? {ok:true, why:"今天可用，地區相符"} : {ok:null, why:"今天可用，但限「" + dm.dest + "」的商品"};
   }
 
-  if (!r) return geoOK ? {ok:true, why:"地區與類別相符"} : {ok:null, why:"沒有登記商品規則"};
+  /* 沒有排除清單、也沒登記地區類別的碼：以前一律判「可以用」，結果 GNSTAY1（慶州／釜山住宿）
+     對台灣餐券也說可以用（Alen 2026-10-01 抓到）。現在只有全站／全球型的碼才放行，
+     其他先用 scope 文字推類別，推不出來就回「要自己確認」。 */
+  if (!r) {
+    if (CODE_GEO[code]) return geoOK ? {ok:true, why:"地區與類別相符"} : {ok:null, why:"沒有登記商品規則"};
+    const cc = ALLCODES.filter(function(x){ return x.code === code; })[0] || {};
+    if (/全站|全球商品|全球(?!.*限)/.test((cc.scope || "") + (cc.benefit || ""))) return {ok:true, why:"全站適用"};
+    const sc = scopeCat(code), gg = geoOf(Number(id));
+    if (sc && gg && sc.indexOf(gg.cat) < 0) return {ok:false, why:"這張碼限「" + sc.join("、") + "」商品，這件是「" + gg.cat + "」"};
+    return {ok:null, why:"這張碼還沒登記適用範圍，請以結帳頁為準"};
+  }
   if (r.inc && !designated) return {ok:false, why:"這張碼只限定特定商品"};
   if (r.ex && ruleSet(r.ex).has(id)) return {ok:false, why:"在這張碼的排除清單裡"};
   /* 類別限制一定要在地區相符之前判，否則限住宿的碼會對景點門票回「可以用」 */
