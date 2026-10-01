@@ -272,7 +272,7 @@ h3{font-size:19px;font-weight:700;margin:34px 0 10px}
 .cksel2{display:none!important}
 #ckout{margin-top:14px}
 .ckonly ol{margin:8px 0 12px;padding-left:22px;line-height:1.9;font-size:14px}.ckonly a{color:var(--deep);font-weight:700}
-.ckcopyonly{font:inherit;font-weight:800;font-size:14px;padding:10px 18px;border:0;border-radius:12px;background:var(--brand);color:#fff;cursor:pointer}
+.ckcopyonly{font:inherit;font-size:13.5px;font-weight:700;background:none;border:0;color:var(--deep);text-decoration:underline;cursor:pointer;padding:0}
 .cknear{font:inherit;font-size:13px;font-weight:700;margin:4px 6px 0 0;padding:5px 10px;border:1px solid var(--brand);border-radius:999px;background:#fff;color:var(--deep);cursor:pointer}
 #ckcodemsg .hit{margin-top:10px}
 .blist{max-height:300px;overflow-y:auto;border:1px solid var(--line);border-radius:12px;margin-top:10px}
@@ -5785,6 +5785,19 @@ function pkThreshold(code){
 }
 function pkUsable(code){
   const used = pkUsed(), T = pkThreshold(code);
+  /* 限定商品碼：建議主打直接從指定清單挑，不受「近 7 天熱門」限制（Alen 2026-10-01：每張碼都要長一樣） */
+  const fo = FLASH_RULE[code];
+  if (fo && fo.only) {
+    const seen = {}, rows = [];
+    fo.only.forEach(function(id){
+      const v = ONLY_NAMES[id] || [HOT_PRODS[id] || ("查看商品 #" + id), Number((typeof MIDMAP !== "undefined" && MIDMAP[id]) || id)];
+      const pid = v[1];
+      if (seen[pid] || used.has(pid) || used.has(String(pid))) return; seen[pid] = 1;
+      const g = (typeof geoOf === "function") ? (geoOf(Number(id)) || {}) : {};
+      rows.push([pid, v[0], g.cat || "", 0]);
+    });
+    return rows;
+  }
   const fit = [], over = [], rest = [];
   for (let i = 0; i < PICKRANK.length; i++) {
     const pid = PICKRANK[i][0], aop = PICKRANK[i][2];
@@ -5922,9 +5935,11 @@ document.getElementById("cksel").addEventListener("change", e => {
       if (seen[v[1]]) return; seen[v[1]] = 1; items.push(v);
     });
     var url = function(m){ return "https://www.kkday.com/zh-tw/product/" + m + (MYCID ? "?cid=" + MYCID : ""); };
-    ckout.innerHTML = '<div class="ckonly"><p class="ckmore"><b>只能用在這 ' + items.length + ' 支商品</b>（' + esc(f.note) + '）</p>' +
-      '<ol>' + items.map(function(v){ return '<li><a href="' + url(v[1]) + '" target="_blank" rel="noopener">' + esc(v[0]) + '</a></li>'; }).join("") + '</ol>' +
-      '<button class="ckcopyonly">複製商品與連結</button></div>';
+    PK_CODE = code; PK_OFF = 0;
+    ckout.innerHTML = '<div id="pickbox">' + pickHtml() + '</div>' +
+      '<p class="ckmore"><b>只能用在這 ' + items.length + ' 支商品</b>（' + esc(f.note) + '）</p>' +
+      '<div class="ckonly"><ol>' + items.map(function(v){ return '<li><a href="' + url(v[1]) + '" target="_blank" rel="noopener">' + esc(v[0]) + '</a></li>'; }).join("") + '</ol>' +
+      '<button class="ckcopyonly pklink">複製全部 ' + items.length + ' 支</button></div>';
     ckout.querySelector(".ckcopyonly").addEventListener("click", function(){
       var head = code + (CK_ITEM && CK_ITEM.benefit ? "｜" + CK_ITEM.benefit : "") + "\n" + f.note + "\n";
       copyText(head + items.map(function(v, k){ return (k + 1) + ". " + v[0] + "\n" + url(v[1]); }).join("\n"), "清單已複製");
