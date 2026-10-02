@@ -3462,6 +3462,7 @@ const BANNERS = [
    可選 s/e：填了只在該期間顯示，過期自動讓位給後面的；不填＝一直顯示。 */
 const HIGHLIGHTS = [
   /* 2026-10-01：每一則都要給 s／e，沒填期限會一直掛著（六本木、JR PASS、F1 就是這樣過期還在） */
+  {img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_528208/20260522030638_UfvUB/jpg", t:"買一送一", b:"關西周遊券", d:"全網最便宜", href:"#today", s:"2026-10-02", e:"2026-12-31"},
   {img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/promo_7795_20260929190603/20260929110607_oC9nX/jpg", t:"十月全月", b:"十尚玩咖", d:"全站最高折 600", href:"#code=ALL95", s:"2026-10-01", e:"2026-10-31"},
   {img:"img/pk-lianjia.webp", t:"雙十連假", b:"國旅主題包", d:"樂園＋離島", href:"#packs-lianjia", s:"2026-10-01", e:"2026-10-11"},
   {img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_771487/20260914050112_CIBLD/png", t:"期間限定", b:"嵐山月燈路", d:"竹林點燈一日遊", href:"#today", s:"2026-10-01", e:"2026-11-08"},
@@ -3491,6 +3492,16 @@ const HIGHLIGHTS = [
    長檔期建議自己寫，不然會出現「還剩 101 天」這種沒有急迫感的字。
    url 可填站內錨點（#today）或外部網址；img 省略就沿用 HTML 裡的預設圖。 */
 const POPUP = [
+{
+  name:  "關西樂享周遊券豪華版｜買一送一",
+  s:     "2026-10-02",
+  e:     "2026-10-09",
+  badge: "全網最便宜・啟動前免費取消",
+  desc:  "兩個人去大阪一個人價！可選環球影城 1 日券、快速通關、空中庭園展望台，再加 HARUKA 或利木津巴士。一路賣到 12/31。",
+  img:   "https://image.kkday.com/v2/image/get/c_fill%2Ch_900%2Cq_80%2Ct_webp%2Cw_1600/s1.kkday.com/product_528208/20260522030638_UfvUB/jpg",
+  url:   "https://www.kkday.com/zh-tw/product/528208",
+  cta:   "看方案"
+},
 {
   name:  "曼谷船＋巴士一日通票｜只要 31 元",
   s:     "2026-09-30",
