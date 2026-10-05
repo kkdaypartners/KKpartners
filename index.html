@@ -1360,6 +1360,7 @@ const PSCOPE = {"cty":["?","Japan","Taiwan","Korea","Europe","TH","Hong Kong and
 /* 每張折扣碼的適用地區。cty 國家白名單、dest 城市白名單，兩者都沒填就代表不限地區。
    這是依折扣碼名稱與訴求推得的，發現誤判就改這裡。 */
 const CODE_GEO = {
+  "26PH600":{cty:["PH"]},
   "26JTP5000":{cty:["Korea"]},
   "EARLYBIRD":{cat:["交通","票券通票"],cty:["Japan"]},
   "FUBON300H2":{cat:["景點門票","票券通票","行程體驗"]},
@@ -4012,6 +4013,7 @@ const GROUPS = [
     {scope:"韓國｜首爾指定體驗行程", code:"FINDSEOUL20", benefit:"滿 TWD 1,271 折 TWD 636（USD 20），限 9 支指定商品", till:"2026-10-31"},
     {scope:"韓國｜NOWDA GO 濟州通行證", code:"26JTP5000", benefit:"不限門檻現折 ₩5,000（約 NT$115）", from:"2026-10-01", till:"2026-10-31", url:"https://www.kkday.com/zh-tw/product/765041"},
     {scope:"歐美樂園｜好萊塢環球影城、加州迪士尼", code:"DEPLH26", benefit:"95 折，最高折 US$15（約 NT$479）", from:"2026-10-01", till:"2026-10-31", url:"https://www.kkday.com/zh-tw/product/3971"},
+    {scope:"菲律賓｜全商品", code:"26PH600", benefit:"滿 3,000 折 600 元", from:"2026-10-05", till:"2026-10-31"},
     {scope:"日韓滑雪", code:"JPKRSKI88", benefit:"單筆滿 US$200（約 NT$6,400）享 88 折，最高折 US$20（約 NT$640），全市場 5,000 組", from:"2026-10-01", till:"2027-02-28", url:"https://www.kkday.com/zh-tw/promo/autumn_trip#ski"},
     {scope:"香港｜昂坪 360 纜車", code:"KKNPT50", benefit:"標準／水晶車廂 5 折，限量 20 組", till:"2026-12-30", url:"https://www.kkday.com/zh-tw/product/4360"},
     {scope:"韓國｜韓劇拍攝地指定行程", code:"26KDRAMA15", benefit:"滿 2,000 折 450，限 25 支指定商品", till:"2026-12-31"},
