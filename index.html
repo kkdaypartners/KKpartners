@@ -1362,6 +1362,7 @@ const PSCOPE = {"cty":["?","Japan","Taiwan","Korea","Europe","TH","Hong Kong and
 /* 每張折扣碼的適用地區。cty 國家白名單、dest 城市白名單，兩者都沒填就代表不限地區。
    這是依折扣碼名稱與訴求推得的，發現誤判就改這裡。 */
 const CODE_GEO = {
+  "FUNOCT971":{cty:["Taiwan"],cat:["景點門票"]},
   "26PH600":{cty:["PH"]},
   "26JTP5000":{cty:["Korea"]},
   "EARLYBIRD":{cat:["交通","票券通票"],cty:["Japan"]},
@@ -4072,6 +4073,7 @@ const GROUPS = [
     {scope:"菲律賓｜全商品", code:"26PH600", benefit:"滿 3,000 折 600 元", from:"2026-10-05", till:"2026-10-31", url:"https://www.kkday.com/zh-tw/promo/lovethephilippines"},
     {scope:"日韓滑雪｜限量", code:"JPKRSKI50OFF", benefit:"兩人同行滿 3,000 享 5 折（實際以美金計），全市場限量；11/1 起才能用", from:"2026-11-01", till:"2026-12-30", url:"https://www.kkday.com/zh-tw/promo/winter-in-japan"},
     {scope:"滑雪搭新幹線｜限量", code:"SKIFUN", benefit:"日本滑雪＆雪上活動 9 折（搭配指定新幹線路線推廣）；11/1 起才能用", from:"2026-11-01", till:"2026-12-30", url:"https://www.kkday.com/zh-tw/promo/winter-in-japan"},
+    {scope:"台灣｜雙十連假樂園親子景點（限量）", code:"FUNOCT971", benefit:"滿 1,200 享 97 折，最高折 150；1 人可用 2 次，出發日到 11/30", from:"2026-10-07", till:"2026-10-11"},
     {scope:"日韓滑雪", code:"JPKRSKI88", benefit:"單筆滿 6,000 享 88 折（實際以美金 US$200 計），最高折約 640，全市場 5,000 組", from:"2026-10-01", till:"2027-02-27", url:"https://www.kkday.com/zh-tw/promo/autumn_trip#ski"},
     {scope:"香港｜昂坪 360 纜車", code:"KKNPT50", benefit:"標準／水晶車廂 5 折，限量 20 組", till:"2026-12-30", url:"https://www.kkday.com/zh-tw/product/4360"},
     {scope:"韓國｜韓劇拍攝地指定行程", code:"26KDRAMA15", benefit:"滿 2,000 折 450，限 25 支指定商品", till:"2026-12-31"},
