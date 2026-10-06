@@ -1362,6 +1362,11 @@ const PSCOPE = {"cty":["?","Japan","Taiwan","Korea","Europe","TH","Hong Kong and
 /* 每張折扣碼的適用地區。cty 國家白名單、dest 城市白名單，兩者都沒填就代表不限地區。
    這是依折扣碼名稱與訴求推得的，發現誤判就改這裡。 */
 const CODE_GEO = {
+  "LH1000":{cty:["Europe","North America","Australia","New Zealand","Long Haul"]},
+  "10TKT1K":{cat:["行程體驗"]},
+  "DIAMONDCRZ":{cat:["郵輪"]},
+  "PLATINUMCRZ":{cat:["郵輪"]},
+  "GOLDCRZ":{cat:["郵輪"]},
   "FUNOCT971":{cty:["Taiwan"],cat:["景點門票"]},
   "26PH600":{cty:["PH"]},
   "26JTP5000":{cty:["Korea"]},
@@ -2549,7 +2554,7 @@ const DEALS = [
     img: "https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_528868/20260923035844_HE2hJ/jpg",
     price: [
       {n:"第 3、4 位", v:"航程費半價"},
-      {n:"10/10 前訂", v:"送 USD 100 旅遊金"}
+      {n:"10/10 前", v:"送 USD100 旅遊金"}
     ],
     why: "新加坡出發的迪士尼探險號雙重優惠：① 10/10 前預訂任一航班，送 USD 100 新加坡旅遊金（約 NT$3,200）；② 12/20 前預訂 2027/1/4–12/16 指定航程，同艙第 3、4 位旅客航程費半價，全家或朋友四人一間最划算。3 晚：https://www.kkday.com/zh-tw/cruises/528868　4 晚：https://www.kkday.com/zh-tw/cruises/528869",
     due: "半價：12/20 前預訂、2027/1/4–12/16 出發；不適用 2/4、2/8、3/8、3/22。旅遊金：10/10 前預訂。郵輪確認後不可取消、退款、更改。",
@@ -3852,6 +3857,245 @@ const POPUP = [
    折扣碼清單與查詢工具會收 EVENT_LIST 裡「所有」活動還沒過期的碼，所以被蓋過的活動（飛航日）碼仍查得到。 */
 const EVENT_LIST = [
 {
+  name: "十月會員日｜10/7–10/13",
+  s:    "2026-10-07",
+  e:    "2026-10-13",
+  url:  "https://www.kkday.com/zh-tw/promo/autumn_trip",
+  note: "10/7–9 預熱、10/10 正檔、10/11–13 返場。整點方案整點才上架，沒標折扣碼的是免碼或搶券（在活動頁領）。會籍券、點數加碼依讀者自己的會員等級，發文寫「依會籍」就好。",
+  perks: [
+    {t:"戳戳樂", d:"10/7–9 抽 88,888 點；10/10 抽 $88,888 旅遊金"},
+    {t:"點數加碼", d:"10/10 黑鑽 5 倍／白金 3 倍／黃金 2 倍／白銀 1.5 倍；10/13 全站 2 倍"},
+    {t:"滿額送點", d:"10/10 全站滿 6,000 送 1,000 點", until:"2026-10-10"}
+  ],
+  days: [
+    {
+      date:  "2026-10-07", label: "10/7 預熱",
+      highlight: "預熱：天天玩戳戳樂抽 88,888 KKday Points；13:00 夯品 5 折／買一送一",
+      codes: [
+        {time:"11:00", scope:"搶折扣金", free:true, benefit:"全站搶 $10,100 折扣金", till:"2026-10-07"},
+        {time:"13:00", scope:"夯品買一送一／5 折", free:true, benefit:"整點上架，限量", till:"2026-10-07"}
+      ],
+      bogo: [
+        {name:"橡樹谷官方外國人滑雪學校", url:"https://www.kkday.com/zh-tw/product/136591", deal:"5 折", why:"韓國｜限時5折"},
+        {name:"Elysian 伊利希安江村滑雪場一日遊", url:"https://www.kkday.com/zh-tw/product/136649", deal:"5 折", why:"韓國｜限時5折"},
+        {name:"伊利希安江村冬季滑雪一日遊", url:"https://www.kkday.com/zh-tw/product/146949", deal:"5 折", why:"韓國｜限時5折"},
+        {name:"江原道威利希利滑雪度假村一日遊／【22341", url:"https://www.kkday.com/zh-tw/product/26221", deal:"4.2 折", why:"韓國｜限時4.2折"},
+        {name:"韓國冬季親子遊", url:"https://www.kkday.com/zh-tw/product/29022", deal:"5 折", why:"韓國｜限時5折"},
+        {name:"首爾清潭", url:"https://www.kkday.com/zh-tw/product/596494", deal:"5 折", why:"韓國｜限時5折"},
+        {name:"日本滑雪", url:"https://www.kkday.com/zh-tw/product/137860", deal:"5 折", why:"日本｜限時5折"},
+        {name:"日本滑雪", url:"https://www.kkday.com/zh-tw/product/151891", deal:"5 折", why:"日本｜限時5折"},
+        {name:"川場滑雪場一日遊", url:"https://www.kkday.com/zh-tw/product/770747", deal:"5 折", why:"日本｜限時5折"},
+        {name:"豪華版關西樂享周遊券（可選日本環球影城1日券", url:"https://www.kkday.com/zh-tw/product/528208", deal:"買一送一", why:"日本｜限量買一送一"},
+        {name:"遊戲愛樂園門票", url:"https://www.kkday.com/zh-tw/product/126588", deal:"買一送一", why:"台灣"},
+        {name:"遊戲愛樂園門票", url:"https://www.kkday.com/zh-tw/product/126588", deal:"買一送一", why:"台灣"},
+        {name:"遊戲愛樂園門票", url:"https://www.kkday.com/zh-tw/product/126588", deal:"買一送一", why:"台灣｜限量買一送一"},
+        {name:"遊戲愛樂園門票", url:"https://www.kkday.com/zh-tw/product/126588", deal:"買一送一", why:"台灣｜限量買一送一"},
+        {name:"遊戲愛樂園門票", url:"https://www.kkday.com/zh-tw/product/126588", deal:"買一送一", why:"台灣"},
+        {name:"嘉義", url:"https://www.kkday.com/zh-tw/product/185667", deal:"折抵 300 T", why:"台灣"},
+        {name:"嘉義", url:"https://www.kkday.com/zh-tw/product/185667", deal:"折抵 300 T", why:"台灣"},
+        {name:"嘉義", url:"https://www.kkday.com/zh-tw/product/185667", deal:"折抵 300 T", why:"台灣"},
+        {name:"福湯岩盤浴 台中新時代館", url:"https://www.kkday.com/zh-tw/product/268051", deal:"買一送一", why:"台灣｜限量買一送一"},
+        {name:"福湯岩盤浴 新竹湳雅館", url:"https://www.kkday.com/zh-tw/product/119325", deal:"買一送一", why:"台灣｜限量買一送一"},
+        {name:"鹿港民俗文物館門票", url:"https://www.kkday.com/zh-tw/product/553840", deal:"買一送一", why:"台灣｜限量買一送一"},
+        {name:"JP超動感全票（含入場券＋120分鐘遊樂設施", url:"https://www.kkday.com/zh-tw/product/262230", deal:"買一送一", why:"港澳中｜限量買一送一"}
+      ]
+    },
+    {
+      date:  "2026-10-08", label: "10/8 預熱",
+      highlight: "預熱：天天玩戳戳樂抽 88,888 KKday Points；13:00 夯品 5 折／買一送一",
+      codes: [
+        {time:"11:00", scope:"搶折扣金", free:true, benefit:"全站搶 $10,100 折扣金", till:"2026-10-08"},
+        {time:"13:00", scope:"夯品買一送一／5 折", free:true, benefit:"整點上架，限量", till:"2026-10-08"}
+      ],
+      bogo: [
+        {name:"Elysian 伊利希安江村滑雪場一日遊", url:"https://www.kkday.com/zh-tw/product/136649", deal:"5 折", why:"韓國｜限時5折"},
+        {name:"韓國非軍事區一日遊", url:"https://www.kkday.com/zh-tw/product/144143", deal:"5 折", why:"韓國｜限時5折"},
+        {name:"伊利希安江村冬季滑雪一日遊", url:"https://www.kkday.com/zh-tw/product/146949", deal:"5 折", why:"韓國｜限時5折"},
+        {name:"江原道威利希利滑雪度假村一日遊／【22341", url:"https://www.kkday.com/zh-tw/product/26221", deal:"6 折", why:"韓國｜限時6折"},
+        {name:"首爾清潭", url:"https://www.kkday.com/zh-tw/product/596494", deal:"5 折", why:"韓國｜限時5折"},
+        {name:"富士山＆靜岡地區周遊券 mini", url:"https://www.kkday.com/zh-tw/product/20303", deal:"其他 ／ Oth", why:"日本"},
+        {name:"JR關西廣域鐵路周遊 5 日券", url:"https://www.kkday.com/zh-tw/product/20317", deal:"其他 ／ Oth", why:"日本"},
+        {name:"日本京都秘境一日遊", url:"https://www.kkday.com/zh-tw/product/287665", deal:"買一送一", why:"日本｜限量買一送一"},
+        {name:"日本京都奈良經典一日遊", url:"https://www.kkday.com/zh-tw/product/770580", deal:"買一送一", why:"日本｜限量買一送一"},
+        {name:"日本三景天橋立・伊根舟屋一日遊", url:"https://www.kkday.com/zh-tw/product/770690", deal:"買一送一", why:"日本｜限量買一送一"},
+        {name:"豪華版關西樂享周遊券（可選日本環球影城1日券", url:"https://www.kkday.com/zh-tw/product/528208", deal:"買一送一", why:"日本｜限量買一送一"},
+        {name:"高雄鈴鹿賽道2026 單人全日無限暢遊券", url:"https://www.kkday.com/zh-tw/product/114876", deal:"買一送一", why:"台灣｜限量買一送一"},
+        {name:"福湯岩盤浴 台中新時代館", url:"https://www.kkday.com/zh-tw/product/268051", deal:"買一送一", why:"台灣｜限量買一送一"},
+        {name:"福湯岩盤浴 新竹湳雅館", url:"https://www.kkday.com/zh-tw/product/119325", deal:"買一送一", why:"台灣｜限量買一送一"},
+        {name:"澳門新濠影滙水上樂園門票 Water Par", url:"https://www.kkday.com/zh-tw/product/118248", deal:"5 折", why:"港中澳｜限時5折"},
+        {name:"澳門新濠影滙「星滙餐廳Spotlight」自", url:"https://www.kkday.com/zh-tw/product/19803", deal:"5 折", why:"港中澳｜限時5折"}
+      ]
+    },
+    {
+      date:  "2026-10-09", label: "10/9 預熱",
+      highlight: "預熱：天天玩戳戳樂抽 88,888 KKday Points；13:00 夯品 5 折／買一送一",
+      codes: [
+        {time:"11:00", scope:"搶折扣金", free:true, benefit:"全站搶 $10,100 折扣金", till:"2026-10-09"},
+        {time:"13:00", scope:"夯品買一送一／5 折", free:true, benefit:"整點上架，限量", till:"2026-10-09"}
+      ],
+      bogo: [
+        {name:"釜山遊艇併團體驗", url:"https://www.kkday.com/zh-tw/product/134684", deal:"5 折", why:"韓國｜限時5折"},
+        {name:"Elysian 伊利希安江村滑雪場一日遊", url:"https://www.kkday.com/zh-tw/product/136649", deal:"5 折", why:"韓國｜限時5折"},
+        {name:"韓國釜山", url:"https://www.kkday.com/zh-tw/product/260335", deal:"5 折", why:"韓國｜限時5折"},
+        {name:"江原道威利希利滑雪度假村一日遊／【22341", url:"https://www.kkday.com/zh-tw/product/26221", deal:"6 折", why:"韓國｜限時6折"},
+        {name:"首爾清潭", url:"https://www.kkday.com/zh-tw/product/596494", deal:"5 折", why:"韓國｜限時5折"},
+        {name:"日本富士山箱根經典一日遊", url:"https://www.kkday.com/zh-tw/product/142196", deal:"買一送一", why:"日本｜限量買一送一"},
+        {name:"北海道冬季夢幻點燈一日遊", url:"https://www.kkday.com/zh-tw/product/162520", deal:"買一送一", why:"日本｜限量買一送一"},
+        {name:"富士山＆靜岡地區周遊券 mini", url:"https://www.kkday.com/zh-tw/product/20303", deal:"其他 ／ Oth", why:"日本"},
+        {name:"日本北海道美瑛富良野景點一日遊", url:"https://www.kkday.com/zh-tw/product/247083", deal:"買一送一", why:"日本｜限量買一送一"},
+        {name:"北海道登別洞爺湖一日遊", url:"https://www.kkday.com/zh-tw/product/536617", deal:"買一送一", why:"日本｜限量買一送一"},
+        {name:"日本北海道一日遊", url:"https://www.kkday.com/zh-tw/product/594340", deal:"買一送一", why:"日本｜限量買一送一"},
+        {name:"北海道札幌手稻", url:"https://www.kkday.com/zh-tw/product/609339", deal:"None", why:"日本"},
+        {name:"豪華版關西樂享周遊券（可選日本環球影城1日券", url:"https://www.kkday.com/zh-tw/product/528208", deal:"買一送一", why:"日本｜限量買一送一"},
+        {name:"Xpark Blu Night 【週五至週六", url:"https://www.kkday.com/zh-tw/product/127485", deal:"買一送一", why:"台灣｜限量買一送一"},
+        {name:"福湯岩盤浴 台中新時代館", url:"https://www.kkday.com/zh-tw/product/268051", deal:"買一送一", why:"台灣｜限量買一送一"},
+        {name:"福湯岩盤浴 新竹湳雅館", url:"https://www.kkday.com/zh-tw/product/119325", deal:"買一送一", why:"台灣｜限量買一送一"},
+        {name:"澳門英倫遊艇會酒店/君樂皇府酒店", url:"https://www.kkday.com/zh-tw/product/141927", deal:"6 折", why:"港中澳｜限時6折"},
+        {name:"皇家葡萄餚 Tromba Rija", url:"https://www.kkday.com/zh-tw/product/20569", deal:"4.9 折", why:"港中澳｜限時49折"},
+        {name:"香港仔觀光船遊", url:"https://www.kkday.com/zh-tw/product/24165", deal:"買一送一", why:"港中澳｜限量買一送一"}
+      ]
+    },
+    {
+      date:  "2026-10-10", label: "10/10 正檔",
+      highlight: "正檔：點數加碼（黑鑽 5 倍／白金 3 倍／黃金 2 倍／白銀 1.5 倍）、全站滿 6,000 送 1,000 點、戳戳樂抽 $88,888 旅遊金",
+      codes: [
+        {time:"11:00", scope:"搶折扣金", free:true, benefit:"全站搶 $10,100 折扣金", till:"2026-10-10"},
+        {time:"12:00", scope:"會籍券｜行程、體驗、住宿、租車包車", free:true, benefit:"黑鑽 1 折／白金 7 折／黃金 9 折", till:"2026-10-10"},
+        {time:"13:00", scope:"人氣商品買一送一／5 折起", free:true, benefit:"重點：豪華版關西樂享周遊券買一送一", till:"2026-10-10"},
+        {time:"14:00", scope:"日韓跨年機票", free:true, benefit:"搶券最低 $6,288", till:"2026-10-10"},
+        {time:"14:00", scope:"團旅全商品", code:"10TKT1K", benefit:"滿萬現折 $1,000", till:"2026-10-10"},
+        {time:"16:00", scope:"歐美紐澳", code:"LH1000", benefit:"滿額最高折 $1,000", till:"2026-10-10"},
+        {time:"20:00", scope:"郵輪｜黑鑽會員", code:"DIAMONDCRZ", benefit:"滿 50,000 折 8,000", till:"2026-10-10"},
+        {time:"20:00", scope:"郵輪｜白金會員", code:"PLATINUMCRZ", benefit:"滿 50,000 折 6,000", till:"2026-10-10"},
+        {time:"20:00", scope:"郵輪｜黃金會員", code:"GOLDCRZ", benefit:"滿 50,000 折 5,000", till:"2026-10-10"},
+        {time:"22:00", scope:"夜間加碼 88 折", free:true, benefit:"搶券最高折 $300（排除部分低毛利商品）", till:"2026-10-10"}
+      ],
+      bogo: [
+        {name:"韓國濟州島", url:"https://www.kkday.com/zh-tw/product/131733", deal:"4.542 折", why:"韓國｜限時5折"},
+        {name:"韓國非軍事區一日遊", url:"https://www.kkday.com/zh-tw/product/144143", deal:"5 折", why:"韓國｜限時57折"},
+        {name:"江原道威利希利滑雪度假村一日遊／【22341", url:"https://www.kkday.com/zh-tw/product/26221", deal:"5.7 折", why:"韓國｜限量買一送一"},
+        {name:"首爾弘大", url:"https://www.kkday.com/zh-tw/product/266953", deal:"買一送一", why:"韓國｜限時5折"},
+        {name:"首爾", url:"https://www.kkday.com/zh-tw/product/268724", deal:"5 折", why:"韓國｜限時5折"},
+        {name:"仁川一天團 A", url:"https://www.kkday.com/zh-tw/product/32097", deal:"5 折", why:"韓國｜限量買一送一"},
+        {name:"東京哈利波特製片廠之旅 門票", url:"https://www.kkday.com/zh-tw/product/144383", deal:"買一送一", why:"日本｜限量買一送一"},
+        {name:"富士山打卡一日遊", url:"https://www.kkday.com/zh-tw/product/150665", deal:"買一送一", why:"日本｜限量買一送一"},
+        {name:"富士山打卡一日遊", url:"https://www.kkday.com/zh-tw/product/150665", deal:"買一送一", why:"日本｜限時5折"},
+        {name:"日本京都天橋立一日遊", url:"https://www.kkday.com/zh-tw/product/155289", deal:"5 折", why:"日本｜限量買一送一"},
+        {name:"北海道旭川動物園一日遊", url:"https://www.kkday.com/zh-tw/product/155327", deal:"買一送一", why:"日本｜限量買一送一"},
+        {name:"滋賀絕景琵琶湖一日遊", url:"https://www.kkday.com/zh-tw/product/166656", deal:"買一送一", why:"日本｜限量買一送一"},
+        {name:"滋賀絕景琵琶湖一日遊", url:"https://www.kkday.com/zh-tw/product/166656", deal:"買一送一", why:"日本｜限量買一送一"},
+        {name:"日本大分太宰府・別府空中纜車・由布院・金鱗湖", url:"https://www.kkday.com/zh-tw/product/248949", deal:"買一送一", why:"日本｜限時5折"},
+        {name:"日本富士山河口湖一日遊", url:"https://www.kkday.com/zh-tw/product/12319", deal:"5 折", why:"日本｜限量買一送一"},
+        {name:"日本", url:"https://www.kkday.com/zh-tw/product/269798", deal:"買一送一", why:"日本｜限量買一送一"},
+        {name:"日本京都奈良經典一日遊", url:"https://www.kkday.com/zh-tw/product/770580", deal:"買一送一", why:"日本｜限量買一送一"},
+        {name:"日本三景天橋立・伊根舟屋一日遊", url:"https://www.kkday.com/zh-tw/product/770690", deal:"買一送一", why:"日本｜限量買一送一"},
+        {name:"京都丹後海上列車&天橋立纜車&伊根游覽船&伊", url:"https://www.kkday.com/zh-tw/product/772099", deal:"買一送一", why:"日本｜限量買一送一"},
+        {name:"京都天橋立・伊根舟屋一日遊", url:"https://www.kkday.com/zh-tw/product/772216", deal:"買一送一", why:"日本｜限量買一送一"},
+        {name:"阿倍野展望台門票 HARUKAS 300", url:"https://www.kkday.com/zh-tw/product/19513", deal:"買一送一", why:"日本｜限量買一送一"},
+        {name:"豪華版關西樂享周遊券（可選日本環球影城1日券", url:"https://www.kkday.com/zh-tw/product/528208", deal:"買一送一", why:"日本"},
+        {name:"小人國主題樂園門票", url:"https://www.kkday.com/zh-tw/product/27980", deal:"46 折", why:"台灣｜限量買一送一"},
+        {name:"竹湖山居", url:"https://www.kkday.com/zh-tw/product/701463", deal:"買一送一", why:"台灣｜限量買一送一"},
+        {name:"福湯岩盤浴 台中新時代館", url:"https://www.kkday.com/zh-tw/product/268051", deal:"買一送一", why:"台灣｜限量買一送一"},
+        {name:"福湯岩盤浴 新竹湳雅館", url:"https://www.kkday.com/zh-tw/product/119325", deal:"買一送一", why:"台灣｜限時4折"},
+        {name:"360°旋轉餐廳下午茶優惠", url:"https://www.kkday.com/zh-tw/product/141248", deal:"4 折", why:"港中澳｜限量買一送一"},
+        {name:"城巴全港遊72小時套票", url:"https://www.kkday.com/zh-tw/product/161178", deal:"買一送一", why:"港中澳｜限量買一送一"},
+        {name:"昂坪360纜車", url:"https://www.kkday.com/zh-tw/product/4360", deal:"買一送一", why:"港中澳｜限時5折"},
+        {name:"澳門新濠天地水舞間門票 House of D", url:"https://www.kkday.com/zh-tw/product/4366", deal:"5 折", why:"港中澳"},
+        {name:"香港上環↔澳門氹仔", url:"https://www.kkday.com/zh-tw/product/19071", deal:"None", why:"港中澳"},
+        {name:"澳洲黃金海岸", url:"https://www.kkday.com/zh-tw/product/6349", deal:"None", why:"澳洲"},
+        {name:"曼谷素坤逸11巷", url:"https://www.kkday.com/zh-tw/product/10440", deal:"None", why:"東南亞"},
+        {name:"澳洲黃金海岸", url:"https://www.kkday.com/zh-tw/product/6349", deal:"None", why:"OC"}
+      ]
+    },
+    {
+      date:  "2026-10-11", label: "10/11 返場",
+      highlight: "返場：驚喜專區 5 折起；10/10 的機票、郵輪、長線商品續賣到 10/13",
+      codes: [
+        {time:"全天", scope:"全站指定商品", code:"B4M010", benefit:"94 折（排除部分低毛利商品）", till:"2026-10-13"},
+        {time:"全天", scope:"全站限量滿額折", free:true, benefit:"滿 5,000 折 400（限量；排除郵輪、機票及部分低毛利商品）", till:"2026-10-13"},
+        {time:"11:00", scope:"搶折扣金", free:true, benefit:"全站搶 $10,100 折扣金", till:"2026-10-11"},
+        {time:"13:00", scope:"買一送一／5 折", free:true, benefit:"整點上架，限量", till:"2026-10-11"},
+        {time:"20:00", scope:"5 折券｜不限會籍", free:true, benefit:"最高折 $500", till:"2026-10-11"}
+      ],
+      bogo: [
+        {name:"江原道威利希利滑雪度假村一日遊／【22341", url:"https://www.kkday.com/zh-tw/product/26221", deal:"5 折", why:"KR"},
+        {name:"慶州聯合國教科文組織世界遺產一日遊", url:"https://www.kkday.com/zh-tw/product/331797", deal:"5 折", why:"KR"},
+        {name:"首爾清潭", url:"https://www.kkday.com/zh-tw/product/596494", deal:"5 折", why:"KR"},
+        {name:"野森動物學校門票", url:"https://www.kkday.com/zh-tw/product/570724", deal:"買一送一", why:"TW"},
+        {name:"福湯岩盤浴 台中新時代館", url:"https://www.kkday.com/zh-tw/product/268051", deal:"買一送一", why:"TW"},
+        {name:"福湯岩盤浴 新竹湳雅館", url:"https://www.kkday.com/zh-tw/product/119325", deal:"買一送一", why:"TW"},
+        {name:"小人國主題樂園門票", url:"https://www.kkday.com/zh-tw/product/27980", deal:"46 折", why:"TW"},
+        {name:"單程船票(香港上環↔澳門氹仔)", url:"https://www.kkday.com/zh-tw/product/10445", deal:"None", why:"HKMOCN"},
+        {name:"永東巴士香港市區＜往/返＞澳門單程兌換劵", url:"https://www.kkday.com/zh-tw/product/161593", deal:"5 折", why:"HKMOCN"},
+        {name:"360° 旋轉餐廳自助午餐．晚餐", url:"https://www.kkday.com/zh-tw/product/10555", deal:"4.8 折", why:"HKMOCN"},
+        {name:"豪華版關西樂享周遊券（可選日本環球影城1日券", url:"https://www.kkday.com/zh-tw/product/528208", deal:"買一送一", why:"JP"},
+        {name:"九州一日遊", url:"https://www.kkday.com/zh-tw/product/150984", deal:"買一送一", why:"JP"},
+        {name:"日本京都天橋立一日遊", url:"https://www.kkday.com/zh-tw/product/155289", deal:"5 折", why:"JP"},
+        {name:"九州皿倉山纜車一日遊", url:"https://www.kkday.com/zh-tw/product/180965", deal:"買一送一", why:"JP"},
+        {name:"富士山＆靜岡地區周遊券 mini", url:"https://www.kkday.com/zh-tw/product/20303", deal:"其他 ／ Oth", why:"JP"},
+        {name:"日本富士山河口湖一日遊", url:"https://www.kkday.com/zh-tw/product/12319", deal:"5 折", why:"JP"},
+        {name:"富士山六景熱門打卡拍照一日遊", url:"https://www.kkday.com/zh-tw/product/266389", deal:"買一送一", why:"JP"},
+        {name:"日本宮崎高千穗峽＆阿蘇火山草千里一日遊", url:"https://www.kkday.com/zh-tw/product/287625", deal:"買一送一", why:"JP"},
+        {name:"日本", url:"https://www.kkday.com/zh-tw/product/581905", deal:"買一送一", why:"JP"}
+      ]
+    },
+    {
+      date:  "2026-10-12", label: "10/12 返場",
+      highlight: "返場：驚喜專區 5 折起；10/10 的機票、郵輪、長線商品續賣到 10/13",
+      codes: [
+        {time:"全天", scope:"全站指定商品", code:"B4M010", benefit:"94 折（排除部分低毛利商品）", till:"2026-10-13"},
+        {time:"全天", scope:"全站限量滿額折", free:true, benefit:"滿 5,000 折 400（限量；排除郵輪、機票及部分低毛利商品）", till:"2026-10-13"},
+        {time:"11:00", scope:"搶折扣金", free:true, benefit:"全站搶 $10,100 折扣金", till:"2026-10-12"},
+        {time:"13:00", scope:"買一送一／5 折", free:true, benefit:"整點上架，限量", till:"2026-10-12"},
+        {time:"20:00", scope:"5 折券｜不限會籍", free:true, benefit:"最高折 $500", till:"2026-10-12"}
+      ],
+      bogo: [
+        {name:"名古屋一日遊", url:"https://www.kkday.com/zh-tw/product/17716", deal:"None", why:"JP"},
+        {name:"日本東京六本木之丘展望台門票 Roppong", url:"https://www.kkday.com/zh-tw/product/18946", deal:"買一送一", why:"JP"},
+        {name:"富士山＆靜岡地區周遊券 mini", url:"https://www.kkday.com/zh-tw/product/20303", deal:"其他 ／ Oth", why:"JP"},
+        {name:"勝尾寺祈福達摩・京都嵐山・清水寺二年坂三年坂", url:"https://www.kkday.com/zh-tw/product/284721", deal:"None", why:"JP"},
+        {name:"日本東京富士山打卡一日遊", url:"https://www.kkday.com/zh-tw/product/573307", deal:"買一送一", why:"JP"},
+        {name:"京都秘境一日遊", url:"https://www.kkday.com/zh-tw/product/615677", deal:"買一送一", why:"JP"},
+        {name:"豪華版關西樂享周遊券（可選日本環球影城1日券", url:"https://www.kkday.com/zh-tw/product/528208", deal:"買一送一", why:"JP"},
+        {name:"共聲島", url:"https://www.kkday.com/zh-tw/product/703756", deal:"買一送一", why:"TW"},
+        {name:"福湯岩盤浴 台中新時代館", url:"https://www.kkday.com/zh-tw/product/268051", deal:"買一送一", why:"TW"},
+        {name:"福湯岩盤浴 新竹湳雅館", url:"https://www.kkday.com/zh-tw/product/119325", deal:"買一送一", why:"TW"},
+        {name:"香港機場快綫", url:"https://www.kkday.com/zh-tw/product/24165", deal:"買一送一", why:"HKMOCN"},
+        {name:"澳洲雪梨", url:"https://www.kkday.com/zh-tw/product/21745", deal:"None", why:"OC"}
+      ]
+    },
+    {
+      date:  "2026-10-13", label: "10/13 最後一天",
+      highlight: "返場：驚喜專區 5 折起；10/10 的機票、郵輪、長線商品續賣到 10/13；今天點數加碼 2 倍",
+      codes: [
+        {time:"全天", scope:"全站指定商品", code:"B4M010", benefit:"94 折（排除部分低毛利商品）", till:"2026-10-13"},
+        {time:"全天", scope:"全站限量滿額折", free:true, benefit:"滿 5,000 折 400（限量；排除郵輪、機票及部分低毛利商品）", till:"2026-10-13"},
+        {time:"11:00", scope:"搶折扣金", free:true, benefit:"全站搶 $10,100 折扣金", till:"2026-10-13"},
+        {time:"13:00", scope:"買一送一／5 折", free:true, benefit:"整點上架，限量", till:"2026-10-13"},
+        {time:"20:00", scope:"5 折券｜不限會籍", free:true, benefit:"最高折 $500", till:"2026-10-13"},
+        {time:"22:00", scope:"夜間加碼 88 折", free:true, benefit:"最高折 $300（排除部分低毛利商品）", till:"2026-10-13"}
+      ],
+      bogo: [
+        {name:"富士山經典一日遊", url:"https://www.kkday.com/zh-tw/product/148912", deal:"None", why:"JP"},
+        {name:"北海道登別雙路線可選", url:"https://www.kkday.com/zh-tw/product/185814", deal:"買一送一", why:"JP"},
+        {name:"日本沖繩南部巴士一日遊", url:"https://www.kkday.com/zh-tw/product/285410", deal:"None", why:"JP"},
+        {name:"日本福岡糸島一日遊", url:"https://www.kkday.com/zh-tw/product/528486", deal:"None", why:"JP"},
+        {name:"日本東京富士山打卡一日遊", url:"https://www.kkday.com/zh-tw/product/573379", deal:"買一送一", why:"JP"},
+        {name:"四季彩之丘・富田農場・青池・瀑布一日遊", url:"https://www.kkday.com/zh-tw/product/580114", deal:"買一送一", why:"JP"},
+        {name:"北海道札幌手稻", url:"https://www.kkday.com/zh-tw/product/609339", deal:"None", why:"JP"},
+        {name:"日本白川鄉合掌村一日遊", url:"https://www.kkday.com/zh-tw/product/771707", deal:"買一送一", why:"JP"},
+        {name:"豪華版關西樂享周遊券（可選日本環球影城1日券", url:"https://www.kkday.com/zh-tw/product/528208", deal:"買一送一", why:"JP"},
+        {name:"共聲島", url:"https://www.kkday.com/zh-tw/product/703756", deal:"買一送一", why:"TW"},
+        {name:"福湯岩盤浴 台中新時代館", url:"https://www.kkday.com/zh-tw/product/268051", deal:"買一送一", why:"TW"},
+        {name:"福湯岩盤浴 新竹湳雅館", url:"https://www.kkday.com/zh-tw/product/119325", deal:"買一送一", why:"TW"},
+        {name:"環亞機場貴賓室服務-3小時貴賓室", url:"https://www.kkday.com/zh-tw/product/551942", deal:"4 折", why:"HKMOCN"},
+        {name:"澳洲", url:"https://www.kkday.com/zh-tw/product/121506", deal:"None", why:"OC"},
+        {name:"澳洲", url:"https://www.kkday.com/zh-tw/product/527407", deal:"None", why:"OC"}
+      ]
+    }
+  ]
+},
+{
   name: "嗨 Go! 飛航日｜泰瑞航空 韓國",
   s:    "2026-09-27",
   e:    "2026-10-11",
@@ -4020,7 +4264,7 @@ const EVENT = pickEvent(EVENT_LIST, twYmd());
 
 const CAMPAIGNS = [
   {name:"十尚玩咖｜十月全月", s:"2026-10-01", e:"2026-10-31", url:"https://www.kkday.com/zh-tw/promo/autumn_trip"},
-  {name:"會員日", s:"2026-10-10", e:"2026-10-13", url:"https://www.kkday.com/zh-tw/promo/vip-member"},
+  {name:"會員日", s:"2026-10-07", e:"2026-10-13", url:"https://www.kkday.com/zh-tw/promo/autumn_trip"},
   {name:"月中快閃", s:"2026-10-17", e:"2026-10-19", url:"https://www.kkday.com/zh-tw/promo/flashday"},
   {name:"飛航日", s:"2026-10-27", e:"2026-10-27", url:"https://www.kkday.com/zh-tw/promo/27-flash-sale"},
   {name:"月底閃購", s:"2026-10-29", e:"2026-10-31", url:"https://www.kkday.com/zh-tw/promo/flashday"}
