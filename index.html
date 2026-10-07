@@ -1122,7 +1122,8 @@ footer a{color:var(--brand)}
 .tierlede .pktier{margin-left:0}
 .dayimg{display:block;position:relative;max-width:880px;margin:0 auto 18px;border-radius:14px;overflow:hidden;
   border:1px solid var(--line);background:var(--wash);line-height:0}
-.dayimg img{width:100%;aspect-ratio:16/9;height:auto;object-fit:cover;object-position:center;display:block}
+/* 電腦版用橫式 pc、手機用直式 mo，整張顯示不裁切（Alen 10/7：原本電腦也吃直式圖被裁成 16:9） */
+.dayimg img{width:100%;height:auto;display:block}
 .dayimgtip{position:absolute;right:10px;bottom:10px;background:rgba(10,42,46,.72);color:#fff;
   font-size:12px;font-weight:600;line-height:1;padding:6px 11px;border-radius:999px;
   opacity:0;transition:.18s;pointer-events:none}
@@ -5545,8 +5546,9 @@ function buildEvent(){
         return '<div class="daypane' + (i === todayIdx ? " on" : "") + '" id="day-' + i + '">' +
           (d.highlight ? '<div class="dayhl">' + esc(d.highlight) + '</div>' : "") +
           (d.img ? '<a class="dayimg" href="' + esc(d.img.pc || d.img.mo) + '" target="_blank" rel="noopener" title="點開看大圖">' +
+            '<picture>' + (d.img.pc && d.img.mo ? '<source media="(min-width:721px)" srcset="' + esc(d.img.pc) + '">' : '') +
             '<img loading="lazy" src="' + esc(d.img.mo || d.img.pc) + '" alt="' + esc(d.label) + '攻略圖" ' +
-            'onerror="this.closest(\'.dayimg\').remove()"><span class="dayimgtip">點開看大圖</span></a>' : "") +
+            'onerror="this.closest(\'.dayimg\').remove()"></picture><span class="dayimgtip">點開看大圖</span></a>' : "") +
           (function(){
             const live = liveCodes(d);
             const gone = (d.codes || []).filter(function(it){ return it.code; }).length - live.length;
