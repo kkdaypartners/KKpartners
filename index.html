@@ -7601,8 +7601,21 @@ document.getElementById("cksel").addEventListener("change", e => {
     PK_CODE = code; PK_OFF = 0;
     ckout.innerHTML = '<div id="pickbox">' + pickHtml() + '</div>' +
       '<p class="ckmore"><b>只能用在這 ' + items.length + ' 支商品</b>（' + esc(f.note) + '）</p>' +
-      '<div class="ckonly"><ol>' + items.map(function(v){ return '<li><a href="' + url(v[1]) + '" target="_blank" rel="noopener">' + esc(v[0]) + '</a></li>'; }).join("") + '</ol>' +
+      '<div class="ckonly"><div class="pkbar"><button class="ckpickall">全選</button>' +
+      '<button class="ckpickcopy" disabled>複製勾選的 0 支</button></div><ol>' + items.map(function(v, k){ return '<li><label><input type="checkbox" class="ckpick" data-k="' + k + '"> <a href="' + url(v[1]) + '" target="_blank" rel="noopener">' + esc(v[0]) + '</a></label></li>'; }).join("") + '</ol>' +
       '<button class="ckcopyonly pklink">複製全部 ' + items.length + ' 支</button></div>';
+    (function(){
+      var boxes = ckout.querySelectorAll(".ckpick"), bt = ckout.querySelector(".ckpickcopy"), all = ckout.querySelector(".ckpickall");
+      var picked = function(){ return Array.prototype.filter.call(boxes, function(b){ return b.checked; }); };
+      var sync = function(){ var n = picked().length; bt.textContent = "複製勾選的 " + n + " 支"; bt.disabled = !n; all.textContent = (n === boxes.length ? "取消全選" : "全選"); };
+      Array.prototype.forEach.call(boxes, function(b){ b.addEventListener("change", sync); });
+      all.addEventListener("click", function(){ var on = picked().length !== boxes.length; Array.prototype.forEach.call(boxes, function(b){ b.checked = on; }); sync(); });
+      bt.addEventListener("click", function(){
+        var sel = picked().map(function(b){ return items[Number(b.getAttribute("data-k"))]; });
+        var head = code + (CK_ITEM && CK_ITEM.benefit ? "｜" + CK_ITEM.benefit : "") + "\n";
+        copyText(head + sel.map(function(v){ return "・" + v[0] + "\n" + url(v[1]); }).join("\n"), "已複製 " + sel.length + " 支");
+      });
+    })();
     ckout.querySelector(".ckcopyonly").addEventListener("click", function(){
       var head = code + (CK_ITEM && CK_ITEM.benefit ? "｜" + CK_ITEM.benefit : "") + "\n" + f.note + "\n";
       copyText(head + items.map(function(v, k){ return (k + 1) + ". " + v[0] + "\n" + url(v[1]); }).join("\n"), "清單已複製");
