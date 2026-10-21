@@ -4407,6 +4407,16 @@ const HIGHLIGHTS = [
    url 可填站內錨點（#today）或外部網址；img 省略就沿用 HTML 裡的預設圖。 */
 const POPUP = [
 {
+  name:  "萬聖節給糖不搗蛋｜全站滿額現折",
+  s:     "2026-10-21",
+  e:     "2026-10-26",
+  badge: "AFF 專屬・只到 10/26",
+  desc:  "全站單筆滿 $6,600 折 $666（KKHAL666）、滿 $8,800 折 $888（KKHAL888）。適合搭多日遊、小三通、極光、破冰船這類高客單商品；搭配建議看百科本週特別優惠。",
+  img:   {pc:"img/hal-pc.webp", mo:"img/hal-mo.webp"},
+  url:   "#today",
+  cta:   "看萬聖節優惠"
+},
+{
   name:  "超嗨會員日｜10/7 預熱",
   s:     "2026-10-07",
   e:     "2026-10-07",
@@ -7210,7 +7220,10 @@ renderCid();
     const wrap = document.querySelector(".popimg");
     if (!wrap) return;
     if (P) {                                   /* POPUP 自帶圖就用，沒帶就留 HTML 預設圖 */
-      if (P.img) wrap.innerHTML = '<img loading="lazy" src="' + esc(P.img) + '" alt="' + esc(P.name) + '">';
+      if (P.img && typeof P.img === "object") {   /* {pc, mo}：電腦橫式、手機直式 */
+        wrap.innerHTML = '<picture>' + (P.img.mo ? '<source media="(max-width:720px)" srcset="' + esc(P.img.mo) + '">' : "") +
+          '<img loading="lazy" src="' + esc(P.img.pc || P.img.mo) + '" alt="' + esc(P.name) + '"></picture>';
+      } else if (P.img) wrap.innerHTML = '<img loading="lazy" src="' + esc(P.img) + '" alt="' + esc(P.name) + '">';
       return;
     }
     const day = EVENT.days.filter(function(d){ return dayDiff(d.until || d.date) >= 0; })[0];
