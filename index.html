@@ -4686,6 +4686,34 @@ const POPUP = [
    折扣碼清單與查詢工具會收 EVENT_LIST 裡「所有」活動還沒過期的碼，所以被蓋過的活動（飛航日）碼仍查得到。 */
 const EVENT_LIST = [
 {
+  name: "雙 11｜10/26–11/16",
+  s:    "2026-10-26",
+  e:    "2026-11-16",
+  url:  "https://www.kkday.com/zh-tw/promo/double11",
+  note: "預熱期 10/26–10/31、正檔期 11/1–11/16（ITF 旅展加碼）。全期鋪底：全站 94 折、新客 84 折、滿 8,000 折 800、秋冬行程體驗滿萬折 1,200。每天 10:00／12:00／13:00／21:00 夯品 $11／$111／$1,111 整點開搶（商品清單提品中）。正檔期天天 11:00 搶 1 折券（最高折 $1,111；會員日 11/7–11/13 最高折 $11,111）。",
+  perks: [
+    {t:"整點開搶", d:"每天 10:00／12:00／13:00／21:00，夯品 $11／$111／$1,111（清單提品中）"},
+    {t:"超值機加酒", d:"機加酒 $11,111、國內機票 $1,111（清單提品中）"},
+    {t:"目的地 8 折起", d:"雪季、鐵路、跨年商品 8 折起"},
+    {t:"正檔 1 折券", d:"11/1 起天天 11:00 搶 1 折券，最高折 $1,111；11/7–11/13 會員日最高折 $11,111"},
+    {t:"郵輪加碼", d:"11/2 起週末 11:00、13:00 指定郵輪 $1,111；全郵輪滿 2 萬折 $1,111（搶券）"}
+  ],
+  days: [
+    {
+      date:  "2026-10-26", label: "雙 11 預熱開跑",
+      highlight: "全期鋪底券今天開始可領：全站 94 折、新客 84 折、滿 8,000 折 800、秋冬行程體驗滿萬折 1,200；10/26 13:00 人氣交通票券搶券",
+      codes: [
+        {time:"全期", scope:"全站不限門檻 94 折", code:"11A94", benefit:"最高折 150；活動頁領券", till:"2026-11-16"},
+        {time:"全期", scope:"新客專屬 84 折", code:"11N84", benefit:"最高折 100；限新客", till:"2026-11-16"},
+        {time:"全期", scope:"雙 11 限定｜全站滿 8,000 折 800", code:"11SV8", benefit:"活動頁領券", till:"2026-11-16"},
+        {time:"全期", scope:"秋冬行程體驗滿 10,000 折 1,200", code:"WIN1200", benefit:"活動頁領券", till:"2026-11-16"}
+      ],
+      bogo: [
+      ]
+    }
+  ]
+},
+{
   name: "十月月中快閃｜10/17–10/19",
   s:    "2026-10-17",
   e:    "2026-10-19",
@@ -5452,6 +5480,9 @@ const GROUPS = [
     {scope:"萬聖節給糖不搗蛋｜全站（AFF 專屬）", code:"KKHAL666", benefit:"全站單筆滿 6,600 折 666", from:"2026-10-21", till:"2026-10-26"},
     {scope:"萬聖節給糖不搗蛋｜全站（AFF 專屬）", code:"KKHAL888", benefit:"全站單筆滿 8,800 折 888", from:"2026-10-21", till:"2026-10-26"},
     {scope:"颱風安心優惠", code:"KKFLASH93", benefit:"93 折（適用範圍、上限與期限以十尚玩咖活動頁為準）", from:"2026-10-22", till:"", url:"https://www.kkday.com/zh-tw/promo/autumn_trip"},
+    {scope:"雙 11｜全站不限門檻", code:"11A94", benefit:"94 折，最高折 150", from:"2026-10-26", till:"2026-11-16", url:"https://www.kkday.com/zh-tw/promo/double11"},
+    {scope:"雙 11｜新客專屬", code:"11N84", benefit:"84 折，最高折 100；限新客", from:"2026-10-26", till:"2026-11-16", url:"https://www.kkday.com/zh-tw/promo/double11"},
+    {scope:"雙 11｜全站滿額", code:"11SV8", benefit:"滿 8,000 折 800", from:"2026-10-26", till:"2026-11-16", url:"https://www.kkday.com/zh-tw/promo/double11"},
     {scope:"韓國｜釜山療癒體驗（BTO WELLNESS）", code:"26BTOWELL", benefit:"指定 12 支體驗 8 折，最高折 $600（衝浪、立槳、寺院健行、汗蒸幕 Spa）", from:"2026-10-07", till:"2026-10-31", url:"https://www.kkday.com/zh-tw/promo/bto_wellness"},
     {scope:"歐美樂園｜好萊塢環球影城、加州迪士尼", code:"DEPLH26", benefit:"95 折，最高折 US$15（約 NT$479）", from:"2026-10-01", till:"2026-10-31", url:"https://www.kkday.com/zh-tw/product/3971"},
     {scope:"菲律賓｜全商品", code:"26PH600", benefit:"滿 3,000 折 600 元", from:"2026-10-05", till:"2026-10-31", url:"https://www.kkday.com/zh-tw/promo/lovethephilippines"},
@@ -5487,7 +5518,7 @@ const GROUPS = [
     {scope:"京畿道住宿", code:"KKGGSTAY", benefit:"折 500 元", till:"2026-09-30", url:"https://www.kkday.com/zh-tw/promo/gyeonggido-2026"},
     {scope:"京畿道票券", code:"KKGGTIX", benefit:"9 折", till:"2026-09-30", url:"https://www.kkday.com/zh-tw/promo/gyeonggido-2026"},
     {scope:"秋冬早鳥｜日遊體驗", code:"WIN600", benefit:"行程體驗滿 5,000 折 600 元（出發日至 2027/2/28）", till:"2026-10-31"},
-    {scope:"秋冬早鳥｜日遊體驗", code:"WIN1200", benefit:"行程體驗滿 10,000 折 1,200 元（出發日至 2027/2/28）", till:"2026-10-31"},
+    {scope:"秋冬早鳥｜日遊體驗", code:"WIN1200", benefit:"行程體驗滿 10,000 折 1,200 元（出發日至 2027/2/28）；雙 11 延長", till:"2026-11-16"},
     {scope:"全球住宿｜新客", code:"KKHOTELNEW", benefit:"不限低消 92 折，上限折 300 元", till:"2026-12-31", url:"https://www.kkday.com/zh-tw/promo/kkhotel"},
     {scope:"全球住宿｜舊客", code:"KKHOTEL", benefit:"不限低消 95 折，上限折 200 元", till:"2026-12-31", url:"https://www.kkday.com/zh-tw/promo/kkhotel"},
     {scope:"全球住宿｜週三限定", code:"WEDKKHOTEL", benefit:"台灣飯店晚鳥 9 折", till:"", url:"https://www.kkday.com/zh-tw/promo/kkhotel"},
