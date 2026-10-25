@@ -4686,6 +4686,35 @@ const POPUP = [
    折扣碼清單與查詢工具會收 EVENT_LIST 裡「所有」活動還沒過期的碼，所以被蓋過的活動（飛航日）碼仍查得到。 */
 const EVENT_LIST = [
 {
+  name: "嗨 Go! 飛航日｜亞洲航空、樂桃航空 日本大阪",
+  s:    "2026-10-27",
+  e:    "2026-10-27",
+  url:  "https://www.kkday.com/zh-tw/promo/27-flash-sale",
+  note: "每月 27 號的飛航日。10:00 搶亞洲航空大阪機票（最低 9,699 起，亞航是最低價）；13:00 搶台灣機場接送折 $500。當天下訂的六張專屬碼都能用 3 天（10/27–10/29）。全站滿萬送 1,000 點只限 10/27 當天；全球訂房點數 2 倍限 10/26–10/27。麗星郵輪照例不公開寫折扣碼。",
+  perks: [
+    {t:"滿萬送點", d:"10/27 當天全站滿 10,000 送 1,000 點"},
+    {t:"訂房點數 2 倍", d:"10/26–10/27 全球訂房點數 2 倍送"}
+  ],
+  days: [
+    {
+      date:  "2026-10-27", label: "飛航日 10/27",
+      highlight: "10:00 亞洲航空大阪機票 9,699 起、13:00 台灣機場接送折 $500；六張專屬碼用到 10/29",
+      codes: [
+        {time:"10:00", scope:"搶購機票", code:"FLYDAYTKT300", benefit:"折 300，用 3 天", till:"2026-10-29"},
+        {time:"全天", scope:"搶購機加酒", code:"FLYDAYPKG888", benefit:"折 888，用 3 天", till:"2026-10-29"},
+        {time:"全天", scope:"指定機票", code:"FLYDAY500TKT", benefit:"折 500，用 3 天", till:"2026-10-29"},
+        {time:"全天", scope:"指定迷你團／機加酒", code:"FLYDAY1000PKG", benefit:"折 1,000，用 3 天", till:"2026-10-29"},
+        {time:"全天", scope:"指定郵輪", code:"FLYDAY2000CUZ", benefit:"折 2,000，用 3 天", till:"2026-10-29"},
+        {time:"全天", scope:"指定郵輪＋機票", code:"FLYDAY3000FUZ", benefit:"折 3,000，用 3 天", till:"2026-10-29"}
+      ],
+      bogo: [
+        {name:"亞洲航空｜台灣飛日本大阪機票", url:"https://www.kkday.com/zh-tw/promo/27-flash-sale", deal:"9,699 起", why:"日本｜10:00 開搶，亞航是最低價"},
+        {name:"台灣機場接送", url:"https://www.kkday.com/zh-tw/promo/27-flash-sale", deal:"折 $500", why:"台灣｜13:00 開搶"}
+      ]
+    }
+  ]
+},
+{
   name: "雙 11｜10/26–11/16",
   s:    "2026-10-26",
   e:    "2026-11-16",
