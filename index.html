@@ -4481,6 +4481,26 @@ const HIGHLIGHTS = [
    url 可填站內錨點（#today）或外部網址；img 省略就沿用 HTML 裡的預設圖。 */
 const POPUP = [
 {
+  name:  "雙 11 預熱開跑",
+  s:     "2026-10-27",
+  e:     "2026-10-31",
+  badge: "10/26–11/16",
+  desc:  "每天 13:00、21:00 整點開搶 $11／$111／$1,111。全期鋪底：11A94 全站 94 折、11N84 新客 84 折、11SV8 滿 $8,000 折 $800、WIN1200 秋冬行程滿萬折 $1,200。每天的搶購清單看活動檔期。",
+  img:   {pc:"img/d11-pre-pc.webp", mo:"img/d11-pre-mo.webp"},
+  url:   "#event",
+  cta:   "看今天搶什麼"
+},
+{
+  name:  "雙 11 正檔開搶",
+  s:     "2026-11-01",
+  e:     "2026-11-16",
+  badge: "ITF 旅展加碼",
+  desc:  "天天 11:00 搶 1 折券（最高折 $1,111，11/7–11/13 會員日最高折 $11,111）；11/2 起週一到週五 11:00 超值機票；每天 13:00、21:00 整點開搶。",
+  img:   {pc:"img/d11-main-pc.webp", mo:"img/d11-main-mo.webp"},
+  url:   "#event",
+  cta:   "看今天搶什麼"
+},
+{
   name:  "萬聖節給糖不搗蛋｜全站滿額現折",
   s:     "2026-10-21",
   e:     "2026-10-26",
@@ -4730,7 +4750,7 @@ const EVENT_LIST = [
   ],
   days: [
     {
-      date:  "2026-10-26", label: "雙 11 預熱 10/26",
+      date:  "2026-10-26", img: {pc:"img/d11-1026.webp", mo:"img/d11-1026.webp"}, label: "雙 11 預熱 10/26",
       highlight: "整點開搶：13:00 4 品、21:00 3 品（搶購日曆 10/20 版，以活動頁為準）",
       codes: [
         {time:"全期", scope:"全站不限門檻 94 折", code:"11A94", benefit:"最高折 150；活動頁領券", till:"2026-11-16"},
@@ -4749,7 +4769,7 @@ const EVENT_LIST = [
       ]
     },
     {
-      date:  "2026-10-27", label: "雙 11 預熱 10/27",
+      date:  "2026-10-27", img: {pc:"img/d11-1027.webp", mo:"img/d11-1027.webp"}, label: "雙 11 預熱 10/27",
       highlight: "整點開搶：13:00 4 品、21:00 2 品（搶購日曆 10/20 版，以活動頁為準）",
       codes: [],
       bogo: [
@@ -4762,7 +4782,7 @@ const EVENT_LIST = [
       ]
     },
     {
-      date:  "2026-10-28", label: "雙 11 預熱 10/28",
+      date:  "2026-10-28", img: {pc:"img/d11-1028.webp", mo:"img/d11-1028.webp"}, label: "雙 11 預熱 10/28",
       highlight: "整點開搶：13:00 4 品、21:00 4 品（搶購日曆 10/20 版，以活動頁為準）",
       codes: [],
       bogo: [
@@ -4777,7 +4797,7 @@ const EVENT_LIST = [
       ]
     },
     {
-      date:  "2026-10-29", label: "雙 11 預熱 10/29",
+      date:  "2026-10-29", img: {pc:"img/d11-1029.webp", mo:"img/d11-1029.webp"}, label: "雙 11 預熱 10/29",
       highlight: "整點開搶：13:00 4 品（搶購日曆 10/20 版，以活動頁為準）",
       codes: [],
       bogo: [
@@ -4788,7 +4808,7 @@ const EVENT_LIST = [
       ]
     },
     {
-      date:  "2026-10-30", label: "雙 11 預熱 10/30",
+      date:  "2026-10-30", img: {pc:"img/d11-1030.webp", mo:"img/d11-1030.webp"}, label: "雙 11 預熱 10/30",
       highlight: "整點開搶：13:00 6 品（搶購日曆 10/20 版，以活動頁為準）",
       codes: [],
       bogo: [
@@ -4801,7 +4821,7 @@ const EVENT_LIST = [
       ]
     },
     {
-      date:  "2026-10-31", label: "雙 11 預熱 10/31",
+      date:  "2026-10-31", img: {pc:"img/d11-1031.webp", mo:"img/d11-1031.webp"}, label: "雙 11 預熱 10/31",
       highlight: "整點開搶：13:00 4 品（搶購日曆 10/20 版，以活動頁為準）",
       codes: [],
       bogo: [
@@ -4812,7 +4832,7 @@ const EVENT_LIST = [
       ]
     },
     {
-      date:  "2026-11-01", label: "雙 11 正檔 11/1",
+      date:  "2026-11-01", img: {pc:"img/d11-1101.webp", mo:"img/d11-1101.webp"}, label: "雙 11 正檔 11/1",
       highlight: "整點開搶：13:00 4 品、21:00 3 品（搶購日曆 10/20 版，以活動頁為準）",
       codes: [],
       bogo: [
@@ -4826,7 +4846,7 @@ const EVENT_LIST = [
       ]
     },
     {
-      date:  "2026-11-02", label: "雙 11 正檔 11/2",
+      date:  "2026-11-02", img: {pc:"img/d11-1102.webp", mo:"img/d11-1102.webp"}, label: "雙 11 正檔 11/2",
       highlight: "整點開搶：11:00 1 品、13:00 4 品、21:00 3 品（搶購日曆 10/20 版，以活動頁為準）",
       codes: [],
       bogo: [
@@ -4841,7 +4861,7 @@ const EVENT_LIST = [
       ]
     },
     {
-      date:  "2026-11-03", label: "雙 11 正檔 11/3",
+      date:  "2026-11-03", img: {pc:"img/d11-1103.webp", mo:"img/d11-1103.webp"}, label: "雙 11 正檔 11/3",
       highlight: "整點開搶：11:00 1 品、13:00 3 品、21:00 6 品（搶購日曆 10/20 版，以活動頁為準）",
       codes: [],
       bogo: [
@@ -4858,7 +4878,7 @@ const EVENT_LIST = [
       ]
     },
     {
-      date:  "2026-11-04", label: "雙 11 正檔 11/4",
+      date:  "2026-11-04", img: {pc:"img/d11-1104.webp", mo:"img/d11-1104.webp"}, label: "雙 11 正檔 11/4",
       highlight: "整點開搶：11:00 1 品、13:00 6 品、21:00 6 品（搶購日曆 10/20 版，以活動頁為準）",
       codes: [],
       bogo: [
@@ -4878,7 +4898,7 @@ const EVENT_LIST = [
       ]
     },
     {
-      date:  "2026-11-05", label: "雙 11 正檔 11/5",
+      date:  "2026-11-05", img: {pc:"img/d11-1105.webp", mo:"img/d11-1105.webp"}, label: "雙 11 正檔 11/5",
       highlight: "整點開搶：11:00 1 品、13:00 7 品、21:00 10 品（搶購日曆 10/20 版，以活動頁為準）",
       codes: [],
       bogo: [
@@ -4903,7 +4923,7 @@ const EVENT_LIST = [
       ]
     },
     {
-      date:  "2026-11-06", label: "雙 11 正檔 11/6",
+      date:  "2026-11-06", img: {pc:"img/d11-1106.webp", mo:"img/d11-1106.webp"}, label: "雙 11 正檔 11/6",
       highlight: "整點開搶：11:00 1 品、13:00 5 品、21:00 3 品（搶購日曆 10/20 版，以活動頁為準）",
       codes: [],
       bogo: [
@@ -4919,7 +4939,7 @@ const EVENT_LIST = [
       ]
     },
     {
-      date:  "2026-11-07", label: "會員日 11/7",
+      date:  "2026-11-07", img: {pc:"img/d11-1107.webp", mo:"img/d11-1107.webp"}, label: "會員日 11/7",
       highlight: "整點開搶：13:00 5 品（搶購日曆 10/20 版，以活動頁為準）",
       codes: [],
       bogo: [
@@ -4931,7 +4951,7 @@ const EVENT_LIST = [
       ]
     },
     {
-      date:  "2026-11-08", label: "會員日 11/8",
+      date:  "2026-11-08", img: {pc:"img/d11-1108.webp", mo:"img/d11-1108.webp"}, label: "會員日 11/8",
       highlight: "整點開搶：13:00 5 品（搶購日曆 10/20 版，以活動頁為準）",
       codes: [],
       bogo: [
@@ -4943,7 +4963,7 @@ const EVENT_LIST = [
       ]
     },
     {
-      date:  "2026-11-09", label: "會員日 11/9",
+      date:  "2026-11-09", img: {pc:"img/d11-1109.webp", mo:"img/d11-1109.webp"}, label: "會員日 11/9",
       highlight: "整點開搶：11:00 1 品、13:00 2 品（搶購日曆 10/20 版，以活動頁為準）",
       codes: [],
       bogo: [
@@ -4953,7 +4973,7 @@ const EVENT_LIST = [
       ]
     },
     {
-      date:  "2026-11-10", label: "會員日 11/10",
+      date:  "2026-11-10", img: {pc:"img/d11-1110.webp", mo:"img/d11-1110.webp"}, label: "會員日 11/10",
       highlight: "整點開搶：11:00 1 品、13:00 3 品（搶購日曆 10/20 版，以活動頁為準）",
       codes: [],
       bogo: [
