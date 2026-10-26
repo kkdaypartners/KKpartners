@@ -4481,6 +4481,16 @@ const HIGHLIGHTS = [
    url 可填站內錨點（#today）或外部網址；img 省略就沿用 HTML 裡的預設圖。 */
 const POPUP = [
 {
+  name:  "嗨 Go! 飛航日｜10/27 限定",
+  s:     "2026-10-27",
+  e:     "2026-10-27",
+  badge: "只有今天",
+  desc:  "10:00 亞洲航空大阪機票 9,699 起、13:00 台灣機場接送折 $500；當天下訂的專屬碼可用 3 天（到 10/29）。全站滿萬送 1,000 點只限今天。",
+  img:   {pc:"img/fly-1027-pc.webp", mo:"img/fly-1027-mo.webp"},
+  url:   "#event",
+  cta:   "看飛航日優惠"
+},
+{
   name:  "雙 11 預熱開跑",
   s:     "2026-10-27",
   e:     "2026-10-31",
@@ -4717,7 +4727,7 @@ const EVENT_LIST = [
   ],
   days: [
     {
-      date:  "2026-10-27", label: "飛航日 10/27",
+      date:  "2026-10-27", img: {pc:"img/fly-1027-pc.webp", mo:"img/fly-1027-mo.webp"}, label: "飛航日 10/27",
       highlight: "10:00 亞洲航空大阪機票 9,699 起、13:00 台灣機場接送折 $500；六張專屬碼用到 10/29",
       codes: [
         {time:"10:00", scope:"搶購機票", code:"FLYDAYTKT300", benefit:"折 300，用 3 天", till:"2026-10-29"},
@@ -4984,7 +4994,7 @@ const EVENT_LIST = [
       ]
     },
     {
-      date:  "2026-11-11", label: "會員日 11/11",
+      date:  "2026-11-11", img: {pc:"img/d11-1111.webp", mo:"img/d11-1111.webp"}, label: "會員日 11/11",
       highlight: "整點開搶：11:00 1 品、13:00 4 品（搶購日曆 10/20 版，以活動頁為準）",
       codes: [],
       bogo: [
@@ -4996,7 +5006,7 @@ const EVENT_LIST = [
       ]
     },
     {
-      date:  "2026-11-12", label: "會員日 11/12",
+      date:  "2026-11-12", img: {pc:"img/d11-1112.webp", mo:"img/d11-1112.webp"}, label: "會員日 11/12",
       highlight: "整點開搶：11:00 1 品、13:00 3 品（搶購日曆 10/20 版，以活動頁為準）",
       codes: [],
       bogo: [
@@ -5007,7 +5017,7 @@ const EVENT_LIST = [
       ]
     },
     {
-      date:  "2026-11-13", label: "會員日 11/13",
+      date:  "2026-11-13", img: {pc:"img/d11-1113.webp", mo:"img/d11-1113.webp"}, label: "會員日 11/13",
       highlight: "整點開搶：11:00 1 品、13:00 4 品（搶購日曆 10/20 版，以活動頁為準）",
       codes: [],
       bogo: [
@@ -5019,7 +5029,7 @@ const EVENT_LIST = [
       ]
     },
     {
-      date:  "2026-11-14", label: "雙 11 正檔 11/14",
+      date:  "2026-11-14", img: {pc:"img/d11-1114.webp", mo:"img/d11-1114.webp"}, label: "雙 11 正檔 11/14",
       highlight: "整點開搶：13:00 5 品、21:00 1 品（搶購日曆 10/20 版，以活動頁為準）",
       codes: [],
       bogo: [
@@ -5032,7 +5042,7 @@ const EVENT_LIST = [
       ]
     },
     {
-      date:  "2026-11-15", label: "雙 11 正檔 11/15",
+      date:  "2026-11-15", img: {pc:"img/d11-1115.webp", mo:"img/d11-1115.webp"}, label: "雙 11 正檔 11/15",
       highlight: "整點開搶：13:00 2 品、21:00 2 品（搶購日曆 10/20 版，以活動頁為準）",
       codes: [],
       bogo: [
@@ -5043,7 +5053,7 @@ const EVENT_LIST = [
       ]
     },
     {
-      date:  "2026-11-16", label: "雙 11 正檔 11/16",
+      date:  "2026-11-16", img: {pc:"img/d11-1116.webp", mo:"img/d11-1116.webp"}, label: "雙 11 正檔 11/16",
       highlight: "整點開搶：11:00 1 品、13:00 2 品、21:00 2 品（搶購日曆 10/20 版，以活動頁為準）",
       codes: [],
       bogo: [
