@@ -1385,7 +1385,7 @@ const FLASH_RULE = {
   "HAMIKUMA5OFF":  {only:[2247], note:"僅限 USJ 指定套票方案一，限時延至 9/20"},
   "USJBUNDLE1000": {only:[2247], note:"僅限 USJ 任天堂保證入園套票"},
   "USJBUNDLE5OFF": {only:[2247], note:"僅限 USJ 萬聖限定套票"},
-  "HFP5OFF":     {only:[528208], note:"買一送一再折 3%，僅限豪華版關西樂享周遊券（訂購 10/27 15:00–2027/2/27 15:00，出發日 10/28–2027/2/28）"},
+  "HFP5OFF":     {only:[528208], note:"買一送一再 95 折，僅限豪華版關西樂享周遊券（訂購 10/27 15:00–2027/2/27 15:00，出發日 10/28–2027/2/28）"},
   "MWEDUAG":     {only:[528208], note:"僅限豪華版關西樂享周遊券一檔，訂購 9/17 13:00–23:59（台北時間）"},
   "W9FRCYD":     {only:[712921], note:"僅限名人郵輪青森睡魔祭一檔，訂購 9/17 20:00 起（台北時間）"},
   "917TKT5000":  {cat:"僅限機票類別", note:"訂購 9/17 20:00–23:59（台北時間），出發日至 2027/3/31"},
@@ -3714,17 +3714,17 @@ const DEALS = [
   },
   {
     tag: "買一送一",
-    name: "關西周遊券｜買一送一再折3%",
+    name: "關西周遊券｜買一送一再95折",
     url: "https://www.kkday.com/zh-tw/product/528208",
     from: "2026-10-02",
     till: "2027-02-27",
     code: "HFP5OFF",
     img: "https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_528208/20260522030638_UfvUB/jpg",
     price: [
-      {n:"輸碼 HFP5OFF", v:"買一送一再折 3%"},
+      {n:"輸碼 HFP5OFF", v:"買一送一再 95 折"},
       {n:"取消", v:"兌換前免費取消"}
     ],
-    why: "豪華版關西樂享周遊券買一送一，結帳輸 HFP5OFF 再折 3%，兩個人去大阪等於一人價還更便宜。7 天內可選環球影城 1 日券、快速通關、造型爆米花桶、空中庭園展望台、空庭溫泉，再加 HARUKA 或利木津巴士機場交通，一張搞定關西。已售 20K+、4.7 分，還能免費取消。",
+    why: "豪華版關西樂享周遊券買一送一，結帳輸 HFP5OFF 再 95 折，兩個人去大阪等於一人價還更便宜。7 天內可選環球影城 1 日券、快速通關、造型爆米花桶、空中庭園展望台、空庭溫泉，再加 HARUKA 或利木津巴士機場交通，一張搞定關西。已售 20K+、4.7 分，還能免費取消。",
     due: "HFP5OFF 訂購到 2027/2/27 15:00、出發日 10/28–2027/2/28。購買後 270 天內要啟動；兌換後就不能取消、變更。這張是專屬碼，其他全站碼一樣不適用。",
     note: [
       "要下載 Travel Contents App 綁定電子票，現場出示 QR code 入場",
@@ -4739,7 +4739,7 @@ const BANNERS = [
 const HIGHLIGHTS = [
   /* 2026-10-01：每一則都要給 s／e，沒填期限會一直掛著（六本木、JR PASS、F1 就是這樣過期還在） */
   {img:"img/md-1010.webp", t:"10/7–10/13", b:"超嗨會員日", d:"全站最高折 $10,100", href:"#event", s:"2026-10-06", e:"2026-10-13"},
-  {img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_528208/20260522030638_UfvUB/jpg", t:"買一送一", b:"關西周遊券", d:"輸碼再折 3%", href:"#code=HFP5OFF", s:"2026-10-02", e:"2027-02-27"},
+  {img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_528208/20260522030638_UfvUB/jpg", t:"買一送一", b:"關西周遊券", d:"輸碼再 95 折", href:"#code=HFP5OFF", s:"2026-10-02", e:"2027-02-27"},
   {img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/promo_7795_20260929190603/20260929110607_oC9nX/jpg", t:"十月全月", b:"十尚玩咖", d:"全站最高折 600", href:"#code=ALL95", s:"2026-10-01", e:"2026-10-31"},
   {img:"img/pk-lianjia.webp", t:"雙十連假", b:"國旅主題包", d:"樂園＋離島", href:"#packs-lianjia", s:"2026-10-01", e:"2026-10-11"},
   {img:"https://image.kkday.com/v2/image/get/c_fill%2Ch_400%2Cq_55%2Ct_webp%2Cw_500/s1.kkday.com/product_771487/20260914050112_CIBLD/png", t:"期間限定", b:"嵐山月燈路", d:"竹林點燈一日遊", href:"#today", s:"2026-10-01", e:"2026-11-08"},
@@ -6753,7 +6753,7 @@ const GROUPS = [
     {scope:"USJ 套票｜萬聖限定・敲磚必備", code:"USJBUNDLE5OFF", benefit:"門票＋關西樂享周遊券＋人氣周邊任選，結帳現折 95 折", till:"2026-10-31", url:"https://www.kkday.com/zh-tw/product/2247"},
     {scope:"USJ 套票｜快閃加碼送哈咪酷瑪", code:"HAMIKUMA5OFF", benefit:"大門票＋哈咪酷瑪爆米花桶＋關西樂享周遊券，結帳現折 95 折", till:"2026-09-30", url:"https://www.kkday.com/zh-tw/product/2247"},
     {scope:"USJ 套票｜任天堂世界保證入園", code:"USJBUNDLE1000", benefit:"瑪利歐園區保證入園＋門票＋關西樂享周遊券＋周邊二選一，結帳現折 1,000 日圓", till:"2026-09-30", url:"https://www.kkday.com/zh-tw/product/2247"},
-    {scope:"關西｜豪華版關西樂享周遊券（買一送一）", code:"HFP5OFF", benefit:"買一送一再折 3%，限豪華版關西樂享周遊券一檔；可選環球影城 1 日券，出發日到 2027/2/28", from:"2026-10-27", till:"2027-02-27", url:"https://www.kkday.com/zh-tw/product/528208"},
+    {scope:"關西｜豪華版關西樂享周遊券（買一送一）", code:"HFP5OFF", benefit:"買一送一再 95 折，限豪華版關西樂享周遊券一檔；可選環球影城 1 日券，出發日到 2027/2/28", from:"2026-10-27", till:"2027-02-27", url:"https://www.kkday.com/zh-tw/product/528208"},
     {scope:"日本鐵路｜JR 點對點（早鳥）", code:"EARLYBIRD", benefit:"全路線 92 折、不限低消，最高折 202 元；出發日 2027/1/1–2/28", from:"2026-10-01", till:"2026-11-30", url:"https://www.kkday.com/zh-tw/transportation/japan-rail"},
     {scope:"日本鐵路", code:"JPTRAIN", benefit:"95 折，上限折 150 元", till:"2026-12-31", url:"https://www.kkday.com/zh-tw/transportation/japan-rail"},
     {scope:"日本鐵路｜新客", code:"JPNEWTRAIN", benefit:"新戶無低消 93 折", till:"2026-12-31", url:"https://www.kkday.com/zh-tw/transportation/japan-rail"},
