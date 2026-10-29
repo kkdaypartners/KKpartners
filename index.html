@@ -1385,6 +1385,7 @@ const FLASH_RULE = {
   "HAMIKUMA5OFF":  {only:[2247], note:"僅限 USJ 指定套票方案一，限時延至 9/20"},
   "USJBUNDLE1000": {only:[2247], note:"僅限 USJ 任天堂保證入園套票"},
   "USJBUNDLE5OFF": {only:[2247], note:"僅限 USJ 萬聖限定套票"},
+  "CHS1029":     {only:[136414], note:"10/29 12:00 泰國包車折 1,000，限曼谷客製包車一日遊，限量"},
   "HFP5OFF":     {only:[528208], note:"買一送一再 95 折，僅限豪華版關西樂享周遊券（訂購 10/27 15:00–2027/2/27 15:00，出發日 10/28–2027/2/28）"},
   "MWEDUAG":     {only:[528208], note:"僅限豪華版關西樂享周遊券一檔，訂購 9/17 13:00–23:59（台北時間）"},
   "W9FRCYD":     {only:[712921], note:"僅限名人郵輪青森睡魔祭一檔，訂購 9/17 20:00 起（台北時間）"},
@@ -5062,11 +5063,16 @@ const EVENT_LIST = [
         {time:"全天", scope:"全站滿 3,000 折 200（排除 8%）", code:"FD200", benefit:"三天通用", till:"2026-10-31"},
         {time:"11:00", scope:"全站限量 5 折券（第一波）", code:"1029FD51", benefit:"限量，搶完為止", till:"2026-10-29"},
         {time:"21:00", scope:"全站限量 5 折券（第二波）", code:"1029FD52", benefit:"限量，搶完為止", till:"2026-10-29"},
-        {time:"12:00", scope:"泰國包車折 1,000", code:"CHS1029", benefit:"限量", till:"2026-10-29"},
+        {time:"12:00", scope:"泰國包車折 1,000（限曼谷客製包車一日遊）", code:"CHS1029", benefit:"限量", till:"2026-10-29", url:"https://www.kkday.com/zh-tw/product/136414"},
         {time:"18:00", scope:"指定品 5 折券", code:"1029FL5", benefit:"限指定商品", till:"2026-10-29"},
-        {time:"20:00", scope:"東南亞機票折 3,000（排除黑名單與低毛利機票）", code:"AT1029", benefit:"限量", till:"2026-10-29"}
+        {time:"20:00", scope:"東南亞機票折 3,000（主推峴港、曼谷、新加坡、富國島）", code:"AT1029", benefit:"限量", till:"2026-10-29"}
       ],
       bogo: [
+        {name:"曼谷客製包車一日遊", url:"https://www.kkday.com/zh-tw/product/136414", deal:"折 $1,000（CHS1029）", why:"泰國｜12:00 開搶｜限量"},
+        {name:"台灣虎航｜越南峴港 5 天＆6 天計劃機票｜1 人成行．含行李", url:"https://www.kkday.com/zh-tw/product/134915", deal:"NT$8,888 再折 $3,000（AT1029）", why:"東南亞機票｜20:00 開搶｜限量"},
+        {name:"泰越捷航空｜泰國曼谷 5 天＆6 天計劃機票．自選超值方案", url:"https://www.kkday.com/zh-tw/product/247091", deal:"NT$9,988 起再折 $3,000（AT1029）", why:"東南亞機票｜20:00 開搶｜限量"},
+        {name:"酷航｜新加坡 4 天＆5 天計劃機票＋自選超值方案｜1 人成行．含行李", url:"https://www.kkday.com/zh-tw/product/158429", deal:"NT$8,888 起再折 $3,000（AT1029）", why:"東南亞機票｜20:00 開搶｜限量"},
+        {name:"桃園直飛富國島｜越南富國島 4～6 天計畫機票｜1 人成行．含行李", url:"https://www.kkday.com/zh-tw/product/137240", deal:"NT$7,888 起再折 $3,000（AT1029）", why:"東南亞機票｜20:00 開搶｜限量"},
         {name:"買20309廣島＆山口地區鐵路周遊5日券送271103北九州市・下關樂享周遊券", url:"https://www.kkday.com/zh-tw/product/20309", deal:"買A送Ｂ", why:"日本｜13:00 開搶｜不限量"},
         {name:"買20315山陽＆山陰地區鐵路周遊券送271103北九州市・下關樂享周遊券", url:"https://www.kkday.com/zh-tw/product/20315", deal:"買A送Ｂ", why:"日本｜13:00 開搶｜不限量"},
         {name:"日本大阪勝尾寺・京都嵐山・清水寺一日遊｜勝利達摩祈福巡禮（大阪出發）", url:"https://www.kkday.com/zh-tw/product/263298", deal:"50% Off", why:"日本｜13:00 開搶｜每個出遊日 10"},
