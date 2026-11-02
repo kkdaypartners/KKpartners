@@ -1411,6 +1411,23 @@ const PSCOPE = {"cty":["?","Japan","Taiwan","Korea","Europe","TH","Hong Kong and
    這是依折扣碼名稱與訴求推得的，發現誤判就改這裡。 */
 const CODE_GEO = {
   /* 2026-10-28 十一月碼（來源：每月月底黑名單.xlsx 11 月版） */
+  /* 2026-11-02 雙 11 每天 11:00 一折券（來源：雙11_ITF 企劃表）：排除機票 */
+  "11FL1":{nocat:["機票","機+酒","機+行程&門票","機+團體旅遊"]},
+  "11FL2":{nocat:["機票","機+酒","機+行程&門票","機+團體旅遊"]},
+  "11FL3":{nocat:["機票","機+酒","機+行程&門票","機+團體旅遊"]},
+  "11FL4":{nocat:["機票","機+酒","機+行程&門票","機+團體旅遊"]},
+  "11FL5":{nocat:["機票","機+酒","機+行程&門票","機+團體旅遊"]},
+  "11FL6":{nocat:["機票","機+酒","機+行程&門票","機+團體旅遊"]},
+  "EU3MFPC":{nocat:["機票","機+酒","機+行程&門票","機+團體旅遊"]},
+  "YSZ9B6E":{nocat:["機票","機+酒","機+行程&門票","機+團體旅遊"]},
+  "WBFZZBH":{nocat:["機票","機+酒","機+行程&門票","機+團體旅遊"]},
+  "MLPLBPS":{nocat:["機票","機+酒","機+行程&門票","機+團體旅遊"]},
+  "JAELTPK":{nocat:["機票","機+酒","機+行程&門票","機+團體旅遊"]},
+  "Q7BQJKP":{nocat:["機票","機+酒","機+行程&門票","機+團體旅遊"]},
+  "HFMRNK9":{nocat:["機票","機+酒","機+行程&門票","機+團體旅遊"]},
+  "11FL7":{nocat:["機票","機+酒","機+行程&門票","機+團體旅遊"]},
+  "11FL8":{nocat:["機票","機+酒","機+行程&門票","機+團體旅遊"]},
+  "11FL9":{nocat:["機票","機+酒","機+行程&門票","機+團體旅遊"]},
   "JPTAXFREE":{cty:["Japan"]},
   "AFTEE85OCT":{nocat:["網路"]},   /* 表上另排除購物折扣券、禮券、伴手禮、生鮮食品 */
   "JPAIRPORT":{cat:["包車"],cty:["Japan"]},
@@ -5682,7 +5699,8 @@ const EVENT_LIST = [
         {time:"全期", scope:"全站不限門檻 94 折", code:"11A94", benefit:"最高折 150；活動頁領券", till:"2026-11-16"},
         {time:"全期", scope:"新客專屬 84 折", code:"11N84", benefit:"最高折 100；限新客", till:"2026-11-16"},
         {time:"全期", scope:"雙 11 限定｜全站滿 8,000 折 800", code:"11SV8", benefit:"活動頁領券", till:"2026-11-16"},
-        {time:"全期", scope:"秋冬行程體驗滿 10,000 折 1,200", code:"WIN1200", benefit:"活動頁領券", till:"2026-11-16"}
+        {time:"全期", scope:"秋冬行程體驗滿 10,000 折 1,200", code:"WIN1200", benefit:"活動頁領券", till:"2026-11-16"},
+        {time:"11:00", scope:"雙 11｜全站限量 1 折券（排除機票）", code:"11FL1", benefit:"最高折 $1,111；限量，搶完為止", till:"2026-11-01"}
       ],
       bogo: [
         {name:"福湯岩盤浴 新竹湳雅館", url:"https://www.kkday.com/zh-tw/product/119325", deal:"雙人3小時$1,111", why:"台灣｜13:00 開搶｜每日10組"},
@@ -5701,7 +5719,8 @@ const EVENT_LIST = [
         {time:"全期", scope:"全站不限門檻 94 折", code:"11A94", benefit:"最高折 150；活動頁領券", till:"2026-11-16"},
         {time:"全期", scope:"新客專屬 84 折", code:"11N84", benefit:"最高折 100；限新客", till:"2026-11-16"},
         {time:"全期", scope:"雙 11 限定｜全站滿 8,000 折 800", code:"11SV8", benefit:"活動頁領券", till:"2026-11-16"},
-        {time:"全期", scope:"秋冬行程體驗滿 10,000 折 1,200", code:"WIN1200", benefit:"活動頁領券", till:"2026-11-16"}
+        {time:"全期", scope:"秋冬行程體驗滿 10,000 折 1,200", code:"WIN1200", benefit:"活動頁領券", till:"2026-11-16"},
+        {time:"11:00", scope:"雙 11｜全站限量 1 折券（排除機票）", code:"11FL2", benefit:"最高折 $1,111；限量，搶完為止", till:"2026-11-02"}
       ],
       bogo: [
         {name:"MSC 榮耀號｜絕美賞櫻 5 天 4 夜｜基隆＋鹿兒島＋東京（2027/3/23 出發）", url:"https://www.kkday.com/zh-tw/product/575458", deal:"每人 $11,111", why:"郵輪｜13:00 開搶｜賞櫻航次"},
@@ -5722,7 +5741,8 @@ const EVENT_LIST = [
         {time:"全期", scope:"全站不限門檻 94 折", code:"11A94", benefit:"最高折 150；活動頁領券", till:"2026-11-16"},
         {time:"全期", scope:"新客專屬 84 折", code:"11N84", benefit:"最高折 100；限新客", till:"2026-11-16"},
         {time:"全期", scope:"雙 11 限定｜全站滿 8,000 折 800", code:"11SV8", benefit:"活動頁領券", till:"2026-11-16"},
-        {time:"全期", scope:"秋冬行程體驗滿 10,000 折 1,200", code:"WIN1200", benefit:"活動頁領券", till:"2026-11-16"}
+        {time:"全期", scope:"秋冬行程體驗滿 10,000 折 1,200", code:"WIN1200", benefit:"活動頁領券", till:"2026-11-16"},
+        {time:"11:00", scope:"雙 11｜全站限量 1 折券（排除機票）", code:"11FL3", benefit:"最高折 $1,111；限量，搶完為止", till:"2026-11-03"}
       ],
       bogo: [
         {name:"MSC 榮耀號｜絕美賞櫻 5 天 4 夜｜基隆＋鹿兒島＋東京（2027/3/23 出發）", url:"https://www.kkday.com/zh-tw/product/575458", deal:"每人 $11,111", why:"郵輪｜13:00 開搶｜賞櫻航次"},
@@ -5745,7 +5765,8 @@ const EVENT_LIST = [
         {time:"全期", scope:"全站不限門檻 94 折", code:"11A94", benefit:"最高折 150；活動頁領券", till:"2026-11-16"},
         {time:"全期", scope:"新客專屬 84 折", code:"11N84", benefit:"最高折 100；限新客", till:"2026-11-16"},
         {time:"全期", scope:"雙 11 限定｜全站滿 8,000 折 800", code:"11SV8", benefit:"活動頁領券", till:"2026-11-16"},
-        {time:"全期", scope:"秋冬行程體驗滿 10,000 折 1,200", code:"WIN1200", benefit:"活動頁領券", till:"2026-11-16"}
+        {time:"全期", scope:"秋冬行程體驗滿 10,000 折 1,200", code:"WIN1200", benefit:"活動頁領券", till:"2026-11-16"},
+        {time:"11:00", scope:"雙 11｜全站限量 1 折券（排除機票）", code:"11FL4", benefit:"最高折 $1,111；限量，搶完為止", till:"2026-11-04"}
       ],
       bogo: [
         {name:"MSC 榮耀號｜絕美賞櫻 5 天 4 夜｜基隆＋鹿兒島＋東京（2027/3/23 出發）", url:"https://www.kkday.com/zh-tw/product/575458", deal:"每人 $11,111", why:"郵輪｜13:00 開搶｜賞櫻航次"},
@@ -5771,7 +5792,8 @@ const EVENT_LIST = [
         {time:"全期", scope:"全站不限門檻 94 折", code:"11A94", benefit:"最高折 150；活動頁領券", till:"2026-11-16"},
         {time:"全期", scope:"新客專屬 84 折", code:"11N84", benefit:"最高折 100；限新客", till:"2026-11-16"},
         {time:"全期", scope:"雙 11 限定｜全站滿 8,000 折 800", code:"11SV8", benefit:"活動頁領券", till:"2026-11-16"},
-        {time:"全期", scope:"秋冬行程體驗滿 10,000 折 1,200", code:"WIN1200", benefit:"活動頁領券", till:"2026-11-16"}
+        {time:"全期", scope:"秋冬行程體驗滿 10,000 折 1,200", code:"WIN1200", benefit:"活動頁領券", till:"2026-11-16"},
+        {time:"11:00", scope:"雙 11｜全站限量 1 折券（排除機票）", code:"11FL5", benefit:"最高折 $1,111；限量，搶完為止", till:"2026-11-05"}
       ],
       bogo: [
         {name:"MSC 榮耀號｜絕美賞櫻 5 天 4 夜｜基隆＋鹿兒島＋東京（2027/3/23 出發）", url:"https://www.kkday.com/zh-tw/product/575458", deal:"每人 $11,111", why:"郵輪｜13:00 開搶｜賞櫻航次"},
@@ -5802,7 +5824,8 @@ const EVENT_LIST = [
         {time:"全期", scope:"全站不限門檻 94 折", code:"11A94", benefit:"最高折 150；活動頁領券", till:"2026-11-16"},
         {time:"全期", scope:"新客專屬 84 折", code:"11N84", benefit:"最高折 100；限新客", till:"2026-11-16"},
         {time:"全期", scope:"雙 11 限定｜全站滿 8,000 折 800", code:"11SV8", benefit:"活動頁領券", till:"2026-11-16"},
-        {time:"全期", scope:"秋冬行程體驗滿 10,000 折 1,200", code:"WIN1200", benefit:"活動頁領券", till:"2026-11-16"}
+        {time:"全期", scope:"秋冬行程體驗滿 10,000 折 1,200", code:"WIN1200", benefit:"活動頁領券", till:"2026-11-16"},
+        {time:"11:00", scope:"雙 11｜全站限量 1 折券（排除機票）", code:"11FL6", benefit:"最高折 $1,111；限量，搶完為止", till:"2026-11-06"}
       ],
       bogo: [
         {name:"MSC 榮耀號｜絕美賞櫻 5 天 4 夜｜基隆＋鹿兒島＋東京（2027/3/23 出發）", url:"https://www.kkday.com/zh-tw/product/575458", deal:"每人 $11,111", why:"郵輪｜13:00 開搶｜賞櫻航次"},
@@ -5824,7 +5847,8 @@ const EVENT_LIST = [
         {time:"全期", scope:"全站不限門檻 94 折", code:"11A94", benefit:"最高折 150；活動頁領券", till:"2026-11-16"},
         {time:"全期", scope:"新客專屬 84 折", code:"11N84", benefit:"最高折 100；限新客", till:"2026-11-16"},
         {time:"全期", scope:"雙 11 限定｜全站滿 8,000 折 800", code:"11SV8", benefit:"活動頁領券", till:"2026-11-16"},
-        {time:"全期", scope:"秋冬行程體驗滿 10,000 折 1,200", code:"WIN1200", benefit:"活動頁領券", till:"2026-11-16"}
+        {time:"全期", scope:"秋冬行程體驗滿 10,000 折 1,200", code:"WIN1200", benefit:"活動頁領券", till:"2026-11-16"},
+        {time:"11:00", scope:"雙 11｜全站限量 1 折券（排除機票）", code:"EU3MFPC", benefit:"最高折 $11,111；限量，搶完為止", till:"2026-11-07"}
       ],
       bogo: [
         {name:"MSC 榮耀號｜絕美賞櫻 5 天 4 夜｜基隆＋鹿兒島＋東京（2027/3/23 出發）", url:"https://www.kkday.com/zh-tw/product/575458", deal:"每人 $11,111", why:"郵輪｜13:00 開搶｜賞櫻航次"},
@@ -5842,7 +5866,8 @@ const EVENT_LIST = [
         {time:"全期", scope:"全站不限門檻 94 折", code:"11A94", benefit:"最高折 150；活動頁領券", till:"2026-11-16"},
         {time:"全期", scope:"新客專屬 84 折", code:"11N84", benefit:"最高折 100；限新客", till:"2026-11-16"},
         {time:"全期", scope:"雙 11 限定｜全站滿 8,000 折 800", code:"11SV8", benefit:"活動頁領券", till:"2026-11-16"},
-        {time:"全期", scope:"秋冬行程體驗滿 10,000 折 1,200", code:"WIN1200", benefit:"活動頁領券", till:"2026-11-16"}
+        {time:"全期", scope:"秋冬行程體驗滿 10,000 折 1,200", code:"WIN1200", benefit:"活動頁領券", till:"2026-11-16"},
+        {time:"11:00", scope:"雙 11｜全站限量 1 折券（排除機票）", code:"YSZ9B6E", benefit:"最高折 $11,111；限量，搶完為止", till:"2026-11-08"}
       ],
       bogo: [
         {name:"MSC 榮耀號｜絕美賞櫻 5 天 4 夜｜基隆＋鹿兒島＋東京（2027/3/23 出發）", url:"https://www.kkday.com/zh-tw/product/575458", deal:"每人 $11,111", why:"郵輪｜13:00 開搶｜賞櫻航次"},
@@ -5860,7 +5885,8 @@ const EVENT_LIST = [
         {time:"全期", scope:"全站不限門檻 94 折", code:"11A94", benefit:"最高折 150；活動頁領券", till:"2026-11-16"},
         {time:"全期", scope:"新客專屬 84 折", code:"11N84", benefit:"最高折 100；限新客", till:"2026-11-16"},
         {time:"全期", scope:"雙 11 限定｜全站滿 8,000 折 800", code:"11SV8", benefit:"活動頁領券", till:"2026-11-16"},
-        {time:"全期", scope:"秋冬行程體驗滿 10,000 折 1,200", code:"WIN1200", benefit:"活動頁領券", till:"2026-11-16"}
+        {time:"全期", scope:"秋冬行程體驗滿 10,000 折 1,200", code:"WIN1200", benefit:"活動頁領券", till:"2026-11-16"},
+        {time:"11:00", scope:"雙 11｜全站限量 1 折券（排除機票）", code:"WBFZZBH", benefit:"最高折 $11,111；限量，搶完為止", till:"2026-11-09"}
       ],
       bogo: [
         {name:"MSC 榮耀號｜絕美賞櫻 5 天 4 夜｜基隆＋鹿兒島＋東京（2027/3/23 出發）", url:"https://www.kkday.com/zh-tw/product/575458", deal:"每人 $11,111", why:"郵輪｜13:00 開搶｜賞櫻航次"},
@@ -5876,7 +5902,8 @@ const EVENT_LIST = [
         {time:"全期", scope:"全站不限門檻 94 折", code:"11A94", benefit:"最高折 150；活動頁領券", till:"2026-11-16"},
         {time:"全期", scope:"新客專屬 84 折", code:"11N84", benefit:"最高折 100；限新客", till:"2026-11-16"},
         {time:"全期", scope:"雙 11 限定｜全站滿 8,000 折 800", code:"11SV8", benefit:"活動頁領券", till:"2026-11-16"},
-        {time:"全期", scope:"秋冬行程體驗滿 10,000 折 1,200", code:"WIN1200", benefit:"活動頁領券", till:"2026-11-16"}
+        {time:"全期", scope:"秋冬行程體驗滿 10,000 折 1,200", code:"WIN1200", benefit:"活動頁領券", till:"2026-11-16"},
+        {time:"11:00", scope:"雙 11｜全站限量 1 折券（排除機票）", code:"MLPLBPS", benefit:"最高折 $11,111；限量，搶完為止", till:"2026-11-10"}
       ],
       bogo: [
         {name:"MSC 榮耀號｜絕美賞櫻 5 天 4 夜｜基隆＋鹿兒島＋東京（2027/3/23 出發）", url:"https://www.kkday.com/zh-tw/product/575458", deal:"每人 $11,111", why:"郵輪｜13:00 開搶｜賞櫻航次"},
@@ -5893,7 +5920,8 @@ const EVENT_LIST = [
         {time:"全期", scope:"全站不限門檻 94 折", code:"11A94", benefit:"最高折 150；活動頁領券", till:"2026-11-16"},
         {time:"全期", scope:"新客專屬 84 折", code:"11N84", benefit:"最高折 100；限新客", till:"2026-11-16"},
         {time:"全期", scope:"雙 11 限定｜全站滿 8,000 折 800", code:"11SV8", benefit:"活動頁領券", till:"2026-11-16"},
-        {time:"全期", scope:"秋冬行程體驗滿 10,000 折 1,200", code:"WIN1200", benefit:"活動頁領券", till:"2026-11-16"}
+        {time:"全期", scope:"秋冬行程體驗滿 10,000 折 1,200", code:"WIN1200", benefit:"活動頁領券", till:"2026-11-16"},
+        {time:"11:00", scope:"雙 11｜全站限量 1 折券（排除機票）", code:"JAELTPK", benefit:"最高折 $11,111；限量，搶完為止", till:"2026-11-11"}
       ],
       bogo: [
         {name:"MSC 榮耀號｜絕美賞櫻 5 天 4 夜｜基隆＋鹿兒島＋東京（2027/3/23 出發）", url:"https://www.kkday.com/zh-tw/product/575458", deal:"每人 $11,111", why:"郵輪｜13:00 開搶｜賞櫻航次"},
@@ -5911,7 +5939,8 @@ const EVENT_LIST = [
         {time:"全期", scope:"全站不限門檻 94 折", code:"11A94", benefit:"最高折 150；活動頁領券", till:"2026-11-16"},
         {time:"全期", scope:"新客專屬 84 折", code:"11N84", benefit:"最高折 100；限新客", till:"2026-11-16"},
         {time:"全期", scope:"雙 11 限定｜全站滿 8,000 折 800", code:"11SV8", benefit:"活動頁領券", till:"2026-11-16"},
-        {time:"全期", scope:"秋冬行程體驗滿 10,000 折 1,200", code:"WIN1200", benefit:"活動頁領券", till:"2026-11-16"}
+        {time:"全期", scope:"秋冬行程體驗滿 10,000 折 1,200", code:"WIN1200", benefit:"活動頁領券", till:"2026-11-16"},
+        {time:"11:00", scope:"雙 11｜全站限量 1 折券（排除機票）", code:"Q7BQJKP", benefit:"最高折 $11,111；限量，搶完為止", till:"2026-11-12"}
       ],
       bogo: [
         {name:"MSC 榮耀號｜絕美賞櫻 5 天 4 夜｜基隆＋鹿兒島＋東京（2027/3/23 出發）", url:"https://www.kkday.com/zh-tw/product/575458", deal:"每人 $11,111", why:"郵輪｜13:00 開搶｜賞櫻航次"},
@@ -5928,7 +5957,8 @@ const EVENT_LIST = [
         {time:"全期", scope:"全站不限門檻 94 折", code:"11A94", benefit:"最高折 150；活動頁領券", till:"2026-11-16"},
         {time:"全期", scope:"新客專屬 84 折", code:"11N84", benefit:"最高折 100；限新客", till:"2026-11-16"},
         {time:"全期", scope:"雙 11 限定｜全站滿 8,000 折 800", code:"11SV8", benefit:"活動頁領券", till:"2026-11-16"},
-        {time:"全期", scope:"秋冬行程體驗滿 10,000 折 1,200", code:"WIN1200", benefit:"活動頁領券", till:"2026-11-16"}
+        {time:"全期", scope:"秋冬行程體驗滿 10,000 折 1,200", code:"WIN1200", benefit:"活動頁領券", till:"2026-11-16"},
+        {time:"11:00", scope:"雙 11｜全站限量 1 折券（排除機票）", code:"HFMRNK9", benefit:"最高折 $11,111；限量，搶完為止", till:"2026-11-13"}
       ],
       bogo: [
         {name:"MSC 榮耀號｜絕美賞櫻 5 天 4 夜｜基隆＋鹿兒島＋東京（2027/3/23 出發）", url:"https://www.kkday.com/zh-tw/product/575458", deal:"每人 $11,111", why:"郵輪｜13:00 開搶｜賞櫻航次"},
@@ -5946,7 +5976,8 @@ const EVENT_LIST = [
         {time:"全期", scope:"全站不限門檻 94 折", code:"11A94", benefit:"最高折 150；活動頁領券", till:"2026-11-16"},
         {time:"全期", scope:"新客專屬 84 折", code:"11N84", benefit:"最高折 100；限新客", till:"2026-11-16"},
         {time:"全期", scope:"雙 11 限定｜全站滿 8,000 折 800", code:"11SV8", benefit:"活動頁領券", till:"2026-11-16"},
-        {time:"全期", scope:"秋冬行程體驗滿 10,000 折 1,200", code:"WIN1200", benefit:"活動頁領券", till:"2026-11-16"}
+        {time:"全期", scope:"秋冬行程體驗滿 10,000 折 1,200", code:"WIN1200", benefit:"活動頁領券", till:"2026-11-16"},
+        {time:"11:00", scope:"雙 11｜全站限量 1 折券（排除機票）", code:"11FL7", benefit:"最高折 $1,111；限量，搶完為止", till:"2026-11-14"}
       ],
       bogo: [
         {name:"MSC 榮耀號｜絕美賞櫻 5 天 4 夜｜基隆＋鹿兒島＋東京（2027/3/23 出發）", url:"https://www.kkday.com/zh-tw/product/575458", deal:"每人 $11,111", why:"郵輪｜13:00 開搶｜賞櫻航次"},
@@ -5965,7 +5996,8 @@ const EVENT_LIST = [
         {time:"全期", scope:"全站不限門檻 94 折", code:"11A94", benefit:"最高折 150；活動頁領券", till:"2026-11-16"},
         {time:"全期", scope:"新客專屬 84 折", code:"11N84", benefit:"最高折 100；限新客", till:"2026-11-16"},
         {time:"全期", scope:"雙 11 限定｜全站滿 8,000 折 800", code:"11SV8", benefit:"活動頁領券", till:"2026-11-16"},
-        {time:"全期", scope:"秋冬行程體驗滿 10,000 折 1,200", code:"WIN1200", benefit:"活動頁領券", till:"2026-11-16"}
+        {time:"全期", scope:"秋冬行程體驗滿 10,000 折 1,200", code:"WIN1200", benefit:"活動頁領券", till:"2026-11-16"},
+        {time:"11:00", scope:"雙 11｜全站限量 1 折券（排除機票）", code:"11FL8", benefit:"最高折 $1,111；限量，搶完為止", till:"2026-11-15"}
       ],
       bogo: [
         {name:"MSC 榮耀號｜絕美賞櫻 5 天 4 夜｜基隆＋鹿兒島＋東京（2027/3/23 出發）", url:"https://www.kkday.com/zh-tw/product/575458", deal:"每人 $11,111", why:"郵輪｜13:00 開搶｜賞櫻航次"},
@@ -5982,7 +6014,8 @@ const EVENT_LIST = [
         {time:"全期", scope:"全站不限門檻 94 折", code:"11A94", benefit:"最高折 150；活動頁領券", till:"2026-11-16"},
         {time:"全期", scope:"新客專屬 84 折", code:"11N84", benefit:"最高折 100；限新客", till:"2026-11-16"},
         {time:"全期", scope:"雙 11 限定｜全站滿 8,000 折 800", code:"11SV8", benefit:"活動頁領券", till:"2026-11-16"},
-        {time:"全期", scope:"秋冬行程體驗滿 10,000 折 1,200", code:"WIN1200", benefit:"活動頁領券", till:"2026-11-16"}
+        {time:"全期", scope:"秋冬行程體驗滿 10,000 折 1,200", code:"WIN1200", benefit:"活動頁領券", till:"2026-11-16"},
+        {time:"11:00", scope:"雙 11｜全站限量 1 折券（排除機票）", code:"11FL9", benefit:"最高折 $1,111；限量，搶完為止", till:"2026-11-16"}
       ],
       bogo: [
         {name:"MSC 榮耀號｜絕美賞櫻 5 天 4 夜｜基隆＋鹿兒島＋東京（2027/3/23 出發）", url:"https://www.kkday.com/zh-tw/product/575458", deal:"每人 $11,111", why:"郵輪｜13:00 開搶｜賞櫻航次"},
