@@ -6946,7 +6946,7 @@ const GROUPS = [
     {scope:"萬聖節給糖不搗蛋｜全站（AFF 專屬）", code:"KKHAL888", benefit:"全站單筆滿 8,800 折 888", from:"2026-10-21", till:"2026-10-26"},
     {scope:"颱風安心優惠", code:"KKFLASH93", benefit:"93 折（適用範圍、上限與期限以十尚玩咖活動頁為準）", from:"2026-10-22", till:"", url:"https://www.kkday.com/zh-tw/promo/autumn_trip"},
     {scope:"雙 11｜全站不限門檻", code:"11A94", benefit:"94 折，最高折 150", from:"2026-10-26", till:"2026-11-16", url:"https://www.kkday.com/zh-tw/promo/double11"},
-    {scope:"ITF｜瑞士商品（半價卡除外）", code:"SWISSITF93", benefit:"滿 15,000 享 89 折，最高折 1,750；限時限量", from:"2026-11-05", url:"https://www.kkday.com/zh-tw/product/2524"},
+    {scope:"ITF｜瑞士商品（含半價卡）", code:"SWISSITF93", benefit:"滿 15,000 享 89 折，最高折 1,750；限時限量", from:"2026-11-05", url:"https://www.kkday.com/zh-tw/product/2524"},
     {scope:"日本｜賞楓／溫泉商品", code:"26JPAW92", benefit:"滿 1,500 享 92 折，最高折 300", from:"2026-11-05", till:"2026-12-12", url:"https://www.kkday.com/zh-tw/product/771734"},
     {scope:"雙 11｜全站票券（夥伴專屬）", code:"KKAFF11", benefit:"票券、交通票券 9 折，最高折 150；11/5 再補 300 張，用完為止；只排除 JR Pass、日本環球影城系列", from:"2026-11-04", till:"2026-11-16", url:"https://www.kkday.com/zh-tw/promo/double11"},
     {scope:"雙 11｜全球行程體驗（加開）", code:"11ST88", benefit:"行程體驗 88 折，最高折 150；排除毛利 7% 以下商品", from:"2026-11-04", till:"2026-11-16", url:"https://www.kkday.com/zh-tw/promo/double11"},
@@ -9101,7 +9101,7 @@ const EXTRA_OK = {
 /* 11/4 雙 11 KKOL 票券碼 KKAFF11：BD 給的排除名單（JR Pass 系列、USJ 系列、歐鐵） */
 /* 11/5 日本賞楓／溫泉 92 折：BD 提品名單確定可用，名單外的日本商品以結帳頁為準 */
 const CODE_SOFT = {
-  "SWISSITF93": {ids:new Set([2524,183425,609680,621389,18767,126786,528887,528759,250510,134871,286379,625591,263631,1304,19572,601555,332076]), ex:new Set([128031]), exWhy:"瑞士半價卡不適用這張碼", cty:["Europe"], yes:"瑞士商品，滿 15,000 享 89 折（最高折 1,750），限時限量", no:"限瑞士商品", maybe:"不在瑞士商品清單，是否適用請以結帳頁為準"},
+  "SWISSITF93": {ids:new Set([2524,183425,609680,621389,18767,126786,528887,528759,250510,134871,286379,625591,263631,1304,19572,601555,332076,128031]), cty:["Europe"], yes:"瑞士商品，滿 15,000 享 89 折（最高折 1,750），限時限量", no:"限瑞士商品", maybe:"不在瑞士商品清單，是否適用請以結帳頁為準"},
   "26JPAW92": {ids:new Set([23253,771529,771734,573608,155295,576605,601817,182060]), cty:["Japan"], yes:"BD 提品的日本賞楓／溫泉商品，滿 1,500 享 92 折（最高折 300）", no:"限日本賞楓／溫泉商品", maybe:"不在 BD 提品名單，是否屬於賞楓／溫泉商品請以結帳頁為準"}
 };
 const CODE_EXCL = {
