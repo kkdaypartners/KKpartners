@@ -1269,6 +1269,13 @@ const BLACKLIST = [[125652,"【KKday會員積分禮遇】KKday Points增值方�
    r = 每張折扣碼：ex 排除集合／inc 限定集合／cin 限定類別數／cex 排除類別數／pkg 限定方案數 */
 /* 信用卡／支付折扣碼的適用範圍（來源：銀行合作表 C 欄對照 P 欄） */
 const BANK_SCOPE = {
+  /* 雙 11×會員日（2026-11-07）：適用範圍 PM 還沒給完整名單，先登記文字說明 */
+  "MBMDAY500TKT":"會員日 11/10–11/11 14:00 搶券，團旅全商品滿 10,000 折 500",
+  "LH1000":"會員日 11/10–11/11 16:00，歐美紐澳商品滿額最高折 1,000",
+  "B4M11":"會員日返場 11/12–11/13，全站指定商品 94 折，排除毛利 8% 以下",
+  "11SV2":"雙 11 全站滿 3,000 折 200，排除毛利 8% 以下",
+  "27EXPO500":"旅展寒假春節早鳥，全站滿 4,000 折 500，出發日 2027/1/15–2/10，排除毛利 12% 以下，用到 11/7",
+  "27EXPO888":"旅展寒假春節早鳥，全站滿 8,000 折 888，出發日 2027/1/15–2/10，排除毛利 10% 以下，用到 11/7",
   /* 10 月沿用 9 月同類碼的規則（2026-09-29，排除清單 Alen 另給，到時再換） */
   "DBSJK2610":"日韓體驗、行程，排除低毛利商品",
   "DBSKDDI10":"指定 KDDI eSIM 商品",
@@ -9418,6 +9425,12 @@ document.getElementById("cksel").addEventListener("change", e => {
       till: ""
     };
   }
+  /* 檔期每日碼（雙 11 一折券、會員日折扣金等）登錄在 EVENT_LIST 的 days.codes，不在 GROUPS（2026-11-07） */
+  if (!CK_ITEM && typeof EVENT_LIST !== "undefined") {
+    EVENT_LIST.forEach(function(ev){ (ev.days || []).forEach(function(d){ (d.codes || []).forEach(function(c){
+      if (!CK_ITEM && c.code === code) CK_ITEM = {benefit: c.benefit || "", scope: c.scope || "", till: c.till || d.date || ""};
+    }); }); });
+  }
   if (!code) { ckout.innerHTML = ""; return; }
   const f = FLASH_RULE[code];
   /* 限定商品碼（FLASH_RULE.only）原本只列編號，跟其他碼長得不一樣；改走下面同一套清單，列商品名＋連結（Alen 2026-10-01） */
@@ -9461,7 +9474,9 @@ document.getElementById("cksel").addEventListener("change", e => {
      2026-09-23：清單已匯入但這段先擋住，畫面仍顯示「還沒登記商品規則」。 */
   const isReader = (code === "READER92" || code === "READER94");
   const isFly = (typeof FLYDAY_RULE !== "undefined" && !!FLYDAY_RULE[code]);   /* 飛航日碼不走 RULES，用 FLYDAY_RULE */
-  if (!r && !isReader && !isFly && !(f && f.only)) {
+  /* 這幾天新增的碼登錄在 CODE_GEO／CODE_EXCL／CODE_SOFT，judge 判得出來，不要擋在「還沒登記」（2026-11-07） */
+  const isLocal = !!((typeof CODE_GEO !== "undefined" && CODE_GEO[code]) || (typeof CODE_EXCL !== "undefined" && CODE_EXCL[code]) || (typeof CODE_SOFT !== "undefined" && CODE_SOFT[code]));
+  if (!r && !isReader && !isFly && !isLocal && !(f && f.only)) {
     ckout.innerHTML = '<div class="hit warn2"><b>這張碼還沒有登記商品規則</b>' +
       (BANK_SCOPE[code] ? '登記的適用範圍是：' + esc(BANK_SCOPE[code]) + '。' : "") +
       '請以結帳頁實際試算為準。</div>';
