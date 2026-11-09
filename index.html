@@ -1269,6 +1269,11 @@ const BLACKLIST = [[125652,"【KKday會員積分禮遇】KKday Points增值方�
    r = 每張折扣碼：ex 排除集合／inc 限定集合／cin 限定類別數／cex 排除類別數／pkg 限定方案數 */
 /* 信用卡／支付折扣碼的適用範圍（來源：銀行合作表 C 欄對照 P 欄） */
 const BANK_SCOPE = {
+  "KR5AT":"KTO 韓流冬季專案（11/10–12/15）：台北飛韓國機票 滿額折 500，只限活動頁指定商品 https://www.kkday.com/zh-tw/promo/love_korea_ktravel#WIN",
+  "KR8AT":"KTO 韓流冬季專案（11/10–12/15）：台中、高雄飛韓國機票 滿額折 800，只限活動頁指定商品 https://www.kkday.com/zh-tw/promo/love_korea_ktravel#WIN",
+  "KR12G":"KTO 韓流冬季專案（11/10–12/15）：台北飛韓國機加酒／迷你團 滿額折 1,200，只限活動頁指定商品 https://www.kkday.com/zh-tw/promo/love_korea_ktravel#WIN",
+  "KR15G":"KTO 韓流冬季專案（11/10–12/15）：台中、高雄飛韓國機加酒／迷你團 滿額折 1,500，只限活動頁指定商品 https://www.kkday.com/zh-tw/promo/love_korea_ktravel#WIN",
+  "KR5DT":"KTO 韓流冬季專案（11/10–12/15）：韓國一日遊／冬季商品 滿額折 500，只限活動頁指定商品 https://www.kkday.com/zh-tw/promo/love_korea_ktravel#WIN",
   /* 雙 11×會員日（2026-11-07）：適用範圍 PM 還沒給完整名單，先登記文字說明 */
   "MBMDAY500TKT":"會員日 11/10–11/11 14:00 搶券，團旅全商品滿 10,000 折 500",
   "LH1000":"會員日 11/10–11/11 16:00，歐美紐澳商品滿額最高折 1,000",
@@ -4959,6 +4964,7 @@ const BENEFITS = [
    只會顯示「同一天」的項目，最多五則，新的排前面。
    工作區（?admin=1）不受日期限制、永遠顯示，方便先看版面。 */
 const NEWS = [
+  {t:"2026-11-10T00:00", b:"KTO 韓流冬季專案開跑（11/10–12/15）：韓國機票折 500／800、機加酒迷你團折 1,200／1,500、一日遊冬季商品折 500，限活動頁指定品", url:"https://www.kkday.com/zh-tw/promo/love_korea_ktravel"},
   {t:"2026-11-09T14:00", b:"Xpark 買一送一已購買者注意：未使用的票 12/31 前都能免費取消（頁面寫「所選日期前一天」以這則為準）；過了所選日期若無法自行取消，請聯繫客服", url:"#code=XPARK50"},
   {t:"2026-11-06T16:00", b:"富士山、輕井澤一日遊新增中途下車方案：JPTOUR500OFF 現折 ¥500；11/16 前買這兩支送回程新幹線 ¥1,000，買指定新幹線送一日遊 85 折（最高折 ¥2,500）", url:"#code=JPTOUR500OFF"},
   {t:"2026-11-06T15:00", b:"會員日整週可推：韓國全品類 26KR1111 滿 2,000 折 200（500 組）；八達通升級版買就送 eSIM（限 1,200 組，請導 8962 這支）；Anyma ÆDEN 曼谷站是黑名單，任何碼都不能用；麗星不適用旅展折扣券", url:"#today"},
@@ -7142,6 +7148,11 @@ const GROUPS = [
     {scope:"萬聖節給糖不搗蛋｜全站（AFF 專屬）", code:"KKHAL888", benefit:"全站單筆滿 8,800 折 888", from:"2026-10-21", till:"2026-10-26"},
     {scope:"颱風安心優惠", code:"KKFLASH93", benefit:"93 折（適用範圍、上限與期限以十尚玩咖活動頁為準）", from:"2026-10-22", till:"", url:"https://www.kkday.com/zh-tw/promo/autumn_trip"},
     {scope:"雙 11｜全站不限門檻", code:"11A94", benefit:"94 折，最高折 150", from:"2026-10-26", till:"2026-11-16", url:"https://www.kkday.com/zh-tw/promo/double11"},
+    {scope:"KTO 韓流冬季｜台北飛韓國機票（活動頁指定品）", code:"KR5AT", benefit:"滿額折 500；限活動頁指定商品", from:"2026-11-10", till:"2026-12-15", url:"https://www.kkday.com/zh-tw/promo/love_korea_ktravel"},
+    {scope:"KTO 韓流冬季｜台中、高雄飛韓國機票（活動頁指定品）", code:"KR8AT", benefit:"滿額折 800；限活動頁指定商品", from:"2026-11-10", till:"2026-12-15", url:"https://www.kkday.com/zh-tw/promo/love_korea_ktravel"},
+    {scope:"KTO 韓流冬季｜台北飛韓國機加酒／迷你團（活動頁指定品）", code:"KR12G", benefit:"滿額折 1,200；限活動頁指定商品", from:"2026-11-10", till:"2026-12-15", url:"https://www.kkday.com/zh-tw/promo/love_korea_ktravel"},
+    {scope:"KTO 韓流冬季｜台中、高雄飛韓國機加酒／迷你團（活動頁指定品）", code:"KR15G", benefit:"滿額折 1,500；限活動頁指定商品", from:"2026-11-10", till:"2026-12-15", url:"https://www.kkday.com/zh-tw/promo/love_korea_ktravel"},
+    {scope:"KTO 韓流冬季｜韓國一日遊／冬季商品（活動頁指定品）", code:"KR5DT", benefit:"滿額折 500；限活動頁指定商品", from:"2026-11-10", till:"2026-12-15", url:"https://www.kkday.com/zh-tw/promo/love_korea_ktravel"},
     {scope:"會員日｜臺北戲棚傳統藝術表演", code:"TPOPERA50", benefit:"買一送一，限 15；選新方案再輸碼", from:"2026-11-07", till:"2026-11-12", url:"https://www.kkday.com/zh-tw/product/18141"},
     {scope:"雙 11｜伊利希安滑雪 A 滑雪課程方案", code:"D11ELYA", benefit:"輸碼享 $1,111（限量）", from:"2026-11-09", till:"2026-11-16", url:"https://www.kkday.com/zh-tw/product/136649"},
     {scope:"雙 11｜伊利希安滑雪 B 自由滑行方案", code:"D11ELYB", benefit:"輸碼享 $1,111（限量）", from:"2026-11-09", till:"2026-11-16", url:"https://www.kkday.com/zh-tw/product/136649"},
